@@ -1,0 +1,368 @@
+2021-07-06 16:04:45.265  INFO 31810 --- [main] com.coatardbul.stock.StockApplication    : No active profile set, falling back to default profiles: default
+2021-07-06 16:04:46.258  WARN 31810 --- [main] o.m.s.mapper.ClassPathMapperScanner      : No MyBatis mapper was found in '[com.coatardbul.stock]' package. Please check your configuration.
+2021-07-06 16:04:46.973  INFO 31810 --- [main] o.s.cloud.context.scope.GenericScope     : BeanFactory id=05988e50-028c-32ce-aa22-724de8d341d2
+2021-07-06 16:04:47.123  INFO 31810 --- [main] trationDelegate$BeanPostProcessorChecker : Bean 'org.springframework.transaction.annotation.ProxyTransactionManagementConfiguration' of type [org.springframework.transaction.annotation.ProxyTransactionManagementConfiguration$$EnhancerBySpringCGLIB$$1] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2021-07-06 16:04:47.152  INFO 31810 --- [main] trationDelegate$BeanPostProcessorChecker : Bean 'org.springframework.cloud.autoconfigure.ConfigurationPropertiesRebinderAutoConfiguration' of type [org.springframework.cloud.autoconfigure.ConfigurationPropertiesRebinderAutoConfiguration$$EnhancerBySpringCGLIB$$1] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2021-07-06 16:04:47.996  INFO 31810 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 9006 (http)
+2021-07-06 16:04:48.043  INFO 31810 --- [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2021-07-06 16:04:48.043  INFO 31810 --- [main] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.21]
+2021-07-06 16:04:48.288  INFO 31810 --- [main] o.a.c.c.C.[Tomcat].[localhost].[/stock]  : Initializing Spring embedded WebApplicationContext
+2021-07-06 16:04:48.289 DEBUG 31810 --- [main] o.s.web.context.ContextLoader            : Published root WebApplicationContext as ServletContext attribute with name [org.springframework.web.context.WebApplicationContext.ROOT]
+2021-07-06 16:04:48.289  INFO 31810 --- [main] o.s.web.context.ContextLoader            : Root WebApplicationContext: initialization completed in 3004 ms
+2021-07-06 16:04:48.542  WARN 31810 --- [main] c.n.c.sources.URLConfigurationSource     : No URLs will be polled as dynamic configuration sources.
+2021-07-06 16:04:48.542  INFO 31810 --- [main] c.n.c.sources.URLConfigurationSource     : To enable URLs as dynamic configuration sources, define System property archaius.configurationSource.additionalUrls or make config.properties available on classpath.
+2021-07-06 16:04:48.550  WARN 31810 --- [main] c.n.c.sources.URLConfigurationSource     : No URLs will be polled as dynamic configuration sources.
+2021-07-06 16:04:48.550  INFO 31810 --- [main] c.n.c.sources.URLConfigurationSource     : To enable URLs as dynamic configuration sources, define System property archaius.configurationSource.additionalUrls or make config.properties available on classpath.
+2021-07-06 16:04:48.641 DEBUG 31810 --- [main] o.s.w.s.handler.SimpleUrlHandlerMapping  : Patterns [/**/favicon.ico] in 'faviconHandlerMapping'
+2021-07-06 16:04:48.851  INFO 31810 --- [main] o.s.s.concurrent.ThreadPoolTaskExecutor  : Initializing ExecutorService 'applicationTaskExecutor'
+2021-07-06 16:04:48.887 DEBUG 31810 --- [main] s.w.s.m.m.a.RequestMappingHandlerAdapter : ControllerAdvice beans: 0 @ModelAttribute, 0 @InitBinder, 1 RequestBodyAdvice, 1 ResponseBodyAdvice
+2021-07-06 16:04:48.993 DEBUG 31810 --- [main] s.w.s.m.m.a.RequestMappingHandlerMapping : 2 mappings in 'requestMappingHandlerMapping'
+2021-07-06 16:04:49.009 DEBUG 31810 --- [main] o.s.w.s.handler.SimpleUrlHandlerMapping  : Patterns [/webjars/**, /**] in 'resourceHandlerMapping'
+2021-07-06 16:04:49.022 DEBUG 31810 --- [main] .m.m.a.ExceptionHandlerExceptionResolver : ControllerAdvice beans: 0 @ExceptionHandler, 1 ResponseBodyAdvice
+2021-07-06 16:04:49.126  INFO 31810 --- [main] c.a.d.s.b.a.DruidDataSourceAutoConfigure : Init DruidDataSource
+2021-07-06 16:04:49.274  INFO 31810 --- [main] com.alibaba.druid.pool.DruidDataSource   : {dataSource-1} inited
+2021-07-06 16:04:50.919  INFO 31810 --- [main] org.quartz.impl.StdSchedulerFactory      : Using default implementation for ThreadExecutor
+2021-07-06 16:04:50.948  INFO 31810 --- [main] org.quartz.core.SchedulerSignalerImpl    : Initialized Scheduler Signaller of type: class org.quartz.core.SchedulerSignalerImpl
+2021-07-06 16:04:50.948  INFO 31810 --- [main] org.quartz.core.QuartzScheduler          : Quartz Scheduler v.2.3.1 created.
+2021-07-06 16:04:50.949  INFO 31810 --- [main] org.quartz.simpl.RAMJobStore             : RAMJobStore initialized.
+2021-07-06 16:04:50.950  INFO 31810 --- [main] org.quartz.core.QuartzScheduler          : Scheduler meta-data: Quartz Scheduler (v2.3.1) 'quartzScheduler' with instanceId 'NON_CLUSTERED'
+  Scheduler class: 'org.quartz.core.QuartzScheduler' - running locally.
+  NOT STARTED.
+  Currently in standby mode.
+  Number of jobs executed: 0
+  Using thread pool 'org.quartz.simpl.SimpleThreadPool' - with 10 threads.
+  Using job-store 'org.quartz.simpl.RAMJobStore' - which does not support persistence. and is not clustered.
+
+2021-07-06 16:04:50.950  INFO 31810 --- [main] org.quartz.impl.StdSchedulerFactory      : Quartz scheduler 'quartzScheduler' initialized from an externally provided properties instance.
+2021-07-06 16:04:50.950  INFO 31810 --- [main] org.quartz.impl.StdSchedulerFactory      : Quartz scheduler version: 2.3.1
+2021-07-06 16:04:50.950  INFO 31810 --- [main] org.quartz.core.QuartzScheduler          : JobFactory set to: org.springframework.scheduling.quartz.SpringBeanJobFactory@27ebd037
+2021-07-06 16:04:51.021  INFO 31810 --- [main] o.s.b.d.a.OptionalLiveReloadServer       : LiveReload server is running on port 35729
+2021-07-06 16:04:51.539  INFO 31810 --- [main] o.s.c.n.eureka.InstanceInfoFactory       : Setting initial instance status as: STARTING
+2021-07-06 16:04:51.596  INFO 31810 --- [main] com.netflix.discovery.DiscoveryClient    : Initializing Eureka in region us-east-1
+2021-07-06 16:04:51.714  INFO 31810 --- [main] c.n.d.provider.DiscoveryJerseyProvider   : Using JSON encoding codec LegacyJacksonJson
+2021-07-06 16:04:51.715  INFO 31810 --- [main] c.n.d.provider.DiscoveryJerseyProvider   : Using JSON decoding codec LegacyJacksonJson
+2021-07-06 16:04:52.004  INFO 31810 --- [main] c.n.d.provider.DiscoveryJerseyProvider   : Using XML encoding codec XStreamXml
+2021-07-06 16:04:52.005  INFO 31810 --- [main] c.n.d.provider.DiscoveryJerseyProvider   : Using XML decoding codec XStreamXml
+2021-07-06 16:04:52.600  INFO 31810 --- [main] c.n.d.s.r.aws.ConfigClusterResolver      : Resolving eureka endpoints via configuration
+2021-07-06 16:04:52.634  INFO 31810 --- [main] com.netflix.discovery.DiscoveryClient    : Disable delta property : false
+2021-07-06 16:04:52.634  INFO 31810 --- [main] com.netflix.discovery.DiscoveryClient    : Single vip registry refresh property : null
+2021-07-06 16:04:52.634  INFO 31810 --- [main] com.netflix.discovery.DiscoveryClient    : Force full registry fetch : false
+2021-07-06 16:04:52.634  INFO 31810 --- [main] com.netflix.discovery.DiscoveryClient    : Application is null : false
+2021-07-06 16:04:52.634  INFO 31810 --- [main] com.netflix.discovery.DiscoveryClient    : Registered Applications size is zero : true
+2021-07-06 16:04:52.634  INFO 31810 --- [main] com.netflix.discovery.DiscoveryClient    : Application version is -1: true
+2021-07-06 16:04:52.634  INFO 31810 --- [main] com.netflix.discovery.DiscoveryClient    : Getting all instance registry info from the eureka server
+2021-07-06 16:04:53.083  INFO 31810 --- [main] com.netflix.discovery.DiscoveryClient    : The response status is 200
+2021-07-06 16:04:53.087  INFO 31810 --- [main] com.netflix.discovery.DiscoveryClient    : Starting heartbeat executor: renew interval is: 30
+2021-07-06 16:04:53.090  INFO 31810 --- [main] c.n.discovery.InstanceInfoReplicator     : InstanceInfoReplicator onDemand update allowed rate per min is 4
+2021-07-06 16:04:53.096  INFO 31810 --- [main] com.netflix.discovery.DiscoveryClient    : Discovery Client initialized at timestamp 1625558693094 with initial instances count: 1
+2021-07-06 16:04:53.098  INFO 31810 --- [main] o.s.c.n.e.s.EurekaServiceRegistry        : Registering application STOCK with eureka with status UP
+2021-07-06 16:04:53.099  INFO 31810 --- [main] com.netflix.discovery.DiscoveryClient    : Saw local status change event StatusChangeEvent [timestamp=1625558693099, current=UP, previous=STARTING]
+2021-07-06 16:04:53.102  INFO 31810 --- [DiscoveryClient-InstanceInfoReplicator-0] com.netflix.discovery.DiscoveryClient    : DiscoveryClient_STOCK/192.168.43.176:stock:9006: registering service...
+2021-07-06 16:04:53.102  INFO 31810 --- [main] o.s.s.quartz.SchedulerFactoryBean        : Starting Quartz Scheduler now
+2021-07-06 16:04:53.102  INFO 31810 --- [main] org.quartz.core.QuartzScheduler          : Scheduler quartzScheduler_$_NON_CLUSTERED started.
+2021-07-06 16:04:53.194  INFO 31810 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 9006 (http) with context path '/stock'
+2021-07-06 16:04:53.195  INFO 31810 --- [main] .s.c.n.e.s.EurekaAutoServiceRegistration : Updating port to 9006
+2021-07-06 16:04:53.198  INFO 31810 --- [main] com.coatardbul.stock.StockApplication    : Started StockApplication in 10.127 seconds (JVM running for 15.018)
+2021-07-06 16:04:53.248  INFO 31810 --- [DiscoveryClient-InstanceInfoReplicator-0] com.netflix.discovery.DiscoveryClient    : DiscoveryClient_STOCK/192.168.43.176:stock:9006 - registration status: 204
+2021-07-06 16:05:04.043  INFO 31810 --- [Thread-47] o.s.c.n.e.s.EurekaServiceRegistry        : Unregistering application STOCK with eureka with status DOWN
+2021-07-06 16:05:04.044  WARN 31810 --- [Thread-47] com.netflix.discovery.DiscoveryClient    : Saw local status change event StatusChangeEvent [timestamp=1625558704044, current=DOWN, previous=UP]
+2021-07-06 16:05:04.045  INFO 31810 --- [DiscoveryClient-InstanceInfoReplicator-0] com.netflix.discovery.DiscoveryClient    : DiscoveryClient_STOCK/192.168.43.176:stock:9006: registering service...
+2021-07-06 16:05:04.047  INFO 31810 --- [Thread-47] org.quartz.core.QuartzScheduler          : Scheduler quartzScheduler_$_NON_CLUSTERED paused.
+2021-07-06 16:05:04.063  INFO 31810 --- [Thread-47] o.s.s.quartz.SchedulerFactoryBean        : Shutting down Quartz Scheduler
+2021-07-06 16:05:04.063  INFO 31810 --- [Thread-47] org.quartz.core.QuartzScheduler          : Scheduler quartzScheduler_$_NON_CLUSTERED shutting down.
+2021-07-06 16:05:04.064  INFO 31810 --- [Thread-47] org.quartz.core.QuartzScheduler          : Scheduler quartzScheduler_$_NON_CLUSTERED paused.
+2021-07-06 16:05:04.065  INFO 31810 --- [Thread-47] org.quartz.core.QuartzScheduler          : Scheduler quartzScheduler_$_NON_CLUSTERED shutdown complete.
+2021-07-06 16:05:04.080  INFO 31810 --- [Thread-47] com.alibaba.druid.pool.DruidDataSource   : {dataSource-1} closed
+2021-07-06 16:05:04.081  INFO 31810 --- [Thread-47] o.s.s.concurrent.ThreadPoolTaskExecutor  : Shutting down ExecutorService 'applicationTaskExecutor'
+2021-07-06 16:05:04.087  INFO 31810 --- [Thread-47] com.netflix.discovery.DiscoveryClient    : Shutting down DiscoveryClient ...
+2021-07-06 16:05:04.101  INFO 31810 --- [DiscoveryClient-InstanceInfoReplicator-0] com.netflix.discovery.DiscoveryClient    : DiscoveryClient_STOCK/192.168.43.176:stock:9006 - registration status: 204
+2021-07-06 16:05:04.103  INFO 31810 --- [Thread-47] com.netflix.discovery.DiscoveryClient    : Unregistering ...
+2021-07-06 16:05:04.146  INFO 31810 --- [Thread-47] com.netflix.discovery.DiscoveryClient    : DiscoveryClient_STOCK/192.168.43.176:stock:9006 - deregister  status: 200
+2021-07-06 16:05:04.159  INFO 31810 --- [Thread-47] com.netflix.discovery.DiscoveryClient    : Completed shut down of DiscoveryClient
+2021-07-06 16:12:08.123  INFO 31954 --- [main] com.coatardbul.stock.StockApplication    : No active profile set, falling back to default profiles: default
+2021-07-06 16:12:09.190  WARN 31954 --- [main] o.m.s.mapper.ClassPathMapperScanner      : No MyBatis mapper was found in '[com.coatardbul.stock.mapper]' package. Please check your configuration.
+2021-07-06 16:12:09.525  WARN 31954 --- [main] o.m.s.mapper.ClassPathMapperScanner      : No MyBatis mapper was found in '[com.coatardbul.stock]' package. Please check your configuration.
+2021-07-06 16:12:10.084  INFO 31954 --- [main] o.s.cloud.context.scope.GenericScope     : BeanFactory id=fd63419e-1498-3dda-bb9c-e19ff66713ea
+2021-07-06 16:12:10.438  INFO 31954 --- [main] trationDelegate$BeanPostProcessorChecker : Bean 'org.springframework.transaction.annotation.ProxyTransactionManagementConfiguration' of type [org.springframework.transaction.annotation.ProxyTransactionManagementConfiguration$$EnhancerBySpringCGLIB$$1] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2021-07-06 16:12:10.576  WARN 31954 --- [main] ConfigServletWebServerApplicationContext : Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'objectMapperConfigurer' defined in class path resource [springfox/documentation/spring/web/SpringfoxWebMvcConfiguration.class]: BeanPostProcessor before instantiation of bean failed; nested exception is org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'org.springframework.transaction.annotation.ProxyTransactionManagementConfiguration': Initialization of bean failed; nested exception is java.lang.IllegalArgumentException: error Type referred to is not an annotation type: com$coatardbul$river$common$annotation$MethodLogLevel
+2021-07-06 16:12:10.587  INFO 31954 --- [main] ConditionEvaluationReportLoggingListener : 
+
+Error starting ApplicationContext. To display the conditions report re-run your application with 'debug' enabled.
+2021-07-06 16:12:10.611 ERROR 31954 --- [main] o.s.boot.SpringApplication               : Application run failed
+
+org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'objectMapperConfigurer' defined in class path resource [springfox/documentation/spring/web/SpringfoxWebMvcConfiguration.class]: BeanPostProcessor before instantiation of bean failed; nested exception is org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'org.springframework.transaction.annotation.ProxyTransactionManagementConfiguration': Initialization of bean failed; nested exception is java.lang.IllegalArgumentException: error Type referred to is not an annotation type: com$coatardbul$river$common$annotation$MethodLogLevel
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:510) ~[spring-beans-5.1.6.RELEASE.jar:5.1.6.RELEASE]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:320) ~[spring-beans-5.1.6.RELEASE.jar:5.1.6.RELEASE]
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:222) ~[spring-beans-5.1.6.RELEASE.jar:5.1.6.RELEASE]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:318) ~[spring-beans-5.1.6.RELEASE.jar:5.1.6.RELEASE]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:204) ~[spring-beans-5.1.6.RELEASE.jar:5.1.6.RELEASE]
+	at org.springframework.context.support.PostProcessorRegistrationDelegate.registerBeanPostProcessors(PostProcessorRegistrationDelegate.java:240) ~[spring-context-5.1.6.RELEASE.jar:5.1.6.RELEASE]
+	at org.springframework.context.support.AbstractApplicationContext.registerBeanPostProcessors(AbstractApplicationContext.java:721) ~[spring-context-5.1.6.RELEASE.jar:5.1.6.RELEASE]
+	at org.springframework.context.support.AbstractApplicationContext.__refresh(AbstractApplicationContext.java:534) ~[spring-context-5.1.6.RELEASE.jar:5.1.6.RELEASE]
+	at org.springframework.context.support.AbstractApplicationContext.jrLockAndRefresh(AbstractApplicationContext.java:40002) ~[spring-context-5.1.6.RELEASE.jar:5.1.6.RELEASE]
+	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:41008) ~[spring-context-5.1.6.RELEASE.jar:5.1.6.RELEASE]
+	at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.refresh(ServletWebServerApplicationContext.java:140) ~[spring-boot-2.1.6.RELEASE.jar:2.1.6.RELEASE]
+	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:742) [spring-boot-2.1.6.RELEASE.jar:2.1.6.RELEASE]
+	at org.springframework.boot.SpringApplication.refreshContext(SpringApplication.java:389) [spring-boot-2.1.6.RELEASE.jar:2.1.6.RELEASE]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:311) [spring-boot-2.1.6.RELEASE.jar:2.1.6.RELEASE]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1213) [spring-boot-2.1.6.RELEASE.jar:2.1.6.RELEASE]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1202) [spring-boot-2.1.6.RELEASE.jar:2.1.6.RELEASE]
+	at com.coatardbul.stock.StockApplication.main(StockApplication.java:10) [classes/:na]
+Caused by: org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'org.springframework.transaction.annotation.ProxyTransactionManagementConfiguration': Initialization of bean failed; nested exception is java.lang.IllegalArgumentException: error Type referred to is not an annotation type: com$coatardbul$river$common$annotation$MethodLogLevel
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:601) ~[spring-beans-5.1.6.RELEASE.jar:5.1.6.RELEASE]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:515) ~[spring-beans-5.1.6.RELEASE.jar:5.1.6.RELEASE]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:320) ~[spring-beans-5.1.6.RELEASE.jar:5.1.6.RELEASE]
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:222) ~[spring-beans-5.1.6.RELEASE.jar:5.1.6.RELEASE]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:318) ~[spring-beans-5.1.6.RELEASE.jar:5.1.6.RELEASE]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:199) ~[spring-beans-5.1.6.RELEASE.jar:5.1.6.RELEASE]
+	at org.springframework.beans.factory.support.ConstructorResolver.instantiateUsingFactoryMethod(ConstructorResolver.java:392) ~[spring-beans-5.1.6.RELEASE.jar:5.1.6.RELEASE]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.instantiateUsingFactoryMethod(AbstractAutowireCapableBeanFactory.java:1321) ~[spring-beans-5.1.6.RELEASE.jar:5.1.6.RELEASE]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBeanInstance(AbstractAutowireCapableBeanFactory.java:1160) ~[spring-beans-5.1.6.RELEASE.jar:5.1.6.RELEASE]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:555) ~[spring-beans-5.1.6.RELEASE.jar:5.1.6.RELEASE]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:515) ~[spring-beans-5.1.6.RELEASE.jar:5.1.6.RELEASE]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:320) ~[spring-beans-5.1.6.RELEASE.jar:5.1.6.RELEASE]
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:222) ~[spring-beans-5.1.6.RELEASE.jar:5.1.6.RELEASE]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:318) ~[spring-beans-5.1.6.RELEASE.jar:5.1.6.RELEASE]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:204) ~[spring-beans-5.1.6.RELEASE.jar:5.1.6.RELEASE]
+	at org.springframework.aop.framework.autoproxy.BeanFactoryAdvisorRetrievalHelper.findAdvisorBeans(BeanFactoryAdvisorRetrievalHelper.java:91) ~[spring-aop-5.1.6.RELEASE.jar:5.1.6.RELEASE]
+	at org.springframework.aop.framework.autoproxy.AbstractAdvisorAutoProxyCreator.findCandidateAdvisors(AbstractAdvisorAutoProxyCreator.java:109) ~[spring-aop-5.1.6.RELEASE.jar:5.1.6.RELEASE]
+	at org.springframework.aop.aspectj.annotation.AnnotationAwareAspectJAutoProxyCreator.findCandidateAdvisors(AnnotationAwareAspectJAutoProxyCreator.java:92) ~[spring-aop-5.1.6.RELEASE.jar:5.1.6.RELEASE]
+	at org.springframework.aop.aspectj.autoproxy.AspectJAwareAdvisorAutoProxyCreator.shouldSkip(AspectJAwareAdvisorAutoProxyCreator.java:101) ~[spring-aop-5.1.6.RELEASE.jar:5.1.6.RELEASE]
+	at org.springframework.aop.framework.autoproxy.AbstractAutoProxyCreator.postProcessBeforeInstantiation(AbstractAutoProxyCreator.java:251) ~[spring-aop-5.1.6.RELEASE.jar:5.1.6.RELEASE]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.applyBeanPostProcessorsBeforeInstantiation(AbstractAutowireCapableBeanFactory.java:1124) ~[spring-beans-5.1.6.RELEASE.jar:5.1.6.RELEASE]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.resolveBeforeInstantiation(AbstractAutowireCapableBeanFactory.java:1097) ~[spring-beans-5.1.6.RELEASE.jar:5.1.6.RELEASE]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:504) ~[spring-beans-5.1.6.RELEASE.jar:5.1.6.RELEASE]
+	... 16 common frames omitted
+Caused by: java.lang.IllegalArgumentException: error Type referred to is not an annotation type: com$coatardbul$river$common$annotation$MethodLogLevel
+	at org.aspectj.weaver.tools.PointcutParser.parsePointcutExpression(PointcutParser.java:319) ~[aspectjweaver-1.9.4.jar:na]
+	at org.springframework.aop.aspectj.AspectJExpressionPointcut.buildPointcutExpression(AspectJExpressionPointcut.java:227) ~[spring-aop-5.1.6.RELEASE.jar:5.1.6.RELEASE]
+	at org.springframework.aop.aspectj.AspectJExpressionPointcut.obtainPointcutExpression(AspectJExpressionPointcut.java:198) ~[spring-aop-5.1.6.RELEASE.jar:5.1.6.RELEASE]
+	at org.springframework.aop.aspectj.AspectJExpressionPointcut.getClassFilter(AspectJExpressionPointcut.java:177) ~[spring-aop-5.1.6.RELEASE.jar:5.1.6.RELEASE]
+	at org.springframework.aop.support.AopUtils.canApply(AopUtils.java:225) ~[spring-aop-5.1.6.RELEASE.jar:5.1.6.RELEASE]
+	at org.springframework.aop.support.AopUtils.canApply(AopUtils.java:288) ~[spring-aop-5.1.6.RELEASE.jar:5.1.6.RELEASE]
+	at org.springframework.aop.support.AopUtils.findAdvisorsThatCanApply(AopUtils.java:320) ~[spring-aop-5.1.6.RELEASE.jar:5.1.6.RELEASE]
+	at org.springframework.aop.framework.autoproxy.AbstractAdvisorAutoProxyCreator.findAdvisorsThatCanApply(AbstractAdvisorAutoProxyCreator.java:126) ~[spring-aop-5.1.6.RELEASE.jar:5.1.6.RELEASE]
+	at org.springframework.aop.framework.autoproxy.AbstractAdvisorAutoProxyCreator.findEligibleAdvisors(AbstractAdvisorAutoProxyCreator.java:95) ~[spring-aop-5.1.6.RELEASE.jar:5.1.6.RELEASE]
+	at org.springframework.aop.framework.autoproxy.AbstractAdvisorAutoProxyCreator.getAdvicesAndAdvisorsForBean(AbstractAdvisorAutoProxyCreator.java:76) ~[spring-aop-5.1.6.RELEASE.jar:5.1.6.RELEASE]
+	at org.springframework.aop.framework.autoproxy.AbstractAutoProxyCreator.wrapIfNecessary(AbstractAutoProxyCreator.java:347) ~[spring-aop-5.1.6.RELEASE.jar:5.1.6.RELEASE]
+	at org.springframework.aop.framework.autoproxy.AbstractAutoProxyCreator.postProcessAfterInitialization(AbstractAutoProxyCreator.java:299) ~[spring-aop-5.1.6.RELEASE.jar:5.1.6.RELEASE]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.applyBeanPostProcessorsAfterInitialization(AbstractAutowireCapableBeanFactory.java:429) ~[spring-beans-5.1.6.RELEASE.jar:5.1.6.RELEASE]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.initializeBean(AbstractAutowireCapableBeanFactory.java:1782) ~[spring-beans-5.1.6.RELEASE.jar:5.1.6.RELEASE]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:593) ~[spring-beans-5.1.6.RELEASE.jar:5.1.6.RELEASE]
+	... 38 common frames omitted
+
+2021-07-06 16:12:55.899  INFO 31974 --- [main] com.coatardbul.stock.StockApplication    : No active profile set, falling back to default profiles: default
+2021-07-06 16:12:56.635  WARN 31974 --- [main] o.m.s.mapper.ClassPathMapperScanner      : No MyBatis mapper was found in '[com.coatardbul.stock.mapper]' package. Please check your configuration.
+2021-07-06 16:12:56.919  WARN 31974 --- [main] o.m.s.mapper.ClassPathMapperScanner      : No MyBatis mapper was found in '[com.coatardbul.stock]' package. Please check your configuration.
+2021-07-06 16:12:57.463  INFO 31974 --- [main] o.s.cloud.context.scope.GenericScope     : BeanFactory id=fd63419e-1498-3dda-bb9c-e19ff66713ea
+2021-07-06 16:12:57.798  INFO 31974 --- [main] trationDelegate$BeanPostProcessorChecker : Bean 'org.springframework.transaction.annotation.ProxyTransactionManagementConfiguration' of type [org.springframework.transaction.annotation.ProxyTransactionManagementConfiguration$$EnhancerBySpringCGLIB$$1] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2021-07-06 16:12:57.933  WARN 31974 --- [main] ConfigServletWebServerApplicationContext : Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'objectMapperConfigurer' defined in class path resource [springfox/documentation/spring/web/SpringfoxWebMvcConfiguration.class]: BeanPostProcessor before instantiation of bean failed; nested exception is org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'org.springframework.transaction.annotation.ProxyTransactionManagementConfiguration': Initialization of bean failed; nested exception is java.lang.IllegalArgumentException: error Type referred to is not an annotation type: com$coatardbul$river$common$annotation$MethodLogLevel
+2021-07-06 16:12:57.941  INFO 31974 --- [main] ConditionEvaluationReportLoggingListener : 
+
+Error starting ApplicationContext. To display the conditions report re-run your application with 'debug' enabled.
+2021-07-06 16:12:57.962 ERROR 31974 --- [main] o.s.boot.SpringApplication               : Application run failed
+
+org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'objectMapperConfigurer' defined in class path resource [springfox/documentation/spring/web/SpringfoxWebMvcConfiguration.class]: BeanPostProcessor before instantiation of bean failed; nested exception is org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'org.springframework.transaction.annotation.ProxyTransactionManagementConfiguration': Initialization of bean failed; nested exception is java.lang.IllegalArgumentException: error Type referred to is not an annotation type: com$coatardbul$river$common$annotation$MethodLogLevel
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:510) ~[spring-beans-5.1.6.RELEASE.jar:5.1.6.RELEASE]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:320) ~[spring-beans-5.1.6.RELEASE.jar:5.1.6.RELEASE]
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:222) ~[spring-beans-5.1.6.RELEASE.jar:5.1.6.RELEASE]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:318) ~[spring-beans-5.1.6.RELEASE.jar:5.1.6.RELEASE]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:204) ~[spring-beans-5.1.6.RELEASE.jar:5.1.6.RELEASE]
+	at org.springframework.context.support.PostProcessorRegistrationDelegate.registerBeanPostProcessors(PostProcessorRegistrationDelegate.java:240) ~[spring-context-5.1.6.RELEASE.jar:5.1.6.RELEASE]
+	at org.springframework.context.support.AbstractApplicationContext.registerBeanPostProcessors(AbstractApplicationContext.java:721) ~[spring-context-5.1.6.RELEASE.jar:5.1.6.RELEASE]
+	at org.springframework.context.support.AbstractApplicationContext.__refresh(AbstractApplicationContext.java:534) ~[spring-context-5.1.6.RELEASE.jar:5.1.6.RELEASE]
+	at org.springframework.context.support.AbstractApplicationContext.jrLockAndRefresh(AbstractApplicationContext.java:40002) ~[spring-context-5.1.6.RELEASE.jar:5.1.6.RELEASE]
+	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:41008) ~[spring-context-5.1.6.RELEASE.jar:5.1.6.RELEASE]
+	at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.refresh(ServletWebServerApplicationContext.java:140) ~[spring-boot-2.1.6.RELEASE.jar:2.1.6.RELEASE]
+	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:742) [spring-boot-2.1.6.RELEASE.jar:2.1.6.RELEASE]
+	at org.springframework.boot.SpringApplication.refreshContext(SpringApplication.java:389) [spring-boot-2.1.6.RELEASE.jar:2.1.6.RELEASE]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:311) [spring-boot-2.1.6.RELEASE.jar:2.1.6.RELEASE]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1213) [spring-boot-2.1.6.RELEASE.jar:2.1.6.RELEASE]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1202) [spring-boot-2.1.6.RELEASE.jar:2.1.6.RELEASE]
+	at com.coatardbul.stock.StockApplication.main(StockApplication.java:10) [classes/:na]
+Caused by: org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'org.springframework.transaction.annotation.ProxyTransactionManagementConfiguration': Initialization of bean failed; nested exception is java.lang.IllegalArgumentException: error Type referred to is not an annotation type: com$coatardbul$river$common$annotation$MethodLogLevel
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:601) ~[spring-beans-5.1.6.RELEASE.jar:5.1.6.RELEASE]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:515) ~[spring-beans-5.1.6.RELEASE.jar:5.1.6.RELEASE]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:320) ~[spring-beans-5.1.6.RELEASE.jar:5.1.6.RELEASE]
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:222) ~[spring-beans-5.1.6.RELEASE.jar:5.1.6.RELEASE]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:318) ~[spring-beans-5.1.6.RELEASE.jar:5.1.6.RELEASE]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:199) ~[spring-beans-5.1.6.RELEASE.jar:5.1.6.RELEASE]
+	at org.springframework.beans.factory.support.ConstructorResolver.instantiateUsingFactoryMethod(ConstructorResolver.java:392) ~[spring-beans-5.1.6.RELEASE.jar:5.1.6.RELEASE]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.instantiateUsingFactoryMethod(AbstractAutowireCapableBeanFactory.java:1321) ~[spring-beans-5.1.6.RELEASE.jar:5.1.6.RELEASE]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBeanInstance(AbstractAutowireCapableBeanFactory.java:1160) ~[spring-beans-5.1.6.RELEASE.jar:5.1.6.RELEASE]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:555) ~[spring-beans-5.1.6.RELEASE.jar:5.1.6.RELEASE]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:515) ~[spring-beans-5.1.6.RELEASE.jar:5.1.6.RELEASE]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:320) ~[spring-beans-5.1.6.RELEASE.jar:5.1.6.RELEASE]
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:222) ~[spring-beans-5.1.6.RELEASE.jar:5.1.6.RELEASE]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:318) ~[spring-beans-5.1.6.RELEASE.jar:5.1.6.RELEASE]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:204) ~[spring-beans-5.1.6.RELEASE.jar:5.1.6.RELEASE]
+	at org.springframework.aop.framework.autoproxy.BeanFactoryAdvisorRetrievalHelper.findAdvisorBeans(BeanFactoryAdvisorRetrievalHelper.java:91) ~[spring-aop-5.1.6.RELEASE.jar:5.1.6.RELEASE]
+	at org.springframework.aop.framework.autoproxy.AbstractAdvisorAutoProxyCreator.findCandidateAdvisors(AbstractAdvisorAutoProxyCreator.java:109) ~[spring-aop-5.1.6.RELEASE.jar:5.1.6.RELEASE]
+	at org.springframework.aop.aspectj.annotation.AnnotationAwareAspectJAutoProxyCreator.findCandidateAdvisors(AnnotationAwareAspectJAutoProxyCreator.java:92) ~[spring-aop-5.1.6.RELEASE.jar:5.1.6.RELEASE]
+	at org.springframework.aop.aspectj.autoproxy.AspectJAwareAdvisorAutoProxyCreator.shouldSkip(AspectJAwareAdvisorAutoProxyCreator.java:101) ~[spring-aop-5.1.6.RELEASE.jar:5.1.6.RELEASE]
+	at org.springframework.aop.framework.autoproxy.AbstractAutoProxyCreator.postProcessBeforeInstantiation(AbstractAutoProxyCreator.java:251) ~[spring-aop-5.1.6.RELEASE.jar:5.1.6.RELEASE]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.applyBeanPostProcessorsBeforeInstantiation(AbstractAutowireCapableBeanFactory.java:1124) ~[spring-beans-5.1.6.RELEASE.jar:5.1.6.RELEASE]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.resolveBeforeInstantiation(AbstractAutowireCapableBeanFactory.java:1097) ~[spring-beans-5.1.6.RELEASE.jar:5.1.6.RELEASE]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:504) ~[spring-beans-5.1.6.RELEASE.jar:5.1.6.RELEASE]
+	... 16 common frames omitted
+Caused by: java.lang.IllegalArgumentException: error Type referred to is not an annotation type: com$coatardbul$river$common$annotation$MethodLogLevel
+	at org.aspectj.weaver.tools.PointcutParser.parsePointcutExpression(PointcutParser.java:319) ~[aspectjweaver-1.9.4.jar:na]
+	at org.springframework.aop.aspectj.AspectJExpressionPointcut.buildPointcutExpression(AspectJExpressionPointcut.java:227) ~[spring-aop-5.1.6.RELEASE.jar:5.1.6.RELEASE]
+	at org.springframework.aop.aspectj.AspectJExpressionPointcut.obtainPointcutExpression(AspectJExpressionPointcut.java:198) ~[spring-aop-5.1.6.RELEASE.jar:5.1.6.RELEASE]
+	at org.springframework.aop.aspectj.AspectJExpressionPointcut.getClassFilter(AspectJExpressionPointcut.java:177) ~[spring-aop-5.1.6.RELEASE.jar:5.1.6.RELEASE]
+	at org.springframework.aop.support.AopUtils.canApply(AopUtils.java:225) ~[spring-aop-5.1.6.RELEASE.jar:5.1.6.RELEASE]
+	at org.springframework.aop.support.AopUtils.canApply(AopUtils.java:288) ~[spring-aop-5.1.6.RELEASE.jar:5.1.6.RELEASE]
+	at org.springframework.aop.support.AopUtils.findAdvisorsThatCanApply(AopUtils.java:320) ~[spring-aop-5.1.6.RELEASE.jar:5.1.6.RELEASE]
+	at org.springframework.aop.framework.autoproxy.AbstractAdvisorAutoProxyCreator.findAdvisorsThatCanApply(AbstractAdvisorAutoProxyCreator.java:126) ~[spring-aop-5.1.6.RELEASE.jar:5.1.6.RELEASE]
+	at org.springframework.aop.framework.autoproxy.AbstractAdvisorAutoProxyCreator.findEligibleAdvisors(AbstractAdvisorAutoProxyCreator.java:95) ~[spring-aop-5.1.6.RELEASE.jar:5.1.6.RELEASE]
+	at org.springframework.aop.framework.autoproxy.AbstractAdvisorAutoProxyCreator.getAdvicesAndAdvisorsForBean(AbstractAdvisorAutoProxyCreator.java:76) ~[spring-aop-5.1.6.RELEASE.jar:5.1.6.RELEASE]
+	at org.springframework.aop.framework.autoproxy.AbstractAutoProxyCreator.wrapIfNecessary(AbstractAutoProxyCreator.java:347) ~[spring-aop-5.1.6.RELEASE.jar:5.1.6.RELEASE]
+	at org.springframework.aop.framework.autoproxy.AbstractAutoProxyCreator.postProcessAfterInitialization(AbstractAutoProxyCreator.java:299) ~[spring-aop-5.1.6.RELEASE.jar:5.1.6.RELEASE]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.applyBeanPostProcessorsAfterInitialization(AbstractAutowireCapableBeanFactory.java:429) ~[spring-beans-5.1.6.RELEASE.jar:5.1.6.RELEASE]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.initializeBean(AbstractAutowireCapableBeanFactory.java:1782) ~[spring-beans-5.1.6.RELEASE.jar:5.1.6.RELEASE]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:593) ~[spring-beans-5.1.6.RELEASE.jar:5.1.6.RELEASE]
+	... 38 common frames omitted
+
+2021-07-06 16:14:04.684  INFO 32005 --- [main] com.coatardbul.stock.StockApplication    : No active profile set, falling back to default profiles: default
+2021-07-06 16:14:05.509  WARN 32005 --- [main] o.m.s.mapper.ClassPathMapperScanner      : No MyBatis mapper was found in '[com.coatardbul.stock.mapper]' package. Please check your configuration.
+2021-07-06 16:14:05.851  WARN 32005 --- [main] o.m.s.mapper.ClassPathMapperScanner      : No MyBatis mapper was found in '[com.coatardbul.stock]' package. Please check your configuration.
+2021-07-06 16:14:06.443  INFO 32005 --- [main] o.s.cloud.context.scope.GenericScope     : BeanFactory id=6236b647-f174-316a-98f3-adae8c66b877
+2021-07-06 16:14:06.849  INFO 32005 --- [main] trationDelegate$BeanPostProcessorChecker : Bean 'org.springframework.transaction.annotation.ProxyTransactionManagementConfiguration' of type [org.springframework.transaction.annotation.ProxyTransactionManagementConfiguration$$EnhancerBySpringCGLIB$$1] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2021-07-06 16:14:07.011  WARN 32005 --- [main] ConfigServletWebServerApplicationContext : Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'objectMapperConfigurer' defined in class path resource [springfox/documentation/spring/web/SpringfoxWebMvcConfiguration.class]: BeanPostProcessor before instantiation of bean failed; nested exception is org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'org.springframework.transaction.annotation.ProxyTransactionManagementConfiguration': Initialization of bean failed; nested exception is java.lang.IllegalArgumentException: error Type referred to is not an annotation type: com$coatardbul$river$common$annotation$WebLog
+2021-07-06 16:14:07.020  INFO 32005 --- [main] ConditionEvaluationReportLoggingListener : 
+
+Error starting ApplicationContext. To display the conditions report re-run your application with 'debug' enabled.
+2021-07-06 16:14:07.043 ERROR 32005 --- [main] o.s.boot.SpringApplication               : Application run failed
+
+org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'objectMapperConfigurer' defined in class path resource [springfox/documentation/spring/web/SpringfoxWebMvcConfiguration.class]: BeanPostProcessor before instantiation of bean failed; nested exception is org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'org.springframework.transaction.annotation.ProxyTransactionManagementConfiguration': Initialization of bean failed; nested exception is java.lang.IllegalArgumentException: error Type referred to is not an annotation type: com$coatardbul$river$common$annotation$WebLog
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:510) ~[spring-beans-5.1.6.RELEASE.jar:5.1.6.RELEASE]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:320) ~[spring-beans-5.1.6.RELEASE.jar:5.1.6.RELEASE]
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:222) ~[spring-beans-5.1.6.RELEASE.jar:5.1.6.RELEASE]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:318) ~[spring-beans-5.1.6.RELEASE.jar:5.1.6.RELEASE]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:204) ~[spring-beans-5.1.6.RELEASE.jar:5.1.6.RELEASE]
+	at org.springframework.context.support.PostProcessorRegistrationDelegate.registerBeanPostProcessors(PostProcessorRegistrationDelegate.java:240) ~[spring-context-5.1.6.RELEASE.jar:5.1.6.RELEASE]
+	at org.springframework.context.support.AbstractApplicationContext.registerBeanPostProcessors(AbstractApplicationContext.java:721) ~[spring-context-5.1.6.RELEASE.jar:5.1.6.RELEASE]
+	at org.springframework.context.support.AbstractApplicationContext.__refresh(AbstractApplicationContext.java:534) ~[spring-context-5.1.6.RELEASE.jar:5.1.6.RELEASE]
+	at org.springframework.context.support.AbstractApplicationContext.jrLockAndRefresh(AbstractApplicationContext.java:40002) ~[spring-context-5.1.6.RELEASE.jar:5.1.6.RELEASE]
+	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:41008) ~[spring-context-5.1.6.RELEASE.jar:5.1.6.RELEASE]
+	at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.refresh(ServletWebServerApplicationContext.java:140) ~[spring-boot-2.1.6.RELEASE.jar:2.1.6.RELEASE]
+	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:742) [spring-boot-2.1.6.RELEASE.jar:2.1.6.RELEASE]
+	at org.springframework.boot.SpringApplication.refreshContext(SpringApplication.java:389) [spring-boot-2.1.6.RELEASE.jar:2.1.6.RELEASE]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:311) [spring-boot-2.1.6.RELEASE.jar:2.1.6.RELEASE]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1213) [spring-boot-2.1.6.RELEASE.jar:2.1.6.RELEASE]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1202) [spring-boot-2.1.6.RELEASE.jar:2.1.6.RELEASE]
+	at com.coatardbul.stock.StockApplication.main(StockApplication.java:10) [classes/:na]
+Caused by: org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'org.springframework.transaction.annotation.ProxyTransactionManagementConfiguration': Initialization of bean failed; nested exception is java.lang.IllegalArgumentException: error Type referred to is not an annotation type: com$coatardbul$river$common$annotation$WebLog
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:601) ~[spring-beans-5.1.6.RELEASE.jar:5.1.6.RELEASE]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:515) ~[spring-beans-5.1.6.RELEASE.jar:5.1.6.RELEASE]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:320) ~[spring-beans-5.1.6.RELEASE.jar:5.1.6.RELEASE]
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:222) ~[spring-beans-5.1.6.RELEASE.jar:5.1.6.RELEASE]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:318) ~[spring-beans-5.1.6.RELEASE.jar:5.1.6.RELEASE]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:199) ~[spring-beans-5.1.6.RELEASE.jar:5.1.6.RELEASE]
+	at org.springframework.beans.factory.support.ConstructorResolver.instantiateUsingFactoryMethod(ConstructorResolver.java:392) ~[spring-beans-5.1.6.RELEASE.jar:5.1.6.RELEASE]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.instantiateUsingFactoryMethod(AbstractAutowireCapableBeanFactory.java:1321) ~[spring-beans-5.1.6.RELEASE.jar:5.1.6.RELEASE]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBeanInstance(AbstractAutowireCapableBeanFactory.java:1160) ~[spring-beans-5.1.6.RELEASE.jar:5.1.6.RELEASE]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:555) ~[spring-beans-5.1.6.RELEASE.jar:5.1.6.RELEASE]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:515) ~[spring-beans-5.1.6.RELEASE.jar:5.1.6.RELEASE]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:320) ~[spring-beans-5.1.6.RELEASE.jar:5.1.6.RELEASE]
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:222) ~[spring-beans-5.1.6.RELEASE.jar:5.1.6.RELEASE]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:318) ~[spring-beans-5.1.6.RELEASE.jar:5.1.6.RELEASE]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:204) ~[spring-beans-5.1.6.RELEASE.jar:5.1.6.RELEASE]
+	at org.springframework.aop.framework.autoproxy.BeanFactoryAdvisorRetrievalHelper.findAdvisorBeans(BeanFactoryAdvisorRetrievalHelper.java:91) ~[spring-aop-5.1.6.RELEASE.jar:5.1.6.RELEASE]
+	at org.springframework.aop.framework.autoproxy.AbstractAdvisorAutoProxyCreator.findCandidateAdvisors(AbstractAdvisorAutoProxyCreator.java:109) ~[spring-aop-5.1.6.RELEASE.jar:5.1.6.RELEASE]
+	at org.springframework.aop.aspectj.annotation.AnnotationAwareAspectJAutoProxyCreator.findCandidateAdvisors(AnnotationAwareAspectJAutoProxyCreator.java:92) ~[spring-aop-5.1.6.RELEASE.jar:5.1.6.RELEASE]
+	at org.springframework.aop.aspectj.autoproxy.AspectJAwareAdvisorAutoProxyCreator.shouldSkip(AspectJAwareAdvisorAutoProxyCreator.java:101) ~[spring-aop-5.1.6.RELEASE.jar:5.1.6.RELEASE]
+	at org.springframework.aop.framework.autoproxy.AbstractAutoProxyCreator.postProcessBeforeInstantiation(AbstractAutoProxyCreator.java:251) ~[spring-aop-5.1.6.RELEASE.jar:5.1.6.RELEASE]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.applyBeanPostProcessorsBeforeInstantiation(AbstractAutowireCapableBeanFactory.java:1124) ~[spring-beans-5.1.6.RELEASE.jar:5.1.6.RELEASE]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.resolveBeforeInstantiation(AbstractAutowireCapableBeanFactory.java:1097) ~[spring-beans-5.1.6.RELEASE.jar:5.1.6.RELEASE]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:504) ~[spring-beans-5.1.6.RELEASE.jar:5.1.6.RELEASE]
+	... 16 common frames omitted
+Caused by: java.lang.IllegalArgumentException: error Type referred to is not an annotation type: com$coatardbul$river$common$annotation$WebLog
+	at org.aspectj.weaver.tools.PointcutParser.parsePointcutExpression(PointcutParser.java:319) ~[aspectjweaver-1.9.4.jar:na]
+	at org.springframework.aop.aspectj.AspectJExpressionPointcut.buildPointcutExpression(AspectJExpressionPointcut.java:227) ~[spring-aop-5.1.6.RELEASE.jar:5.1.6.RELEASE]
+	at org.springframework.aop.aspectj.AspectJExpressionPointcut.obtainPointcutExpression(AspectJExpressionPointcut.java:198) ~[spring-aop-5.1.6.RELEASE.jar:5.1.6.RELEASE]
+	at org.springframework.aop.aspectj.AspectJExpressionPointcut.getClassFilter(AspectJExpressionPointcut.java:177) ~[spring-aop-5.1.6.RELEASE.jar:5.1.6.RELEASE]
+	at org.springframework.aop.support.AopUtils.canApply(AopUtils.java:225) ~[spring-aop-5.1.6.RELEASE.jar:5.1.6.RELEASE]
+	at org.springframework.aop.support.AopUtils.canApply(AopUtils.java:288) ~[spring-aop-5.1.6.RELEASE.jar:5.1.6.RELEASE]
+	at org.springframework.aop.support.AopUtils.findAdvisorsThatCanApply(AopUtils.java:320) ~[spring-aop-5.1.6.RELEASE.jar:5.1.6.RELEASE]
+	at org.springframework.aop.framework.autoproxy.AbstractAdvisorAutoProxyCreator.findAdvisorsThatCanApply(AbstractAdvisorAutoProxyCreator.java:126) ~[spring-aop-5.1.6.RELEASE.jar:5.1.6.RELEASE]
+	at org.springframework.aop.framework.autoproxy.AbstractAdvisorAutoProxyCreator.findEligibleAdvisors(AbstractAdvisorAutoProxyCreator.java:95) ~[spring-aop-5.1.6.RELEASE.jar:5.1.6.RELEASE]
+	at org.springframework.aop.framework.autoproxy.AbstractAdvisorAutoProxyCreator.getAdvicesAndAdvisorsForBean(AbstractAdvisorAutoProxyCreator.java:76) ~[spring-aop-5.1.6.RELEASE.jar:5.1.6.RELEASE]
+	at org.springframework.aop.framework.autoproxy.AbstractAutoProxyCreator.wrapIfNecessary(AbstractAutoProxyCreator.java:347) ~[spring-aop-5.1.6.RELEASE.jar:5.1.6.RELEASE]
+	at org.springframework.aop.framework.autoproxy.AbstractAutoProxyCreator.postProcessAfterInitialization(AbstractAutoProxyCreator.java:299) ~[spring-aop-5.1.6.RELEASE.jar:5.1.6.RELEASE]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.applyBeanPostProcessorsAfterInitialization(AbstractAutowireCapableBeanFactory.java:429) ~[spring-beans-5.1.6.RELEASE.jar:5.1.6.RELEASE]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.initializeBean(AbstractAutowireCapableBeanFactory.java:1782) ~[spring-beans-5.1.6.RELEASE.jar:5.1.6.RELEASE]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:593) ~[spring-beans-5.1.6.RELEASE.jar:5.1.6.RELEASE]
+	... 38 common frames omitted
+
+2021-07-06 16:15:43.724  INFO 32045 --- [main] com.coatardbul.stock.StockApplication    : No active profile set, falling back to default profiles: default
+2021-07-06 16:15:44.483  WARN 32045 --- [main] o.m.s.mapper.ClassPathMapperScanner      : No MyBatis mapper was found in '[com.coatardbul.stock.mapper]' package. Please check your configuration.
+2021-07-06 16:15:44.770  WARN 32045 --- [main] o.m.s.mapper.ClassPathMapperScanner      : No MyBatis mapper was found in '[com.coatardbul.stock]' package. Please check your configuration.
+2021-07-06 16:15:45.295  INFO 32045 --- [main] o.s.cloud.context.scope.GenericScope     : BeanFactory id=fd63419e-1498-3dda-bb9c-e19ff66713ea
+2021-07-06 16:15:45.616  INFO 32045 --- [main] trationDelegate$BeanPostProcessorChecker : Bean 'org.springframework.transaction.annotation.ProxyTransactionManagementConfiguration' of type [org.springframework.transaction.annotation.ProxyTransactionManagementConfiguration$$EnhancerBySpringCGLIB$$1] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2021-07-06 16:15:45.847  INFO 32045 --- [main] trationDelegate$BeanPostProcessorChecker : Bean 'org.springframework.cloud.autoconfigure.ConfigurationPropertiesRebinderAutoConfiguration' of type [org.springframework.cloud.autoconfigure.ConfigurationPropertiesRebinderAutoConfiguration$$EnhancerBySpringCGLIB$$1] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2021-07-06 16:15:46.609  INFO 32045 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 9006 (http)
+2021-07-06 16:15:46.659  INFO 32045 --- [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2021-07-06 16:15:46.660  INFO 32045 --- [main] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.21]
+2021-07-06 16:15:46.911  INFO 32045 --- [main] o.a.c.c.C.[Tomcat].[localhost].[/stock]  : Initializing Spring embedded WebApplicationContext
+2021-07-06 16:15:46.911 DEBUG 32045 --- [main] o.s.web.context.ContextLoader            : Published root WebApplicationContext as ServletContext attribute with name [org.springframework.web.context.WebApplicationContext.ROOT]
+2021-07-06 16:15:46.911  INFO 32045 --- [main] o.s.web.context.ContextLoader            : Root WebApplicationContext: initialization completed in 3169 ms
+2021-07-06 16:15:47.628 DEBUG 32045 --- [main] s.w.s.m.m.a.RequestMappingHandlerMapping : 5 mappings in 'requestMappingHandlerMapping'
+2021-07-06 16:15:47.806  INFO 32045 --- [main] pertySourcedRequestMappingHandlerMapping : Mapped URL path [/v2/api-docs] onto method [public org.springframework.http.ResponseEntity<springfox.documentation.spring.web.json.Json> springfox.documentation.swagger2.web.Swagger2Controller.getDocumentation(java.lang.String,javax.servlet.http.HttpServletRequest)]
+2021-07-06 16:15:47.901  WARN 32045 --- [main] c.n.c.sources.URLConfigurationSource     : No URLs will be polled as dynamic configuration sources.
+2021-07-06 16:15:47.901  INFO 32045 --- [main] c.n.c.sources.URLConfigurationSource     : To enable URLs as dynamic configuration sources, define System property archaius.configurationSource.additionalUrls or make config.properties available on classpath.
+2021-07-06 16:15:47.909  WARN 32045 --- [main] c.n.c.sources.URLConfigurationSource     : No URLs will be polled as dynamic configuration sources.
+2021-07-06 16:15:47.909  INFO 32045 --- [main] c.n.c.sources.URLConfigurationSource     : To enable URLs as dynamic configuration sources, define System property archaius.configurationSource.additionalUrls or make config.properties available on classpath.
+2021-07-06 16:15:48.007 DEBUG 32045 --- [main] o.s.w.s.handler.SimpleUrlHandlerMapping  : Patterns [/**/favicon.ico] in 'faviconHandlerMapping'
+2021-07-06 16:15:48.201  INFO 32045 --- [main] o.s.s.concurrent.ThreadPoolTaskExecutor  : Initializing ExecutorService 'applicationTaskExecutor'
+2021-07-06 16:15:48.328  INFO 32045 --- [main] o.s.b.d.a.OptionalLiveReloadServer       : LiveReload server is running on port 35729
+2021-07-06 16:15:48.422 DEBUG 32045 --- [main] s.w.s.m.m.a.RequestMappingHandlerAdapter : ControllerAdvice beans: 0 @ModelAttribute, 0 @InitBinder, 1 RequestBodyAdvice, 1 ResponseBodyAdvice
+2021-07-06 16:15:48.488 DEBUG 32045 --- [main] o.s.w.s.handler.SimpleUrlHandlerMapping  : Patterns [/webjars/**, /**] in 'resourceHandlerMapping'
+2021-07-06 16:15:48.503 DEBUG 32045 --- [main] .m.m.a.ExceptionHandlerExceptionResolver : ControllerAdvice beans: 1 @ExceptionHandler, 1 ResponseBodyAdvice
+2021-07-06 16:15:48.619  INFO 32045 --- [main] c.a.d.s.b.a.DruidDataSourceAutoConfigure : Init DruidDataSource
+2021-07-06 16:15:48.771  INFO 32045 --- [main] com.alibaba.druid.pool.DruidDataSource   : {dataSource-1} inited
+2021-07-06 16:15:50.388  INFO 32045 --- [main] org.quartz.impl.StdSchedulerFactory      : Using default implementation for ThreadExecutor
+2021-07-06 16:15:50.418  INFO 32045 --- [main] org.quartz.core.SchedulerSignalerImpl    : Initialized Scheduler Signaller of type: class org.quartz.core.SchedulerSignalerImpl
+2021-07-06 16:15:50.418  INFO 32045 --- [main] org.quartz.core.QuartzScheduler          : Quartz Scheduler v.2.3.1 created.
+2021-07-06 16:15:50.419  INFO 32045 --- [main] org.quartz.simpl.RAMJobStore             : RAMJobStore initialized.
+2021-07-06 16:15:50.421  INFO 32045 --- [main] org.quartz.core.QuartzScheduler          : Scheduler meta-data: Quartz Scheduler (v2.3.1) 'quartzScheduler' with instanceId 'NON_CLUSTERED'
+  Scheduler class: 'org.quartz.core.QuartzScheduler' - running locally.
+  NOT STARTED.
+  Currently in standby mode.
+  Number of jobs executed: 0
+  Using thread pool 'org.quartz.simpl.SimpleThreadPool' - with 10 threads.
+  Using job-store 'org.quartz.simpl.RAMJobStore' - which does not support persistence. and is not clustered.
+
+2021-07-06 16:15:50.421  INFO 32045 --- [main] org.quartz.impl.StdSchedulerFactory      : Quartz scheduler 'quartzScheduler' initialized from an externally provided properties instance.
+2021-07-06 16:15:50.421  INFO 32045 --- [main] org.quartz.impl.StdSchedulerFactory      : Quartz scheduler version: 2.3.1
+2021-07-06 16:15:50.421  INFO 32045 --- [main] org.quartz.core.QuartzScheduler          : JobFactory set to: org.springframework.scheduling.quartz.SpringBeanJobFactory@5197efcd
+2021-07-06 16:15:50.995  INFO 32045 --- [main] o.s.c.n.eureka.InstanceInfoFactory       : Setting initial instance status as: STARTING
+2021-07-06 16:15:51.058  INFO 32045 --- [main] com.netflix.discovery.DiscoveryClient    : Initializing Eureka in region us-east-1
+2021-07-06 16:15:51.171  INFO 32045 --- [main] c.n.d.provider.DiscoveryJerseyProvider   : Using JSON encoding codec LegacyJacksonJson
+2021-07-06 16:15:51.171  INFO 32045 --- [main] c.n.d.provider.DiscoveryJerseyProvider   : Using JSON decoding codec LegacyJacksonJson
+2021-07-06 16:15:51.423  INFO 32045 --- [main] c.n.d.provider.DiscoveryJerseyProvider   : Using XML encoding codec XStreamXml
+2021-07-06 16:15:51.423  INFO 32045 --- [main] c.n.d.provider.DiscoveryJerseyProvider   : Using XML decoding codec XStreamXml
+2021-07-06 16:15:52.083  INFO 32045 --- [main] c.n.d.s.r.aws.ConfigClusterResolver      : Resolving eureka endpoints via configuration
+2021-07-06 16:15:52.115  INFO 32045 --- [main] com.netflix.discovery.DiscoveryClient    : Disable delta property : false
+2021-07-06 16:15:52.116  INFO 32045 --- [main] com.netflix.discovery.DiscoveryClient    : Single vip registry refresh property : null
+2021-07-06 16:15:52.116  INFO 32045 --- [main] com.netflix.discovery.DiscoveryClient    : Force full registry fetch : false
+2021-07-06 16:15:52.116  INFO 32045 --- [main] com.netflix.discovery.DiscoveryClient    : Application is null : false
+2021-07-06 16:15:52.116  INFO 32045 --- [main] com.netflix.discovery.DiscoveryClient    : Registered Applications size is zero : true
+2021-07-06 16:15:52.116  INFO 32045 --- [main] com.netflix.discovery.DiscoveryClient    : Application version is -1: true
+2021-07-06 16:15:52.116  INFO 32045 --- [main] com.netflix.discovery.DiscoveryClient    : Getting all instance registry info from the eureka server
+2021-07-06 16:15:52.544  INFO 32045 --- [main] com.netflix.discovery.DiscoveryClient    : The response status is 200
+2021-07-06 16:15:52.547  INFO 32045 --- [main] com.netflix.discovery.DiscoveryClient    : Starting heartbeat executor: renew interval is: 30
+2021-07-06 16:15:52.551  INFO 32045 --- [main] c.n.discovery.InstanceInfoReplicator     : InstanceInfoReplicator onDemand update allowed rate per min is 4
+2021-07-06 16:15:52.556  INFO 32045 --- [main] com.netflix.discovery.DiscoveryClient    : Discovery Client initialized at timestamp 1625559352554 with initial instances count: 1
+2021-07-06 16:15:52.562  INFO 32045 --- [main] o.s.c.n.e.s.EurekaServiceRegistry        : Registering application STOCK with eureka with status UP
+2021-07-06 16:15:52.563  INFO 32045 --- [main] com.netflix.discovery.DiscoveryClient    : Saw local status change event StatusChangeEvent [timestamp=1625559352563, current=UP, previous=STARTING]
+2021-07-06 16:15:52.565  INFO 32045 --- [DiscoveryClient-InstanceInfoReplicator-0] com.netflix.discovery.DiscoveryClient    : DiscoveryClient_STOCK/192.168.43.176:stock:9006: registering service...
+2021-07-06 16:15:52.565  INFO 32045 --- [main] d.s.w.p.DocumentationPluginsBootstrapper : Context refreshed
+2021-07-06 16:15:52.599  INFO 32045 --- [main] d.s.w.p.DocumentationPluginsBootstrapper : Found 1 custom documentation plugin(s)
+2021-07-06 16:15:52.655  INFO 32045 --- [main] s.d.s.w.s.ApiListingReferenceScanner     : Scanning for api listing references
+2021-07-06 16:15:52.679  INFO 32045 --- [DiscoveryClient-InstanceInfoReplicator-0] com.netflix.discovery.DiscoveryClient    : DiscoveryClient_STOCK/192.168.43.176:stock:9006 - registration status: 204
+2021-07-06 16:15:52.680  INFO 32045 --- [main] o.s.s.quartz.SchedulerFactoryBean        : Starting Quartz Scheduler now
+2021-07-06 16:15:52.680  INFO 32045 --- [main] org.quartz.core.QuartzScheduler          : Scheduler quartzScheduler_$_NON_CLUSTERED started.
+2021-07-06 16:15:52.793  INFO 32045 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 9006 (http) with context path '/stock'
+2021-07-06 16:15:52.795  INFO 32045 --- [main] .s.c.n.e.s.EurekaAutoServiceRegistration : Updating port to 9006
+2021-07-06 16:15:52.801  INFO 32045 --- [main] com.coatardbul.stock.StockApplication    : Started StockApplication in 11.125 seconds (JVM running for 15.481)

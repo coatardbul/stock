@@ -1,0 +1,41 @@
+
+server:
+  port: 9006
+  servlet:
+    #  全局路径配置
+    context-path: /stock
+spring:
+  #  rabbitmq:
+  #    host: localhost
+  #    port: 15672
+  #    username: dsfsd
+  #    password: sdfjsdfl
+  application:
+    name: stock
+  datasource:
+    url: jdbc:mysql://47.105.148.90:3306/stock?serverTimezone=GMT&useSSL=false&characterEncoding=utf-8
+    driverClassName: com.mysql.cj.jdbc.Driver
+    username: root
+    password: Dream1226.27!
+
+mybatis:
+  mapper-locations: classpath:mapper/*.xml
+  type-aliases-package: com.coatardbul.stock.model.entity
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+
+logging:
+  path: logs/
+  level:
+    org.springframework.web: debug
+    com.springboot.cloud: debug
+    java.sql.PreparedStatement: debug
+
+eureka:
+  instance:
+    prefer-ip-address: true
+    hostname: stock
+    appname: stock
+  client:
+    serviceUrl:
+      defaultZone: http://47.105.148.90:8001/eureka/
