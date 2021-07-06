@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.coatardbul.stock.mapper.ModulePriceMapper">
+  <resultMap id="BaseResultMap" type="com.coatardbul.stock.model.entity.ModulePrice">
+    <!--@mbg.generated-->
+    <!--@Table module_price-->
+    <id column="code" jdbcType="VARCHAR" property="code" />
+    <id column="date" jdbcType="VARCHAR" property="date" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="open_price" jdbcType="DECIMAL" property="openPrice" />
+    <result column="close_price" jdbcType="DECIMAL" property="closePrice" />
+    <result column="min_price" jdbcType="DECIMAL" property="minPrice" />
+    <result column="max_price" jdbcType="DECIMAL" property="maxPrice" />
+    <result column="last_close_price" jdbcType="DECIMAL" property="lastClosePrice" />
+    <result column="turn_over_rate" jdbcType="DECIMAL" property="turnOverRate" />
+    <result column="quantity_relative_ratio" jdbcType="DECIMAL" property="quantityRelativeRatio" />
+    <result column="volumn" jdbcType="INTEGER" property="volumn" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    <!--@mbg.generated-->
+    code, `date`, `name`, open_price, close_price, min_price, max_price, last_close_price, 
+    turn_over_rate, quantity_relative_ratio, volumn
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="map" resultMap="BaseResultMap">
+    <!--@mbg.generated-->
+    select 
+    <include refid="Base_Column_List" />
+    from module_price
+    where code = #{code,jdbcType=VARCHAR}
+      and `date` = #{date,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="map">
+    <!--@mbg.generated-->
+    delete from module_price
+    where code = #{code,jdbcType=VARCHAR}
+      and `date` = #{date,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.coatardbul.stock.model.entity.ModulePrice">
+    <!--@mbg.generated-->
+    insert into module_price (code, `date`, `name`, 
+      open_price, close_price, min_price, 
+      max_price, last_close_price, turn_over_rate, 
+      quantity_relative_ratio, volumn)
+    values (#{code,jdbcType=VARCHAR}, #{date,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, 
+      #{openPrice,jdbcType=DECIMAL}, #{closePrice,jdbcType=DECIMAL}, #{minPrice,jdbcType=DECIMAL}, 
+      #{maxPrice,jdbcType=DECIMAL}, #{lastClosePrice,jdbcType=DECIMAL}, #{turnOverRate,jdbcType=DECIMAL}, 
+      #{quantityRelativeRatio,jdbcType=DECIMAL}, #{volumn,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.coatardbul.stock.model.entity.ModulePrice">
+    <!--@mbg.generated-->
+    insert into module_price
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="code != null">
+        code,
+      </if>
+      <if test="date != null">
+        `date`,
+      </if>
+      <if test="name != null">
+        `name`,
+      </if>
+      <if test="openPrice != null">
+        open_price,
+      </if>
+      <if test="closePrice != null">
+        close_price,
+      </if>
+      <if test="minPrice != null">
+        min_price,
+      </if>
+      <if test="maxPrice != null">
+        max_price,
+      </if>
+      <if test="lastClosePrice != null">
+        last_close_price,
+      </if>
+      <if test="turnOverRate != null">
+        turn_over_rate,
+      </if>
+      <if test="quantityRelativeRatio != null">
+        quantity_relative_ratio,
+      </if>
+      <if test="volumn != null">
+        volumn,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="code != null">
+        #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="date != null">
+        #{date,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null">
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="openPrice != null">
+        #{openPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="closePrice != null">
+        #{closePrice,jdbcType=DECIMAL},
+      </if>
+      <if test="minPrice != null">
+        #{minPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="maxPrice != null">
+        #{maxPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="lastClosePrice != null">
+        #{lastClosePrice,jdbcType=DECIMAL},
+      </if>
+      <if test="turnOverRate != null">
+        #{turnOverRate,jdbcType=DECIMAL},
+      </if>
+      <if test="quantityRelativeRatio != null">
+        #{quantityRelativeRatio,jdbcType=DECIMAL},
+      </if>
+      <if test="volumn != null">
+        #{volumn,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.coatardbul.stock.model.entity.ModulePrice">
+    <!--@mbg.generated-->
+    update module_price
+    <set>
+      <if test="name != null">
+        `name` = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="openPrice != null">
+        open_price = #{openPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="closePrice != null">
+        close_price = #{closePrice,jdbcType=DECIMAL},
+      </if>
+      <if test="minPrice != null">
+        min_price = #{minPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="maxPrice != null">
+        max_price = #{maxPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="lastClosePrice != null">
+        last_close_price = #{lastClosePrice,jdbcType=DECIMAL},
+      </if>
+      <if test="turnOverRate != null">
+        turn_over_rate = #{turnOverRate,jdbcType=DECIMAL},
+      </if>
+      <if test="quantityRelativeRatio != null">
+        quantity_relative_ratio = #{quantityRelativeRatio,jdbcType=DECIMAL},
+      </if>
+      <if test="volumn != null">
+        volumn = #{volumn,jdbcType=INTEGER},
+      </if>
+    </set>
+    where code = #{code,jdbcType=VARCHAR}
+      and `date` = #{date,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.coatardbul.stock.model.entity.ModulePrice">
+    <!--@mbg.generated-->
+    update module_price
+    set `name` = #{name,jdbcType=VARCHAR},
+      open_price = #{openPrice,jdbcType=DECIMAL},
+      close_price = #{closePrice,jdbcType=DECIMAL},
+      min_price = #{minPrice,jdbcType=DECIMAL},
+      max_price = #{maxPrice,jdbcType=DECIMAL},
+      last_close_price = #{lastClosePrice,jdbcType=DECIMAL},
+      turn_over_rate = #{turnOverRate,jdbcType=DECIMAL},
+      quantity_relative_ratio = #{quantityRelativeRatio,jdbcType=DECIMAL},
+      volumn = #{volumn,jdbcType=INTEGER}
+    where code = #{code,jdbcType=VARCHAR}
+      and `date` = #{date,jdbcType=VARCHAR}
+  </update>
+</mapper>

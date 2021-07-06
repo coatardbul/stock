@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.coatardbul.stock.mapper.StockFinanceMapper">
+  <resultMap id="BaseResultMap" type="com.coatardbul.stock.model.entity.StockFinance">
+    <!--@mbg.generated-->
+    <!--@Table stock_finance-->
+    <id column="code" jdbcType="VARCHAR" property="code" />
+    <id column="date" jdbcType="VARCHAR" property="date" />
+    <result column="name1" jdbcType="DECIMAL" property="name1" />
+    <result column="name2" jdbcType="DECIMAL" property="name2" />
+    <result column="name3" jdbcType="DECIMAL" property="name3" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    <!--@mbg.generated-->
+    code, `date`, name1, name2, name3
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="map" resultMap="BaseResultMap">
+    <!--@mbg.generated-->
+    select 
+    <include refid="Base_Column_List" />
+    from stock_finance
+    where code = #{code,jdbcType=VARCHAR}
+      and `date` = #{date,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="map">
+    <!--@mbg.generated-->
+    delete from stock_finance
+    where code = #{code,jdbcType=VARCHAR}
+      and `date` = #{date,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.coatardbul.stock.model.entity.StockFinance">
+    <!--@mbg.generated-->
+    insert into stock_finance (code, `date`, name1, 
+      name2, name3)
+    values (#{code,jdbcType=VARCHAR}, #{date,jdbcType=VARCHAR}, #{name1,jdbcType=DECIMAL}, 
+      #{name2,jdbcType=DECIMAL}, #{name3,jdbcType=DECIMAL})
+  </insert>
+  <insert id="insertSelective" parameterType="com.coatardbul.stock.model.entity.StockFinance">
+    <!--@mbg.generated-->
+    insert into stock_finance
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="code != null">
+        code,
+      </if>
+      <if test="date != null">
+        `date`,
+      </if>
+      <if test="name1 != null">
+        name1,
+      </if>
+      <if test="name2 != null">
+        name2,
+      </if>
+      <if test="name3 != null">
+        name3,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="code != null">
+        #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="date != null">
+        #{date,jdbcType=VARCHAR},
+      </if>
+      <if test="name1 != null">
+        #{name1,jdbcType=DECIMAL},
+      </if>
+      <if test="name2 != null">
+        #{name2,jdbcType=DECIMAL},
+      </if>
+      <if test="name3 != null">
+        #{name3,jdbcType=DECIMAL},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.coatardbul.stock.model.entity.StockFinance">
+    <!--@mbg.generated-->
+    update stock_finance
+    <set>
+      <if test="name1 != null">
+        name1 = #{name1,jdbcType=DECIMAL},
+      </if>
+      <if test="name2 != null">
+        name2 = #{name2,jdbcType=DECIMAL},
+      </if>
+      <if test="name3 != null">
+        name3 = #{name3,jdbcType=DECIMAL},
+      </if>
+    </set>
+    where code = #{code,jdbcType=VARCHAR}
+      and `date` = #{date,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.coatardbul.stock.model.entity.StockFinance">
+    <!--@mbg.generated-->
+    update stock_finance
+    set name1 = #{name1,jdbcType=DECIMAL},
+      name2 = #{name2,jdbcType=DECIMAL},
+      name3 = #{name3,jdbcType=DECIMAL}
+    where code = #{code,jdbcType=VARCHAR}
+      and `date` = #{date,jdbcType=VARCHAR}
+  </update>
+</mapper>

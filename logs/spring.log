@@ -366,3 +366,17 @@ Caused by: java.lang.IllegalArgumentException: error Type referred to is not an 
 2021-07-06 16:15:52.793  INFO 32045 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 9006 (http) with context path '/stock'
 2021-07-06 16:15:52.795  INFO 32045 --- [main] .s.c.n.e.s.EurekaAutoServiceRegistration : Updating port to 9006
 2021-07-06 16:15:52.801  INFO 32045 --- [main] com.coatardbul.stock.StockApplication    : Started StockApplication in 11.125 seconds (JVM running for 15.481)
+2021-07-06 16:20:52.132  INFO 32045 --- [AsyncResolver-bootstrap-executor-0] c.n.d.s.r.aws.ConfigClusterResolver      : Resolving eureka endpoints via configuration
+2021-07-06 16:25:52.144  INFO 32045 --- [AsyncResolver-bootstrap-executor-0] c.n.d.s.r.aws.ConfigClusterResolver      : Resolving eureka endpoints via configuration
+2021-07-06 16:30:52.135  INFO 32045 --- [AsyncResolver-bootstrap-executor-0] c.n.d.s.r.aws.ConfigClusterResolver      : Resolving eureka endpoints via configuration
+2021-07-06 16:35:52.148  INFO 32045 --- [AsyncResolver-bootstrap-executor-0] c.n.d.s.r.aws.ConfigClusterResolver      : Resolving eureka endpoints via configuration
+2021-07-06 16:40:52.158  INFO 32045 --- [AsyncResolver-bootstrap-executor-0] c.n.d.s.r.aws.ConfigClusterResolver      : Resolving eureka endpoints via configuration
+2021-07-06 16:45:52.161  INFO 32045 --- [AsyncResolver-bootstrap-executor-0] c.n.d.s.r.aws.ConfigClusterResolver      : Resolving eureka endpoints via configuration
+2021-07-06 16:50:52.175  INFO 32045 --- [AsyncResolver-bootstrap-executor-0] c.n.d.s.r.aws.ConfigClusterResolver      : Resolving eureka endpoints via configuration
+2021-07-06 16:55:52.190  INFO 32045 --- [AsyncResolver-bootstrap-executor-0] c.n.d.s.r.aws.ConfigClusterResolver      : Resolving eureka endpoints via configuration
+2021-07-06 17:00:52.198  INFO 32045 --- [AsyncResolver-bootstrap-executor-0] c.n.d.s.r.aws.ConfigClusterResolver      : Resolving eureka endpoints via configuration
+2021-07-06 17:05:52.208  INFO 32045 --- [AsyncResolver-bootstrap-executor-0] c.n.d.s.r.aws.ConfigClusterResolver      : Resolving eureka endpoints via configuration
+2021-07-06 17:10:52.217  INFO 32045 --- [AsyncResolver-bootstrap-executor-0] c.n.d.s.r.aws.ConfigClusterResolver      : Resolving eureka endpoints via configuration
+2021-07-06 17:15:52.141  INFO 32045 --- [AsyncResolver-bootstrap-executor-0] c.n.d.s.r.aws.ConfigClusterResolver      : Resolving eureka endpoints via configuration
+2021-07-06 17:20:52.149  INFO 32045 --- [AsyncResolver-bootstrap-executor-0] c.n.d.s.r.aws.ConfigClusterResolver      : Resolving eureka endpoints via configuration
+2021-07-06 17:25:52.157  INFO 32045 --- [AsyncResolver-bootstrap-executor-0] c.n.d.s.r.aws.ConfigClusterResolver      : Resolving eureka endpoints via configuration

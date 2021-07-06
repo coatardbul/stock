@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.coatardbul.stock.mapper.StockModuleMapperMapper">
+  <resultMap id="BaseResultMap" type="com.coatardbul.stock.model.entity.StockModuleMapper">
+    <!--@mbg.generated-->
+    <!--@Table stock_module_mapper-->
+    <id column="stock_code" jdbcType="VARCHAR" property="stockCode" />
+    <id column="module_code" jdbcType="VARCHAR" property="moduleCode" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    <!--@mbg.generated-->
+    stock_code, module_code
+  </sql>
+  <delete id="deleteByPrimaryKey" parameterType="map">
+    <!--@mbg.generated-->
+    delete from stock_module_mapper
+    where stock_code = #{stockCode,jdbcType=VARCHAR}
+      and module_code = #{moduleCode,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.coatardbul.stock.model.entity.StockModuleMapper">
+    <!--@mbg.generated-->
+    insert into stock_module_mapper (stock_code, module_code)
+    values (#{stockCode,jdbcType=VARCHAR}, #{moduleCode,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.coatardbul.stock.model.entity.StockModuleMapper">
+    <!--@mbg.generated-->
+    insert into stock_module_mapper
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="stockCode != null">
+        stock_code,
+      </if>
+      <if test="moduleCode != null">
+        module_code,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="stockCode != null">
+        #{stockCode,jdbcType=VARCHAR},
+      </if>
+      <if test="moduleCode != null">
+        #{moduleCode,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+</mapper>
