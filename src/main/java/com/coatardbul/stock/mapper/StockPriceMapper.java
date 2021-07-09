@@ -1,4 +1,6 @@
 package com.coatardbul.stock.mapper;
+import com.coatardbul.stock.model.dto.StockPriceRequestDTO;
+import org.apache.ibatis.annotations.Param;
 
 import com.coatardbul.stock.model.entity.StockPrice;
 import org.apache.ibatis.annotations.Mapper;
@@ -16,4 +18,9 @@ public interface StockPriceMapper {
     int updateByPrimaryKeySelective(StockPrice record);
 
     int updateByPrimaryKey(StockPrice record);
+
+
+int deleteByCodeAndDateBetweenOrEqualTo(StockPriceRequestDTO  dto);
+
+
 }
