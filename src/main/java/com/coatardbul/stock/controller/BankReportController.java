@@ -2,6 +2,7 @@ package com.coatardbul.stock.controller;
 
 
 import com.coatardbul.stock.common.annotation.WebLog;
+import com.coatardbul.stock.common.api.CommonResult;
 import com.coatardbul.stock.model.bo.ThsPriceBO;
 import com.coatardbul.stock.model.dto.StockPriceRequestDTO;
 import com.coatardbul.stock.service.StockPriceService;
@@ -44,8 +45,9 @@ public class BankReportController {
 //    }
     @WebLog(value = "")
     @RequestMapping(path = "/refreshStockPrice", method = RequestMethod.POST)
-    public void  refreshStockPrice(@Validated @RequestBody StockPriceRequestDTO dto) {
+    public CommonResult  refreshStockPrice(@Validated @RequestBody StockPriceRequestDTO dto) {
         stockPriceService.refreshStockPrice(dto);
+        return CommonResult.success("刷新成功");
     }
 
 }
