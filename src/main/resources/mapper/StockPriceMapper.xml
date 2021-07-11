@@ -5,6 +5,7 @@
     <!--@mbg.generated-->
     <!--@Table stock_price-->
     <id column="code" jdbcType="VARCHAR" property="code" />
+    <id column="date" jdbcType="VARCHAR" property="date" />
     <result column="name" jdbcType="VARCHAR" property="name" />
     <result column="open_price" jdbcType="DECIMAL" property="openPrice" />
     <result column="close_price" jdbcType="DECIMAL" property="closePrice" />
@@ -13,36 +14,37 @@
     <result column="last_close_price" jdbcType="DECIMAL" property="lastClosePrice" />
     <result column="turn_over_rate" jdbcType="DECIMAL" property="turnOverRate" />
     <result column="quantity_relative_ratio" jdbcType="DECIMAL" property="quantityRelativeRatio" />
-    <result column="date" jdbcType="VARCHAR" property="date" />
     <result column="volumn" jdbcType="INTEGER" property="volumn" />
   </resultMap>
   <sql id="Base_Column_List">
     <!--@mbg.generated-->
-    code, `name`, open_price, close_price, min_price, max_price, last_close_price, turn_over_rate, 
-    quantity_relative_ratio, `date`, volumn
+    code, `date`, `name`, open_price, close_price, min_price, max_price, last_close_price, 
+    turn_over_rate, quantity_relative_ratio, volumn
   </sql>
-  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+  <select id="selectByPrimaryKey" parameterType="map" resultMap="BaseResultMap">
     <!--@mbg.generated-->
     select 
     <include refid="Base_Column_List" />
     from stock_price
     where code = #{code,jdbcType=VARCHAR}
+      and `date` = #{date,jdbcType=VARCHAR}
   </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+  <delete id="deleteByPrimaryKey" parameterType="map">
     <!--@mbg.generated-->
     delete from stock_price
     where code = #{code,jdbcType=VARCHAR}
+      and `date` = #{date,jdbcType=VARCHAR}
   </delete>
   <insert id="insert" parameterType="com.coatardbul.stock.model.entity.StockPrice">
     <!--@mbg.generated-->
-    insert into stock_price (code, `name`, open_price, 
-      close_price, min_price, max_price, 
-      last_close_price, turn_over_rate, quantity_relative_ratio, 
-      `date`, volumn)
-    values (#{code,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, #{openPrice,jdbcType=DECIMAL}, 
-      #{closePrice,jdbcType=DECIMAL}, #{minPrice,jdbcType=DECIMAL}, #{maxPrice,jdbcType=DECIMAL}, 
-      #{lastClosePrice,jdbcType=DECIMAL}, #{turnOverRate,jdbcType=DECIMAL}, #{quantityRelativeRatio,jdbcType=DECIMAL}, 
-      #{date,jdbcType=VARCHAR}, #{volumn,jdbcType=INTEGER})
+    insert into stock_price (code, `date`, `name`, 
+      open_price, close_price, min_price, 
+      max_price, last_close_price, turn_over_rate, 
+      quantity_relative_ratio, volumn)
+    values (#{code,jdbcType=VARCHAR}, #{date,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, 
+      #{openPrice,jdbcType=DECIMAL}, #{closePrice,jdbcType=DECIMAL}, #{minPrice,jdbcType=DECIMAL}, 
+      #{maxPrice,jdbcType=DECIMAL}, #{lastClosePrice,jdbcType=DECIMAL}, #{turnOverRate,jdbcType=DECIMAL}, 
+      #{quantityRelativeRatio,jdbcType=DECIMAL}, #{volumn,jdbcType=INTEGER})
   </insert>
   <insert id="insertSelective" parameterType="com.coatardbul.stock.model.entity.StockPrice">
     <!--@mbg.generated-->
@@ -50,6 +52,9 @@
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="code != null">
         code,
+      </if>
+      <if test="date != null">
+        `date`,
       </if>
       <if test="name != null">
         `name`,
@@ -75,9 +80,6 @@
       <if test="quantityRelativeRatio != null">
         quantity_relative_ratio,
       </if>
-      <if test="date != null">
-        `date`,
-      </if>
       <if test="volumn != null">
         volumn,
       </if>
@@ -85,6 +87,9 @@
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="code != null">
         #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="date != null">
+        #{date,jdbcType=VARCHAR},
       </if>
       <if test="name != null">
         #{name,jdbcType=VARCHAR},
@@ -109,9 +114,6 @@
       </if>
       <if test="quantityRelativeRatio != null">
         #{quantityRelativeRatio,jdbcType=DECIMAL},
-      </if>
-      <if test="date != null">
-        #{date,jdbcType=VARCHAR},
       </if>
       <if test="volumn != null">
         #{volumn,jdbcType=INTEGER},
@@ -146,14 +148,12 @@
       <if test="quantityRelativeRatio != null">
         quantity_relative_ratio = #{quantityRelativeRatio,jdbcType=DECIMAL},
       </if>
-      <if test="date != null">
-        `date` = #{date,jdbcType=VARCHAR},
-      </if>
       <if test="volumn != null">
         volumn = #{volumn,jdbcType=INTEGER},
       </if>
     </set>
     where code = #{code,jdbcType=VARCHAR}
+      and `date` = #{date,jdbcType=VARCHAR}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.coatardbul.stock.model.entity.StockPrice">
     <!--@mbg.generated-->
@@ -166,9 +166,9 @@
       last_close_price = #{lastClosePrice,jdbcType=DECIMAL},
       turn_over_rate = #{turnOverRate,jdbcType=DECIMAL},
       quantity_relative_ratio = #{quantityRelativeRatio,jdbcType=DECIMAL},
-      `date` = #{date,jdbcType=VARCHAR},
       volumn = #{volumn,jdbcType=INTEGER}
     where code = #{code,jdbcType=VARCHAR}
+      and `date` = #{date,jdbcType=VARCHAR}
   </update>
 
 

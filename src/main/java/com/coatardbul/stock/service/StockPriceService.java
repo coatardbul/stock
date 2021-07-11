@@ -18,98 +18,47 @@ import javax.annotation.Resource;
 
 import com.coatardbul.stock.mapper.StockPriceMapper;
 import com.coatardbul.stock.model.entity.StockPrice;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.stream.Collectors;
 
 @Slf4j
 @Service
-public class StockPriceService {
+public class StockPriceService extends BaseService {
     private static final String SPLIT = ",";
     @Resource
     private StockPriceMapper stockPriceMapper;
 
     public void refreshStockPrice(StockPriceRequestDTO dto) {
         stockPriceMapper.deleteByCodeAndDateBetweenOrEqualTo(dto);
-        stockPriceProcess(dto);
-    }
-
-    /**
-     * 根据对应开始，结束时间，对应额股票代码，获取http请求数据，解析成对应的价格数据，存入表中
-     *
-     * @param dto
-     */
-    public void stockPriceProcess(StockPriceRequestDTO dto) {
-
-        // 获得Http客户端(可以理解为:你得先有一个浏览器;注意:实际上HttpClient与浏览器是不一样的)
-        CloseableHttpClient httpClient = HttpClientBuilder.create().build();
-        // 参数
-//        StringBuffer params = new StringBuffer();
-//        // 字符数据最好encoding以下;这样一来，某些特殊字符才能传过去(如:某人的名字就是“&”,不encoding的话,传不过去)
-//        params.append("id=" + num);
-
-        // 创建Post请求
-        HttpGet httpPost = new HttpGet(getStockPriceUrl(dto.getCode()));
-        // 设置ContentType(注:如果只是传普通参数的话,ContentType不一定非要用application/json)
-        httpPost.setHeader("Referer", "http://www.iwencai.com/");
-        // 响应模型
-        CloseableHttpResponse response = null;
-        try {
-            // 由客户端执行(发送)Post请求
-            response = httpClient.execute(httpPost);
-            response.setHeader("Content-Type", "text/html; charset=UTF-8");
-            // 从响应模型中获取响应实体
-            HttpEntity responseEntity = response.getEntity();
-
-            log.info("响应状态为:" + response.getStatusLine());
-            if (responseEntity != null) {
-                log.info("响应内容长度为:" + responseEntity.getContentLength());
-                String responseStr = EntityUtils.toString(responseEntity, "utf-8");
-                log.info("响应内容为:" + responseStr);
-                //解析response，存入数据
-                stockPriceProcess(responseStr, dto);
-            }
-        } catch (Exception e) {
-            log.error(e.getMessage(), e);
-        } finally {
-            try {
-                // 释放资源
-                if (httpClient != null) {
-                    httpClient.close();
-                }
-                if (response != null) {
-                    response.close();
-                }
-            } catch (IOException e) {
-                log.error(e.getMessage(), e);
-            }
-        }
+        stockProcess(dto);
     }
 
 
-    private String getStockPriceUrl(String code) {
+
+    @Override
+    protected String getStockUrl(String code) {
         return "http://d.10jqka.com.cn/v6/line/hs_" +
                 code +
                 "/01/all.js?hexin-v=A6rEhVkvvr5fKTLSdVxojvC1_RtPGy5zIJ-iGTRjVv2IZ0SNHKt-hfAv8m8H";
 
     }
 
-    private void stockPriceProcess(String responseString, StockPriceRequestDTO code) throws IOException {
+    @Override
+    protected void parseAndSaveDate(String responseString, StockPriceRequestDTO code) throws IOException {
         //json解析
         ObjectMapper objectMapper = new ObjectMapper();
         int beginIndex = responseString.indexOf("{");
         String jsonString = responseString.substring(beginIndex, responseString.length() - 1);
         ThsPriceBO thsPriceBO = objectMapper.readValue(jsonString, ThsPriceBO.class);
         //将数据存入表中
-        stockPriceProcess(thsPriceBO, code);
+        parseAndSaveDate(thsPriceBO, code);
     }
 
-    void stockPriceProcess(ThsPriceBO thsPriceBO, StockPriceRequestDTO code) {
+    void parseAndSaveDate(ThsPriceBO thsPriceBO, StockPriceRequestDTO code) {
         List<StockPrice> stockPriceList = getStockPriceList(thsPriceBO, code);
         //过滤list 中的时间数据
         filterDate(stockPriceList, code);
@@ -171,16 +120,16 @@ public class StockPriceService {
             StockPrice stockPrice = new StockPrice();
             stockPrice.setCode(code);
             stockPrice.setName(name);
-            stockPrice.setOpenPrice(Long.parseLong(priceArray[4 * i + 1]));
-            stockPrice.setClosePrice(Long.parseLong(priceArray[4 * i + 3]));
-            stockPrice.setMinPrice(Long.parseLong(priceArray[4 * i]));
-            stockPrice.setMaxPrice(Long.parseLong(priceArray[4 * i + 2]));
+            stockPrice.setOpenPrice(new BigDecimal(priceArray[4 * i + 1]));
+            stockPrice.setClosePrice(new BigDecimal(priceArray[4 * i + 3]));
+            stockPrice.setMinPrice(new BigDecimal(priceArray[4 * i]));
+            stockPrice.setMaxPrice(new BigDecimal(priceArray[4 * i + 2]));
             //TODO
-            stockPrice.setLastClosePrice(0L);
+            stockPrice.setLastClosePrice(BigDecimal.ZERO);
             //TODO
-            stockPrice.setTurnOverRate(0L);
+            stockPrice.setTurnOverRate(BigDecimal.ZERO);
             //TODO
-            stockPrice.setQuantityRelativeRatio(0L);
+            stockPrice.setQuantityRelativeRatio(BigDecimal.ZERO);
             //将年月拼接起来
             if (i == count) {
                 index++;
@@ -201,9 +150,13 @@ public class StockPriceService {
      * @param stockPrice
      */
     private void render(StockPrice stockPrice) {
-        stockPrice.setOpenPrice(stockPrice.getMinPrice() + stockPrice.getOpenPrice());
-        stockPrice.setClosePrice(stockPrice.getMinPrice() + stockPrice.getClosePrice());
-        stockPrice.setMaxPrice(stockPrice.getMinPrice() + stockPrice.getMaxPrice());
+        stockPrice.setOpenPrice(stockPrice.getMinPrice() .add( stockPrice.getOpenPrice()));
+        stockPrice.setClosePrice(stockPrice.getMinPrice() .add( stockPrice.getClosePrice()));
+        stockPrice.setMaxPrice(stockPrice.getMinPrice() .add( stockPrice.getMaxPrice()));
+
+        stockPrice.setOpenPrice(stockPrice.getOpenPrice().divide(new BigDecimal(100)));
+        stockPrice.setClosePrice(stockPrice.getClosePrice().divide(new BigDecimal(100)));
+        stockPrice.setMaxPrice(stockPrice.getMaxPrice().divide(new BigDecimal(100)));
     }
 
     /**
@@ -226,4 +179,7 @@ public class StockPriceService {
         }
         return result;
     }
+
 }
+
+

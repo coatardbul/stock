@@ -3,7 +3,7 @@ package com.coatardbul.stock.model.entity;
 import lombok.Data;
 
 @Data
-public class ModulePrice {
+public class BaseInfoDict {
     /**
      * 股票编码
      */

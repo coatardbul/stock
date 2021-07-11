@@ -6,47 +6,42 @@ import lombok.Data;
 @Data
 public class StockBase {
     /**
-    * 股票代码
-    */
+     * 股票代码
+     */
     private String code;
 
     /**
-    * 日期
-    */
-    private String date;
-
-    /**
-    * 股票名称
-    */
+     * 股票名称
+     */
     private String name;
 
     /**
-    * 流通股本
-    */
-    private Integer circulatingStockCapital;
+     * 流通股本
+     */
+    private BigDecimal circulatingStockCapital;
 
     /**
-    * 流通市值
-    */
+     * 流通市值
+     */
     private BigDecimal circulatingStockValue;
 
     /**
-    * 总股本
-    */
-    private Integer allStockCapital;
+     * 总股本
+     */
+    private BigDecimal allStockCapital;
 
     /**
-    * 总市值
-    */
+     * 总市值
+     */
     private BigDecimal allStockValue;
 
     /**
-    * 市盈率
-    */
-    private Long per;
+     * 市盈率
+     */
+    private BigDecimal per;
 
     /**
-    * 市净率
-    */
-    private Long pbr;
+     * 市净率
+     */
+    private BigDecimal pbr;
 }

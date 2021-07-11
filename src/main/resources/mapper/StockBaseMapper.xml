@@ -5,44 +5,41 @@
     <!--@mbg.generated-->
     <!--@Table stock_base-->
     <id column="code" jdbcType="VARCHAR" property="code" />
-    <id column="date" jdbcType="VARCHAR" property="date" />
     <result column="name" jdbcType="VARCHAR" property="name" />
-    <result column="circulating_stock_capital" jdbcType="INTEGER" property="circulatingStockCapital" />
+    <result column="circulating_stock_capital" jdbcType="DECIMAL" property="circulatingStockCapital" />
     <result column="circulating_stock_value" jdbcType="DECIMAL" property="circulatingStockValue" />
-    <result column="all_stock_capital" jdbcType="INTEGER" property="allStockCapital" />
+    <result column="all_stock_capital" jdbcType="DECIMAL" property="allStockCapital" />
     <result column="all_stock_value" jdbcType="DECIMAL" property="allStockValue" />
     <result column="per" jdbcType="DECIMAL" property="per" />
     <result column="pbr" jdbcType="DECIMAL" property="pbr" />
   </resultMap>
   <sql id="Base_Column_List">
     <!--@mbg.generated-->
-    code, `date`, `name`, circulating_stock_capital, circulating_stock_value, all_stock_capital, 
+    code, `name`, circulating_stock_capital, circulating_stock_value, all_stock_capital, 
     all_stock_value, per, pbr
   </sql>
-  <select id="selectByPrimaryKey" parameterType="map" resultMap="BaseResultMap">
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
     <!--@mbg.generated-->
     select 
     <include refid="Base_Column_List" />
     from stock_base
     where code = #{code,jdbcType=VARCHAR}
-      and `date` = #{date,jdbcType=VARCHAR}
   </select>
-  <delete id="deleteByPrimaryKey" parameterType="map">
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
     <!--@mbg.generated-->
     delete from stock_base
     where code = #{code,jdbcType=VARCHAR}
-      and `date` = #{date,jdbcType=VARCHAR}
   </delete>
   <insert id="insert" parameterType="com.coatardbul.stock.model.entity.StockBase">
     <!--@mbg.generated-->
-    insert into stock_base (code, `date`, `name`, 
-      circulating_stock_capital, circulating_stock_value, 
-      all_stock_capital, all_stock_value, per, 
-      pbr)
-    values (#{code,jdbcType=VARCHAR}, #{date,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, 
-      #{circulatingStockCapital,jdbcType=INTEGER}, #{circulatingStockValue,jdbcType=DECIMAL}, 
-      #{allStockCapital,jdbcType=INTEGER}, #{allStockValue,jdbcType=DECIMAL}, #{per,jdbcType=DECIMAL}, 
-      #{pbr,jdbcType=DECIMAL})
+    insert into stock_base (code, `name`, circulating_stock_capital, 
+      circulating_stock_value, all_stock_capital, 
+      all_stock_value, per, pbr
+      )
+    values (#{code,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, #{circulatingStockCapital,jdbcType=DECIMAL}, 
+      #{circulatingStockValue,jdbcType=DECIMAL}, #{allStockCapital,jdbcType=DECIMAL}, 
+      #{allStockValue,jdbcType=DECIMAL}, #{per,jdbcType=DECIMAL}, #{pbr,jdbcType=DECIMAL}
+      )
   </insert>
   <insert id="insertSelective" parameterType="com.coatardbul.stock.model.entity.StockBase">
     <!--@mbg.generated-->
@@ -50,9 +47,6 @@
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="code != null">
         code,
-      </if>
-      <if test="date != null">
-        `date`,
       </if>
       <if test="name != null">
         `name`,
@@ -80,20 +74,17 @@
       <if test="code != null">
         #{code,jdbcType=VARCHAR},
       </if>
-      <if test="date != null">
-        #{date,jdbcType=VARCHAR},
-      </if>
       <if test="name != null">
         #{name,jdbcType=VARCHAR},
       </if>
       <if test="circulatingStockCapital != null">
-        #{circulatingStockCapital,jdbcType=INTEGER},
+        #{circulatingStockCapital,jdbcType=DECIMAL},
       </if>
       <if test="circulatingStockValue != null">
         #{circulatingStockValue,jdbcType=DECIMAL},
       </if>
       <if test="allStockCapital != null">
-        #{allStockCapital,jdbcType=INTEGER},
+        #{allStockCapital,jdbcType=DECIMAL},
       </if>
       <if test="allStockValue != null">
         #{allStockValue,jdbcType=DECIMAL},
@@ -114,13 +105,13 @@
         `name` = #{name,jdbcType=VARCHAR},
       </if>
       <if test="circulatingStockCapital != null">
-        circulating_stock_capital = #{circulatingStockCapital,jdbcType=INTEGER},
+        circulating_stock_capital = #{circulatingStockCapital,jdbcType=DECIMAL},
       </if>
       <if test="circulatingStockValue != null">
         circulating_stock_value = #{circulatingStockValue,jdbcType=DECIMAL},
       </if>
       <if test="allStockCapital != null">
-        all_stock_capital = #{allStockCapital,jdbcType=INTEGER},
+        all_stock_capital = #{allStockCapital,jdbcType=DECIMAL},
       </if>
       <if test="allStockValue != null">
         all_stock_value = #{allStockValue,jdbcType=DECIMAL},
@@ -133,19 +124,17 @@
       </if>
     </set>
     where code = #{code,jdbcType=VARCHAR}
-      and `date` = #{date,jdbcType=VARCHAR}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.coatardbul.stock.model.entity.StockBase">
     <!--@mbg.generated-->
     update stock_base
     set `name` = #{name,jdbcType=VARCHAR},
-      circulating_stock_capital = #{circulatingStockCapital,jdbcType=INTEGER},
+      circulating_stock_capital = #{circulatingStockCapital,jdbcType=DECIMAL},
       circulating_stock_value = #{circulatingStockValue,jdbcType=DECIMAL},
-      all_stock_capital = #{allStockCapital,jdbcType=INTEGER},
+      all_stock_capital = #{allStockCapital,jdbcType=DECIMAL},
       all_stock_value = #{allStockValue,jdbcType=DECIMAL},
       per = #{per,jdbcType=DECIMAL},
       pbr = #{pbr,jdbcType=DECIMAL}
     where code = #{code,jdbcType=VARCHAR}
-      and `date` = #{date,jdbcType=VARCHAR}
   </update>
 </mapper>
