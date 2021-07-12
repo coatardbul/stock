@@ -6,6 +6,7 @@ import com.coatardbul.stock.model.dto.StockPriceRequestDTO;
 import com.coatardbul.stock.model.entity.StockBase;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang.StringUtils;
 import org.apache.http.HttpEntity;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpGet;
@@ -38,6 +39,9 @@ public class StockBaseService extends BaseService{
     public void parseAndSaveDate(String responseString, StockPriceRequestDTO  dto) throws IOException {
         //json解析
         ObjectMapper objectMapper = new ObjectMapper();
+        if(!StringUtils.isNotBlank(responseString)){
+            return;
+        }
         int beginIndex = responseString.indexOf(":");
         String jsonString = responseString.substring(beginIndex + 1, responseString.length() - 2);
         Map<String, String> map = objectMapper.readValue(jsonString, HashMap.class);

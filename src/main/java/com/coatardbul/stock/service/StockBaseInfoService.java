@@ -49,7 +49,7 @@ public class StockBaseInfoService extends BaseService {
 
 //        httpPost.setHeader("X-Requested-With", "XMLHttpRequest");
 //
-        httpPost.setHeader("hexin-v", "A8YAFukr2jokm47eyRYMurxBEbdLJwtP3GE-RbDvsT7FdGhhGLda8az7jkSD");
+        httpPost.setHeader("hexin-v", "A8EHh9oiRftNCqnPF3rDG9_Y1gbY7jWWX2PZ9CMWvkklEu9waz5FsO-y6cKw");
 
 //        httpPost.setHeader("Accept", "text/html, */*; q=0.01");
 //

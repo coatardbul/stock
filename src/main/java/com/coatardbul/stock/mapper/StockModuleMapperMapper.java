@@ -11,4 +11,8 @@ public interface StockModuleMapperMapper {
     int insert(StockModuleMapper record);
 
     int insertSelective(StockModuleMapper record);
+
+    int deleteByStockCode(@Param("stockCode")String stockCode);
+
+
 }

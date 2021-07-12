@@ -74,4 +74,5 @@ public abstract class BaseService {
     protected abstract void parseAndSaveDate(String responseStr, StockPriceRequestDTO dto)throws IOException ;
 
     protected abstract String getStockUrl(String code);
+
 }

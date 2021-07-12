@@ -11,8 +11,10 @@ import com.coatardbul.stock.service.IndustryBaseInfoService;
 import com.coatardbul.stock.service.ModulePriceService;
 import com.coatardbul.stock.service.StockBaseInfoService;
 import com.coatardbul.stock.service.StockBaseService;
+import com.coatardbul.stock.service.StockModuleMapperService;
 import com.coatardbul.stock.service.StockPriceService;
 import com.coatardbul.stock.service.TerritoryBaseInfoService;
+import com.google.common.util.concurrent.ThreadFactoryBuilder;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
@@ -22,6 +24,11 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
+import java.util.concurrent.ArrayBlockingQueue;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.ThreadFactory;
+import java.util.concurrent.ThreadPoolExecutor;
+import java.util.concurrent.TimeUnit;
 
 /**
  * <p>
@@ -51,6 +58,22 @@ public class BankReportController {
     StockBaseInfoService stockBaseInfoService;
     @Autowired
     private BaseInfoDictMapper baseInfoDictMapper;
+    @Autowired
+    StockModuleMapperService stockModuleMapperService;
+
+    ExecutorService postLoanThreadPool;
+
+
+    @Autowired
+    public void PostLoanController() {
+        ThreadFactory threadFactory = new ThreadFactoryBuilder().setNameFormat("stock_main_thread").build();
+        this.postLoanThreadPool = new ThreadPoolExecutor(
+                10, 20, 1, TimeUnit.MINUTES,
+                new ArrayBlockingQueue<>(1000),
+                threadFactory);
+    }
+
+
     @WebLog(value = "")
     @RequestMapping(path = "/refreshStockPrice", method = RequestMethod.POST)
     public CommonResult refreshStockPrice(@Validated @RequestBody StockPriceRequestDTO dto) {
@@ -70,6 +93,39 @@ public class BankReportController {
     public CommonResult refreshStockBaseInfo(@Validated @RequestBody StockPriceRequestDTO dto) {
         stockBaseService.refreshStockBaseInfo(dto);
         return CommonResult.success("刷新成功");
+    }
+
+    /**
+     * 刷新当前代码的所有基础信息
+     *
+     * @param dto
+     * @return
+     */
+    @WebLog(value = "")
+    @RequestMapping(path = "/refreshAllStockBaseInfo", method = RequestMethod.POST)
+    public CommonResult refreshAllStockBaseInfo(@Validated @RequestBody StockPriceRequestDTO dto) throws InterruptedException {
+        for (int i = 0; i < 1000000; i += 10000) {
+            final int sb=i;
+            postLoanThreadPool.submit(() -> {
+                for (int j = sb; j < sb + 10000; j++) {
+                    StockPriceRequestDTO stockPriceRequestDTO = new StockPriceRequestDTO();
+                    String zero = getZero(6 - String.valueOf(j).length()) + j;
+                    stockPriceRequestDTO.setCode(zero);
+                    stockBaseService.refreshStockBaseInfo(stockPriceRequestDTO);
+                }
+
+            });
+        }
+
+        return CommonResult.success("刷新成功");
+    }
+
+    private String getZero(int n) {
+        StringBuffer sb = new StringBuffer();
+        for (int i = 0; i < n; i++) {
+            sb.append("0");
+        }
+        return sb.toString();
     }
 
     /**
@@ -96,15 +152,29 @@ public class BankReportController {
     @WebLog(value = "")
     @RequestMapping(path = "/refreshStockBaseInfoDict", method = RequestMethod.POST)
     public CommonResult refreshStockBaseInfoDict(@Validated @RequestBody StockPriceRequestDTO dto) throws InterruptedException {
-        for(int i=Integer.valueOf(dto.getCode());i<=217;i++){
+        for (int i = Integer.valueOf(dto.getCode()); i <= 217; i++) {
             dto.setCode(String.valueOf(i));
             try {
                 stockBaseInfoService.refreshModuleBaseInfo(dto);
-            }catch (Exception e){
-                return CommonResult.failed("到达"+i+"中断");
+            } catch (Exception e) {
+                return CommonResult.failed("到达" + i + "中断");
             }
             Thread.sleep(1000);
         }
+        return CommonResult.success("刷新成功");
+    }
+
+    /**
+     * 寻找股票与所属概念映射
+     *
+     * @param dto
+     * @return
+     * @throws InterruptedException
+     */
+    @WebLog(value = "")
+    @RequestMapping(path = "/refreshStockModuleMapper", method = RequestMethod.POST)
+    public CommonResult refreshStockModuleMapper(@Validated @RequestBody StockPriceRequestDTO dto) throws InterruptedException {
+        stockModuleMapperService.refreshStockModuleMapper(dto);
         return CommonResult.success("刷新成功");
     }
 }
