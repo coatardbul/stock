@@ -1,5 +1,7 @@
 package com.coatardbul.stock.common.exception.handle;
 
+import com.coatardbul.stock.common.api.CommonResult;
+import com.coatardbul.stock.common.exception.BusinessException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -11,7 +13,6 @@ import javax.validation.ConstraintViolationException;
 @Component
 @Slf4j
 @ControllerAdvice
-
 public class UnifiedExceptionHandler {
     /**
      * 绑定的异常
@@ -20,17 +21,22 @@ public class UnifiedExceptionHandler {
      */
     @ExceptionHandler(value = ConstraintViolationException.class)
     @ResponseBody
-    public String fjlksdj(ConstraintViolationException e) {
+    public String constraintViolation(ConstraintViolationException e) {
         log.info(e.getMessage(),e);
         return "11111";
     }
 
+    @ExceptionHandler({BusinessException.class})
+    @ResponseBody
+    public CommonResult business(BusinessException e) {
+        return CommonResult.failed(e.getMessage());
+    }
+
     @ExceptionHandler({Exception.class})
     @ResponseBody
-    public String fjlk12321sdj(Exception e) {
+    public CommonResult fjlk12321sdj(Exception e) {
         log.info(e.getMessage(),e);
-        log.info("此类夫在enum定义"+e.getClass().getSimpleName());
-        return "222222222";
+        return CommonResult.failed(e.getMessage());
     }
 
 

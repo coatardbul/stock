@@ -15,6 +15,9 @@ import com.coatardbul.stock.service.StockModuleMapperService;
 import com.coatardbul.stock.service.StockPriceService;
 import com.coatardbul.stock.service.TerritoryBaseInfoService;
 import com.google.common.util.concurrent.ThreadFactoryBuilder;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
@@ -31,17 +34,16 @@ import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 
 /**
- * <p>
- * Note: 总分行报告列表
- * <p> TENANT_ID
+ * <p
  * Date: 2021/6/17
  *
  * @author Su Xiaolei
  */
 @Slf4j
 @RestController
+@Api(tags = "")
 @RequestMapping("/price")
-public class BankReportController {
+public class StockController {
     @Autowired
     StockPriceService stockPriceService;
     @Autowired
