@@ -17,7 +17,7 @@ public interface RiverServerFeign {
     /**
      * @return
      */
-    @RequestMapping(value = "river/getQuery", method = RequestMethod.POST)
+    @RequestMapping(value = "river/api/stockTemplate/getQuery", method = RequestMethod.POST)
     @Headers("Content-Type: application/json")
     public CommonResult<String> getQuery(StockTemplateQueryDto dto);
 

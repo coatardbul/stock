@@ -149,10 +149,10 @@ public class StockStrategyService {
             BigDecimal variance=BigDecimal.ZERO;
             for(int i=0;i<limitUpStrategy.getData().size();i++){
                 BigDecimal b = limitUpStrategy.getData().getJSONObject(i).getBigDecimal(dto.getKeyStr()).subtract(medianNum);
-                variance.add(b.multiply(b));
+                variance= variance.add(b.multiply(b));
             }
             //方差
-            variance=variance.divide(new BigDecimal(limitUpStrategy.getTotalNum()-1));
+            variance=variance.divide(new BigDecimal(limitUpStrategy.getTotalNum()-1),4, BigDecimal.ROUND_HALF_UP);
 
             result.setVariance(variance);
             result.setMedian(medianNum);
