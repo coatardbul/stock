@@ -2,6 +2,7 @@ package com.coatardbul.stock.controller;
 
 import com.coatardbul.stock.common.annotation.WebLog;
 import com.coatardbul.stock.common.api.CommonResult;
+import com.coatardbul.stock.model.dto.StockExcelStaticQueryDTO;
 import com.coatardbul.stock.model.dto.StockStaticQueryDTO;
 import com.coatardbul.stock.model.dto.StockStrategyQueryDTO;
 import com.coatardbul.stock.service.StockStrategyService;
@@ -31,23 +32,47 @@ public class StockQueryController {
     @Autowired
     StockStrategyService stockStrategyService;
 
+    @WebLog(value = "同花顺新版问财功能")
+    @RequestMapping(path = "/refreshCookie", method = RequestMethod.POST)
+    public CommonResult refreshCookie()  {
+        stockStrategyService.refreshCookie();
+        return CommonResult.success(null);
+    }
 
     /**
      * 同花顺新版问财功能
-     * @param dto
+     * @param dto   基础查询对象，支持id和问句查询
      * @return
      */
-
     @WebLog(value = "同花顺新版问财功能")
     @RequestMapping(path = "/strategy", method = RequestMethod.POST)
     public CommonResult strategy(@Validated @RequestBody StockStrategyQueryDTO dto)  {
         return CommonResult.success(stockStrategyService.strategy(dto));
     }
 
+    /**
+     * 获取当前时间的统计数据
+     * @param dto  当前时间对象，支持模板
+     * @return
+     */
     @WebLog(value = "获取连板标准差，中位数，adjs")
     @RequestMapping(path = "/getStatic", method = RequestMethod.POST)
     public CommonResult getStatic(@Validated @RequestBody StockStaticQueryDTO dto)  {
         return CommonResult.success(stockStrategyService.getStatic(dto));
     }
 
+    @WebLog(value = "获取连板标准差，中位数，adjs")
+    @RequestMapping(path = "/saveExcel", method = RequestMethod.POST)
+    public CommonResult saveExcel(@Validated @RequestBody StockExcelStaticQueryDTO  dto)  {
+        stockStrategyService.saveExcel(dto);
+        return CommonResult.success(null);
+    }
+
+
+    @WebLog(value = "保存连板标准差，中位数，adjs")
+    @RequestMapping(path = "/saveDate", method = RequestMethod.POST)
+    public CommonResult saveDate(@Validated @RequestBody StockExcelStaticQueryDTO  dto)  {
+        stockStrategyService.saveDate(dto);
+        return CommonResult.success(null);
+    }
 }

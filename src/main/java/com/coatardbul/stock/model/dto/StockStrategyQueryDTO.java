@@ -13,16 +13,13 @@ import lombok.Data;
 @Data
 public class StockStrategyQueryDTO {
 
-    private String templateId;
+    private String riverStockTemplateId;
 
     private String dateStr;
     /**
      * 查询字符串
      */
     private String queryStr;
-
-
-    private String cookie;
 
     /**
      * 页码相关

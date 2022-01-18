@@ -14,20 +14,57 @@ import java.math.BigDecimal;
  */
 @Data
 public class StockStaticBO {
+    private String dateStr;
+
 
     /**
-     * 方差
+     * 标准差
      */
-    private BigDecimal variance;
+    private BigDecimal standardDeviation;
+
+
     /**
      * 中位数
      */
     private BigDecimal median;
+
+    /**
+     * 标的数
+     */
+    private Integer raiseLimitNum;
     /**
      * adjs
      */
     private Integer adjs;
 
+    /**
+     * 标准差
+     */
+    private BigDecimal standardDeviationOne;
 
 
+    /**
+     * 中位数
+     */
+    private BigDecimal medianOne;
+
+    /**
+     * 标的数
+     */
+    private Integer raiseLimitNumOne;
+    /**
+     * 标准差
+     */
+    private BigDecimal standardDeviationTwo;
+
+
+    /**
+     * 中位数
+     */
+    private BigDecimal medianTwo;
+
+    /**
+     * 标的数
+     */
+    private Integer raiseLimitNumTwo;
 }

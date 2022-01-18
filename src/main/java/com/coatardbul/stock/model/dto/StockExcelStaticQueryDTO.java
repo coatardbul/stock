@@ -11,10 +11,14 @@ import lombok.Data;
  * @author Su Xiaolei
  */
 @Data
-public class StockStaticQueryDTO extends  StockStrategyQueryBaseDTO{
+public class StockExcelStaticQueryDTO extends  StockStrategyQueryBaseDTO{
 
-    private String dateStr;
 
+
+    private String dateBeginStr;
+
+
+    private String dateEndStr;
 
 
 }
