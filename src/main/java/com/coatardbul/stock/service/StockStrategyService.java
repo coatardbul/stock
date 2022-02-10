@@ -3,6 +3,7 @@ package com.coatardbul.stock.service;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.coatardbul.stock.common.api.CommonResult;
+import com.coatardbul.stock.common.constants.Constant;
 import com.coatardbul.stock.common.constants.CookieEnum;
 import com.coatardbul.stock.common.exception.BusinessException;
 import com.coatardbul.stock.common.util.BigRoot;
@@ -43,6 +44,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -294,10 +296,12 @@ public class StockStrategyService {
         List<String> data = date.getData();
         //根据dto，日期查询信息
         for (String dateStr : data) {
-            stockDateStaticMapper.deleteByPrimaryKey(dateStr);
-            StockStaticQueryDTO temp = convert(dto, dateStr);
-            StockStaticBO aStatic = getStatic(temp);
-            insertDate(aStatic);
+            Constant.dateJobThreadPool.execute(()->{
+                stockDateStaticMapper.deleteByPrimaryKey(dateStr);
+                StockStaticQueryDTO temp = convert(dto, dateStr);
+                StockStaticBO aStatic = getStatic(temp);
+                insertDate(aStatic);
+            });
         }
 
     }
@@ -558,5 +562,11 @@ public class StockStrategyService {
     private String getOrderStr(String dateStr) {
         String s = dateStr.replaceAll("-", "");
         return "竞价涨幅[" + s + "]";
+    }
+
+    public List<StockDateStatic> getAllStatic(StockExcelStaticQueryDTO dto) {
+        List<StockDateStatic> stockDateStatics = stockDateStaticMapper.selectAllByDateBetweenEqual(dto.getDateBeginStr(), dto.getDateEndStr());
+
+        return stockDateStatics.stream().sorted(Comparator.comparing(StockDateStatic::getDate)).collect(Collectors.toList());
     }
 }

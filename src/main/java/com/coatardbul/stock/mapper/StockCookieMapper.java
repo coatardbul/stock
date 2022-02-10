@@ -1,9 +1,11 @@
 package com.coatardbul.stock.mapper;
+import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 import com.coatardbul.stock.model.entity.StockCookie;
 
 import java.util.List;
-
+@Mapper
 public interface StockCookieMapper {
     int deleteByPrimaryKey(String id);
 
@@ -19,6 +21,8 @@ public interface StockCookieMapper {
 
 
     List<StockCookie> selectAll();
+
+
 
 
 }

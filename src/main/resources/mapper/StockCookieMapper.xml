@@ -96,4 +96,6 @@
     <include refid="Base_Column_List" />
     from stock_cookie
   </select>
+
+
 </mapper>

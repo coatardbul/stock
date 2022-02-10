@@ -61,6 +61,14 @@ public class StockQueryController {
         return CommonResult.success(stockStrategyService.getStatic(dto));
     }
 
+
+    @WebLog(value = "获取连板标准差，中位数，adjs")
+    @RequestMapping(path = "/getAllStatic", method = RequestMethod.POST)
+    public CommonResult getAllStatic(@Validated @RequestBody StockExcelStaticQueryDTO  dto)  {
+
+        return CommonResult.success( stockStrategyService.getAllStatic(dto));
+    }
+
     @WebLog(value = "获取连板标准差，中位数，adjs")
     @RequestMapping(path = "/saveExcel", method = RequestMethod.POST)
     public CommonResult saveExcel(@Validated @RequestBody StockExcelStaticQueryDTO  dto)  {
@@ -75,4 +83,6 @@ public class StockQueryController {
         stockStrategyService.saveDate(dto);
         return CommonResult.success(null);
     }
+
+
 }

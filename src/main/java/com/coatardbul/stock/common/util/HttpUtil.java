@@ -20,6 +20,7 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.Arrays;
 import java.util.List;
 
 @Slf4j
@@ -123,7 +124,6 @@ public class HttpUtil {
      * @return
      */
     public static String doPost(String url, String jsonString, List<Header> headerList) {
-
         // 获得Http客户端(可以理解为:你得先有一个浏览器;注意:实际上HttpClient与浏览器是不一样的)
         CloseableHttpClient httpClient = HttpClientBuilder.create().build();
         // 创建Post请求
@@ -139,8 +139,7 @@ public class HttpUtil {
         StringEntity entity = new StringEntity(jsonString, "UTF-8");
         // post请求是将参数放在请求体里面传过去的;这里将entity放入post请求体中
         httpPost.setEntity(entity);
-
-
+        log.info("请求地址："+httpPost.toString()+"请求头信息："+ Arrays.toString(httpPost.getAllHeaders())+"请求体："+jsonString);
         // 响应模型
         CloseableHttpResponse response = null;
         try {
@@ -148,7 +147,7 @@ public class HttpUtil {
             response = httpClient.execute(httpPost);
             // 从响应模型中获取响应实体
             HttpEntity responseEntity = response.getEntity();
-            log.info("响应状态为:" + response.getStatusLine());
+            log.info(httpPost.toString()+"响应状态为:" + response.getStatusLine());
             if (responseEntity != null) {
                 log.info("响应内容长度为:" + responseEntity.getContentLength());
                 String responseStr = EntityUtils.toString(responseEntity);
