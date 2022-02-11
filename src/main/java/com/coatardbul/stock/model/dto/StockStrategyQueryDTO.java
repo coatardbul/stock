@@ -4,7 +4,9 @@ import lombok.Data;
 
 /**
  * <p>
- * Note:
+ * Note:支持两种模式
+ * 1.传入id，日期，时间
+ * 2.直接传入问句
  * <p>
  * Date: 2022/1/5
  *
@@ -15,7 +17,15 @@ public class StockStrategyQueryDTO {
 
     private String riverStockTemplateId;
 
+    /**
+     * YYYY-MM-DD
+     */
     private String dateStr;
+
+    /**
+     * HH:MM
+     */
+    private String timeStr;
     /**
      * 查询字符串
      */

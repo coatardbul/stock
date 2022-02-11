@@ -5,7 +5,8 @@ import com.coatardbul.stock.common.api.CommonResult;
 import com.coatardbul.stock.model.dto.StockExcelStaticQueryDTO;
 import com.coatardbul.stock.model.dto.StockStaticQueryDTO;
 import com.coatardbul.stock.model.dto.StockStrategyQueryDTO;
-import com.coatardbul.stock.service.StockStrategyService;
+import com.coatardbul.stock.service.statistic.StockDayStaticService;
+import com.coatardbul.stock.service.statistic.StockStrategyService;
 import io.swagger.annotations.Api;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,15 +28,19 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @Api(tags = "股票查询")
 @RequestMapping("/stockQuery")
-public class StockQueryController {
+public class StockDayStaticController {
+
+    @Autowired
+    StockDayStaticService stockDayStaticService;
 
     @Autowired
     StockStrategyService stockStrategyService;
 
+
     @WebLog(value = "同花顺新版问财功能")
     @RequestMapping(path = "/refreshCookie", method = RequestMethod.POST)
     public CommonResult refreshCookie()  {
-        stockStrategyService.refreshCookie();
+        stockDayStaticService.refreshCookie();
         return CommonResult.success(null);
     }
 
@@ -58,7 +63,7 @@ public class StockQueryController {
     @WebLog(value = "获取连板标准差，中位数，adjs")
     @RequestMapping(path = "/getStatic", method = RequestMethod.POST)
     public CommonResult getStatic(@Validated @RequestBody StockStaticQueryDTO dto)  {
-        return CommonResult.success(stockStrategyService.getStatic(dto));
+        return CommonResult.success(stockDayStaticService.getStatic(dto));
     }
 
 
@@ -66,13 +71,13 @@ public class StockQueryController {
     @RequestMapping(path = "/getAllStatic", method = RequestMethod.POST)
     public CommonResult getAllStatic(@Validated @RequestBody StockExcelStaticQueryDTO  dto)  {
 
-        return CommonResult.success( stockStrategyService.getAllStatic(dto));
+        return CommonResult.success( stockDayStaticService.getAllStatic(dto));
     }
 
     @WebLog(value = "获取连板标准差，中位数，adjs")
     @RequestMapping(path = "/saveExcel", method = RequestMethod.POST)
     public CommonResult saveExcel(@Validated @RequestBody StockExcelStaticQueryDTO  dto)  {
-        stockStrategyService.saveExcel(dto);
+        stockDayStaticService.saveExcel(dto);
         return CommonResult.success(null);
     }
 
@@ -80,7 +85,7 @@ public class StockQueryController {
     @WebLog(value = "保存连板标准差，中位数，adjs")
     @RequestMapping(path = "/saveDate", method = RequestMethod.POST)
     public CommonResult saveDate(@Validated @RequestBody StockExcelStaticQueryDTO  dto)  {
-        stockStrategyService.saveDate(dto);
+        stockDayStaticService.saveDate(dto);
         return CommonResult.success(null);
     }
 

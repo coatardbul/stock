@@ -1,4 +1,4 @@
-package com.coatardbul.stock.controller;
+package com.coatardbul.stock.controller.unuse;
 
 
 import com.coatardbul.stock.common.annotation.WebLog;

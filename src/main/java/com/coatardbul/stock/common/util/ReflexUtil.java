@@ -82,6 +82,35 @@ public class ReflexUtil {
         return num;
     }
 
+    /**
+     * @param obj
+     * @return 读取当前对象的属性值的总数
+     */
+    public static void singleReadAStringAttributeList(Object obj,List<String> result) throws IllegalAccessException {
+        //得到所有属性
+        Field[] fields = obj.getClass().getDeclaredFields();
+
+        for (int i = 0; i < fields.length; i++) {//遍历
+            //得到属性
+            Field field = fields[i];
+            //打开私有访问
+            field.setAccessible(true);
+            //获取属性
+            String name = field.getName();
+            //获取属性值  .get(object)
+            Object ownValue = field.get(obj);
+
+            if(field.getGenericType().toString().contains("String")  ) {
+                result.add((String) ownValue);
+            }
+        }
+    }
+
+
+
+
+
+
     public static <T> int singleReadAttributeCount(Class<T> tClass) {
         //得到所有属性
         return tClass.getDeclaredFields().length;

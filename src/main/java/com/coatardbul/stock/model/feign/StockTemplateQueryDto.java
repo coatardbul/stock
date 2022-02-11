@@ -11,7 +11,10 @@ import javax.validation.constraints.NotBlank;
 public class StockTemplateQueryDto {
     @NotBlank(message = "id不能为空")
     private String id;
-
+    /**
+     * HH:mm
+     */
+    private String  timeStr;
     /**
     * 模板名称
     */

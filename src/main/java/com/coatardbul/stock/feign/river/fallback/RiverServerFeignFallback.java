@@ -7,6 +7,7 @@ import com.coatardbul.stock.feign.river.RiverServerFeign;
 import com.coatardbul.stock.model.feign.CalendarDateDTO;
 import com.coatardbul.stock.model.feign.StockTemplateDto;
 import com.coatardbul.stock.model.feign.StockTemplateQueryDto;
+import com.coatardbul.stock.model.feign.StockTimeInterval;
 import feign.hystrix.FallbackFactory;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
@@ -27,6 +28,18 @@ public class RiverServerFeignFallback implements FallbackFactory<RiverServerFeig
         return new RiverServerFeign() {
             @Override
             public CommonResult<String> getQuery(StockTemplateQueryDto dto) {
+                log.error("调用失败", throwable);
+                return null;
+            }
+
+            /**
+             * 间隔数据
+             *
+             * @param dto
+             * @return
+             */
+            @Override
+            public CommonResult<List<String>> getTimeIntervalList(StockTimeInterval dto) {
                 log.error("调用失败", throwable);
                 return null;
             }

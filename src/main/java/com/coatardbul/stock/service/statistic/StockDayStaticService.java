@@ -1,22 +1,16 @@
-package com.coatardbul.stock.service;
+package com.coatardbul.stock.service.statistic;
 
-import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.coatardbul.stock.common.api.CommonResult;
 import com.coatardbul.stock.common.constants.Constant;
 import com.coatardbul.stock.common.constants.CookieEnum;
-import com.coatardbul.stock.common.exception.BusinessException;
 import com.coatardbul.stock.common.util.BigRoot;
-import com.coatardbul.stock.common.util.HttpUtil;
-import com.coatardbul.stock.common.util.JsonUtil;
 import com.coatardbul.stock.feign.river.RiverServerFeign;
 import com.coatardbul.stock.mapper.StockCookieMapper;
 import com.coatardbul.stock.mapper.StockDateStaticMapper;
-import com.coatardbul.stock.mapper.StockExcelTemplateMapper;
 import com.coatardbul.stock.model.bo.StockStaticBO;
 import com.coatardbul.stock.model.bo.StockStaticBaseBO;
 import com.coatardbul.stock.model.bo.StrategyBO;
-import com.coatardbul.stock.model.bo.StrategyQueryBO;
 import com.coatardbul.stock.model.dto.StockExcelStaticQueryDTO;
 import com.coatardbul.stock.model.dto.StockStaticQueryDTO;
 import com.coatardbul.stock.model.dto.StockStrategyQueryDTO;
@@ -24,10 +18,10 @@ import com.coatardbul.stock.model.entity.StockCookie;
 import com.coatardbul.stock.model.entity.StockDateStatic;
 import com.coatardbul.stock.model.entity.StockExcelTemplate;
 import com.coatardbul.stock.model.feign.CalendarDateDTO;
-import com.coatardbul.stock.model.feign.StockTemplateQueryDto;
+import com.coatardbul.stock.service.StockExcelTemplateService;
+import com.coatardbul.stock.service.statistic.StockStrategyService;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang.StringUtils;
-import org.apache.http.Header;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
@@ -50,7 +44,7 @@ import java.util.stream.Collectors;
 
 /**
  * <p>
- * Note:
+ * Note:策略处理
  * <p>
  * Date: 2022/1/5
  *
@@ -58,7 +52,7 @@ import java.util.stream.Collectors;
  */
 @Slf4j
 @Service
-public class StockStrategyService {
+public class StockDayStaticService {
 
     @Autowired
     RiverServerFeign riverServerFeign;
@@ -66,6 +60,10 @@ public class StockStrategyService {
     StockDateStaticMapper stockDateStaticMapper;
     @Autowired
     StockExcelTemplateService stockExcelTemplateService;
+
+    @Autowired
+    StockStrategyService stockStrategyService;
+    //同花顺问财地址
     private static final String STRATEGY_URL = "http://www.iwencai.com/customized/chart/get-robot-data";
 
     private static final String STATUS_CODE = "status_code";
@@ -89,93 +87,6 @@ public class StockStrategyService {
     @Autowired
     StockCookieMapper stockCookieMapper;
 
-    /**
-     * 获取默认策略查询对象
-     *
-     * @return
-     */
-    private StrategyQueryBO getDefaultStrategyQuery() {
-        StrategyQueryBO result = new StrategyQueryBO();
-        result.setSecondary_intent("stock");
-        result.setLog_info("{\\\"input_type\\\":\\\"typewrite\\\"}");
-        result.setIwcpro(1);
-        result.setSource("Ths_iwencai_Xuangu");
-        result.setVersion("2.0");
-        result.setPerpage(100);
-        result.setPage(1);
-//        result.setQuery_area();
-//        result.setBlock_list();
-
-        result.setAdd_info("");
-        return result;
-    }
-
-
-    public StrategyBO strategy(StockStrategyQueryDTO dto) throws BusinessException {
-        StrategyBO result = new StrategyBO();
-        //默认信息
-        StrategyQueryBO defaultStrategyQuery = getDefaultStrategyQuery();
-        //请求dto信息
-        setRequestInfo(dto, defaultStrategyQuery);
-        //http请求
-        String jsonString = JsonUtil.toJson(defaultStrategyQuery);
-        List<Header> headerList = new ArrayList<>();
-        Header cookie = HttpUtil.getHead("Cookie", cookieValue);
-        headerList.add(cookie);
-        String response = null;
-        response = HttpUtil.doPost(STRATEGY_URL, jsonString, headerList);
-        if (StringUtils.isNotBlank(response)) {
-            //解析返回体
-            JSONObject requestObject = JSONObject.parseObject(response);
-            if (!STATUS_SUCCESS.equals(requestObject.getString(STATUS_CODE))) {
-                throw new BusinessException("请求同花顺策略问句异常，" + requestObject.getString(STATUS_MSG));
-            }
-            //基础信息
-            JSONObject baseObject = requestObject.getJSONObject("data").getJSONArray("answer")
-                    .getJSONObject(0).getJSONArray("txt").getJSONObject(0)
-                    .getJSONObject("content").getJSONArray("components")
-                    .getJSONObject(0).getJSONObject("data");
-            //解析的数据信息
-            JSONArray data = baseObject.getJSONArray("datas");
-            //总数
-            Integer totalNum = baseObject.getJSONObject("meta").getJSONObject("extra").getObject("row_count", Integer.class);
-            result.setData(data);
-            result.setTotalNum(totalNum);
-        }
-        return result;
-
-    }
-
-    /**
-     * 将请求中的dto转换成策略对象
-     *
-     * @param dto
-     * @param defaultStrategyQuery
-     */
-    private void setRequestInfo(StockStrategyQueryDTO dto, StrategyQueryBO defaultStrategyQuery) {
-        if (dto.getPageSize() != null && dto.getPage() != null) {
-            defaultStrategyQuery.setPerpage(dto.getPageSize());
-            defaultStrategyQuery.setPage(dto.getPage());
-        } else {
-            defaultStrategyQuery.setPerpage(300);
-            defaultStrategyQuery.setPage(1);
-        }
-        defaultStrategyQuery.setSort_key(dto.getOrderStr());
-        defaultStrategyQuery.setSort_order(dto.getOrderBy());
-        // 此接口可以通过调用river获取实时动态数据
-        defaultStrategyQuery.setQuestion(dto.getQueryStr());
-        if (StringUtils.isNotBlank(dto.getRiverStockTemplateId())) {
-            //feign
-            StockTemplateQueryDto stockTemplateQueryDto = new StockTemplateQueryDto();
-            stockTemplateQueryDto.setId(dto.getRiverStockTemplateId());
-            stockTemplateQueryDto.setDateStr(dto.getDateStr());
-            CommonResult<String> riverServerFeignResult = riverServerFeign.getQuery(stockTemplateQueryDto);
-            if (riverServerFeignResult != null) {
-                defaultStrategyQuery.setQuestion(riverServerFeignResult.getData());
-            }
-        }
-
-    }
 
 
     /**
@@ -210,14 +121,14 @@ public class StockStrategyService {
         StockStaticBO result = new StockStaticBO();
         result.setDateStr(dto.getDateStr());
         //上涨家数
-        StrategyBO riseStrategy = strategy(convert(dto, excelTemplateInfo.getRiseId(), excelTemplateInfo.getOrderStr(), null));
+        StrategyBO riseStrategy = stockStrategyService.strategy(convert(dto, excelTemplateInfo.getRiseId(), excelTemplateInfo.getOrderStr(), null));
         //下跌家数
-        StrategyBO failStrategy = strategy(convert(dto, excelTemplateInfo.getFailId(), excelTemplateInfo.getOrderStr(), null));
+        StrategyBO failStrategy = stockStrategyService.strategy(convert(dto, excelTemplateInfo.getFailId(), excelTemplateInfo.getOrderStr(), null));
         //上涨家数-下跌家数
         result.setAdjs(riseStrategy.getTotalNum() - failStrategy.getTotalNum());
 
         //涨停
-        StrategyBO limitUpStrategy = strategy(convert(dto, excelTemplateInfo.getLimitUpId(),
+        StrategyBO limitUpStrategy = stockStrategyService.strategy(convert(dto, excelTemplateInfo.getLimitUpId(),
                 excelTemplateInfo.getOrderStr(), excelTemplateInfo.getOrderBy()));
         //基本统计信息
         StockStaticBaseBO staticBase = getStaticBase(limitUpStrategy, excelTemplateInfo.getOrderStr());
@@ -227,7 +138,7 @@ public class StockStrategyService {
 
         //涨停类型1
         if (StringUtils.isNotBlank(excelTemplateInfo.getLimitUpOneId())) {
-            StrategyBO limitUpStrategy1 = strategy(convert(dto, excelTemplateInfo.getLimitUpOneId(), excelTemplateInfo.getOrderStr(), excelTemplateInfo.getOrderBy()));
+            StrategyBO limitUpStrategy1 = stockStrategyService.strategy(convert(dto, excelTemplateInfo.getLimitUpOneId(), excelTemplateInfo.getOrderStr(), excelTemplateInfo.getOrderBy()));
             //基本统计信息
             StockStaticBaseBO staticBase1 = getStaticBase(limitUpStrategy1, excelTemplateInfo.getOrderStr());
             result.setStandardDeviationOne(staticBase1.getStandardDeviation());
@@ -236,7 +147,7 @@ public class StockStrategyService {
         }
         //涨停类型2
         if (StringUtils.isNotBlank(excelTemplateInfo.getLimitUpTwoId())) {
-            StrategyBO limitUpStrategy1 = strategy(convert(dto, excelTemplateInfo.getLimitUpTwoId(), excelTemplateInfo.getOrderStr(), excelTemplateInfo.getOrderBy()));
+            StrategyBO limitUpStrategy1 = stockStrategyService.strategy(convert(dto, excelTemplateInfo.getLimitUpTwoId(), excelTemplateInfo.getOrderStr(), excelTemplateInfo.getOrderBy()));
             //基本统计信息
             StockStaticBaseBO staticBase1 = getStaticBase(limitUpStrategy1, excelTemplateInfo.getOrderStr());
             result.setStandardDeviationTwo(staticBase1.getStandardDeviation());
