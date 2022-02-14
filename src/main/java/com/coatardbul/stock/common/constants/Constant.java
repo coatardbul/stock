@@ -34,13 +34,40 @@ public class Constant {
                     new ArrayBlockingQueue<Runnable>(1000));
 
     /**
-     * 每日情绪统计
+     * 每日情绪统计,
+     * 模板，时间间隔存入
      */
-    public static ThreadPoolExecutor emotionJobThreadPool =
+    public static ThreadPoolExecutor emotionTemplateAndIntervalByDateThreadPool =
             new ThreadPoolExecutor(
                     Runtime.getRuntime().availableProcessors(),
                     100,
                     30,
                     TimeUnit.MINUTES,
                     new ArrayBlockingQueue<Runnable>(1000));
+
+
+    /**
+     * 每日情绪统计,
+     * 时间间隔存入
+     */
+    public static ThreadPoolExecutor emotionIntervalByDateThreadPool =
+            new ThreadPoolExecutor(
+                    Runtime.getRuntime().availableProcessors(),
+                    100,
+                    30,
+                    TimeUnit.MINUTES,
+                    new ArrayBlockingQueue<Runnable>(1000));
+
+
+    /**
+     * 日期区间情绪统计,统计涨跌幅，
+     */
+    public static ThreadPoolExecutor emotionByDateRangeThreadPool =
+            new ThreadPoolExecutor(
+                    Runtime.getRuntime().availableProcessors(),
+                    100,
+                    30,
+                    TimeUnit.MINUTES,
+                    new ArrayBlockingQueue<Runnable>(1000));
+
 }

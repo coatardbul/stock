@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.coatardbul.stock.mapper.StockMinuterEmotionMapper">
+  <resultMap id="BaseResultMap" type="com.coatardbul.stock.model.entity.StockMinuterEmotion">
+    <!--@mbg.generated-->
+    <!--@Table stock_minuter_emotion-->
+    <id column="id" jdbcType="VARCHAR" property="id" />
+    <result column="date" jdbcType="VARCHAR" property="date" />
+    <result column="date_time_Array" jdbcType="LONGVARCHAR" property="dateTimeArray" />
+    <result column="object_static_Array" jdbcType="LONGVARCHAR" property="objectStaticArray" />
+    <result column="object_sign" jdbcType="VARCHAR" property="objectSign" />
+    <result column="time_interval" jdbcType="INTEGER" property="timeInterval" />
+    <result column="template_id" jdbcType="VARCHAR" property="templateId" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    <!--@mbg.generated-->
+    id, `date`, date_time_Array, object_static_Array, object_sign, time_interval, template_id, 
+    `name`
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    <!--@mbg.generated-->
+    select 
+    <include refid="Base_Column_List" />
+    from stock_minuter_emotion
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    <!--@mbg.generated-->
+    delete from stock_minuter_emotion
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.coatardbul.stock.model.entity.StockMinuterEmotion">
+    <!--@mbg.generated-->
+    insert into stock_minuter_emotion (id, `date`, date_time_Array, 
+      object_static_Array, object_sign, time_interval, 
+      template_id, `name`)
+    values (#{id,jdbcType=VARCHAR}, #{date,jdbcType=VARCHAR}, #{dateTimeArray,jdbcType=LONGVARCHAR}, 
+      #{objectStaticArray,jdbcType=LONGVARCHAR}, #{objectSign,jdbcType=VARCHAR}, #{timeInterval,jdbcType=INTEGER}, 
+      #{templateId,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.coatardbul.stock.model.entity.StockMinuterEmotion">
+    <!--@mbg.generated-->
+    insert into stock_minuter_emotion
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="date != null">
+        `date`,
+      </if>
+      <if test="dateTimeArray != null">
+        date_time_Array,
+      </if>
+      <if test="objectStaticArray != null">
+        object_static_Array,
+      </if>
+      <if test="objectSign != null">
+        object_sign,
+      </if>
+      <if test="timeInterval != null">
+        time_interval,
+      </if>
+      <if test="templateId != null">
+        template_id,
+      </if>
+      <if test="name != null">
+        `name`,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="date != null">
+        #{date,jdbcType=VARCHAR},
+      </if>
+      <if test="dateTimeArray != null">
+        #{dateTimeArray,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="objectStaticArray != null">
+        #{objectStaticArray,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="objectSign != null">
+        #{objectSign,jdbcType=VARCHAR},
+      </if>
+      <if test="timeInterval != null">
+        #{timeInterval,jdbcType=INTEGER},
+      </if>
+      <if test="templateId != null">
+        #{templateId,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null">
+        #{name,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.coatardbul.stock.model.entity.StockMinuterEmotion">
+    <!--@mbg.generated-->
+    update stock_minuter_emotion
+    <set>
+      <if test="date != null">
+        `date` = #{date,jdbcType=VARCHAR},
+      </if>
+      <if test="dateTimeArray != null">
+        date_time_Array = #{dateTimeArray,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="objectStaticArray != null">
+        object_static_Array = #{objectStaticArray,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="objectSign != null">
+        object_sign = #{objectSign,jdbcType=VARCHAR},
+      </if>
+      <if test="timeInterval != null">
+        time_interval = #{timeInterval,jdbcType=INTEGER},
+      </if>
+      <if test="templateId != null">
+        template_id = #{templateId,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null">
+        `name` = #{name,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.coatardbul.stock.model.entity.StockMinuterEmotion">
+    <!--@mbg.generated-->
+    update stock_minuter_emotion
+    set `date` = #{date,jdbcType=VARCHAR},
+      date_time_Array = #{dateTimeArray,jdbcType=LONGVARCHAR},
+      object_static_Array = #{objectStaticArray,jdbcType=LONGVARCHAR},
+      object_sign = #{objectSign,jdbcType=VARCHAR},
+      time_interval = #{timeInterval,jdbcType=INTEGER},
+      template_id = #{templateId,jdbcType=VARCHAR},
+      `name` = #{name,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+
+
+
+  <!--auto generated by MybatisCodeHelper on 2022-02-12-->
+  <select id="selectAllByDateAndObjectSignAndTimeInterval" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List"/>
+    from stock_minuter_emotion
+    where `date`=#{date,jdbcType=VARCHAR} and object_sign=#{objectSign,jdbcType=VARCHAR} and
+    time_interval=#{timeInterval,jdbcType=INTEGER}
+  </select>
+
+  <!--auto generated by MybatisCodeHelper on 2022-02-12-->
+
+
+  <resultMap id="StaticEmotion" type="com.coatardbul.stock.model.dto.StockEmotionStaticDTO">
+    <result column="date" property="date"/>
+    <result column="object_sign" property="objectSign"/>
+    <result column="time_interval" property="timeInterval"/>
+    <result column="time_Interval_Count" property="timeIntervalCount"/>
+  </resultMap>
+  <select id="selectStaticInfoByCondition" resultMap="StaticEmotion">
+    select
+    date,object_sign,time_interval,count(time_interval) as time_Interval_Count
+    from stock_minuter_emotion
+    <where>
+      <if test="date != null and date != ''">
+        and `date`=#{date,jdbcType=VARCHAR}
+      </if>
+      <if test="objectSign != null and objectSign != ''">
+        and object_sign=#{objectSign,jdbcType=VARCHAR}
+      </if>
+      <if test="timeInterval != null">
+        and time_interval=#{timeInterval,jdbcType=INTEGER}
+      </if>
+    </where>
+    group by date,object_sign,time_interval
+  </select>
+</mapper>

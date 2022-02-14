@@ -3,19 +3,21 @@ package com.coatardbul.stock.model.dto;
 import lombok.Data;
 
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
 
 /**
     *
     */
 @Data
-public class StockEmotionDayDTO {
+public class StockEmotionRangeDayDTO {
     /**
      * YYYY-MM-DD
      */
-    @NotBlank(message = "YYYY-MM-DD不能为空")
-    private String dateStr;
+    private String beginDateStr;
 
+    /**
+     * YYYY-MM-DD
+     */
+    private String endDateStr;
 
     /**
      * 对象枚举标识
@@ -23,10 +25,6 @@ public class StockEmotionDayDTO {
     @NotBlank(message = "对象标识不能为空")
     private String objectEnumSign;
 
-    /**
-     * 时间间隔
-     */
-//    @NotNull(message = "时间间隔不能为空")
-    private Integer TimeInterval;
+
 
 }

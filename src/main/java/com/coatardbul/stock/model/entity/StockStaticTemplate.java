@@ -33,9 +33,4 @@ public class StockStaticTemplate {
      * 对象体
      */
     private String objectStr;
-
-    /**
-     * 时间间隔，对于天，默认为1，分钟需要设置间隔时间
-     */
-    private Integer timeInterval;
 }

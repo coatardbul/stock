@@ -9,24 +9,21 @@ import javax.validation.constraints.NotNull;
     *
     */
 @Data
-public class StockEmotionDayDTO {
+public class StockEmotionQueryDTO {
     /**
      * YYYY-MM-DD
      */
-    @NotBlank(message = "YYYY-MM-DD不能为空")
     private String dateStr;
 
 
     /**
      * 对象枚举标识
      */
-    @NotBlank(message = "对象标识不能为空")
     private String objectEnumSign;
 
     /**
      * 时间间隔
      */
-//    @NotNull(message = "时间间隔不能为空")
-    private Integer TimeInterval;
+    private Integer timeInterval;
 
 }

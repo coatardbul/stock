@@ -1,7 +1,6 @@
 package com.coatardbul.stock.mapper;
-import org.apache.ibatis.annotations.Param;
 
-import com.coatardbul.stock.model.entity.StockStaticTemplate;import java.util.List;
+import com.coatardbul.stock.model.entity.StockStaticTemplate;import org.apache.ibatis.annotations.Param;import java.util.List;
 
 public interface StockStaticTemplateMapper {
     int deleteByPrimaryKey(String id);
@@ -18,7 +17,5 @@ public interface StockStaticTemplateMapper {
 
     List<StockStaticTemplate> selectAll();
 
-    List<StockStaticTemplate> selectAllByObjectSign(@Param("objectSign")String objectSign);
-
-
+    List<StockStaticTemplate> selectAllByObjectSign(@Param("objectSign") String objectSign);
 }

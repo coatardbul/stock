@@ -60,12 +60,6 @@ public class StockStaticTemplateService {
         } else {
             throw new BusinessException("统计纬度枚举数据异常");
         }
-        //间隔时间验证
-        if (StaticLatitudeEnum.isNotBlankVerify(dto.getStaticLatitude(), dto.getTimeInterval())) {
-            result.setTimeInterval(dto.getTimeInterval());
-        }else {
-            throw new BusinessException("间隔时间与统计纬度不符合");
-        }
         result.setRemark(dto.getRemark());
         //todo 需要判断，暂时不判断
         result.setOrderBy(dto.getOrderBy());
@@ -91,7 +85,6 @@ public class StockStaticTemplateService {
         result.setOrderBy(dto.getOrderBy());
         result.setObjectEnumSign(dto.getObjectSign());
         result.setObjectJson(dto.getObjectStr());
-        result.setTimeInterval(dto.getTimeInterval());
         return result;
     }
     public List<StockStaticTemplateBaseDTO> findAll() {

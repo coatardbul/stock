@@ -7,6 +7,7 @@ import com.coatardbul.stock.feign.river.RiverServerFeign;
 import com.coatardbul.stock.mapper.StockExcelTemplateMapper;
 import com.coatardbul.stock.model.entity.StockExcelTemplate;
 import com.coatardbul.stock.model.feign.StockTemplateDto;
+import com.coatardbul.stock.service.romote.RiverRemoteService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -31,6 +32,8 @@ public class StockExcelTemplateService {
     RiverServerFeign riverServerFeign;
     @Autowired
     StockExcelTemplateMapper stockExcelTemplateMapper;
+    @Autowired
+    RiverRemoteService riverRemoteService;
 
     public void add(StockExcelTemplate dto) {
         dto.setId(baseServerFeign.getSnowflakeId());
@@ -69,14 +72,10 @@ public class StockExcelTemplateService {
     }
 
     private String getStockQueryTemplateName(String id) {
-        StockTemplateDto stockTemplateDto = new StockTemplateDto();
-        stockTemplateDto.setId(id);
-        CommonResult<StockTemplateDto> one = riverServerFeign.findOne(stockTemplateDto);
-        if (one == null || one.getData() == null) {
-            return "\n";
-        } else {
-            return one.getData().getName() + "\n";
-        }
+        StockTemplateDto templateById = riverRemoteService.getTemplateById(id);
+
+        return templateById.getName() + "\n";
+
     }
 
     public StockExcelTemplate getStandardInfo(String id, String dateStr) {

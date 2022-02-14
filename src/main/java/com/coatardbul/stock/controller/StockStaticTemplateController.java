@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
+
 /**
  * <p>
  * 统计纬度模板，按照天，按照分钟统计
@@ -73,9 +75,8 @@ public class StockStaticTemplateController {
      * @return
      */
     @RequestMapping(path = "/findAll", method = RequestMethod.POST)
-    public CommonResult findAll() {
+    public CommonResult<List<StockStaticTemplateBaseDTO>> findAll() {
         return CommonResult.success(stockStaticTemplateService.findAll());
     }
-
 
 }

@@ -6,18 +6,13 @@ import lombok.Data;
  * 股票情绪
  */
 @Data
-public class StockEmotion {
+public class StockDayEmotion {
     /**
      * 主键
      */
     private String id;
 
     private String date;
-
-    /**
-     * 时间数组
-     */
-    private String dateTimeArray;
 
     /**
      * 对象集合
@@ -28,16 +23,6 @@ public class StockEmotion {
      * 根据对象解析对应的数据，保留字段
      */
     private String objectSign;
-
-    /**
-     * 时间间隔，单位分钟
-     */
-    private Integer timeInterval;
-
-    /**
-     * 模板id
-     */
-    private String templateId;
 
     /**
      * 如果是组合计算，需要标注名称

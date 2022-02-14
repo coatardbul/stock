@@ -4,8 +4,8 @@ import com.coatardbul.stock.common.annotation.WebLog;
 import com.coatardbul.stock.common.api.CommonResult;
 import com.coatardbul.stock.model.dto.StockEmotionDayDTO;
 import com.coatardbul.stock.model.dto.StockEmotionDayRangeDTO;
-import com.coatardbul.stock.model.entity.StockExcelTemplate;
-import com.coatardbul.stock.service.statistic.StockEmotionService;
+import com.coatardbul.stock.model.dto.StockEmotionQueryDTO;
+import com.coatardbul.stock.service.statistic.StockMinuteEmotinStaticService;
 import io.swagger.annotations.Api;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,10 +26,10 @@ import org.springframework.web.bind.annotation.RestController;
 @Slf4j
 @RestController
 @Api(tags = "股票情绪查询")
-@RequestMapping("/stockEmotion")
+@RequestMapping("/stockMinuteStatic")
 public class StockMinuteStaticController {
     @Autowired
-    StockEmotionService stockEmotionService;
+    StockMinuteEmotinStaticService stockMinuteEmotinStaticService;
 
 
     /**
@@ -40,7 +40,7 @@ public class StockMinuteStaticController {
     @WebLog(value = "")
     @RequestMapping(path = "/refreshDay", method = RequestMethod.POST)
     public CommonResult refreshDay(@Validated @RequestBody StockEmotionDayDTO dto) throws IllegalAccessException {
-        stockEmotionService.refreshDay(dto);
+        stockMinuteEmotinStaticService.refreshDay(dto);
         return CommonResult.success(null);
     }
 
@@ -53,18 +53,28 @@ public class StockMinuteStaticController {
     @WebLog(value = "")
     @RequestMapping(path = "/refreshDayRange", method = RequestMethod.POST)
     public CommonResult refreshDayRange(@Validated @RequestBody StockEmotionDayRangeDTO dto) {
-        stockEmotionService.refreshDayRange(dto);
+        stockMinuteEmotinStaticService.refreshDayRange(dto);
         return CommonResult.success(null);
     }
 
 
     /**
-     * 获取对应时间，对应标识的统计数据
+     * 获取对应时间，对应标识的详细数据
      */
     @WebLog(value = "")
-    @RequestMapping(path = "/getDayStatic", method = RequestMethod.POST)
-    public CommonResult getDayStatic(@Validated @RequestBody StockEmotionDayDTO dto) {
-        return CommonResult.success( stockEmotionService.getDayStatic(dto));
+    @RequestMapping(path = "/getDayDetail", method = RequestMethod.POST)
+    public CommonResult getDayDetail(@Validated @RequestBody StockEmotionDayDTO dto) {
+        return CommonResult.success( stockMinuteEmotinStaticService.getDayDetail(dto));
+    }
+
+    /**
+     *
+     */
+    @WebLog(value = "")
+    @RequestMapping(path = "/getRangeDetail", method = RequestMethod.POST)
+    public CommonResult getRangeDetail(@Validated @RequestBody StockEmotionDayDTO dto) {
+        stockMinuteEmotinStaticService.getRangeDetail(dto);
+        return CommonResult.success(null);
     }
 
     /**
@@ -72,9 +82,8 @@ public class StockMinuteStaticController {
      */
     @WebLog(value = "")
     @RequestMapping(path = "/getRangeStatic", method = RequestMethod.POST)
-    public CommonResult getRangeStatic(@Validated @RequestBody StockEmotionDayDTO dto) {
-        stockEmotionService.getRangeStatic(dto);
-        return CommonResult.success(null);
+    public CommonResult getRangeStatic(@Validated @RequestBody StockEmotionQueryDTO dto) {
+        return CommonResult.success( stockMinuteEmotinStaticService.getRangeStatic(dto));
     }
 
 

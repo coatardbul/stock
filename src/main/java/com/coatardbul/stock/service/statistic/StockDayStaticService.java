@@ -19,6 +19,7 @@ import com.coatardbul.stock.model.entity.StockDateStatic;
 import com.coatardbul.stock.model.entity.StockExcelTemplate;
 import com.coatardbul.stock.model.feign.CalendarDateDTO;
 import com.coatardbul.stock.service.StockExcelTemplateService;
+import com.coatardbul.stock.service.romote.RiverRemoteService;
 import com.coatardbul.stock.service.statistic.StockStrategyService;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang.StringUtils;
@@ -55,7 +56,8 @@ import java.util.stream.Collectors;
 public class StockDayStaticService {
 
     @Autowired
-    RiverServerFeign riverServerFeign;
+    RiverRemoteService riverRemoteService;
+
     @Autowired
     StockDateStaticMapper stockDateStaticMapper;
     @Autowired
@@ -63,14 +65,7 @@ public class StockDayStaticService {
 
     @Autowired
     StockStrategyService stockStrategyService;
-    //同花顺问财地址
-    private static final String STRATEGY_URL = "http://www.iwencai.com/customized/chart/get-robot-data";
 
-    private static final String STATUS_CODE = "status_code";
-
-    private static final String STATUS_MSG = "status_msg";
-
-    private static final String STATUS_SUCCESS = "0";
 
 
     private String cookieValue;
@@ -199,12 +194,7 @@ public class StockDayStaticService {
 
     public void saveDate(StockExcelStaticQueryDTO dto) {
         // 根据开始结束时间查询工作日信息
-        CalendarDateDTO query = new CalendarDateDTO();
-        query.setBeginDate(dto.getDateBeginStr());
-        query.setEndDate(dto.getDateEndStr());
-        query.setDateProp(1);
-        CommonResult<List<String>> date = riverServerFeign.getDate(query);
-        List<String> data = date.getData();
+        List<String> data = riverRemoteService.getDateIntervalList(dto.getDateBeginStr(),dto.getDateEndStr());
         //根据dto，日期查询信息
         for (String dateStr : data) {
             Constant.dateJobThreadPool.execute(()->{
@@ -231,14 +221,7 @@ public class StockDayStaticService {
 
     public void saveExcel(StockExcelStaticQueryDTO dto) {
         // 根据开始结束时间查询工作日信息
-        CalendarDateDTO query = new CalendarDateDTO();
-        query.setBeginDate(dto.getDateBeginStr());
-        query.setEndDate(dto.getDateEndStr());
-        query.setDateProp(1);
-        CommonResult<List<String>> date = riverServerFeign.getDate(query);
-        List<String> data = date.getData();
-
-
+        List<String> data = riverRemoteService.getDateIntervalList(dto.getDateBeginStr(),dto.getDateEndStr());
         //策略数据
         List<StockStaticBO> result = new ArrayList<>();
         ;

@@ -8,6 +8,8 @@ import com.coatardbul.stock.common.exception.BusinessException;
 import com.coatardbul.stock.common.util.BigRoot;
 import com.coatardbul.stock.common.util.HttpUtil;
 import com.coatardbul.stock.common.util.JsonUtil;
+import com.coatardbul.stock.common.util.ReflexUtil;
+import com.coatardbul.stock.common.util.StockStaticModuleUtil;
 import com.coatardbul.stock.feign.river.RiverServerFeign;
 import com.coatardbul.stock.mapper.StockCookieMapper;
 import com.coatardbul.stock.mapper.StockDateStaticMapper;
@@ -20,6 +22,7 @@ import com.coatardbul.stock.model.dto.StockStaticQueryDTO;
 import com.coatardbul.stock.model.dto.StockStrategyQueryDTO;
 import com.coatardbul.stock.model.entity.StockCookie;
 import com.coatardbul.stock.model.entity.StockDateStatic;
+import com.coatardbul.stock.model.entity.StockStaticTemplate;
 import com.coatardbul.stock.model.feign.StockTemplateQueryDto;
 import com.coatardbul.stock.service.StockExcelTemplateService;
 import lombok.extern.slf4j.Slf4j;
@@ -174,6 +177,24 @@ public class StockStrategyService {
             }
         }
 
+    }
+
+
+    /**
+     * 获取模型对象中的模板id集合
+     *
+     * @param stockStaticTemplate
+     * @return
+     * @throws IllegalAccessException
+     */
+    public List<String> getTemplateIdList(StockStaticTemplate stockStaticTemplate) throws IllegalAccessException {
+        List<String> result = new ArrayList<>();
+        //根据标识获取对应的对象解析id数据
+        Class classBySign = StockStaticModuleUtil.getClassBySign(stockStaticTemplate.getObjectSign());
+        Object o = JsonUtil.readToValue(stockStaticTemplate.getObjectStr(), classBySign);
+        //获取类里面的所有属性集合
+        ReflexUtil.singleReadAStringAttributeList(o, result);
+        return result;
     }
 
 }
