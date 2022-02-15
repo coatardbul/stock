@@ -123,6 +123,13 @@ public class StockDayStaticController {
         return CommonResult.success(null);
     }
 
+    @WebLog(value = "")
+    @RequestMapping(path = "/forceRefreshDayRange", method = RequestMethod.POST)
+    public CommonResult forceRefreshDayRange(@Validated @RequestBody StockEmotionDayRangeDTO dto) {
+        stockDayEmotionStaticService.forceRefreshDayRange(dto);
+        return CommonResult.success(null);
+    }
+
 
     /**
      *获取日期区间的数据

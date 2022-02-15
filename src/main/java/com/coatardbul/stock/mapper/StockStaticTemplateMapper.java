@@ -18,4 +18,5 @@ public interface StockStaticTemplateMapper {
     List<StockStaticTemplate> selectAll();
 
     List<StockStaticTemplate> selectAllByObjectSign(@Param("objectSign") String objectSign);
+
 }

@@ -82,7 +82,6 @@ public class StockDayEmotionStaticService {
                 StockStrategyQueryDTO stockStrategyQueryDTO = new StockStrategyQueryDTO();
                 stockStrategyQueryDTO.setRiverStockTemplateId(templateId);
                 stockStrategyQueryDTO.setDateStr(dto.getDateStr());
-                stockStrategyQueryDTO.setTimeStr(dto.getDateStr());
                 StrategyBO strategy = stockStrategyService.strategy(stockStrategyQueryDTO);
                 DayAxiosMiddleBaseBO axiosBaseBo = new DayAxiosMiddleBaseBO();
                 //todo
@@ -132,6 +131,11 @@ public class StockDayEmotionStaticService {
     public void refreshDayRange(StockEmotionDayRangeDTO dto) {
         List<String> dateIntervalList = riverRemoteService.getDateIntervalList(dto.getBeginDate(), dto.getEndDate());
         for (String dateStr : dateIntervalList) {
+            //表中有数据，直接返回，没有再查询
+            List<StockDayEmotion> stockDayEmotions = stockDayEmotionMapper.selectAllByDateAndObjectSign(dateStr, dto.getObjectEnumSign());
+            if(stockDayEmotions!=null &&stockDayEmotions.size()>0){
+                continue;
+            }
             Constant.emotionByDateRangeThreadPool.submit(()->{
                 StockEmotionDayDTO stockEmotionDayDTO = new StockEmotionDayDTO();
                 stockEmotionDayDTO.setDateStr(dateStr);
@@ -158,5 +162,22 @@ public class StockDayEmotionStaticService {
     public List<StockDayEmotion> getRangeStatic(StockEmotionRangeDayDTO dto) {
         List<StockDayEmotion> stockDayEmotions = stockDayEmotionMapper.selectAllByDateBetweenEqualAndObjectSign(dto.getBeginDateStr(), dto.getEndDateStr(), dto.getObjectEnumSign());
         return stockDayEmotions;
+    }
+
+    public void forceRefreshDayRange(StockEmotionDayRangeDTO dto) {
+        List<String> dateIntervalList = riverRemoteService.getDateIntervalList(dto.getBeginDate(), dto.getEndDate());
+        for (String dateStr : dateIntervalList) {
+            Constant.emotionByDateRangeThreadPool.submit(()->{
+                StockEmotionDayDTO stockEmotionDayDTO = new StockEmotionDayDTO();
+                stockEmotionDayDTO.setDateStr(dateStr);
+                stockEmotionDayDTO.setObjectEnumSign(dto.getObjectEnumSign());
+                stockEmotionDayDTO.setTimeInterval(dto.getTimeInterval());
+                try {
+                    refreshDay(stockEmotionDayDTO);
+                } catch (IllegalAccessException e) {
+                    log.error(e.getMessage(), e);
+                }
+            });
+        }
     }
 }

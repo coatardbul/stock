@@ -32,7 +32,7 @@ public class StockEmotionDayRangeDTO {
     /**
      * 时间间隔
      */
-    @NotNull(message = "时间间隔不能为空")
+//    @NotNull(message = "时间间隔不能为空")
     private Integer TimeInterval;
 
 }
