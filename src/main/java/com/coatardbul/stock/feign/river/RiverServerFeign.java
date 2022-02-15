@@ -31,7 +31,7 @@ public interface RiverServerFeign {
      * 间隔数据
      * @return
      */
-    @RequestMapping(value = "river/timeInterval/getList", method = RequestMethod.POST)
+    @RequestMapping(value = "river/timeInterval/getTimeList", method = RequestMethod.POST)
     @Headers("Content-Type: application/json")
     public CommonResult<List<String>> getTimeIntervalList(StockTimeInterval dto);
 
