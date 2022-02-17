@@ -4,9 +4,8 @@ import com.coatardbul.stock.common.api.CommonResult;
 import com.coatardbul.stock.common.constants.Constant;
 import com.coatardbul.stock.common.constants.StaticLatitudeEnum;
 import com.coatardbul.stock.common.exception.BusinessException;
+import com.coatardbul.stock.common.util.DateTimeUtil;
 import com.coatardbul.stock.common.util.JsonUtil;
-import com.coatardbul.stock.common.util.ReflexUtil;
-import com.coatardbul.stock.common.util.StockStaticModuleUtil;
 import com.coatardbul.stock.feign.river.BaseServerFeign;
 import com.coatardbul.stock.feign.river.RiverServerFeign;
 import com.coatardbul.stock.mapper.StockMinuterEmotionMapper;
@@ -32,8 +31,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
+import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 /**
  * <p>
@@ -60,18 +63,18 @@ public class StockMinuteEmotinStaticService {
     StockMinuterEmotionMapper stockMinuterEmotionMapper;
 
     /**
-     * 刷新某天的分钟情绪数据
+     * 刷新某天的分钟情绪数据，
+     * 1.不能刷新当天的，当天请走定时任务
+     * 2.当前时间以后的也不能刷新
      *
      * @param dto
      * @throws IllegalAccessException
      */
-    public void refreshDay(StockEmotionDayDTO dto) throws IllegalAccessException {
-        List<StockStaticTemplate> stockStaticTemplates = stockStaticTemplateMapper.selectAllByObjectSign(dto.getObjectEnumSign());
-        if (stockStaticTemplates == null || stockStaticTemplates.size() == 0) {
-            throw new BusinessException("对象标识异常");
-        }
+    public void refreshDay(StockEmotionDayDTO dto) throws IllegalAccessException, ParseException {
+        //验证时间
+        verifyDateStr(dto);
         //模型策略数据
-        StockStaticTemplate stockStaticTemplate = stockStaticTemplates.get(0);
+        StockStaticTemplate stockStaticTemplate = verifyObjectSign(dto.getObjectEnumSign());
         //获取模型对象中的模板id集合,便于根据模板id查询对应的数据结果
         List<String> templateIdList = stockStrategyService.getTemplateIdList(stockStaticTemplate);
         //按照天统计
@@ -99,7 +102,94 @@ public class StockMinuteEmotinStaticService {
     }
 
     /**
+     * 验证日期
+     * 不能超过当前日期
+     * 当天日期走定时任务
      *
+     * @param dto YYYY-MM-DD
+     * @throws ParseException
+     */
+    private void verifyDateStr(StockEmotionDayDTO dto) throws ParseException {
+        Date date = DateTimeUtil.parseDateStr(dto.getDateStr(), DateTimeUtil.YYYY_MM_DD);
+        if (new Date().compareTo(date) < 0) {
+            throw new BusinessException("当前日期不合法，不能超过当前时间");
+        }
+        String nowDateStr = DateTimeUtil.getDateFormat(new Date(), DateTimeUtil.YYYY_MM_DD);
+        if (nowDateStr.equals(dto.getDateStr())) {
+            throw new BusinessException("当天日期请走定时任务");
+        }
+    }
+
+
+    private StockStaticTemplate verifyObjectSign(String objectSign) {
+        List<StockStaticTemplate> stockStaticTemplates = stockStaticTemplateMapper.selectAllByObjectSign(objectSign);
+        if (stockStaticTemplates == null || stockStaticTemplates.size() == 0) {
+            throw new BusinessException("对象标识异常");
+        }
+        //模型策略数据
+        return stockStaticTemplates.get(0);
+    }
+
+
+    /**
+     * 刷新某天的分钟情绪数据，定时任务
+     *
+     * @param dto
+     * @throws IllegalAccessException
+     */
+    public void taskRefreshDay(StockEmotionDayDTO dto) throws IllegalAccessException {
+
+        //模型策略数据
+        StockStaticTemplate stockStaticTemplate = verifyObjectSign(dto.getObjectEnumSign());
+        //获取模型对象中的模板id集合,便于根据模板id查询对应的数据结果
+        List<String> templateIdList = stockStrategyService.getTemplateIdList(stockStaticTemplate);
+        //按照天统计
+        if (StaticLatitudeEnum.day.getCode().equals(stockStaticTemplate.getStaticLatitude())) {
+            //todo
+        }
+        //分钟
+        if (StaticLatitudeEnum.minuter.getCode().equals(stockStaticTemplate.getStaticLatitude())) {
+            if (dto.getTimeInterval() == null) {
+                throw new BusinessException("时间间隔不能为空");
+            }
+            //获取间隔时间字符串
+            List<String> timeIntervalListData = getRemoteTimeInterval(dto.getTimeInterval());
+
+            //模板信息
+            if (templateIdList != null && templateIdList.size() > 0) {
+                for (String templateId : templateIdList) {
+                    //查询数据，1时间，2sign ,3 模板id
+                    List<StockMinuterEmotion> stockMinuterEmotions = stockMinuterEmotionMapper.selectAllByDateAndObjectSignAndTemplateId(dto.getDateStr(), dto.getObjectEnumSign(), templateId);
+                    //需要遍历的数据
+                    List<String> timeNeedList = timeIntervalListData.stream().filter(o1 -> o1.compareTo(DateTimeUtil.getDateFormat(new Date(), DateTimeUtil.HH_MM)) <= 0).collect(Collectors.toList());
+                    if (stockMinuterEmotions != null && stockMinuterEmotions.size() > 0) {
+                      //表中数据，能查到，肯定有一条数据
+                        List<AxiosBaseBo> axiosBaseBos = JsonUtil.readToValue(stockMinuterEmotions.get(0).getObjectStaticArray(), new TypeReference<List<AxiosBaseBo>>() {});
+                        List<String> timeHaveList = axiosBaseBos.stream().map(AxiosBaseBo::getDateTimeStr).collect(Collectors.toList());
+                        //过滤time
+                        for(String timeStr:timeNeedList){
+                            if(!timeHaveList.contains(timeStr)){
+                                //查询策略
+                                AxiosBaseBo axiosBaseBo = getAxiosBaseBo(dto, templateId, timeStr);
+                                axiosBaseBos.add(axiosBaseBo);
+                            }
+                        }
+                        //更新到表中
+                        stockMinuterEmotions.get(0).setObjectStaticArray(JsonUtil.toJson(axiosBaseBos));
+                        stockMinuterEmotionMapper.updateByPrimaryKeySelective(stockMinuterEmotions.get(0));
+                    }else {
+                        //表中无数据
+                        Constant.emotionTemplateAndIntervalByDateThreadPool.submit(() -> {
+                            inserteEmotionDate(dto, timeNeedList, templateId);
+                        });
+                    }
+                }
+            }
+        }
+    }
+
+
+    /**
      * 将对应模板id按照某天时间间隔存取表中
      *
      * @param dto                  时间
@@ -116,18 +206,23 @@ public class StockMinuteEmotinStaticService {
         addStockMinuterEmotion.setTemplateId(templateId);
         List<AxiosBaseBo> list = new ArrayList<>();
         for (String timeStr : timeIntervalListData) {
-            StockStrategyQueryDTO stockStrategyQueryDTO = new StockStrategyQueryDTO();
-            stockStrategyQueryDTO.setRiverStockTemplateId(templateId);
-            stockStrategyQueryDTO.setDateStr(dto.getDateStr());
-            stockStrategyQueryDTO.setTimeStr(timeStr);
-            StrategyBO strategy = stockStrategyService.strategy(stockStrategyQueryDTO);
-            AxiosBaseBo axiosBaseBo = new AxiosBaseBo();
-            axiosBaseBo.setDateTimeStr(timeStr);
-            axiosBaseBo.setValue(new BigDecimal(strategy.getTotalNum()));
+            AxiosBaseBo axiosBaseBo = getAxiosBaseBo(dto, templateId, timeStr);
             list.add(axiosBaseBo);
         }
         addStockMinuterEmotion.setObjectStaticArray(JsonUtil.toJson(list));
         stockMinuterEmotionMapper.insert(addStockMinuterEmotion);
+    }
+
+    private AxiosBaseBo getAxiosBaseBo(StockEmotionDayDTO dto, String templateId, String timeStr) {
+        StockStrategyQueryDTO stockStrategyQueryDTO = new StockStrategyQueryDTO();
+        stockStrategyQueryDTO.setRiverStockTemplateId(templateId);
+        stockStrategyQueryDTO.setDateStr(dto.getDateStr());
+        stockStrategyQueryDTO.setTimeStr(timeStr);
+        StrategyBO strategy = stockStrategyService.strategy(stockStrategyQueryDTO);
+        AxiosBaseBo axiosBaseBo = new AxiosBaseBo();
+        axiosBaseBo.setDateTimeStr(timeStr);
+        axiosBaseBo.setValue(new BigDecimal(strategy.getTotalNum()));
+        return axiosBaseBo;
     }
 
     /**
@@ -161,7 +256,7 @@ public class StockMinuteEmotinStaticService {
                 stockEmotionDayDTO.setTimeInterval(dto.getTimeInterval());
                 try {
                     refreshDay(stockEmotionDayDTO);
-                } catch (IllegalAccessException e) {
+                } catch (Exception e) {
                     log.error(e.getMessage(), e);
                 }
             });

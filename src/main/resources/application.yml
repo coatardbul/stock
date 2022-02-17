@@ -40,3 +40,18 @@ eureka:
   client:
     serviceUrl:
       defaultZone: http://47.105.148.90:8001/eureka/
+
+
+xxl:
+  job:
+    admin:
+      addresses: http://47.105.148.90:9001/xxl-job-admin
+    accessToken:
+    executor:
+      appname: xxl-job-stock
+      address:
+      ip:
+      port: 9999
+      logretentiondays: 30
+#      logpath: /Users/coatardbul/Desktop/xxljob
+      logpath: /usr/local/xxl_job/client
