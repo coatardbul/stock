@@ -85,7 +85,8 @@ public class StockMinuteEmotinStaticService {
             }
             //获取间隔时间字符串
             List<String> timeIntervalListData = getRemoteTimeInterval(dto.getTimeInterval());
-
+            //删除已经有的数据
+            stockMinuterEmotionMapper.deleteByDateAndObjectSignAndTimeInterval(dto.getDateStr(), dto.getObjectEnumSign(), dto.getTimeInterval());
             //存入分钟间隔数据
             if (templateIdList != null && templateIdList.size() > 0) {
                 for (String templateId : templateIdList) {
@@ -98,6 +99,7 @@ public class StockMinuteEmotinStaticService {
     }
 
     /**
+     *
      * 将对应模板id按照某天时间间隔存取表中
      *
      * @param dto                  时间

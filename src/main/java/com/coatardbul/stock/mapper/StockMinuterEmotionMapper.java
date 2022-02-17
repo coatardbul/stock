@@ -22,4 +22,9 @@ public interface StockMinuterEmotionMapper {
     List<StockEmotionStaticDTO> selectStaticInfoByCondition(@Param("date")String date, @Param("objectSign")String objectSign, @Param("timeInterval")Integer timeInterval);
 
 
+
+	int deleteByDateAndObjectSignAndTimeInterval(@Param("date")String date,@Param("objectSign")String objectSign,@Param("timeInterval")Integer timeInterval);
+
+
+
 }
