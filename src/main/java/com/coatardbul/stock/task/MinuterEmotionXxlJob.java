@@ -1,5 +1,6 @@
 package com.coatardbul.stock.task;
 
+import com.coatardbul.stock.common.util.DateTimeUtil;
 import com.coatardbul.stock.common.util.JsonUtil;
 import com.coatardbul.stock.model.dto.StockEmotionDayDTO;
 import com.coatardbul.stock.service.statistic.StockMinuteEmotinStaticService;
@@ -10,6 +11,7 @@ import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.util.Date;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -32,6 +34,7 @@ public class MinuterEmotionXxlJob {
         log.info("分钟情绪定时任务开始,传递参数为：" + param);
         if (StringUtils.isNotBlank(param)) {
             StockEmotionDayDTO stockEmotionDayDTO = JsonUtil.readToValue(param, StockEmotionDayDTO.class);
+            stockEmotionDayDTO.setDateStr(DateTimeUtil.getDateFormat(new Date(),DateTimeUtil.YYYY_MM_DD));
             stockMinuteEmotinStaticService.taskRefreshDay(stockEmotionDayDTO);
         }
         log.info("分钟情绪定时任务结束");
