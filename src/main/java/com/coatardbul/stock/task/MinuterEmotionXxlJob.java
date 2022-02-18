@@ -35,6 +35,7 @@ public class MinuterEmotionXxlJob {
         if (StringUtils.isNotBlank(param)) {
             StockEmotionDayDTO stockEmotionDayDTO = JsonUtil.readToValue(param, StockEmotionDayDTO.class);
             stockEmotionDayDTO.setDateStr(DateTimeUtil.getDateFormat(new Date(),DateTimeUtil.YYYY_MM_DD));
+            stockEmotionDayDTO.setTimeStr(DateTimeUtil.getDateFormat(new Date(),DateTimeUtil.HH_MM));
             stockMinuteEmotinStaticService.taskRefreshDay(stockEmotionDayDTO);
         }
         log.info("分钟情绪定时任务结束");

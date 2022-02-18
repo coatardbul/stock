@@ -35,9 +35,9 @@ public class StockMinuteStaticController {
 
 
     /**
-     * 根据日期刷新所有的数据，
+     * 根据日期重新刷新所有的数据，
      * 如果日期为当天以前，判断是交易日，返回最近的交易日
-     * 如果是当天的，启动定时任务，并且刷新已经有的数据 ，实时刷新数据
+     * 如果是当天的，请启动定时任务
      */
     @WebLog(value = "")
     @RequestMapping(path = "/refreshDay", method = RequestMethod.POST)
@@ -45,6 +45,21 @@ public class StockMinuteStaticController {
         stockMinuteEmotinStaticService.refreshDay(dto);
         return CommonResult.success(null);
     }
+
+    /**
+     * 补充刷新，已经有的数据不会重新刷新
+     * @param dto
+     * @return
+     * @throws IllegalAccessException
+     * @throws ParseException
+     */
+    @WebLog(value = "")
+    @RequestMapping(path = "/supplementRefreshDay", method = RequestMethod.POST)
+    public CommonResult supplementRefreshDay(@Validated @RequestBody StockEmotionDayDTO dto) throws IllegalAccessException, ParseException {
+        stockMinuteEmotinStaticService.supplementRefreshDay(dto);
+        return CommonResult.success(null);
+    }
+
 
 
     /**

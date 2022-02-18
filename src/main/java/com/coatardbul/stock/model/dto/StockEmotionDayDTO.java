@@ -27,6 +27,13 @@ public class StockEmotionDayDTO {
      * 时间间隔
      */
 //    @NotNull(message = "时间间隔不能为空")
-    private Integer TimeInterval;
+    private Integer timeInterval;
+
+
+    /**
+     * 目前仅限于定时任务使用
+     * HH:mm
+     */
+    private String timeStr;
 
 }
