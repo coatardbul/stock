@@ -126,7 +126,7 @@ public class StockStrategyService {
             JSONArray data = baseObject.getJSONArray("datas");
             //总数
             Integer totalNum = baseObject.getJSONObject("meta").getJSONObject("extra").getObject("row_count", Integer.class);
-            log.info("策略查询返回数据"+data.toString());
+            log.info("策略查询返回数据总数："+data.size()+"数据详情"+data.toString());
             result.setData(data);
             result.setTotalNum(totalNum);
         }

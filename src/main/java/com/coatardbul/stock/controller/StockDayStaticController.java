@@ -99,9 +99,7 @@ public class StockDayStaticController {
 
 
     /**
-     * 根据日期刷新所有的数据，
-     * 如果日期为当天以前，判断是交易日，返回最近的交易日
-     * 如果是当天的，启动定时任务，并且刷新已经有的数据 ，实时刷新数据
+     * 刷新某天所有的数据，
      */
     @WebLog(value = "")
     @RequestMapping(path = "/refreshDay", method = RequestMethod.POST)
@@ -122,6 +120,7 @@ public class StockDayStaticController {
         stockDayEmotionStaticService.refreshDayRange(dto);
         return CommonResult.success(null);
     }
+
 
     @WebLog(value = "")
     @RequestMapping(path = "/forceRefreshDayRange", method = RequestMethod.POST)

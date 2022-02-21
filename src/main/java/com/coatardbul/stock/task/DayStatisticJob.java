@@ -4,7 +4,9 @@ import com.coatardbul.stock.common.util.DateTimeUtil;
 import com.coatardbul.stock.common.util.JsonUtil;
 import com.coatardbul.stock.model.dto.StockEmotionDayDTO;
 import com.coatardbul.stock.model.dto.StockExcelStaticQueryDTO;
+import com.coatardbul.stock.service.statistic.StockDayEmotionStaticService;
 import com.coatardbul.stock.service.statistic.StockDayStaticService;
+import com.coatardbul.stock.service.statistic.StockStrategyService;
 import com.xxl.job.core.context.XxlJobHelper;
 import com.xxl.job.core.handler.annotation.XxlJob;
 import lombok.extern.slf4j.Slf4j;
@@ -28,6 +30,11 @@ public class DayStatisticJob {
     @Autowired
     StockDayStaticService stockDayStaticService;
 
+    @Autowired
+    StockStrategyService stockStrategyService;
+
+    @Autowired
+    StockDayEmotionStaticService stockDayEmotionStaticService;
 
     @XxlJob("dayStaticJobHandler")
     public void dayStaticJobHandler() {
@@ -38,6 +45,18 @@ public class DayStatisticJob {
         stockExcelStaticQueryDTO.setDateEndStr(DateTimeUtil.getDateFormat(new Date(), DateTimeUtil.YYYY_MM_DD));
         stockDayStaticService.saveDate(stockExcelStaticQueryDTO);
         log.info("刷新喇叭口统计数据结束");
+    }
 
+
+    @XxlJob("dayUpDownJobHandler")
+    public void dayUpDownJobHandler() throws IllegalAccessException {
+        String param = XxlJobHelper.getJobParam();
+        log.info("刷新每日涨跌统计数据开始"+param);
+        if (StringUtils.isNotBlank(param)) {
+            StockEmotionDayDTO dto = JsonUtil.readToValue(param, StockEmotionDayDTO.class);
+            dto.setDateStr(DateTimeUtil.getDateFormat(new Date(),DateTimeUtil.YYYY_MM_DD));
+            stockDayEmotionStaticService.refreshDay(dto);
+        }
+        log.info("刷新每日涨跌统计数据结束");
     }
 }

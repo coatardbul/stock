@@ -60,6 +60,11 @@ public class StockDayEmotionStaticService {
     @Autowired
     StockDayEmotionMapper stockDayEmotionMapper;
 
+    /**
+     * 刷新当日数据，全量刷新
+     * @param dto
+     * @throws IllegalAccessException
+     */
     public void refreshDay(StockEmotionDayDTO dto) throws IllegalAccessException {
         List<StockStaticTemplate> stockStaticTemplates = stockStaticTemplateMapper.selectAllByObjectSign(dto.getObjectEnumSign());
         if (stockStaticTemplates == null || stockStaticTemplates.size() == 0) {
@@ -128,6 +133,10 @@ public class StockDayEmotionStaticService {
     }
 
 
+    /**
+     * 表中有数据，不刷新，无数据，增量刷新
+     * @param dto
+     */
     public void refreshDayRange(StockEmotionDayRangeDTO dto) {
         List<String> dateIntervalList = riverRemoteService.getDateIntervalList(dto.getBeginDate(), dto.getEndDate());
         for (String dateStr : dateIntervalList) {
