@@ -27,7 +27,8 @@ mybatis:
 logging:
   path: logs/
   level:
-    com.coatardb2ul.stock: debug
+    com.coatardbul.stock: debug
+    com.coatardbul.stock.mapper: debug
     org.springframework.web: debug
     com.springboot.cloud: debug
     java.sql.PreparedStatement: debug

@@ -139,7 +139,7 @@ public class HttpUtil {
         StringEntity entity = new StringEntity(jsonString, "UTF-8");
         // post请求是将参数放在请求体里面传过去的;这里将entity放入post请求体中
         httpPost.setEntity(entity);
-        log.info("请求地址："+httpPost.toString()+"请求头信息："+ Arrays.toString(httpPost.getAllHeaders())+"请求体："+jsonString);
+//        log.info("请求地址："+httpPost.toString()+"请求头信息："+ Arrays.toString(httpPost.getAllHeaders())+"请求体："+jsonString);
         // 响应模型
         CloseableHttpResponse response = null;
         try {
@@ -149,9 +149,9 @@ public class HttpUtil {
             HttpEntity responseEntity = response.getEntity();
             log.info(httpPost.toString()+"响应状态为:" + response.getStatusLine());
             if (responseEntity != null) {
-                log.info("响应内容长度为:" + responseEntity.getContentLength());
+//                log.info("响应内容长度为:" + responseEntity.getContentLength());
                 String responseStr = EntityUtils.toString(responseEntity);
-                log.info("响应内容为:" + responseStr);
+//                log.info("响应内容为:" + responseStr);
                 return responseStr;
             }
         } catch (IOException e) {
