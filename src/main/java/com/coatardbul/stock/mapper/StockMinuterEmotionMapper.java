@@ -1,8 +1,11 @@
 package com.coatardbul.stock.mapper;
 
 import com.coatardbul.stock.model.dto.StockEmotionStaticDTO;
-import com.coatardbul.stock.model.entity.StockMinuterEmotion;import org.apache.ibatis.annotations.Param;import java.util.List;
+import com.coatardbul.stock.model.entity.StockMinuterEmotion;
+import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;import java.util.List;
 
+@Mapper
 public interface StockMinuterEmotionMapper {
     int deleteByPrimaryKey(String id);
 

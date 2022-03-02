@@ -101,7 +101,9 @@ public class ReflexUtil {
             Object ownValue = field.get(obj);
 
             if(field.getGenericType().toString().contains("String")  ) {
-                result.add((String) ownValue);
+                if(ownValue!=null){
+                    result.add((String) ownValue);
+                }
             }
         }
     }

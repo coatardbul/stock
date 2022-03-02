@@ -1,6 +1,7 @@
 package com.coatardbul.stock.service.statistic;
 
 import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONException;
 import com.alibaba.fastjson.JSONObject;
 import com.coatardbul.stock.common.api.CommonResult;
 import com.coatardbul.stock.common.constants.CookieEnum;
@@ -10,6 +11,7 @@ import com.coatardbul.stock.common.util.HttpUtil;
 import com.coatardbul.stock.common.util.JsonUtil;
 import com.coatardbul.stock.common.util.ReflexUtil;
 import com.coatardbul.stock.common.util.StockStaticModuleUtil;
+import com.coatardbul.stock.common.util.TongHuaShunUtil;
 import com.coatardbul.stock.feign.river.RiverServerFeign;
 import com.coatardbul.stock.mapper.StockCookieMapper;
 import com.coatardbul.stock.mapper.StockDateStaticMapper;
@@ -31,6 +33,8 @@ import org.apache.http.Header;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.script.ScriptException;
+import java.io.FileNotFoundException;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
@@ -103,17 +107,23 @@ public class StockStrategyService {
      * 策略查询，支持两种模式
      * 1.传入id，日期，时间
      * 2.直接传入问句
+     *
      * @param dto
      * @return
      * @throws BusinessException
      */
-    public StrategyBO strategy(StockStrategyQueryDTO dto) throws BusinessException {
+    public StrategyBO strategy(StockStrategyQueryDTO dto) throws BusinessException, NoSuchMethodException, ScriptException, FileNotFoundException {
         StrategyBO result = new StrategyBO();
         //获取策略返回
         String response = getStrategyResponseStr(dto);
         if (StringUtils.isNotBlank(response)) {
             //解析返回体
-            JSONObject requestObject = JSONObject.parseObject(response);
+            JSONObject requestObject = null;
+            try {
+                requestObject = JSONObject.parseObject(response);
+            } catch (JSONException e) {
+                throw new BusinessException("解析http请求返回的数据异常,返回字符串为："+response+" 异常信息："+e.getMessage());
+            }
             if (!STATUS_SUCCESS.equals(requestObject.getString(STATUS_CODE))) {
                 throw new BusinessException("请求同花顺策略问句异常，" + requestObject.getString(STATUS_MSG));
             }
@@ -126,7 +136,7 @@ public class StockStrategyService {
             JSONArray data = baseObject.getJSONArray("datas");
             //总数
             Integer totalNum = baseObject.getJSONObject("meta").getJSONObject("extra").getObject("row_count", Integer.class);
-            log.info("策略查询返回数据总数："+data.size()+"数据详情"+data.toString());
+            log.info("策略查询返回数据总数：" + data.size() + "数据详情" + data.toString());
             result.setData(data);
             result.setTotalNum(totalNum);
         }
@@ -134,8 +144,7 @@ public class StockStrategyService {
     }
 
 
-
-    private String getStrategyResponseStr(StockStrategyQueryDTO dto) throws BusinessException {
+    private String getStrategyResponseStr(StockStrategyQueryDTO dto) throws BusinessException, NoSuchMethodException, ScriptException, FileNotFoundException {
         //默认信息
         StrategyQueryBO defaultStrategyQuery = getDefaultStrategyQuery();
         //请求dto信息
@@ -143,17 +152,22 @@ public class StockStrategyService {
         //http请求
         String jsonString = JsonUtil.toJson(defaultStrategyQuery);
         List<Header> headerList = new ArrayList<>();
-        Header cookie = HttpUtil.getHead("Cookie", cookieValue);
+        String heXinStr = TongHuaShunUtil.getHeXinStr();
+        Header cookie = HttpUtil.getHead("Cookie", cookieValue+heXinStr);
+        Header hexin = HttpUtil.getHead("hexin-v", heXinStr);
+        Header orign = HttpUtil.getHead("Origin", "http://www.iwencai.com");
         headerList.add(cookie);
-        log.info("策略查询传递参数"+jsonString);
-        return  HttpUtil.doPost(STRATEGY_URL, jsonString, headerList);
+        headerList.add(hexin);
+        headerList.add(orign);
+        log.info("策略查询传递参数" + jsonString);
+        return HttpUtil.doPost(STRATEGY_URL, jsonString, headerList);
     }
 
     /**
      * 将请求中的dto转换成策略对象
      *
-     * @param dto  抽象请求数据
-     * @param defaultStrategyQuery   策略对象
+     * @param dto                  抽象请求数据
+     * @param defaultStrategyQuery 策略对象
      */
     private void setRequestInfo(StockStrategyQueryDTO dto, StrategyQueryBO defaultStrategyQuery) {
         if (dto.getPageSize() != null && dto.getPage() != null) {
@@ -173,6 +187,7 @@ public class StockStrategyService {
             stockTemplateQueryDto.setId(dto.getRiverStockTemplateId());
             stockTemplateQueryDto.setDateStr(dto.getDateStr());
             stockTemplateQueryDto.setTimeStr(dto.getTimeStr());
+            stockTemplateQueryDto.setStockCode(dto.getStockCode());
             CommonResult<String> riverServerFeignResult = riverServerFeign.getQuery(stockTemplateQueryDto);
             if (riverServerFeignResult != null) {
                 defaultStrategyQuery.setQuestion(riverServerFeignResult.getData());

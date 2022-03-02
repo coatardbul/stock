@@ -1,7 +1,12 @@
 package com.coatardbul.stock.mapper;
 
-import com.coatardbul.stock.model.entity.StockStaticTemplate;import org.apache.ibatis.annotations.Param;import java.util.List;
+import com.coatardbul.stock.model.entity.StockStaticTemplate;
+import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
+import java.util.List;
+
+@Mapper
 public interface StockStaticTemplateMapper {
     int deleteByPrimaryKey(String id);
 

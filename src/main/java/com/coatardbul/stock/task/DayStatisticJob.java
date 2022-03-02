@@ -43,6 +43,7 @@ public class DayStatisticJob {
         stockExcelStaticQueryDTO.setExcelTemplateId("1483051288928321536");
         stockExcelStaticQueryDTO.setDateBeginStr(DateTimeUtil.getDateFormat(new Date(), DateTimeUtil.YYYY_MM_DD));
         stockExcelStaticQueryDTO.setDateEndStr(DateTimeUtil.getDateFormat(new Date(), DateTimeUtil.YYYY_MM_DD));
+        log.info("刷新喇叭口统计数据参数"+JsonUtil.toJson(stockExcelStaticQueryDTO));
         stockDayStaticService.saveDate(stockExcelStaticQueryDTO);
         log.info("刷新喇叭口统计数据结束");
     }
@@ -55,6 +56,7 @@ public class DayStatisticJob {
         if (StringUtils.isNotBlank(param)) {
             StockEmotionDayDTO dto = JsonUtil.readToValue(param, StockEmotionDayDTO.class);
             dto.setDateStr(DateTimeUtil.getDateFormat(new Date(),DateTimeUtil.YYYY_MM_DD));
+            log.info("刷新每日涨跌统计数据参数"+JsonUtil.toJson(dto));
             stockDayEmotionStaticService.refreshDay(dto);
         }
         log.info("刷新每日涨跌统计数据结束");

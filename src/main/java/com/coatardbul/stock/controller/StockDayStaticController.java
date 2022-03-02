@@ -21,6 +21,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.script.ScriptException;
+import java.io.FileNotFoundException;
+
 /**
  * <p>
  * Note:
@@ -59,7 +62,7 @@ public class StockDayStaticController {
      */
     @WebLog(value = "同花顺新版问财功能")
     @RequestMapping(path = "/strategy", method = RequestMethod.POST)
-    public CommonResult strategy(@Validated @RequestBody StockStrategyQueryDTO dto) {
+    public CommonResult strategy(@Validated @RequestBody StockStrategyQueryDTO dto) throws NoSuchMethodException, ScriptException, FileNotFoundException {
         return CommonResult.success(stockStrategyService.strategy(dto));
     }
 
@@ -71,7 +74,7 @@ public class StockDayStaticController {
      */
     @WebLog(value = "获取连板标准差，中位数，adjs")
     @RequestMapping(path = "/getStatic", method = RequestMethod.POST)
-    public CommonResult getStatic(@Validated @RequestBody StockStaticQueryDTO dto) {
+    public CommonResult getStatic(@Validated @RequestBody StockStaticQueryDTO dto) throws NoSuchMethodException, ScriptException, FileNotFoundException {
         return CommonResult.success(stockDayStaticService.getStatic(dto));
     }
 
@@ -84,7 +87,7 @@ public class StockDayStaticController {
 
     @WebLog(value = "获取连板标准差，中位数，adjs")
     @RequestMapping(path = "/saveExcel", method = RequestMethod.POST)
-    public CommonResult saveExcel(@Validated @RequestBody StockExcelStaticQueryDTO dto) {
+    public CommonResult saveExcel(@Validated @RequestBody StockExcelStaticQueryDTO dto) throws NoSuchMethodException, ScriptException, FileNotFoundException {
         stockDayStaticService.saveExcel(dto);
         return CommonResult.success(null);
     }

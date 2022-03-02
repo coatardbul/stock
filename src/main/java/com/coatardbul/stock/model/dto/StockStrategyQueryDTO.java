@@ -26,6 +26,11 @@ public class StockStrategyQueryDTO {
      * HH:MM
      */
     private String timeStr;
+
+    /**
+     *股票代码
+     */
+    private String stockCode;
     /**
      * 查询字符串
      */

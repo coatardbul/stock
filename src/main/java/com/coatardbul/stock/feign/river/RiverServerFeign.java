@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import java.util.List;
 
 
-@FeignClient(name = "river", url="47.105.148.90:9002", configuration = FeignLogConfig.class, fallbackFactory = String.class)
+@FeignClient(name = "river", url="124.222.217.230:9002", configuration = FeignLogConfig.class, fallbackFactory = String.class)
 public interface RiverServerFeign {
 
     /**

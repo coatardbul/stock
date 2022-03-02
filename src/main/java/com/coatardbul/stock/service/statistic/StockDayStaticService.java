@@ -31,6 +31,7 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.script.ScriptException;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -109,7 +110,7 @@ public class StockDayStaticService {
      * @param dto
      * @return
      */
-    public StockStaticBO getStatic(StockStaticQueryDTO dto) {
+    public StockStaticBO getStatic(StockStaticQueryDTO dto) throws NoSuchMethodException, ScriptException, FileNotFoundException {
         //模板数据
         StockExcelTemplate excelTemplateInfo = stockExcelTemplateService.getStandardInfo(dto.getExcelTemplateId(),dto.getDateStr());
 
@@ -200,7 +201,12 @@ public class StockDayStaticService {
             Constant.dateJobThreadPool.execute(()->{
                 stockDateStaticMapper.deleteByPrimaryKey(dateStr);
                 StockStaticQueryDTO temp = convert(dto, dateStr);
-                StockStaticBO aStatic = getStatic(temp);
+                StockStaticBO aStatic = null;
+                try {
+                    aStatic = getStatic(temp);
+                } catch (Exception e) {
+                log.error(e.getMessage(),e);
+                }
                 insertDate(aStatic);
             });
         }
@@ -219,7 +225,7 @@ public class StockDayStaticService {
     }
 
 
-    public void saveExcel(StockExcelStaticQueryDTO dto) {
+    public void saveExcel(StockExcelStaticQueryDTO dto) throws NoSuchMethodException, ScriptException, FileNotFoundException {
         // 根据开始结束时间查询工作日信息
         List<String> data = riverRemoteService.getDateIntervalList(dto.getDateBeginStr(),dto.getDateEndStr());
         //策略数据

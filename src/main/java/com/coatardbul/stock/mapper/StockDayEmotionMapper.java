@@ -1,9 +1,10 @@
 package com.coatardbul.stock.mapper;
+import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import java.util.List;
 
 import com.coatardbul.stock.model.entity.StockDayEmotion;
-
+@Mapper
 public interface StockDayEmotionMapper {
     int deleteByPrimaryKey(String id);
 

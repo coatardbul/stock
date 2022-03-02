@@ -41,7 +41,7 @@ public class StockMinuteStaticController {
      */
     @WebLog(value = "")
     @RequestMapping(path = "/refreshDay", method = RequestMethod.POST)
-    public CommonResult refreshDay(@Validated @RequestBody StockEmotionDayDTO dto) throws IllegalAccessException, ParseException {
+    public CommonResult refreshDay(@Validated @RequestBody StockEmotionDayDTO dto) throws IllegalAccessException, ParseException, InterruptedException {
         stockMinuteEmotinStaticService.refreshDay(dto);
         return CommonResult.success(null);
     }
@@ -55,7 +55,7 @@ public class StockMinuteStaticController {
      */
     @WebLog(value = "")
     @RequestMapping(path = "/supplementRefreshDay", method = RequestMethod.POST)
-    public CommonResult supplementRefreshDay(@Validated @RequestBody StockEmotionDayDTO dto) throws IllegalAccessException, ParseException {
+    public CommonResult supplementRefreshDay(@Validated @RequestBody StockEmotionDayDTO dto) throws IllegalAccessException, ParseException, InterruptedException {
         stockMinuteEmotinStaticService.supplementRefreshDay(dto);
         return CommonResult.success(null);
     }

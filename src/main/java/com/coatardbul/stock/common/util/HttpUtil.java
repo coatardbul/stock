@@ -14,7 +14,9 @@ import org.apache.http.util.EntityUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javax.script.ScriptException;
 import java.io.ByteArrayOutputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -110,9 +112,7 @@ public class HttpUtil {
     }
 
 
-    public static void doPost(String url, String jsonString) throws IOException {
-        doPost(url, jsonString, null);
-    }
+
 
 
     /**
@@ -123,13 +123,15 @@ public class HttpUtil {
      * @param headerList
      * @return
      */
-    public static String doPost(String url, String jsonString, List<Header> headerList) {
+    public static String doPost(String url, String jsonString, List<Header> headerList) throws NoSuchMethodException, ScriptException, FileNotFoundException {
         // 获得Http客户端(可以理解为:你得先有一个浏览器;注意:实际上HttpClient与浏览器是不一样的)
         CloseableHttpClient httpClient = HttpClientBuilder.create().build();
         // 创建Post请求
         HttpPost httpPost = new HttpPost(url);
         //默认json，可以覆盖
         httpPost.setHeader("Content-Type", "application/json;charset=utf8");
+        httpPost.setHeader("User-Agent", "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/98.0.4758.102 Safari/537.36");
+
 
         if (headerList != null && headerList.size() > 0) {
             for (Header headerTemp : headerList) {

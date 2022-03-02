@@ -1,0 +1,27 @@
+spring:
+  datasource:
+    url: jdbc:mysql://47.105.148.90:3306/stock?serverTimezone=GMT&useSSL=false&characterEncoding=utf-8
+    driverClassName: com.mysql.cj.jdbc.Driver
+    username: root
+    password: Dream1226.27!
+
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://124.222.217.230:8001/eureka/
+
+
+xxl:
+  job:
+    admin:
+      addresses: http://124.222.217.230:9001/xxl-job-admin
+    accessToken:
+    executor:
+      appname: xxl-job-stock
+      address:
+      ip:
+      port: 9999
+      logretentiondays: 30
+      #      logpath: /Users/coatardbul/Desktop/xxljob
+      logpath: /usr/local/xxl_job/client
