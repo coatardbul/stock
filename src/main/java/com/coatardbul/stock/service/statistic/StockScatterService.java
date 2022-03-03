@@ -58,8 +58,9 @@ public class StockScatterService {
     StockMinuterEmotionMapper stockMinuterEmotionMapper;
     @Autowired
     StockDayEmotionMapper stockDayEmotionMapper;
-@Autowired
+    @Autowired
     StockScatterStaticMapper stockScatterStaticMapper;
+
     public void refreshDay(StockEmotionDayDTO dto) throws IllegalAccessException {
         List<StockStaticTemplate> stockStaticTemplates = stockStaticTemplateMapper.selectAllByObjectSign(dto.getObjectEnumSign());
         if (stockStaticTemplates == null || stockStaticTemplates.size() == 0) {
@@ -91,7 +92,7 @@ public class StockScatterService {
             } catch (Exception e) {
                 log.error(e.getMessage(), e);
             }
-            List<StockLineInfoBo> objectArray=new ArrayList<>();
+            List<StockLineInfoBo> objectArray = new ArrayList<>();
             if (strategy != null && strategy.getTotalNum() > 0) {
                 strategy.getData().forEach(item -> {
                     Set<Map.Entry<String, Object>> entries = ((JSONObject) item).entrySet();
@@ -104,13 +105,13 @@ public class StockScatterService {
                             stockLineInfoBo.setName((String) stockLineInfo.getValue());
                         }
                         if (stockLineInfo.getKey().contains("总市值")) {
-                            stockLineInfoBo.setMarketValue(new BigDecimal( String.valueOf(stockLineInfo.getValue())));
+                            stockLineInfoBo.setMarketValue(new BigDecimal(String.valueOf(stockLineInfo.getValue())));
                         }
                         if (stockLineInfo.getKey().contains("成交额")) {
-                            stockLineInfoBo.setTradeMoney(new BigDecimal( String.valueOf(stockLineInfo.getValue())));
+                            stockLineInfoBo.setTradeMoney(new BigDecimal(String.valueOf(stockLineInfo.getValue())));
                         }
                         if (stockLineInfo.getKey().contains("换手率")) {
-                            stockLineInfoBo.setTurnoverRate(new BigDecimal( String.valueOf(stockLineInfo.getValue())));
+                            stockLineInfoBo.setTurnoverRate(new BigDecimal(String.valueOf(stockLineInfo.getValue())));
 
                         }
                     });
@@ -125,14 +126,43 @@ public class StockScatterService {
     }
 
     public void refreshDayRange(StockEmotionDayRangeDTO dto) {
+        List<String> dateIntervalList = riverRemoteService.getDateIntervalList(dto.getBeginDate(), dto.getEndDate());
+        for (String dateStr : dateIntervalList) {
+            //表中有数据，直接返回，没有再查询
+            List<StockScatterStatic> stockScatterStatics = stockScatterStaticMapper.selectAllByDateAndObjectSign(dateStr, dto.getObjectEnumSign());
+            if (stockScatterStatics != null && stockScatterStatics.size() > 0) {
+                continue;
+            }
+            StockEmotionDayDTO stockEmotionDayDTO = new StockEmotionDayDTO();
+            stockEmotionDayDTO.setDateStr(dateStr);
+            stockEmotionDayDTO.setObjectEnumSign(dto.getObjectEnumSign());
+            try {
+                refreshDay(stockEmotionDayDTO);
+            } catch (IllegalAccessException e) {
+                log.error(e.getMessage(), e);
+            }
 
+        }
     }
 
     public void forceRefreshDayRange(StockEmotionDayRangeDTO dto) {
+        List<String> dateIntervalList = riverRemoteService.getDateIntervalList(dto.getBeginDate(), dto.getEndDate());
+        for (String dateStr : dateIntervalList) {
+            StockEmotionDayDTO stockEmotionDayDTO = new StockEmotionDayDTO();
+            stockEmotionDayDTO.setDateStr(dateStr);
+            stockEmotionDayDTO.setObjectEnumSign(dto.getObjectEnumSign());
+            try {
+                Thread.sleep(1000);
+                refreshDay(stockEmotionDayDTO);
+            } catch (Exception e) {
+                log.error(e.getMessage(), e);
+            }
 
+        }
     }
 
-    public Object getRangeStatic(StockEmotionRangeDayDTO dto) {
-        return null;
+    public List<StockScatterStatic> getRangeStatic(StockEmotionRangeDayDTO dto) {
+        List<StockScatterStatic> stockScatterStatics = stockScatterStaticMapper.selectAllByDateBetweenEqualAndObjectSign(dto.getBeginDateStr(), dto.getEndDateStr(), dto.getObjectEnumSign());
+        return stockScatterStatics;
     }
 }

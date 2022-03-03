@@ -198,7 +198,7 @@ public class StockMinuteEmotinStaticService {
                     //表中数据，能查到，肯定有一条数据
                     List<AxiosBaseBo> axiosBaseBos = JsonUtil.readToValue(stockMinuterEmotions.get(0).getObjectStaticArray(), new TypeReference<List<AxiosBaseBo>>() {
                     });
-                    List<String> timeHaveList = axiosBaseBos.stream().map(AxiosBaseBo::getDateTimeStr).collect(Collectors.toList());
+                    List<String> timeHaveList = axiosBaseBos.stream().filter(o1->o1!=null).map(AxiosBaseBo::getDateTimeStr).collect(Collectors.toList());
                     //过滤time
                     for (String timeStr : timeNeedList) {
                         if (!timeHaveList.contains(timeStr)) {
@@ -209,7 +209,9 @@ public class StockMinuteEmotinStaticService {
                             } catch (Exception e) {
                                 log.error(e.getMessage(), e);
                             }
-                            axiosBaseBos.add(axiosBaseBo);
+                            if(axiosBaseBo!=null){
+                                axiosBaseBos.add(axiosBaseBo);
+                            }
                         }
                     }
                     //更新到表中
