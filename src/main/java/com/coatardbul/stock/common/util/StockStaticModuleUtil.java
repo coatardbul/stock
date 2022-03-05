@@ -21,6 +21,9 @@ public class StockStaticModuleUtil {
     //按天统计，统计市值散点信息
     private static final String DAY_MARKET_VALUE_STATISTIC="day_market_Value_statistic";
 
+    private static final String DAY_CALL_AUCTION_STATISTIC="day_call_auction_statistic";
+
+
     //按天统计，统计中位数，标准差
     private static final String DAY_STATIC_STATISTIC="day_static_statistic";
 
@@ -53,6 +56,11 @@ public class StockStaticModuleUtil {
         if (DAY_MARKET_VALUE_STATISTIC.equals(objectSign)) {
             return DayUpDowLimitStatisticBo.class;
         }
+        if (DAY_CALL_AUCTION_STATISTIC.equals(objectSign)) {
+            return DayUpDowLimitStatisticBo.class;
+        }
+
+
         return Object.class;
     }
 }

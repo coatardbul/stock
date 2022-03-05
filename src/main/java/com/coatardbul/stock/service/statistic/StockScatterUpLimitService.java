@@ -10,6 +10,7 @@ import com.coatardbul.stock.mapper.StockMinuterEmotionMapper;
 import com.coatardbul.stock.mapper.StockScatterStaticMapper;
 import com.coatardbul.stock.mapper.StockStaticTemplateMapper;
 import com.coatardbul.stock.model.bo.DayAxiosMiddleBaseBO;
+import com.coatardbul.stock.model.bo.StockCallAuctionBo;
 import com.coatardbul.stock.model.bo.StockLineInfoBo;
 import com.coatardbul.stock.model.bo.StrategyBO;
 import com.coatardbul.stock.model.dto.StockEmotionDayDTO;
@@ -39,7 +40,7 @@ import java.util.Set;
  */
 @Service
 @Slf4j
-public class StockScatterService {
+public class StockScatterUpLimitService {
     @Autowired
     BaseServerFeign baseServerFeign;
     @Autowired
@@ -90,28 +91,48 @@ public class StockScatterService {
             }
             List<StockLineInfoBo> objectArray = new ArrayList<>();
             if (strategy != null && strategy.getTotalNum() > 0) {
+
+                String queryDateStr=dto.getDateStr().replace("-","");
                 strategy.getData().forEach(item -> {
                     Set<Map.Entry<String, Object>> entries = ((JSONObject) item).entrySet();
-                    StockLineInfoBo stockLineInfoBo = new StockLineInfoBo();
+                    StockCallAuctionBo stockCallAuctionBo = new StockCallAuctionBo();
                     entries.forEach(stockLineInfo -> {
                         if (stockLineInfo.getKey().equals("code")) {
-                            stockLineInfoBo.setCode((String) stockLineInfo.getValue());
+                            stockCallAuctionBo.setCode((String) stockLineInfo.getValue());
                         }
                         if (stockLineInfo.getKey().contains("股票简称")) {
-                            stockLineInfoBo.setName((String) stockLineInfo.getValue());
+                            stockCallAuctionBo.setName((String) stockLineInfo.getValue());
                         }
                         if (stockLineInfo.getKey().contains("总市值")) {
-                            stockLineInfoBo.setMarketValue(new BigDecimal(String.valueOf(stockLineInfo.getValue())));
+                            stockCallAuctionBo.setMarketValue(new BigDecimal(String.valueOf(stockLineInfo.getValue())));
                         }
-                        if (stockLineInfo.getKey().contains("成交额")) {
-                            stockLineInfoBo.setTradeMoney(new BigDecimal(String.valueOf(stockLineInfo.getValue())));
+                        if (stockLineInfo.getKey().contains("竞价金额")) {
+                            if(stockLineInfo.getKey().contains(queryDateStr)){
+                                stockCallAuctionBo.setCompareTradeMoney(new BigDecimal(String.valueOf(stockLineInfo.getValue())));
+                            }else {
+                                stockCallAuctionBo.setTradeMoney(new BigDecimal(String.valueOf(stockLineInfo.getValue())));
+                            }
+                        }
+                        if (stockLineInfo.getKey().contains("竞价涨幅")) {
+                            if(stockLineInfo.getKey().contains(queryDateStr)) {
+                                stockCallAuctionBo.setCompareIncreaseRange(new BigDecimal(String.valueOf(stockLineInfo.getValue())));
+                            }else {
+                                stockCallAuctionBo.setIncreaseRange(new BigDecimal(String.valueOf(stockLineInfo.getValue())));
+                            }
                         }
                         if (stockLineInfo.getKey().contains("换手率")) {
-                            stockLineInfoBo.setTurnoverRate(new BigDecimal(String.valueOf(stockLineInfo.getValue())));
-
+                            if(stockLineInfo.getKey().contains(queryDateStr)) {
+                                stockCallAuctionBo.setCompareTurnoverRate(new BigDecimal(String.valueOf(stockLineInfo.getValue())));
+                            }else {
+                                stockCallAuctionBo.setTurnoverRate(new BigDecimal(String.valueOf(stockLineInfo.getValue())));
+                            }
                         }
-                    });
-                    objectArray.add(stockLineInfoBo);
+                        if (stockLineInfo.getKey().contains("{/}竞价金额")) {
+                            stockCallAuctionBo.setCallAuctionRatio(new BigDecimal(String.valueOf(stockLineInfo.getValue())));
+                        }
+
+                        });
+                    objectArray.add(stockCallAuctionBo);
                 });
 
             }

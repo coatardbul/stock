@@ -20,7 +20,7 @@ public class StockEmotionDayDTO {
     /**
      * 对象枚举标识
      */
-    @NotBlank(message = "对象标识不能为空")
+//    @NotBlank(message = "对象标识不能为空")
     private String objectEnumSign;
 
     /**

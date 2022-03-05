@@ -7,6 +7,7 @@ import com.coatardbul.stock.common.util.JsonUtil;
 import com.coatardbul.stock.model.dto.StockEmotionDayDTO;
 import com.coatardbul.stock.model.dto.StockStaticTemplateBaseDTO;
 import com.coatardbul.stock.service.statistic.StockMinuteEmotinStaticService;
+import com.coatardbul.stock.service.statistic.StockStrategyWatchService;
 import com.coatardbul.stock.task.DayStatisticJob;
 import com.coatardbul.stock.task.MinuterEmotionXxlJob;
 import io.swagger.annotations.Api;
@@ -39,7 +40,8 @@ public class TaskController {
     DayStatisticJob dayStatisticJob;
     @Autowired
     StockMinuteEmotinStaticService stockMinuteEmotinStaticService;
-
+@Autowired
+    StockStrategyWatchService stockStrategyWatchService;
     @WebLog(value = "")
     @RequestMapping(path = "/dayStatic", method = RequestMethod.POST)
     public CommonResult dayStatic() {
@@ -54,4 +56,13 @@ public class TaskController {
         stockMinuteEmotinStaticService.taskRefreshDay(stockEmotionDayDTO);
         return  null;
     }
+
+    @WebLog(value = "")
+    @RequestMapping(path = "/simulateHistoryStrategyWatch", method = RequestMethod.POST)
+    public CommonResult simulateHistoryStrategyWatch(@Validated @RequestBody  StockEmotionDayDTO stockEmotionDayDTO) throws Exception {
+        stockStrategyWatchService.simulateHistoryStrategyWatch(stockEmotionDayDTO);
+        return  null;
+    }
+
+
 }

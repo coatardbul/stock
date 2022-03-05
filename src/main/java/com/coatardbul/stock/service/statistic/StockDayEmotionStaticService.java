@@ -1,6 +1,5 @@
 package com.coatardbul.stock.service.statistic;
 
-import com.coatardbul.stock.common.constants.Constant;
 import com.coatardbul.stock.common.exception.BusinessException;
 import com.coatardbul.stock.common.util.JsonUtil;
 import com.coatardbul.stock.common.util.ReflexUtil;
@@ -26,8 +25,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.script.ScriptException;
-import java.io.FileNotFoundException;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -178,7 +175,7 @@ public class StockDayEmotionStaticService {
     }
 
     public List<StockDayEmotion> getRangeStatic(StockEmotionRangeDayDTO dto) {
-        List<StockDayEmotion> stockDayEmotions = stockDayEmotionMapper.selectAllByDateBetweenEqualAndObjectSign(dto.getBeginDateStr(), dto.getEndDateStr(), dto.getObjectEnumSign());
+        List<StockDayEmotion> stockDayEmotions = stockDayEmotionMapper.selectAllByDateBetweenEqualAndObjectSign(dto.getDateBeginStr(), dto.getDateEndStr(), dto.getObjectEnumSign());
         return stockDayEmotions;
     }
 

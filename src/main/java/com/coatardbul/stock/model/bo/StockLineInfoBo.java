@@ -36,4 +36,12 @@ public class StockLineInfoBo {
      * 换手率 70
      */
     private BigDecimal turnoverRate;
+
+
+    /**
+     * 涨幅
+     */
+    private BigDecimal increaseRange;
+
+
 }

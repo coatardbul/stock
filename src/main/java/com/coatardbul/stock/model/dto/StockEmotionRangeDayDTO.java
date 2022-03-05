@@ -12,12 +12,12 @@ public class StockEmotionRangeDayDTO {
     /**
      * YYYY-MM-DD
      */
-    private String beginDateStr;
+    private String dateBeginStr;
 
     /**
      * YYYY-MM-DD
      */
-    private String endDateStr;
+    private String dateEndStr;
 
     /**
      * 对象枚举标识
