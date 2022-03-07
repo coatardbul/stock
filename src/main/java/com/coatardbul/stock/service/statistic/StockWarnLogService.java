@@ -110,4 +110,7 @@ public class StockWarnLogService {
     }
 
 
+    public   List<StockWarnLog>  findAll() {
+        return  stockWarnLogMapper.selectByAll(null);
+    }
 }

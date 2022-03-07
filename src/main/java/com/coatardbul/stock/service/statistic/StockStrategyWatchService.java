@@ -1,5 +1,6 @@
 package com.coatardbul.stock.service.statistic;
 
+import com.coatardbul.stock.feign.river.BaseServerFeign;
 import com.coatardbul.stock.mapper.StockStrategyWatchMapper;
 import com.coatardbul.stock.model.bo.StrategyBO;
 import com.coatardbul.stock.model.dto.StockEmotionDayDTO;
@@ -33,6 +34,8 @@ public class StockStrategyWatchService {
     StockStrategyService stockStrategyService;
     @Autowired
     StockWarnLogService stockWarnLogService;
+    @Autowired
+    BaseServerFeign baseServerFeign;
 
 
     //模拟历史扫描数据
@@ -81,9 +84,28 @@ public class StockStrategyWatchService {
 
     private boolean filter(StockStrategyWatch stockStrategyWatch, String cronTime) {
         if (StringUtils.isNotBlank(stockStrategyWatch.getEndTime())) {
-            return stockStrategyWatch.getEndTime().compareTo(cronTime) > 0;
+            return stockStrategyWatch.getEndTime().compareTo(cronTime) <= 0;
         } else {
             return true;
         }
+    }
+
+    public void add(StockStrategyWatch dto) {
+        dto.setId(baseServerFeign.getSnowflakeId());
+        stockStrategyWatchMapper.insert(dto);
+    }
+
+    public void modify(StockStrategyWatch dto) {
+        stockStrategyWatchMapper.updateByPrimaryKeySelective(dto);
+    }
+
+    public void delete(StockStrategyWatch dto) {
+        stockStrategyWatchMapper.deleteByPrimaryKey(dto.getId());
+
+    }
+
+    public  List<StockStrategyWatch>  findAll() {
+        List<StockStrategyWatch> stockStrategyWatches = stockStrategyWatchMapper.selectByAll(null);
+        return stockStrategyWatches;
     }
 }

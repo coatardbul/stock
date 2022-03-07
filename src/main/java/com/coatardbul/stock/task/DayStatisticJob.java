@@ -6,6 +6,7 @@ import com.coatardbul.stock.model.dto.StockEmotionDayDTO;
 import com.coatardbul.stock.model.dto.StockExcelStaticQueryDTO;
 import com.coatardbul.stock.service.statistic.StockDayEmotionStaticService;
 import com.coatardbul.stock.service.statistic.StockDayStaticService;
+import com.coatardbul.stock.service.statistic.StockScatterUpLimitService;
 import com.coatardbul.stock.service.statistic.StockStrategyService;
 import com.xxl.job.core.context.XxlJobHelper;
 import com.xxl.job.core.handler.annotation.XxlJob;
@@ -36,6 +37,9 @@ public class DayStatisticJob {
     @Autowired
     StockDayEmotionStaticService stockDayEmotionStaticService;
 
+    @Autowired
+    StockScatterUpLimitService stockScatterUpLimitService;
+
     @XxlJob("dayStaticJobHandler")
     public void dayStaticJobHandler() {
         log.info("刷新喇叭口统计数据开始");
@@ -60,5 +64,20 @@ public class DayStatisticJob {
             stockDayEmotionStaticService.refreshDay(dto);
         }
         log.info("刷新每日涨跌统计数据结束");
+    }
+
+
+    @XxlJob("dayTwoUpLimitJobHandler")
+    public void dayTwoUpLimitJobHandler() throws IllegalAccessException {
+        String param = XxlJobHelper.getJobParam();
+        log.info("刷新两板以上集合竞价数据开始"+param);
+        if (StringUtils.isNotBlank(param)) {
+            StockEmotionDayDTO dto = JsonUtil.readToValue(param, StockEmotionDayDTO.class);
+            dto.setDateStr(DateTimeUtil.getDateFormat(new Date(),DateTimeUtil.YYYY_MM_DD));
+            log.info("刷新两板以上集合竞价数据参数"+JsonUtil.toJson(dto));
+            stockScatterUpLimitService.refreshDay(dto);
+
+        }
+        log.info("刷新两板以上集合竞价数据开始");
     }
 }

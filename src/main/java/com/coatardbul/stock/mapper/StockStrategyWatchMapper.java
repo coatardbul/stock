@@ -17,6 +17,8 @@ public interface StockStrategyWatchMapper {
 
     int updateByPrimaryKey(StockStrategyWatch record);
 
+List<StockStrategyWatch> selectByAll(StockStrategyWatch stockStrategyWatch);
+
 
 
     List<StockStrategyWatch> selectAllByType(@Param("type")Integer type);

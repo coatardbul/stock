@@ -1,4 +1,5 @@
 package com.coatardbul.stock.mapper;
+import java.util.Date;
 import org.apache.ibatis.annotations.Param;
 import java.util.List;
 
@@ -18,6 +19,9 @@ public interface StockWarnLogMapper {
     int updateByPrimaryKey(StockWarnLog record);
 
     List<StockWarnLog> selectAllByTemplateIdAndDate(@Param("templateId")String templateId,@Param("date")String date);
+
+
+    List<StockWarnLog> selectByAll(StockWarnLog stockWarnLog);
 
 
 }

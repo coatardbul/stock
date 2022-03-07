@@ -41,7 +41,7 @@ public class StrategyWatchJob {
     }
 
 
-    @XxlJob("historyStrategyNowWatchJobHandler")
+    @XxlJob("historyStrategyWatchJobHandler")
     public void historyStrategyWatchJobHandler() throws Exception {
         String param = XxlJobHelper.getJobParam();
         log.info("历史策略监控定时任务开始,传递参数为：" + param);
