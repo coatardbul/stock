@@ -4,23 +4,22 @@ import com.alibaba.fastjson.JSONObject;
 import com.coatardbul.stock.common.util.DateTimeUtil;
 import com.coatardbul.stock.feign.river.BaseServerFeign;
 import com.coatardbul.stock.mapper.StockWarnLogMapper;
-import com.coatardbul.stock.model.bo.StockCallAuctionBo;
 import com.coatardbul.stock.model.bo.StrategyBO;
 import com.coatardbul.stock.model.dto.StockStrategyQueryDTO;
 import com.coatardbul.stock.model.entity.StockWarnLog;
-import com.coatardbul.stock.model.feign.StockTemplateDto;
+import com.coatardbul.stock.model.dto.StockWarnLogQueryDto;
 import com.coatardbul.stock.service.romote.RiverRemoteService;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.lang.time.DateUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.math.BigDecimal;
 import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 import java.util.Set;
 import java.util.function.Function;
 import java.util.stream.Collectors;
@@ -99,10 +98,15 @@ public class StockWarnLogService {
                 stockWarnLog.setTemplateName(templateName);
                 stockWarnLog.setDate(query.getDateStr());
                 if (isNow) {
-                    stockWarnLog.setCreateTime(new Date());
+                    Date date=new Date();
+                    Calendar calendar = DateTimeUtil.getCalendar(date);
+                    calendar.set(Calendar.SECOND, new Random().nextInt(59));
+                    stockWarnLog.setCreateTime(calendar.getTime());
                 } else {
                     Date hisDate = DateTimeUtil.parseDateStr(query.getDateStr() + query.getTimeStr(), DateTimeUtil.YYYY_MM_DD + DateTimeUtil.HH_MM);
-                    stockWarnLog.setCreateTime(hisDate);
+                    Calendar calendar = DateTimeUtil.getCalendar(hisDate);
+                    calendar.set(Calendar.SECOND, new Random().nextInt(59));
+                    stockWarnLog.setCreateTime(calendar.getTime());
                 }
                 stockWarnLogMapper.insertSelective(stockWarnLog);
             }
@@ -110,7 +114,7 @@ public class StockWarnLogService {
     }
 
 
-    public   List<StockWarnLog>  findAll() {
-        return  stockWarnLogMapper.selectByAll(null);
+    public   List<StockWarnLog>  findAll(StockWarnLogQueryDto dto) {
+        return   stockWarnLogMapper.selectAllByDateAndTemplateId(dto.getDateStr(),dto.getTemplateId());
     }
 }

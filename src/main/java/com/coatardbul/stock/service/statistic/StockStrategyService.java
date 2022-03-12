@@ -112,7 +112,11 @@ public class StockStrategyService {
      * @return
      * @throws BusinessException
      */
-    public StrategyBO strategy(StockStrategyQueryDTO dto) throws BusinessException, NoSuchMethodException, ScriptException, FileNotFoundException {
+    public  synchronized StrategyBO strategy(StockStrategyQueryDTO dto) throws BusinessException, NoSuchMethodException, ScriptException, FileNotFoundException {
+        return strategyCommon(dto);
+    }
+
+    public   StrategyBO strategyCommon(StockStrategyQueryDTO dto) throws BusinessException, NoSuchMethodException, ScriptException, FileNotFoundException {
         StrategyBO result = new StrategyBO();
         //获取策略返回
         String response = getStrategyResponseStr(dto);
@@ -143,6 +147,10 @@ public class StockStrategyService {
         return result;
     }
 
+
+    public   StrategyBO directStrategy(StockStrategyQueryDTO dto) throws BusinessException, NoSuchMethodException, ScriptException, FileNotFoundException {
+       return strategyCommon(dto);
+    }
 
     private String getStrategyResponseStr(StockStrategyQueryDTO dto) throws BusinessException, NoSuchMethodException, ScriptException, FileNotFoundException {
         //默认信息

@@ -21,9 +21,5 @@ public class StockEmotionQueryDTO {
      */
     private String objectEnumSign;
 
-    /**
-     * 时间间隔
-     */
-    private Integer timeInterval;
 
 }

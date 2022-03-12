@@ -42,7 +42,7 @@ public class StockMinuteStaticController {
     @WebLog(value = "")
     @RequestMapping(path = "/refreshDay", method = RequestMethod.POST)
     public CommonResult refreshDay(@Validated @RequestBody StockEmotionDayDTO dto) throws IllegalAccessException, ParseException, InterruptedException {
-        stockMinuteEmotinStaticService.refreshDay(dto);
+        stockMinuteEmotinStaticService.refreshDay(dto,true);
         return CommonResult.success(null);
     }
 
@@ -56,7 +56,7 @@ public class StockMinuteStaticController {
     @WebLog(value = "")
     @RequestMapping(path = "/supplementRefreshDay", method = RequestMethod.POST)
     public CommonResult supplementRefreshDay(@Validated @RequestBody StockEmotionDayDTO dto) throws IllegalAccessException, ParseException, InterruptedException {
-        stockMinuteEmotinStaticService.supplementRefreshDay(dto);
+        stockMinuteEmotinStaticService.refreshDay(dto);
         return CommonResult.success(null);
     }
 
@@ -94,14 +94,7 @@ public class StockMinuteStaticController {
         return CommonResult.success(null);
     }
 
-    /**
-     * 获取对应时间，对应标识的统计数据
-     */
-    @WebLog(value = "")
-    @RequestMapping(path = "/getRangeStatic", method = RequestMethod.POST)
-    public CommonResult getRangeStatic(@Validated @RequestBody StockEmotionQueryDTO dto) {
-        return CommonResult.success( stockMinuteEmotinStaticService.getRangeStatic(dto));
-    }
+
 
 
 }

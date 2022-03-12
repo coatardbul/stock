@@ -37,7 +37,7 @@ public class MinuterEmotionXxlJob {
             stockEmotionDayDTO.setDateStr(DateTimeUtil.getDateFormat(new Date(),DateTimeUtil.YYYY_MM_DD));
             stockEmotionDayDTO.setTimeStr(DateTimeUtil.getDateFormat(new Date(),DateTimeUtil.HH_MM));
             log.info(",传递参数为：" + stockEmotionDayDTO.toString());
-            stockMinuteEmotinStaticService.taskRefreshDay(stockEmotionDayDTO);
+            stockMinuteEmotinStaticService.refreshDay(stockEmotionDayDTO);
         }
         log.info("分钟情绪定时任务结束");
 

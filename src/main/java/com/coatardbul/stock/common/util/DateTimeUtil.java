@@ -75,6 +75,13 @@ public class DateTimeUtil {
         return new SimpleDateFormat("yyyyMMdd").format(calendar.getTime());
     }
 
+    public static Calendar getCalendar(Date date) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(date);
+        return  calendar;
+    }
+
+
     /**
      * 获取从开始至结束的月分
      *

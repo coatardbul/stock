@@ -24,4 +24,10 @@ public interface StockWarnLogMapper {
     List<StockWarnLog> selectByAll(StockWarnLog stockWarnLog);
 
 
+
+    List<StockWarnLog> selectAllByDateAndTemplateId(@Param("date")String date,@Param("templateId")String templateId);
+
+
+
+
 }

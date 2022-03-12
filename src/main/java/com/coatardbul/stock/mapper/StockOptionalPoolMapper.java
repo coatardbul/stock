@@ -15,6 +15,8 @@ public interface StockOptionalPoolMapper {
 
     List<StockOptionalPool> selectByAll(StockOptionalPool stockOptionalPool);
 
+StockOptionalPool selectAllByCodeAndType(@Param("code")String code,@Param("type")Integer type);
+
 
 
     int updateByPrimaryKeySelective(StockOptionalPool record);

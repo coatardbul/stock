@@ -15,11 +15,6 @@ public class StockMinuterEmotion {
     private String date;
 
     /**
-     * 时间数组
-     */
-    private String dateTimeArray;
-
-    /**
      * 对象集合
      */
     private String objectStaticArray;
@@ -28,11 +23,6 @@ public class StockMinuterEmotion {
      * 根据对象解析对应的数据，保留字段
      */
     private String objectSign;
-
-    /**
-     * 时间间隔，单位分钟
-     */
-    private Integer timeInterval;
 
     /**
      * 模板id

@@ -6,6 +6,8 @@ import com.coatardbul.stock.model.bo.StrategyBO;
 import com.coatardbul.stock.model.dto.StockEmotionDayDTO;
 import com.coatardbul.stock.model.dto.StockStrategyQueryDTO;
 import com.coatardbul.stock.model.entity.StockStrategyWatch;
+import com.coatardbul.stock.model.feign.StockTemplateDto;
+import com.coatardbul.stock.service.romote.RiverRemoteService;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,7 +38,8 @@ public class StockStrategyWatchService {
     StockWarnLogService stockWarnLogService;
     @Autowired
     BaseServerFeign baseServerFeign;
-
+    @Autowired
+    RiverRemoteService riverRemoteService;
 
     //模拟历史扫描数据
     public void simulateHistoryStrategyWatch(StockEmotionDayDTO dto) {
@@ -84,7 +87,7 @@ public class StockStrategyWatchService {
 
     private boolean filter(StockStrategyWatch stockStrategyWatch, String cronTime) {
         if (StringUtils.isNotBlank(stockStrategyWatch.getEndTime())) {
-            return stockStrategyWatch.getEndTime().compareTo(cronTime) <= 0;
+            return stockStrategyWatch.getEndTime().compareTo(cronTime) >= 0;
         } else {
             return true;
         }
@@ -104,8 +107,17 @@ public class StockStrategyWatchService {
 
     }
 
-    public  List<StockStrategyWatch>  findAll() {
+    public List<StockStrategyWatch> findAll() {
         List<StockStrategyWatch> stockStrategyWatches = stockStrategyWatchMapper.selectByAll(null);
-        return stockStrategyWatches;
+        if (stockStrategyWatches == null || stockStrategyWatches.size() == 0) {
+            return stockStrategyWatches;
+        }
+        return stockStrategyWatches.stream().map(this::setTemplatedName).collect(Collectors.toList());
+    }
+
+    private StockStrategyWatch setTemplatedName(StockStrategyWatch dto) {
+        StockTemplateDto templateById = riverRemoteService.getTemplateById(dto.getTemplatedId());
+        dto.setTemplatedName(templateById.getName());
+        return dto;
     }
 }

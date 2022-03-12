@@ -53,7 +53,7 @@ public class TaskController {
     @WebLog(value = "")
     @RequestMapping(path = "/minuterEmotion", method = RequestMethod.POST)
     public CommonResult minuterEmotion(@Validated @RequestBody  StockEmotionDayDTO stockEmotionDayDTO) throws Exception {
-        stockMinuteEmotinStaticService.taskRefreshDay(stockEmotionDayDTO);
+        stockMinuteEmotinStaticService.refreshDay(stockEmotionDayDTO);
         return  null;
     }
 

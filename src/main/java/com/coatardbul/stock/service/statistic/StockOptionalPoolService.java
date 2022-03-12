@@ -27,6 +27,10 @@ StockOptionalPoolMapper stockOptionalPoolMapper;
 
     public void add(StockOptionalPool dto) {
         dto.setId(baseServerFeign.getSnowflakeId());
+        StockOptionalPool stockOptionalPool = stockOptionalPoolMapper.selectAllByCodeAndType(dto.getCode(), dto.getType());
+        if(stockOptionalPool!=null){
+            return;
+        }
         stockOptionalPoolMapper.insertSelective(dto);
     }
 

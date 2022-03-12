@@ -83,7 +83,6 @@ public class StockScatterService {
             stockStrategyQueryDTO.setDateStr(dto.getDateStr());
             StrategyBO strategy = null;
             try {
-                Thread.sleep(1000);
                 strategy = stockStrategyService.strategy(stockStrategyQueryDTO);
             } catch (Exception e) {
                 log.error(e.getMessage(), e);

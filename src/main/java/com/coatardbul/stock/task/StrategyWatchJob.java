@@ -33,7 +33,7 @@ public class StrategyWatchJob {
     public void strategyWatchJobHandler() throws Exception {
         String param = XxlJobHelper.getJobParam();
         log.info("策略监控定时任务开始,传递参数为：" + param);
-        StockEmotionDayDTO stockEmotionDayDTO = JsonUtil.readToValue(param, StockEmotionDayDTO.class);
+        StockEmotionDayDTO stockEmotionDayDTO = new StockEmotionDayDTO();
         stockEmotionDayDTO.setDateStr(DateTimeUtil.getDateFormat(new Date(), DateTimeUtil.YYYY_MM_DD));
         stockEmotionDayDTO.setTimeStr(DateTimeUtil.getDateFormat(new Date(), DateTimeUtil.HH_MM));
         stockStrategyWatchService.strategyNowWatch(stockEmotionDayDTO);

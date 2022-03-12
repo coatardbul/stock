@@ -1,11 +1,7 @@
 package com.coatardbul.stock.mapper;
 
-import com.coatardbul.stock.model.dto.StockEmotionStaticDTO;
-import com.coatardbul.stock.model.entity.StockMinuterEmotion;
-import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Param;import java.util.List;
+import com.coatardbul.stock.model.dto.StockEmotionStaticDTO;import com.coatardbul.stock.model.entity.StockMinuterEmotion;import org.apache.ibatis.annotations.Param;import java.util.List;
 
-@Mapper
 public interface StockMinuterEmotionMapper {
     int deleteByPrimaryKey(String id);
 
@@ -19,17 +15,13 @@ public interface StockMinuterEmotionMapper {
 
     int updateByPrimaryKey(StockMinuterEmotion record);
 
-
-    List<StockMinuterEmotion> selectAllByDateAndObjectSignAndTimeInterval(@Param("date")String date, @Param("objectSign")String objectSign, @Param("timeInterval")Integer timeInterval);
-
-    List<StockEmotionStaticDTO> selectStaticInfoByCondition(@Param("date")String date, @Param("objectSign")String objectSign, @Param("timeInterval")Integer timeInterval);
+    List<StockMinuterEmotion> selectAllByDateAndObjectSign(@Param("date") String date, @Param("objectSign") String objectSign);
 
 
-    List<StockMinuterEmotion> selectAllByDateAndObjectSignAndTemplateId(@Param("date")String date,@Param("objectSign")String objectSign,@Param("templateId")String templateId);
+    StockMinuterEmotion selectAllByDateAndObjectSignAndTemplateId(@Param("date") String date, @Param("objectSign") String objectSign, @Param("templateId") String templateId);
 
 
-
-	int deleteByDateAndObjectSignAndTimeInterval(@Param("date")String date,@Param("objectSign")String objectSign,@Param("timeInterval")Integer timeInterval);
+    int deleteByDateAndObjectSignAndTemplateId(@Param("date")String date,@Param("objectSign")String objectSign,@Param("templateId")String templateId);
 
 
 
