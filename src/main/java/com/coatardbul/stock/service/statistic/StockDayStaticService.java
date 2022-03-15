@@ -1,11 +1,9 @@
 package com.coatardbul.stock.service.statistic;
 
 import com.alibaba.fastjson.JSONObject;
-import com.coatardbul.stock.common.api.CommonResult;
 import com.coatardbul.stock.common.constants.Constant;
 import com.coatardbul.stock.common.constants.CookieEnum;
 import com.coatardbul.stock.common.util.BigRoot;
-import com.coatardbul.stock.feign.river.RiverServerFeign;
 import com.coatardbul.stock.mapper.StockCookieMapper;
 import com.coatardbul.stock.mapper.StockDateStaticMapper;
 import com.coatardbul.stock.model.bo.StockStaticBO;
@@ -17,10 +15,9 @@ import com.coatardbul.stock.model.dto.StockStrategyQueryDTO;
 import com.coatardbul.stock.model.entity.StockCookie;
 import com.coatardbul.stock.model.entity.StockDateStatic;
 import com.coatardbul.stock.model.entity.StockExcelTemplate;
-import com.coatardbul.stock.model.feign.CalendarDateDTO;
 import com.coatardbul.stock.service.StockExcelTemplateService;
 import com.coatardbul.stock.service.romote.RiverRemoteService;
-import com.coatardbul.stock.service.statistic.StockStrategyService;
+import com.coatardbul.stock.service.base.StockStrategyService;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang.StringUtils;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;

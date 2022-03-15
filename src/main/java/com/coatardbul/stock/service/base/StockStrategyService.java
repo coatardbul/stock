@@ -1,4 +1,4 @@
-package com.coatardbul.stock.service.statistic;
+package com.coatardbul.stock.service.base;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONException;
@@ -6,8 +6,6 @@ import com.alibaba.fastjson.JSONObject;
 import com.coatardbul.stock.common.api.CommonResult;
 import com.coatardbul.stock.common.constants.CookieEnum;
 import com.coatardbul.stock.common.exception.BusinessException;
-import com.coatardbul.stock.common.util.BigRoot;
-import com.coatardbul.stock.common.util.HttpUtil;
 import com.coatardbul.stock.common.util.JsonUtil;
 import com.coatardbul.stock.common.util.ReflexUtil;
 import com.coatardbul.stock.common.util.StockStaticModuleUtil;
@@ -15,15 +13,10 @@ import com.coatardbul.stock.common.util.TongHuaShunUtil;
 import com.coatardbul.stock.feign.river.RiverServerFeign;
 import com.coatardbul.stock.mapper.StockCookieMapper;
 import com.coatardbul.stock.mapper.StockDateStaticMapper;
-import com.coatardbul.stock.model.bo.StockStaticBO;
-import com.coatardbul.stock.model.bo.StockStaticBaseBO;
 import com.coatardbul.stock.model.bo.StrategyBO;
 import com.coatardbul.stock.model.bo.StrategyQueryBO;
-import com.coatardbul.stock.model.dto.StockExcelStaticQueryDTO;
-import com.coatardbul.stock.model.dto.StockStaticQueryDTO;
 import com.coatardbul.stock.model.dto.StockStrategyQueryDTO;
 import com.coatardbul.stock.model.entity.StockCookie;
-import com.coatardbul.stock.model.entity.StockDateStatic;
 import com.coatardbul.stock.model.entity.StockStaticTemplate;
 import com.coatardbul.stock.model.feign.StockTemplateQueryDto;
 import com.coatardbul.stock.service.StockExcelTemplateService;
@@ -35,7 +28,6 @@ import org.springframework.stereotype.Service;
 
 import javax.script.ScriptException;
 import java.io.FileNotFoundException;
-import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -58,6 +50,8 @@ public class StockStrategyService {
     StockDateStaticMapper stockDateStaticMapper;
     @Autowired
     StockExcelTemplateService stockExcelTemplateService;
+    @Autowired
+    HttpService  httpService;
     //同花顺问财地址
     private static final String STRATEGY_URL = "http://www.iwencai.com/customized/chart/get-robot-data";
 
@@ -112,7 +106,7 @@ public class StockStrategyService {
      * @return
      * @throws BusinessException
      */
-    public  synchronized StrategyBO strategy(StockStrategyQueryDTO dto) throws BusinessException, NoSuchMethodException, ScriptException, FileNotFoundException {
+    public   StrategyBO strategy(StockStrategyQueryDTO dto) throws BusinessException, NoSuchMethodException, ScriptException, FileNotFoundException {
         return strategyCommon(dto);
     }
 
@@ -161,14 +155,14 @@ public class StockStrategyService {
         String jsonString = JsonUtil.toJson(defaultStrategyQuery);
         List<Header> headerList = new ArrayList<>();
         String heXinStr = TongHuaShunUtil.getHeXinStr();
-        Header cookie = HttpUtil.getHead("Cookie", cookieValue+heXinStr);
-        Header hexin = HttpUtil.getHead("hexin-v", heXinStr);
-        Header orign = HttpUtil.getHead("Origin", "http://www.iwencai.com");
+        Header cookie = httpService.getHead("Cookie", cookieValue+heXinStr);
+        Header hexin = httpService.getHead("hexin-v", heXinStr);
+        Header orign = httpService.getHead("Origin", "http://www.iwencai.com");
         headerList.add(cookie);
         headerList.add(hexin);
         headerList.add(orign);
         log.info("策略查询传递参数" + jsonString);
-        return HttpUtil.doPost(STRATEGY_URL, jsonString, headerList);
+        return httpService.doPost(STRATEGY_URL, jsonString, headerList);
     }
 
     /**

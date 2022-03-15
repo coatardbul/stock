@@ -7,7 +7,7 @@ import com.coatardbul.stock.model.dto.StockExcelStaticQueryDTO;
 import com.coatardbul.stock.service.statistic.StockDayEmotionStaticService;
 import com.coatardbul.stock.service.statistic.StockDayStaticService;
 import com.coatardbul.stock.service.statistic.StockScatterUpLimitService;
-import com.coatardbul.stock.service.statistic.StockStrategyService;
+import com.coatardbul.stock.service.base.StockStrategyService;
 import com.xxl.job.core.context.XxlJobHelper;
 import com.xxl.job.core.handler.annotation.XxlJob;
 import lombok.extern.slf4j.Slf4j;
@@ -15,6 +15,7 @@ import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.text.ParseException;
 import java.util.Date;
 
 /**
@@ -54,7 +55,7 @@ public class DayStatisticJob {
 
 
     @XxlJob("dayUpDownJobHandler")
-    public void dayUpDownJobHandler() throws IllegalAccessException {
+    public void dayUpDownJobHandler() throws IllegalAccessException, ParseException {
         String param = XxlJobHelper.getJobParam();
         log.info("刷新每日涨跌统计数据开始"+param);
         if (StringUtils.isNotBlank(param)) {
@@ -68,7 +69,7 @@ public class DayStatisticJob {
 
 
     @XxlJob("dayTwoUpLimitJobHandler")
-    public void dayTwoUpLimitJobHandler() throws IllegalAccessException {
+    public void dayTwoUpLimitJobHandler() throws IllegalAccessException, ParseException {
         String param = XxlJobHelper.getJobParam();
         log.info("刷新两板以上集合竞价数据开始"+param);
         if (StringUtils.isNotBlank(param)) {

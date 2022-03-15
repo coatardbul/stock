@@ -14,14 +14,14 @@ public class CallBackLogInterceptor {
 
 
 
-    @Before("execution(* com.coatardbul.stock.service.statistic.StockStrategyService.strategy(..))")
+    @Before("execution(* com.coatardbul.stock.service.base.StockStrategyService.strategy(..))")
     public void strategyWait(){
-        try {
-            int i = new Random().nextInt(9999) + 1000;
-            Thread.sleep(i);
-        } catch (Exception e) {
-            log.error(e.getMessage(),e);
-        }
+//        try {
+//            int i = new Random().nextInt(9999) + 1000;
+//            Thread.sleep(i);
+//        } catch (Exception e) {
+//            log.error(e.getMessage(),e);
+//        }
     }
 
 }

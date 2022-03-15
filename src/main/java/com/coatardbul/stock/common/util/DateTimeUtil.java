@@ -56,7 +56,6 @@ public class DateTimeUtil {
      */
     public static Date parseDateStr(String dateStr, String format) throws ParseException {
         SimpleDateFormat formatter = new SimpleDateFormat(format);
-        formatter.setTimeZone(TimeZone.getTimeZone("UTC"));
         return formatter.parse(dateStr);
     }
 
@@ -73,6 +72,14 @@ public class DateTimeUtil {
         calendar.setTime(new Date());
         calendar.add(Calendar.DATE, day);
         return new SimpleDateFormat("yyyyMMdd").format(calendar.getTime());
+    }
+
+    public static Date getBeforeDate(int num,int field) {
+        num = 0 - num;
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(new Date());
+        calendar.add(field, num);
+        return calendar.getTime();
     }
 
     public static Calendar getCalendar(Date date) {

@@ -74,6 +74,17 @@ public class StockMinuteStaticController {
         return CommonResult.success(null);
     }
 
+    /**
+     * 过滤数据，
+     * @param dto
+     * @return
+     */
+    @WebLog(value = "")
+    @RequestMapping(path = "/filterDate", method = RequestMethod.POST)
+    public CommonResult filterDate(@Validated @RequestBody StockEmotionDayDTO dto) throws IllegalAccessException {
+        stockMinuteEmotinStaticService.filterDate(dto);
+        return CommonResult.success(null);
+    }
 
     /**
      * 获取对应时间，对应标识的详细数据
@@ -84,15 +95,7 @@ public class StockMinuteStaticController {
         return CommonResult.success( stockMinuteEmotinStaticService.getDayDetail(dto));
     }
 
-    /**
-     *
-     */
-    @WebLog(value = "")
-    @RequestMapping(path = "/getRangeDetail", method = RequestMethod.POST)
-    public CommonResult getRangeDetail(@Validated @RequestBody StockEmotionDayDTO dto) {
-        stockMinuteEmotinStaticService.getRangeDetail(dto);
-        return CommonResult.success(null);
-    }
+
 
 
 

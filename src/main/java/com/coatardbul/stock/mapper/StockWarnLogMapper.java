@@ -23,6 +23,8 @@ public interface StockWarnLogMapper {
 
     List<StockWarnLog> selectByAll(StockWarnLog stockWarnLog);
 
+int deleteByDate(@Param("date")String date);
+
 
 
     List<StockWarnLog> selectAllByDateAndTemplateId(@Param("date")String date,@Param("templateId")String templateId);

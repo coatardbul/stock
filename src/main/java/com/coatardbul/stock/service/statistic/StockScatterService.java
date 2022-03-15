@@ -18,6 +18,7 @@ import com.coatardbul.stock.model.dto.StockEmotionRangeDayDTO;
 import com.coatardbul.stock.model.dto.StockStrategyQueryDTO;
 import com.coatardbul.stock.model.entity.StockScatterStatic;
 import com.coatardbul.stock.model.entity.StockStaticTemplate;
+import com.coatardbul.stock.service.base.StockStrategyService;
 import com.coatardbul.stock.service.romote.RiverRemoteService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;

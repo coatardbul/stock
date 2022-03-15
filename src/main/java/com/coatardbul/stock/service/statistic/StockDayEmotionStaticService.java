@@ -20,12 +20,14 @@ import com.coatardbul.stock.model.dto.StockStrategyQueryDTO;
 import com.coatardbul.stock.model.entity.StockDayEmotion;
 import com.coatardbul.stock.model.entity.StockStaticTemplate;
 import com.coatardbul.stock.model.feign.StockTemplateDto;
+import com.coatardbul.stock.service.base.StockStrategyService;
 import com.coatardbul.stock.service.romote.RiverRemoteService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.HashMap;
@@ -58,14 +60,17 @@ public class StockDayEmotionStaticService {
     StockMinuterEmotionMapper stockMinuterEmotionMapper;
     @Autowired
     StockDayEmotionMapper stockDayEmotionMapper;
-
+@Autowired
+    StockVerifyService  stockVerifyService;
     /**
      * 刷新当日数据，全量刷新
      *
      * @param dto
      * @throws IllegalAccessException
      */
-    public void refreshDay(StockEmotionDayDTO dto) throws IllegalAccessException {
+    public void refreshDay(StockEmotionDayDTO dto) throws IllegalAccessException, ParseException {
+        stockVerifyService.verifyDateStr(dto.getDateStr());
+
         List<StockStaticTemplate> stockStaticTemplates = stockStaticTemplateMapper.selectAllByObjectSign(dto.getObjectEnumSign());
         if (stockStaticTemplates == null || stockStaticTemplates.size() == 0) {
             throw new BusinessException("对象标识异常");
@@ -157,7 +162,7 @@ public class StockDayEmotionStaticService {
             stockEmotionDayDTO.setTimeInterval(dto.getTimeInterval());
             try {
                 refreshDay(stockEmotionDayDTO);
-            } catch (IllegalAccessException e) {
+            } catch (IllegalAccessException | ParseException e) {
                 log.error(e.getMessage(), e);
             }
 

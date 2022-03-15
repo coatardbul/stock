@@ -1,6 +1,9 @@
 package com.coatardbul.stock.controller;
 
+import com.coatardbul.stock.common.annotation.WebLog;
 import com.coatardbul.stock.common.api.CommonResult;
+import com.coatardbul.stock.model.dto.StockEmotionDayDTO;
+import com.coatardbul.stock.model.entity.StockStrategyWatch;
 import com.coatardbul.stock.model.entity.StockWarnLog;
 import com.coatardbul.stock.model.dto.StockWarnLogQueryDto;
 import com.coatardbul.stock.service.statistic.StockWarnLogService;
@@ -42,4 +45,11 @@ public class StockWarnLogController {
         return CommonResult.success(stockWarnLogService.findAll(dto));
     }
 
+
+    @WebLog(value = "")
+    @RequestMapping(path = "/delete", method = RequestMethod.POST)
+    public CommonResult delete(@Validated @RequestBody StockWarnLogQueryDto dto) {
+        stockWarnLogService.delete(dto);
+        return CommonResult.success(null);
+    }
 }

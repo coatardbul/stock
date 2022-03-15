@@ -11,7 +11,7 @@ import com.coatardbul.stock.model.dto.StockStaticQueryDTO;
 import com.coatardbul.stock.model.dto.StockStrategyQueryDTO;
 import com.coatardbul.stock.service.statistic.StockDayEmotionStaticService;
 import com.coatardbul.stock.service.statistic.StockDayStaticService;
-import com.coatardbul.stock.service.statistic.StockStrategyService;
+import com.coatardbul.stock.service.base.StockStrategyService;
 import io.swagger.annotations.Api;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +23,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.script.ScriptException;
 import java.io.FileNotFoundException;
+import java.text.ParseException;
 
 /**
  * <p>
@@ -106,7 +107,7 @@ public class StockDayStaticController {
      */
     @WebLog(value = "")
     @RequestMapping(path = "/refreshDay", method = RequestMethod.POST)
-    public CommonResult refreshDay(@Validated @RequestBody StockEmotionDayDTO dto) throws IllegalAccessException {
+    public CommonResult refreshDay(@Validated @RequestBody StockEmotionDayDTO dto) throws IllegalAccessException, ParseException {
         stockDayEmotionStaticService.refreshDay(dto);
         return CommonResult.success(null);
     }

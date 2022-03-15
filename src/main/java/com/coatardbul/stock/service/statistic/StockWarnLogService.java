@@ -98,7 +98,7 @@ public class StockWarnLogService {
                 stockWarnLog.setTemplateName(templateName);
                 stockWarnLog.setDate(query.getDateStr());
                 if (isNow) {
-                    Date date=new Date();
+                    Date date = new Date();
                     Calendar calendar = DateTimeUtil.getCalendar(date);
                     calendar.set(Calendar.SECOND, new Random().nextInt(59));
                     stockWarnLog.setCreateTime(calendar.getTime());
@@ -114,7 +114,11 @@ public class StockWarnLogService {
     }
 
 
-    public   List<StockWarnLog>  findAll(StockWarnLogQueryDto dto) {
-        return   stockWarnLogMapper.selectAllByDateAndTemplateId(dto.getDateStr(),dto.getTemplateId());
+    public List<StockWarnLog> findAll(StockWarnLogQueryDto dto) {
+        return stockWarnLogMapper.selectAllByDateAndTemplateId(dto.getDateStr(), dto.getTemplateId());
+    }
+
+    public void delete(StockWarnLogQueryDto dto) {
+        stockWarnLogMapper.deleteByDate(dto.getDateStr());
     }
 }

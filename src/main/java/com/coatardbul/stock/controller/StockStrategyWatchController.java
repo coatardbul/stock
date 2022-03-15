@@ -2,6 +2,7 @@ package com.coatardbul.stock.controller;
 
 import com.coatardbul.stock.common.annotation.WebLog;
 import com.coatardbul.stock.common.api.CommonResult;
+import com.coatardbul.stock.model.dto.StockEmotionDayDTO;
 import com.coatardbul.stock.model.dto.StockStaticTemplateBaseDTO;
 import com.coatardbul.stock.model.entity.StockStrategyWatch;
 import com.coatardbul.stock.service.statistic.StockStrategyWatchService;
@@ -75,5 +76,15 @@ public class StockStrategyWatchController {
     public CommonResult<List<StockStrategyWatch>> findAll() {
         return CommonResult.success(stockStrategyWatchService.findAll());
     }
+
+    /**
+     * 根据时间间隔，模拟历史
+     */
+    @WebLog(value = "")
+    @RequestMapping(path = "/hisSimulate", method = RequestMethod.POST)
+    public void hisSimulate(@Validated @RequestBody StockEmotionDayDTO dto) throws Exception {
+        stockStrategyWatchService.hisSimulate(dto);
+    }
+
 
 }
