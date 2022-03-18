@@ -54,6 +54,30 @@ public class StockStrategyWatchService {
     }
 
 
+    public void strategyWatch(StockEmotionDayDTO dto, List<StockStrategyWatch> stockStrategyWatches) throws ParseException {
+        //需要执行的策略监控
+        List<StockStrategyWatch> willExecuteStrategy = stockStrategyWatches.stream().filter(o1 -> filter(o1, dto.getTimeStr())).collect(Collectors.toList());
+        if (willExecuteStrategy == null || willExecuteStrategy.size() == 0) {
+            return;
+        }
+        for (StockStrategyWatch executeStrategy : willExecuteStrategy) {
+            StockStrategyQueryDTO query = new StockStrategyQueryDTO();
+            query.setRiverStockTemplateId(executeStrategy.getTemplatedId());
+            query.setDateStr(dto.getDateStr());
+            query.setTimeStr(dto.getTimeStr());
+            try {
+                StrategyBO strategy = stockStrategyService.strategy(query);
+                //去重存入日志中
+                if (strategy.getTotalNum() > 0) {
+                    stockWarnLogService.insertFilterHistory(strategy, query);
+                }
+            } catch (Exception e) {
+                log.error(e.getMessage(), e);
+            }
+        }
+    }
+
+
     public void strategyWatch(StockEmotionDayDTO dto, boolean isNow) throws ParseException {
         stockVerifyService.verifyDateStr(dto.getDateStr());
 
@@ -137,12 +161,20 @@ public class StockStrategyWatchService {
     public void hisSimulate(StockEmotionDayDTO dto) throws ParseException {
         //验证日期
         stockVerifyService.verifyDateStr(dto.getDateStr());
+        //todo 根据类型，查询出需要扫描的策略
+        List<StockStrategyWatch> stockStrategyWatches = stockStrategyWatchMapper.selectAllByType(2);
+        //过滤符合要求的信息
+        if (stockStrategyWatches == null || stockStrategyWatches.size() == 0) {
+            return;
+        }
+
         //获取间隔时间字符串
         List<String> timeIntervalListData = stockVerifyService.getRemoteTimeInterval(dto.getTimeInterval());
 
+
         for (String timeIntervalStr : timeIntervalListData) {
             dto.setTimeStr(timeIntervalStr);
-            strategyWatch(dto, false);
+            strategyWatch(dto, stockStrategyWatches);
         }
 
 

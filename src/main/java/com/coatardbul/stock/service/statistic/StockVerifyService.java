@@ -71,7 +71,7 @@ public class StockVerifyService {
     public void verifyDateStr(String  dateStr) throws ParseException {
         Date date = DateTimeUtil.parseDateStr(dateStr, DateTimeUtil.YYYY_MM_DD);
         if (new Date().compareTo(date) < 0) {
-            throw new BusinessException("当前日期不合法，不能超过当前时间");
+            throw new BusinessException("当前日期"+dateStr+"不合法，不能超过当前时间");
         }
         List<String> dateIntervalList = riverRemoteService.getDateIntervalList(dateStr,dateStr);
         if (dateIntervalList == null || dateIntervalList.size() == 0) {
@@ -89,7 +89,7 @@ public class StockVerifyService {
     public void verifyDateTimeStr(String  dateStr,String timeStr) throws ParseException {
         Date date=DateTimeUtil.parseDateStr(dateStr+timeStr,DateTimeUtil.YYYY_MM_DD+DateTimeUtil.HH_MM);
         if (new Date().compareTo(date) < 0) {
-            throw new BusinessException("当前日期不合法，不能超过当前时间");
+            throw new BusinessException("当前"+dateStr+timeStr+"不合法，不能超过当前时间");
         }
     }
 

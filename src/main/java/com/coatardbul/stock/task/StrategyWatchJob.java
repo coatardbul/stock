@@ -36,6 +36,7 @@ public class StrategyWatchJob {
         StockEmotionDayDTO stockEmotionDayDTO = new StockEmotionDayDTO();
         stockEmotionDayDTO.setDateStr(DateTimeUtil.getDateFormat(new Date(), DateTimeUtil.YYYY_MM_DD));
         stockEmotionDayDTO.setTimeStr(DateTimeUtil.getDateFormat(new Date(), DateTimeUtil.HH_MM));
+        log.info("策略监控定时任务开始,请求参数为：" + stockEmotionDayDTO);
         stockStrategyWatchService.strategyNowWatch(stockEmotionDayDTO);
         log.info("策略监控定时任务结束");
     }

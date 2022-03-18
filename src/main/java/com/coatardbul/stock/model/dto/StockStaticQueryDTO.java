@@ -17,4 +17,5 @@ public class StockStaticQueryDTO extends  StockStrategyQueryBaseDTO{
 
 
 
+    private String timeStr;
 }

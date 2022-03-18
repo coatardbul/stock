@@ -72,8 +72,8 @@ public class ProxyIpService {
         List<ProxyIp> proxyIps = proxyIpMapper.selectAllByCreateTimeGreaterThanEqualAndUseTimeLessThanEqual(beforeDate, 8);
         if(proxyIps!=null &&proxyIps.size()>0){
             ProxyIp proxyIp = proxyIps.get(0);
-            proxyIp.setUseTime(proxyIp.getUseTime()+1);
-            proxyIpMapper.updateByPrimaryKey(proxyIp);
+//            proxyIp.setUseTime(proxyIp.getUseTime()+1);
+//            proxyIpMapper.updateByPrimaryKey(proxyIp);
             return  new HttpHost(proxyIp.getIp(),Integer.valueOf(proxyIp.getPort()));
         }else {
             return null;

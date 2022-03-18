@@ -122,7 +122,7 @@ public class HttpService {
         //有代理
         if(isProxy){
             HttpHost proxy = proxyIpService.getNewProxyHttpHost();
-            RequestConfig defaultRequestConfig = RequestConfig.custom()
+            RequestConfig defaultRequestConfig = RequestConfig.custom().setConnectTimeout(4000)
                     .setProxy(proxy).build();
             httpClient = HttpClients.custom().setDefaultRequestConfig(defaultRequestConfig).build();
         }else {

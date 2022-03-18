@@ -40,8 +40,9 @@ public class TaskController {
     DayStatisticJob dayStatisticJob;
     @Autowired
     StockMinuteEmotinStaticService stockMinuteEmotinStaticService;
-@Autowired
+    @Autowired
     StockStrategyWatchService stockStrategyWatchService;
+
     @WebLog(value = "")
     @RequestMapping(path = "/dayStatic", method = RequestMethod.POST)
     public CommonResult dayStatic() {
@@ -52,16 +53,16 @@ public class TaskController {
 
     @WebLog(value = "")
     @RequestMapping(path = "/minuterEmotion", method = RequestMethod.POST)
-    public CommonResult minuterEmotion(@Validated @RequestBody  StockEmotionDayDTO stockEmotionDayDTO) throws Exception {
+    public CommonResult minuterEmotion(@Validated @RequestBody StockEmotionDayDTO stockEmotionDayDTO) throws Exception {
         stockMinuteEmotinStaticService.refreshDay(stockEmotionDayDTO);
-        return  null;
+        return null;
     }
 
     @WebLog(value = "")
     @RequestMapping(path = "/simulateHistoryStrategyWatch", method = RequestMethod.POST)
-    public CommonResult simulateHistoryStrategyWatch(@Validated @RequestBody  StockEmotionDayDTO stockEmotionDayDTO) throws Exception {
+    public CommonResult simulateHistoryStrategyWatch(@Validated @RequestBody StockEmotionDayDTO stockEmotionDayDTO) throws Exception {
         stockStrategyWatchService.simulateHistoryStrategyWatch(stockEmotionDayDTO);
-        return  null;
+        return null;
     }
 
 

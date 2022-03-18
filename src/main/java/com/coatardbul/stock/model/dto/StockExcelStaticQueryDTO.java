@@ -21,4 +21,5 @@ public class StockExcelStaticQueryDTO extends  StockStrategyQueryBaseDTO{
     private String dateEndStr;
 
 
+    private String timeStr;
 }

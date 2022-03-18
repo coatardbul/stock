@@ -16,6 +16,7 @@ spring:
     active: tx
 
 mybatis:
+
   mapper-locations: classpath:mapper/*.xml
   type-aliases-package: com.coatardbul.stock.model.entity
   configuration:
@@ -24,7 +25,6 @@ mybatis:
 logging:
   path: logs/
   level:
-#    com.coatardbul.stock: debug
     com.coatardbul.stock.mapper: debug
     org.springframework.web: debug
     com.springboot.cloud: debug

@@ -1,6 +1,6 @@
 spring:
   datasource:
-    url: jdbc:mysql://47.105.148.90:3306/stock?serverTimezone=GMT&useSSL=false&characterEncoding=utf-8
+    url: jdbc:mysql://47.105.148.90:3306/stock?serverTimezone=GMT%2B8&useSSL=false&characterEncoding=utf-8
     driverClassName: com.mysql.cj.jdbc.Driver
     username: root
     password: Dream1226.27!
@@ -19,9 +19,9 @@ xxl:
     accessToken:
     executor:
       appname: xxl-job-stock
-      address:
+      address: 124.222.217.230
       ip:
-      port: 9999
+      port: 8888
       logretentiondays: 30
       #      logpath: /Users/coatardbul/Desktop/xxljob
       logpath: /usr/local/xxl_job/client

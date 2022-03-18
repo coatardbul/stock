@@ -93,6 +93,7 @@ public class StockDayStaticService {
         StockStrategyQueryDTO result = new StockStrategyQueryDTO();
         result.setRiverStockTemplateId(id);
         result.setDateStr(dt.getDateStr());
+        result.setTimeStr(dt.getTimeStr());
         result.setPageSize(dt.getPageSize());
         result.setPage(dt.getPage());
         result.setOrderStr(excelTemplateOrderStr);
@@ -216,6 +217,7 @@ public class StockDayStaticService {
         //模板数据
         temp.setExcelTemplateId(dto.getExcelTemplateId());
         temp.setDateStr(dateStr);
+        temp.setTimeStr(dto.getTimeStr());
         temp.setPageSize(dto.getPageSize());
         temp.setPage(dto.getPage());
         return temp;
