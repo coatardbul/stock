@@ -86,7 +86,9 @@ public class StockMinuteEmotinStaticService {
      */
     public void refreshDay(StockEmotionDayDTO dto, boolean isForce) throws IllegalAccessException, ParseException, InterruptedException {
         //验证日期
-        stockVerifyService.verifyDateStr(dto.getDateStr());
+        if (stockVerifyService.isIllegalDate(dto.getDateStr())) {
+            return;
+        }
         //模型策略数据
         StockStaticTemplate stockStaticTemplate = stockVerifyService.verifyObjectSign(dto.getObjectEnumSign());
         //获取模型对象中的模板id集合,便于根据模板id查询对应的数据结果
@@ -100,11 +102,13 @@ public class StockMinuteEmotinStaticService {
             //时间间隔为空，必须要有具体HH:mm
             if (StringUtils.isNotBlank(dto.getTimeStr())) {
                 //todo
-                stockVerifyService.verifyDateTimeStr(dto.getDateStr(), dto.getTimeStr());
+                if (stockVerifyService.isIllegalDateTimeStr(dto.getDateStr(), dto.getTimeStr())) {
+                    return;
+                }
                 timeStrProcess(dto, templateIdList);
                 return;
             }
-            if(dto.getTimeInterval()!=null) {
+            if (dto.getTimeInterval() != null) {
                 timeIntervalProcess(dto, templateIdList, isForce);
             }
 
@@ -134,7 +138,7 @@ public class StockMinuteEmotinStaticService {
             if (stockMinuterEmotion == null) {
                 StockMinuterEmotion defaultAddStockMinuterEmotion = getDefaultAddStockMinuterEmotion(dto.getDateStr(), dto.getObjectEnumSign(), templateId);
                 List<AxiosBaseBo> list = new ArrayList<>();
-                if(axiosBaseBo!=null){
+                if (axiosBaseBo != null) {
                     list.add(axiosBaseBo);
                 }
                 defaultAddStockMinuterEmotion.setObjectStaticArray(JsonUtil.toJson(list));
@@ -147,7 +151,7 @@ public class StockMinuteEmotinStaticService {
                 //判断时间对象中的数据，是否为空集合
                 if (axiosBaseBos == null || axiosBaseBos.size() == 0) {
                     List<AxiosBaseBo> list = new ArrayList<>();
-                    if(axiosBaseBo!=null){
+                    if (axiosBaseBo != null) {
                         list.add(axiosBaseBo);
                     }
                     stockMinuterEmotion.setObjectStaticArray(JsonUtil.toJson(list));
@@ -156,7 +160,7 @@ public class StockMinuteEmotinStaticService {
                     //当前时间在表中有数据需要更新
                     for (AxiosBaseBo axiosBase : axiosBaseBos) {
                         if (dto.getTimeStr().equals(axiosBase.getDateTimeStr())) {
-                            if(axiosBaseBo!=null){
+                            if (axiosBaseBo != null) {
                                 axiosBase.setValue(axiosBaseBo.getValue());
                             }
                         } else {
@@ -164,7 +168,7 @@ public class StockMinuteEmotinStaticService {
                         }
                     }
                     if (flag) {
-                        if(axiosBaseBo!=null){
+                        if (axiosBaseBo != null) {
                             axiosBaseBos.add(axiosBaseBo);
                         }
                     }
@@ -224,7 +228,9 @@ public class StockMinuteEmotinStaticService {
         List<AxiosBaseBo> list = new ArrayList<>();
         for (String timeStr : timeIntervalListData) {
             try {
-                stockVerifyService.verifyDateTimeStr(dto.getDateStr(), timeStr);
+                if (stockVerifyService.isIllegalDateTimeStr(dto.getDateStr(), dto.getTimeStr())) {
+                    continue;
+                }
                 AxiosBaseBo axiosBaseBo = new AxiosBaseBo();
                 axiosBaseBo.setDateTimeStr(timeStr);
                 axiosBaseBo = getAxiosBaseBo(dto.getDateStr(), templateId, timeStr);
@@ -263,7 +269,9 @@ public class StockMinuteEmotinStaticService {
             List<AxiosBaseBo> list = new ArrayList<>();
             for (String timeStr : timeIntervalListData) {
                 try {
-                    stockVerifyService.verifyDateTimeStr(stockMinuterEmotion.getDate(), timeStr);
+                    if (stockVerifyService.isIllegalDateTimeStr(stockMinuterEmotion.getDate(), timeStr)) {
+                        continue;
+                    }
                     AxiosBaseBo axiosBaseBo = new AxiosBaseBo();
                     axiosBaseBo.setDateTimeStr(timeStr);
                     axiosBaseBo = getAxiosBaseBo(stockMinuterEmotion.getDate(), templateId, timeStr);
@@ -278,7 +286,9 @@ public class StockMinuteEmotinStaticService {
             Map<String, Integer> timeIntervalMap = new HashMap<>();
             for (String str : timeIntervalListData) {
                 try {
-                    stockVerifyService.verifyDateTimeStr(stockMinuterEmotion.getDate(), str);
+                    if (stockVerifyService.isIllegalDateTimeStr(stockMinuterEmotion.getDate(), str)) {
+                        continue;
+                    }
                     timeIntervalMap.put(str, 1);
                 } catch (Exception e) {
                     log.error(e.getMessage(), e);
@@ -313,7 +323,7 @@ public class StockMinuteEmotinStaticService {
         StrategyBO strategy = stockStrategyService.strategy(stockStrategyQueryDTO);
         AxiosBaseBo axiosBaseBo = new AxiosBaseBo();
         axiosBaseBo.setDateTimeStr(timeStr);
-        if(strategy.getTotalNum()!=null){
+        if (strategy.getTotalNum() != null) {
             axiosBaseBo.setValue(new BigDecimal(strategy.getTotalNum()));
         }
         return axiosBaseBo;

@@ -79,8 +79,9 @@ public class StockStrategyWatchService {
 
 
     public void strategyWatch(StockEmotionDayDTO dto, boolean isNow) throws ParseException {
-        stockVerifyService.verifyDateStr(dto.getDateStr());
-
+        if(stockVerifyService.isIllegalDate(dto.getDateStr())){
+            return;
+        }
         //todo 根据类型，查询出需要扫描的策略
         List<StockStrategyWatch> stockStrategyWatches = stockStrategyWatchMapper.selectAllByType(2);
         //过滤符合要求的信息
@@ -160,7 +161,9 @@ public class StockStrategyWatchService {
 
     public void hisSimulate(StockEmotionDayDTO dto) throws ParseException {
         //验证日期
-        stockVerifyService.verifyDateStr(dto.getDateStr());
+        if(stockVerifyService.isIllegalDate(dto.getDateStr())){
+            return;
+        }
         //todo 根据类型，查询出需要扫描的策略
         List<StockStrategyWatch> stockStrategyWatches = stockStrategyWatchMapper.selectAllByType(2);
         //过滤符合要求的信息

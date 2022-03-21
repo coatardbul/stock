@@ -69,8 +69,9 @@ public class StockDayEmotionStaticService {
      * @throws IllegalAccessException
      */
     public void refreshDay(StockEmotionDayDTO dto) throws IllegalAccessException, ParseException {
-        stockVerifyService.verifyDateStr(dto.getDateStr());
-
+        if(stockVerifyService.isIllegalDate(dto.getDateStr())){
+            return;
+        }
         List<StockStaticTemplate> stockStaticTemplates = stockStaticTemplateMapper.selectAllByObjectSign(dto.getObjectEnumSign());
         if (stockStaticTemplates == null || stockStaticTemplates.size() == 0) {
             throw new BusinessException("对象标识异常");

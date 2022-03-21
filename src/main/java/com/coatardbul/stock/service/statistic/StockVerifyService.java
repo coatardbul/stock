@@ -80,6 +80,25 @@ public class StockVerifyService {
     }
 
     /**
+     * 验证非法日期
+     * @param dateStr YYYY-MM-DD
+     * @return true 非法日期
+     * @throws ParseException
+     */
+    public Boolean isIllegalDate(String  dateStr) throws ParseException {
+        Date date = DateTimeUtil.parseDateStr(dateStr, DateTimeUtil.YYYY_MM_DD);
+        if (new Date().compareTo(date) < 0) {
+            return true;
+        }
+        List<String> dateIntervalList = riverRemoteService.getDateIntervalList(dateStr,dateStr);
+        if (dateIntervalList == null || dateIntervalList.size() == 0) {
+            return true;
+        }
+        return false;
+    }
+
+
+    /**
      * 验证日期
      * 不能超过当前日期
      *
@@ -91,6 +110,13 @@ public class StockVerifyService {
         if (new Date().compareTo(date) < 0) {
             throw new BusinessException("当前"+dateStr+timeStr+"不合法，不能超过当前时间");
         }
+    }
+    public Boolean isIllegalDateTimeStr(String  dateStr,String timeStr) throws ParseException {
+        Date date=DateTimeUtil.parseDateStr(dateStr+timeStr,DateTimeUtil.YYYY_MM_DD+DateTimeUtil.HH_MM);
+        if (new Date().compareTo(date) < 0) {
+            return true;
+        }
+        return false;
     }
 
 

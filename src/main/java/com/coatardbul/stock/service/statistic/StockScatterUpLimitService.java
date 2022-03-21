@@ -59,10 +59,13 @@ public class StockScatterUpLimitService {
     StockDayEmotionMapper stockDayEmotionMapper;
     @Autowired
     StockScatterStaticMapper stockScatterStaticMapper;
-@Autowired
+    @Autowired
     StockVerifyService stockVerifyService;
+
     public void refreshDay(StockEmotionDayDTO dto) throws IllegalAccessException, ParseException {
-        stockVerifyService.verifyDateStr(dto.getDateStr());
+        if (stockVerifyService.isIllegalDate(dto.getDateStr())) {
+            return;
+        }
         List<StockStaticTemplate> stockStaticTemplates = stockStaticTemplateMapper.selectAllByObjectSign(dto.getObjectEnumSign());
         if (stockStaticTemplates == null || stockStaticTemplates.size() == 0) {
             throw new BusinessException("对象标识异常");
@@ -96,7 +99,7 @@ public class StockScatterUpLimitService {
             List<StockLineInfoBo> objectArray = new ArrayList<>();
             if (strategy != null && strategy.getTotalNum() > 0) {
 
-                String queryDateStr=dto.getDateStr().replace("-","");
+                String queryDateStr = dto.getDateStr().replace("-", "");
                 strategy.getData().forEach(item -> {
                     Set<Map.Entry<String, Object>> entries = ((JSONObject) item).entrySet();
                     StockCallAuctionBo stockCallAuctionBo = new StockCallAuctionBo();
@@ -111,23 +114,23 @@ public class StockScatterUpLimitService {
                             stockCallAuctionBo.setMarketValue(new BigDecimal(String.valueOf(stockLineInfo.getValue())));
                         }
                         if (stockLineInfo.getKey().contains("竞价金额")) {
-                            if(stockLineInfo.getKey().contains(queryDateStr)){
+                            if (stockLineInfo.getKey().contains(queryDateStr)) {
                                 stockCallAuctionBo.setCompareTradeMoney(new BigDecimal(String.valueOf(stockLineInfo.getValue())));
-                            }else {
+                            } else {
                                 stockCallAuctionBo.setTradeMoney(new BigDecimal(String.valueOf(stockLineInfo.getValue())));
                             }
                         }
                         if (stockLineInfo.getKey().contains("竞价涨幅")) {
-                            if(stockLineInfo.getKey().contains(queryDateStr)) {
+                            if (stockLineInfo.getKey().contains(queryDateStr)) {
                                 stockCallAuctionBo.setCompareIncreaseRange(new BigDecimal(String.valueOf(stockLineInfo.getValue())));
-                            }else {
+                            } else {
                                 stockCallAuctionBo.setIncreaseRange(new BigDecimal(String.valueOf(stockLineInfo.getValue())));
                             }
                         }
                         if (stockLineInfo.getKey().contains("换手率")) {
-                            if(stockLineInfo.getKey().contains(queryDateStr)) {
+                            if (stockLineInfo.getKey().contains(queryDateStr)) {
                                 stockCallAuctionBo.setCompareTurnoverRate(new BigDecimal(String.valueOf(stockLineInfo.getValue())));
-                            }else {
+                            } else {
                                 stockCallAuctionBo.setTurnoverRate(new BigDecimal(String.valueOf(stockLineInfo.getValue())));
                             }
                         }
@@ -135,7 +138,7 @@ public class StockScatterUpLimitService {
                             stockCallAuctionBo.setCallAuctionRatio(new BigDecimal(String.valueOf(stockLineInfo.getValue())));
                         }
 
-                        });
+                    });
                     objectArray.add(stockCallAuctionBo);
                 });
 
