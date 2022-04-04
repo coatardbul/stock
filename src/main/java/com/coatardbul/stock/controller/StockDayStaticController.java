@@ -9,8 +9,8 @@ import com.coatardbul.stock.model.dto.StockEmotionRangeDayDTO;
 import com.coatardbul.stock.model.dto.StockExcelStaticQueryDTO;
 import com.coatardbul.stock.model.dto.StockStaticQueryDTO;
 import com.coatardbul.stock.model.dto.StockStrategyQueryDTO;
-import com.coatardbul.stock.service.statistic.StockDayEmotionStaticService;
-import com.coatardbul.stock.service.statistic.StockDayStaticService;
+import com.coatardbul.stock.service.statistic.dayBaseChart.StockDayStaticService;
+import com.coatardbul.stock.service.statistic.dayBaseChart.StockDayTrumpetCalcService;
 import com.coatardbul.stock.service.base.StockStrategyService;
 import io.swagger.annotations.Api;
 import lombok.extern.slf4j.Slf4j;
@@ -40,20 +40,15 @@ import java.text.ParseException;
 public class StockDayStaticController {
 
     @Autowired
-    StockDayStaticService stockDayStaticService;
+    StockDayTrumpetCalcService stockDayTrumpetCalcService;
 
     @Autowired
     StockStrategyService stockStrategyService;
 
     @Autowired
-    StockDayEmotionStaticService stockDayEmotionStaticService;
+    StockDayStaticService stockDayStaticService;
 
-    @WebLog(value = "同花顺新版问财功能")
-    @RequestMapping(path = "/refreshCookie", method = RequestMethod.POST)
-    public CommonResult refreshCookie() {
-        stockDayStaticService.refreshCookie();
-        return CommonResult.success(null);
-    }
+
 
     /**
      * 同花顺新版问财功能
@@ -76,20 +71,20 @@ public class StockDayStaticController {
     @WebLog(value = "获取连板标准差，中位数，adjs")
     @RequestMapping(path = "/getStatic", method = RequestMethod.POST)
     public CommonResult getStatic(@Validated @RequestBody StockStaticQueryDTO dto) throws NoSuchMethodException, ScriptException, FileNotFoundException {
-        return CommonResult.success(stockDayStaticService.getStatic(dto));
+        return CommonResult.success(stockDayTrumpetCalcService.getStatic(dto));
     }
 
     @WebLog(value = "获取连板标准差，中位数，adjs")
     @RequestMapping(path = "/getAllStatic", method = RequestMethod.POST)
     public CommonResult getAllStatic(@Validated @RequestBody StockExcelStaticQueryDTO dto) {
 
-        return CommonResult.success(stockDayStaticService.getAllStatic(dto));
+        return CommonResult.success(stockDayTrumpetCalcService.getAllStatic(dto));
     }
 
     @WebLog(value = "获取连板标准差，中位数，adjs")
     @RequestMapping(path = "/saveExcel", method = RequestMethod.POST)
     public CommonResult saveExcel(@Validated @RequestBody StockExcelStaticQueryDTO dto) throws NoSuchMethodException, ScriptException, FileNotFoundException {
-        stockDayStaticService.saveExcel(dto);
+        stockDayTrumpetCalcService.saveExcel(dto);
         return CommonResult.success(null);
     }
 
@@ -97,7 +92,7 @@ public class StockDayStaticController {
     @WebLog(value = "保存连板标准差，中位数，adjs")
     @RequestMapping(path = "/saveDate", method = RequestMethod.POST)
     public CommonResult saveDate(@Validated @RequestBody StockExcelStaticQueryDTO dto) {
-        stockDayStaticService.saveDate(dto);
+        stockDayTrumpetCalcService.saveDate(dto);
         return CommonResult.success(null);
     }
 
@@ -108,7 +103,16 @@ public class StockDayStaticController {
     @WebLog(value = "")
     @RequestMapping(path = "/refreshDay", method = RequestMethod.POST)
     public CommonResult refreshDay(@Validated @RequestBody StockEmotionDayDTO dto) throws IllegalAccessException, ParseException {
-        stockDayEmotionStaticService.refreshDay(dto);
+        stockDayStaticService.refreshDay(dto);
+        return CommonResult.success(null);
+    }
+    /**
+     * 删除某天所有的数据，
+     */
+    @WebLog(value = "")
+    @RequestMapping(path = "/deleteDay", method = RequestMethod.POST)
+    public CommonResult deleteDay(@Validated @RequestBody StockEmotionDayDTO dto) throws IllegalAccessException, ParseException {
+        stockDayStaticService.deleteDay(dto);
         return CommonResult.success(null);
     }
 
@@ -121,7 +125,7 @@ public class StockDayStaticController {
     @WebLog(value = "")
     @RequestMapping(path = "/refreshDayRange", method = RequestMethod.POST)
     public CommonResult refreshDayRange(@Validated @RequestBody StockEmotionDayRangeDTO dto) {
-        stockDayEmotionStaticService.refreshDayRange(dto);
+        stockDayStaticService.refreshDayRange(dto);
         return CommonResult.success(null);
     }
 
@@ -129,7 +133,7 @@ public class StockDayStaticController {
     @WebLog(value = "")
     @RequestMapping(path = "/forceRefreshDayRange", method = RequestMethod.POST)
     public CommonResult forceRefreshDayRange(@Validated @RequestBody StockEmotionDayRangeDTO dto) {
-        stockDayEmotionStaticService.forceRefreshDayRange(dto);
+        stockDayStaticService.forceRefreshDayRange(dto);
         return CommonResult.success(null);
     }
 
@@ -140,7 +144,7 @@ public class StockDayStaticController {
     @WebLog(value = "")
     @RequestMapping(path = "/getRangeStatic", method = RequestMethod.POST)
     public CommonResult getRangeStatic(@Validated @RequestBody StockEmotionRangeDayDTO dto) {
-        return CommonResult.success(stockDayEmotionStaticService.getRangeStatic(dto));
+        return CommonResult.success(stockDayStaticService.getRangeStatic(dto));
     }
 
     /**
@@ -149,7 +153,7 @@ public class StockDayStaticController {
     @WebLog(value = "")
     @RequestMapping(path = "/getDayStatic", method = RequestMethod.POST)
     public CommonResult getDayStatic(@Validated @RequestBody StockEmotionQueryDTO dto) {
-        return CommonResult.success(stockDayEmotionStaticService.getDayStatic(dto));
+        return CommonResult.success(stockDayStaticService.getDayStatic(dto));
     }
 
 

@@ -161,7 +161,6 @@ public class StockController {
             } catch (Exception e) {
                 return CommonResult.failed("到达" + i + "中断");
             }
-            Thread.sleep(1000);
         }
         return CommonResult.success("刷新成功");
     }

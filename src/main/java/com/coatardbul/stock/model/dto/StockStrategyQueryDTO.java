@@ -17,6 +17,11 @@ public class StockStrategyQueryDTO {
 
     private String riverStockTemplateId;
 
+
+    /**
+     * 股票脚本
+     */
+    private String StockTemplateScript;
     /**
      * YYYY-MM-DD
      */

@@ -5,8 +5,9 @@ package com.coatardbul.stock.feign.river;
 import com.coatardbul.stock.common.api.CommonResult;
 import com.coatardbul.stock.common.config.FeignLogConfig;
 import com.coatardbul.stock.model.feign.CalendarDateDTO;
+import com.coatardbul.stock.model.feign.CalendarSpecialDTO;
 import com.coatardbul.stock.model.feign.StockTemplateDto;
-import com.coatardbul.stock.model.feign.StockTemplateQueryDto;
+import com.coatardbul.stock.model.feign.StockTemplateQueryDTO;
 import com.coatardbul.stock.model.feign.StockTimeInterval;
 import feign.Headers;
 import org.springframework.cloud.openfeign.FeignClient;
@@ -25,7 +26,7 @@ public interface RiverServerFeign {
      */
     @RequestMapping(value = "river/api/stockTemplate/getQuery", method = RequestMethod.POST)
     @Headers("Content-Type: application/json")
-    public CommonResult<String> getQuery(StockTemplateQueryDto dto);
+    public CommonResult<String> getQuery(StockTemplateQueryDTO dto);
 
     /**
      * 间隔数据
@@ -48,5 +49,11 @@ public interface RiverServerFeign {
     @RequestMapping(value = "river/api/stockTemplate/findOne", method = RequestMethod.POST)
     @Headers("Content-Type: application/json")
     public CommonResult<StockTemplateDto> findOne(StockTemplateDto dto);
+
+
+
+    @RequestMapping(value = "river/api/calendar/getSpecialDay", method = RequestMethod.POST)
+    @Headers("Content-Type: application/json")
+    public CommonResult<String> getSpecialDay(CalendarSpecialDTO dto);
 
 }

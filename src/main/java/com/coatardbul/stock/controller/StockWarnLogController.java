@@ -20,9 +20,10 @@ import java.util.List;
 
 /**
  * <p>
- * Note:
+ * Note:股票的策略扫描结果存储
  * <p>
  * Date: 2022/3/6
+ *
  *
  * @author Su Xiaolei
  */

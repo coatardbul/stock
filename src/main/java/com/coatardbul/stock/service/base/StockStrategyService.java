@@ -18,11 +18,12 @@ import com.coatardbul.stock.model.bo.StrategyQueryBO;
 import com.coatardbul.stock.model.dto.StockStrategyQueryDTO;
 import com.coatardbul.stock.model.entity.StockCookie;
 import com.coatardbul.stock.model.entity.StockStaticTemplate;
-import com.coatardbul.stock.model.feign.StockTemplateQueryDto;
+import com.coatardbul.stock.model.feign.StockTemplateQueryDTO;
 import com.coatardbul.stock.service.StockExcelTemplateService;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang.StringUtils;
 import org.apache.http.Header;
+import org.apache.http.conn.ConnectTimeoutException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -51,7 +52,7 @@ public class StockStrategyService {
     @Autowired
     StockExcelTemplateService stockExcelTemplateService;
     @Autowired
-    HttpService  httpService;
+    HttpService httpService;
     //同花顺问财地址
     private static final String STRATEGY_URL = "http://www.iwencai.com/customized/chart/get-robot-data";
 
@@ -106,11 +107,11 @@ public class StockStrategyService {
      * @return
      * @throws BusinessException
      */
-    public   StrategyBO strategy(StockStrategyQueryDTO dto) throws BusinessException, NoSuchMethodException, ScriptException, FileNotFoundException {
+    public StrategyBO strategy(StockStrategyQueryDTO dto) throws BusinessException, NoSuchMethodException, ScriptException, FileNotFoundException {
         return strategyCommon(dto);
     }
 
-    public   StrategyBO strategyCommon(StockStrategyQueryDTO dto) throws BusinessException, NoSuchMethodException, ScriptException, FileNotFoundException {
+    public StrategyBO strategyCommon(StockStrategyQueryDTO dto) throws BusinessException, NoSuchMethodException, ScriptException, FileNotFoundException {
         StrategyBO result = new StrategyBO();
         //获取策略返回
         String response = getStrategyResponseStr(dto);
@@ -120,7 +121,7 @@ public class StockStrategyService {
             try {
                 requestObject = JSONObject.parseObject(response);
             } catch (JSONException e) {
-                throw new BusinessException("解析http请求返回的数据异常,返回字符串为："+response+" 异常信息："+e.getMessage());
+                throw new BusinessException("解析http请求返回的数据异常,返回字符串为：" + response + " 异常信息：" + e.getMessage());
             }
             if (!STATUS_SUCCESS.equals(requestObject.getString(STATUS_CODE))) {
                 throw new BusinessException("请求同花顺策略问句异常，" + requestObject.getString(STATUS_MSG));
@@ -134,7 +135,8 @@ public class StockStrategyService {
             JSONArray data = baseObject.getJSONArray("datas");
             //总数
             Integer totalNum = baseObject.getJSONObject("meta").getJSONObject("extra").getObject("row_count", Integer.class);
-            log.info("策略查询返回数据总数：" + data.size() + "数据详情" + data.toString());
+            log.info("策略查询返回数据总数：" + data.size());
+//            log.info("策略查询返回数据总数：" + data.size() + "数据详情" + data.toString());
             result.setData(data);
             result.setTotalNum(totalNum);
         }
@@ -142,8 +144,8 @@ public class StockStrategyService {
     }
 
 
-    public   StrategyBO directStrategy(StockStrategyQueryDTO dto) throws BusinessException, NoSuchMethodException, ScriptException, FileNotFoundException {
-       return strategyCommon(dto);
+    public StrategyBO directStrategy(StockStrategyQueryDTO dto) throws BusinessException, NoSuchMethodException, ScriptException, FileNotFoundException {
+        return strategyCommon(dto);
     }
 
     private String getStrategyResponseStr(StockStrategyQueryDTO dto) throws BusinessException, NoSuchMethodException, ScriptException, FileNotFoundException {
@@ -155,14 +157,27 @@ public class StockStrategyService {
         String jsonString = JsonUtil.toJson(defaultStrategyQuery);
         List<Header> headerList = new ArrayList<>();
         String heXinStr = TongHuaShunUtil.getHeXinStr();
-        Header cookie = httpService.getHead("Cookie", cookieValue+heXinStr);
+        Header cookie = httpService.getHead("Cookie", cookieValue + heXinStr);
         Header hexin = httpService.getHead("hexin-v", heXinStr);
         Header orign = httpService.getHead("Origin", "http://www.iwencai.com");
         headerList.add(cookie);
         headerList.add(hexin);
         headerList.add(orign);
         log.info("策略查询传递参数" + jsonString);
-        return httpService.doPost(STRATEGY_URL, jsonString, headerList);
+        String result = null;
+        int retryNum = 5;
+        while (retryNum > 0) {
+            try {
+                result = httpService.doPost(STRATEGY_URL, jsonString, headerList);
+            } catch (ConnectTimeoutException e) {
+                retryNum--;
+                continue;
+            }
+            if(StringUtils.isNotBlank(result)){
+                break;
+            }
+        }
+        return result;
     }
 
     /**
@@ -182,19 +197,22 @@ public class StockStrategyService {
         defaultStrategyQuery.setSort_key(dto.getOrderStr());
         defaultStrategyQuery.setSort_order(dto.getOrderBy());
         // 此接口可以通过调用river获取实时动态数据
-        defaultStrategyQuery.setQuestion(dto.getQueryStr());
-        if (StringUtils.isNotBlank(dto.getRiverStockTemplateId())) {
+        if(StringUtils.isNotBlank(dto.getQueryStr())){
+            defaultStrategyQuery.setQuestion(dto.getQueryStr());
+        }else {
             //feign
-            StockTemplateQueryDto stockTemplateQueryDto = new StockTemplateQueryDto();
+            StockTemplateQueryDTO stockTemplateQueryDto = new StockTemplateQueryDTO();
             stockTemplateQueryDto.setId(dto.getRiverStockTemplateId());
             stockTemplateQueryDto.setDateStr(dto.getDateStr());
             stockTemplateQueryDto.setTimeStr(dto.getTimeStr());
             stockTemplateQueryDto.setStockCode(dto.getStockCode());
+            stockTemplateQueryDto.setStockScript(dto.getStockTemplateScript());
             CommonResult<String> riverServerFeignResult = riverServerFeign.getQuery(stockTemplateQueryDto);
             if (riverServerFeignResult != null) {
                 defaultStrategyQuery.setQuestion(riverServerFeignResult.getData());
             }
         }
+
 
     }
 

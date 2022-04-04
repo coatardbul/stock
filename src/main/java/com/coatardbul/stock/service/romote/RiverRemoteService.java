@@ -8,6 +8,7 @@ import com.coatardbul.stock.model.bo.StockStaticBO;
 import com.coatardbul.stock.model.dto.StockExcelStaticQueryDTO;
 import com.coatardbul.stock.model.dto.StockStaticQueryDTO;
 import com.coatardbul.stock.model.feign.CalendarDateDTO;
+import com.coatardbul.stock.model.feign.CalendarSpecialDTO;
 import com.coatardbul.stock.model.feign.StockTemplateDto;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,8 +32,6 @@ public class RiverRemoteService {
     RiverServerFeign riverServerFeign;
 
 
-
-
     /**
      * 获取两个日期之间的工作日
      *
@@ -54,10 +53,39 @@ public class RiverRemoteService {
         StockTemplateDto stockTemplateDto = new StockTemplateDto();
         stockTemplateDto.setId(id);
         CommonResult<StockTemplateDto> riverDate = riverServerFeign.findOne(stockTemplateDto);
-        if(riverDate.getData()==null){
+        if (riverDate.getData() == null) {
             throw new BusinessException("模板id不正确");
         }
         return riverDate.getData();
     }
+
+    public String getTemplateNameById(String idStr) {
+        StringBuffer sb = new StringBuffer();
+        String[] ids = idStr.split(",");
+        for (String id : ids) {
+            StockTemplateDto stockTemplateDto = new StockTemplateDto();
+            stockTemplateDto.setId(id);
+            CommonResult<StockTemplateDto> riverDate = riverServerFeign.findOne(stockTemplateDto);
+            if (riverDate.getData() == null) {
+                throw new BusinessException("模板id不正确");
+            }
+            sb.append(riverDate.getData().getName());
+        }
+        return sb.toString();
+    }
+
+
+    public String getSpecialDay(String dateStr, Integer addDay) {
+        CalendarSpecialDTO dto = new CalendarSpecialDTO();
+        dto.setDateStr(dateStr);
+        dto.setDateProp(1);
+        dto.setAddDay(addDay);
+        CommonResult<String> riverDate = riverServerFeign.getSpecialDay(dto);
+        if (riverDate.getData() == null) {
+            throw new BusinessException("获取特定日期异常");
+        }
+        return riverDate.getData();
+    }
+
 
 }

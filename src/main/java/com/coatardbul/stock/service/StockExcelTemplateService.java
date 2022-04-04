@@ -72,9 +72,8 @@ public class StockExcelTemplateService {
     }
 
     private String getStockQueryTemplateName(String id) {
-        StockTemplateDto templateById = riverRemoteService.getTemplateById(id);
 
-        return templateById.getName() + "\n";
+        return riverRemoteService.getTemplateNameById(id) + "\n";
 
     }
 

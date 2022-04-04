@@ -23,6 +23,7 @@ import com.coatardbul.stock.model.entity.StockStaticTemplate;
 import com.coatardbul.stock.model.feign.StockTemplateDto;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang.StringUtils;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -34,6 +35,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
 /**
  * <p>
@@ -61,30 +64,18 @@ public class StockMinuteEmotinStaticService {
     @Autowired
     StockVerifyService stockVerifyService;
 
-    /**
-     * 默认是补充数据
-     *
-     * @param dto
-     * @throws IllegalAccessException
-     * @throws ParseException
-     * @throws InterruptedException
-     */
-    public void refreshDay(StockEmotionDayDTO dto) throws IllegalAccessException, ParseException, InterruptedException {
-        refreshDay(dto, false);
-    }
 
     /**
      * 刷新某天的分钟情绪数据，
      * 1.有时间间隔，根据是否强制刷新，补充数据,不能超过当前时间
      * 2.没有时间间隔，有具体timeStr，固定刷新某一时间点，验证时间。
      *
-     * @param dto     参数
-     * @param isForce 是否强制刷新
+     * @param dto 参数
      * @throws IllegalAccessException
      * @throws ParseException
      * @throws InterruptedException
      */
-    public void refreshDay(StockEmotionDayDTO dto, boolean isForce) throws IllegalAccessException, ParseException, InterruptedException {
+    public void refreshDay(StockEmotionDayDTO dto) throws IllegalAccessException, ParseException, InterruptedException {
         //验证日期
         if (stockVerifyService.isIllegalDate(dto.getDateStr())) {
             return;
@@ -109,7 +100,7 @@ public class StockMinuteEmotinStaticService {
                 return;
             }
             if (dto.getTimeInterval() != null) {
-                timeIntervalProcess(dto, templateIdList, isForce);
+                timeIntervalProcess(dto, templateIdList);
             }
 
         }
@@ -126,59 +117,63 @@ public class StockMinuteEmotinStaticService {
             return;
         }
         for (String templateId : templateIdList) {
-            StockMinuterEmotion stockMinuterEmotion = stockMinuterEmotionMapper.selectAllByDateAndObjectSignAndTemplateId(dto.getDateStr(), dto.getObjectEnumSign(), templateId);
-            //获取远程数据
-            AxiosBaseBo axiosBaseBo = null;
-            try {
-                axiosBaseBo = getAxiosBaseBo(dto.getDateStr(), templateId, dto.getTimeStr());
-            } catch (Exception e) {
-                log.error(e.getMessage(), e);
+            timeStrProcess(dto, templateId);
+        }
+    }
+
+
+    private void timeStrProcess(StockEmotionDayDTO dto, String templateId) {
+        StockMinuterEmotion stockMinuterEmotion = stockMinuterEmotionMapper.selectAllByDateAndObjectSignAndTemplateId(dto.getDateStr(), dto.getObjectEnumSign(), templateId);
+        //获取远程数据
+        AxiosBaseBo axiosBaseBo = null;
+        try {
+            axiosBaseBo = getAxiosBaseBo(dto.getDateStr(), templateId, dto.getTimeStr());
+        } catch (Exception e) {
+            log.error(e.getMessage(), e);
+        }
+        //创建对象
+        if (stockMinuterEmotion == null) {
+            StockMinuterEmotion defaultAddStockMinuterEmotion = getDefaultAddStockMinuterEmotion(dto.getDateStr(), dto.getObjectEnumSign(), templateId);
+            List<AxiosBaseBo> list = new ArrayList<>();
+            if (axiosBaseBo != null) {
+                list.add(axiosBaseBo);
             }
-            //创建对象
-            if (stockMinuterEmotion == null) {
-                StockMinuterEmotion defaultAddStockMinuterEmotion = getDefaultAddStockMinuterEmotion(dto.getDateStr(), dto.getObjectEnumSign(), templateId);
+            defaultAddStockMinuterEmotion.setObjectStaticArray(JsonUtil.toJson(list));
+            stockMinuterEmotionMapper.insertSelective(defaultAddStockMinuterEmotion);
+        } else {
+            //表中有数据，补充刷新
+            String objectStaticArray = stockMinuterEmotion.getObjectStaticArray();
+            List<AxiosBaseBo> axiosBaseBos = JsonUtil.readToValue(objectStaticArray, new TypeReference<List<AxiosBaseBo>>() {
+            });
+            //判断时间对象中的数据，是否为空集合
+            if (axiosBaseBos == null || axiosBaseBos.size() == 0) {
                 List<AxiosBaseBo> list = new ArrayList<>();
                 if (axiosBaseBo != null) {
                     list.add(axiosBaseBo);
                 }
-                defaultAddStockMinuterEmotion.setObjectStaticArray(JsonUtil.toJson(list));
-                stockMinuterEmotionMapper.insertSelective(defaultAddStockMinuterEmotion);
+                stockMinuterEmotion.setObjectStaticArray(JsonUtil.toJson(list));
             } else {
-                //表中有数据，补充刷新
-                String objectStaticArray = stockMinuterEmotion.getObjectStaticArray();
-                List<AxiosBaseBo> axiosBaseBos = JsonUtil.readToValue(objectStaticArray, new TypeReference<List<AxiosBaseBo>>() {
-                });
-                //判断时间对象中的数据，是否为空集合
-                if (axiosBaseBos == null || axiosBaseBos.size() == 0) {
-                    List<AxiosBaseBo> list = new ArrayList<>();
-                    if (axiosBaseBo != null) {
-                        list.add(axiosBaseBo);
-                    }
-                    stockMinuterEmotion.setObjectStaticArray(JsonUtil.toJson(list));
-                } else {
-                    boolean flag = false;
-                    //当前时间在表中有数据需要更新
-                    for (AxiosBaseBo axiosBase : axiosBaseBos) {
-                        if (dto.getTimeStr().equals(axiosBase.getDateTimeStr())) {
-                            if (axiosBaseBo != null) {
-                                axiosBase.setValue(axiosBaseBo.getValue());
-                            }
-                        } else {
-                            flag = true;
-                        }
-                    }
-                    if (flag) {
+                boolean flag = false;
+                //当前时间在表中有数据需要更新
+                for (AxiosBaseBo axiosBase : axiosBaseBos) {
+                    if (dto.getTimeStr().equals(axiosBase.getDateTimeStr())) {
                         if (axiosBaseBo != null) {
-                            axiosBaseBos.add(axiosBaseBo);
+                            axiosBase.setValue(axiosBaseBo.getValue());
                         }
+                    } else {
+                        flag = true;
                     }
-                    stockMinuterEmotion.setObjectStaticArray(JsonUtil.toJson(axiosBaseBos));
                 }
-                stockMinuterEmotionMapper.updateByPrimaryKeySelective(stockMinuterEmotion);
+                if (flag) {
+                    if (axiosBaseBo != null) {
+                        axiosBaseBos.add(axiosBaseBo);
+                    }
+                }
+                stockMinuterEmotion.setObjectStaticArray(JsonUtil.toJson(axiosBaseBos));
             }
+            stockMinuterEmotionMapper.updateByPrimaryKeySelective(stockMinuterEmotion);
         }
     }
-
 
     /**
      * 有时间间隔的过程
@@ -186,69 +181,18 @@ public class StockMinuteEmotinStaticService {
      * @param dto
      * @param templateIdList
      */
-    private void timeIntervalProcess(StockEmotionDayDTO dto, List<String> templateIdList, boolean isForce) {
+    private void timeIntervalProcess(StockEmotionDayDTO dto, List<String> templateIdList) {
         //存入分钟间隔数据
         if (templateIdList == null || templateIdList.size() == 0) {
             return;
         }
         //获取间隔时间字符串
         List<String> timeIntervalListData = stockVerifyService.getRemoteTimeInterval(dto.getTimeInterval());
-
-        for (String templateId : templateIdList) {
-            if (isForce) {
-                stockMinuterEmotionMapper.deleteByDateAndObjectSignAndTemplateId(dto.getDateStr(), dto.getObjectEnumSign(), templateId);
-                inserteEmotionDate(dto, timeIntervalListData, templateId);
-            } else {
-                StockMinuterEmotion stockMinuterEmotion = stockMinuterEmotionMapper.selectAllByDateAndObjectSignAndTemplateId(dto.getDateStr(), dto.getObjectEnumSign(), templateId);
-                if (stockMinuterEmotion == null) {
-                    inserteEmotionDate(dto, timeIntervalListData, templateId);
-                } else {
-                    //表中有数据，补充刷新
-                    updateEmotionDate(stockMinuterEmotion, timeIntervalListData, templateId);
-                }
-            }
-
-        }
-    }
-
-
-    /**
-     * 将对应模板id按照某天时间间隔存取表中
-     *
-     * @param dto                  时间
-     * @param timeIntervalListData 时间间隔
-     * @param templateId           模板id
-     */
-    private void inserteEmotionDate(StockEmotionDayDTO dto, List<String> timeIntervalListData, String templateId) {
-        StockMinuterEmotion addStockMinuterEmotion = new StockMinuterEmotion();
-        addStockMinuterEmotion.setId(baseServerFeign.getSnowflakeId());
-        addStockMinuterEmotion.setDate(dto.getDateStr());
-        addStockMinuterEmotion.setObjectSign(dto.getObjectEnumSign());
-        addStockMinuterEmotion.setTemplateId(templateId);
-        List<AxiosBaseBo> list = new ArrayList<>();
         for (String timeStr : timeIntervalListData) {
-            try {
-                if (stockVerifyService.isIllegalDateTimeStr(dto.getDateStr(), dto.getTimeStr())) {
-                    continue;
-                }
-                AxiosBaseBo axiosBaseBo = new AxiosBaseBo();
-                axiosBaseBo.setDateTimeStr(timeStr);
-                axiosBaseBo = getAxiosBaseBo(dto.getDateStr(), templateId, timeStr);
-                list.add(axiosBaseBo);
-            } catch (Exception e) {
-                log.error(e.getMessage(), e);
-            }
-        }
-        addStockMinuterEmotion.setObjectStaticArray(JsonUtil.toJson(list));
-        StockMinuterEmotion stockMinuterEmotion = stockMinuterEmotionMapper.selectAllByDateAndObjectSignAndTemplateId(dto.getDateStr(), dto.getObjectEnumSign(), templateId);
-        if (stockMinuterEmotion == null) {
-            stockMinuterEmotionMapper.insert(addStockMinuterEmotion);
-        } else {
-            addStockMinuterEmotion.setId(stockMinuterEmotion.getId());
-            stockMinuterEmotionMapper.updateByPrimaryKeySelective(addStockMinuterEmotion);
+            dto.setTimeStr(timeStr);
+            timeStrProcess(dto, templateIdList);
         }
     }
-
 
     private StockMinuterEmotion getDefaultAddStockMinuterEmotion(String dateStr, String objectEnumSign, String templatedId) {
         StockMinuterEmotion addStockMinuterEmotion = new StockMinuterEmotion();
@@ -258,62 +202,6 @@ public class StockMinuteEmotinStaticService {
         addStockMinuterEmotion.setTemplateId(templatedId);
         return addStockMinuterEmotion;
     }
-
-
-    private void updateEmotionDate(StockMinuterEmotion stockMinuterEmotion, List<String> timeIntervalListData, String templateId) {
-        String objectStaticArray = stockMinuterEmotion.getObjectStaticArray();
-        List<AxiosBaseBo> axiosBaseBos = JsonUtil.readToValue(objectStaticArray, new TypeReference<List<AxiosBaseBo>>() {
-        });
-        //判断表中是否有数据，没有
-        if (axiosBaseBos == null || axiosBaseBos.size() == 0) {
-            List<AxiosBaseBo> list = new ArrayList<>();
-            for (String timeStr : timeIntervalListData) {
-                try {
-                    if (stockVerifyService.isIllegalDateTimeStr(stockMinuterEmotion.getDate(), timeStr)) {
-                        continue;
-                    }
-                    AxiosBaseBo axiosBaseBo = new AxiosBaseBo();
-                    axiosBaseBo.setDateTimeStr(timeStr);
-                    axiosBaseBo = getAxiosBaseBo(stockMinuterEmotion.getDate(), templateId, timeStr);
-                    list.add(axiosBaseBo);
-                } catch (Exception e) {
-                    log.error(e.getMessage(), e);
-                }
-            }
-            stockMinuterEmotion.setObjectStaticArray(JsonUtil.toJson(list));
-        } else {
-            //HH:mm去重
-            Map<String, Integer> timeIntervalMap = new HashMap<>();
-            for (String str : timeIntervalListData) {
-                try {
-                    if (stockVerifyService.isIllegalDateTimeStr(stockMinuterEmotion.getDate(), str)) {
-                        continue;
-                    }
-                    timeIntervalMap.put(str, 1);
-                } catch (Exception e) {
-                    log.error(e.getMessage(), e);
-                }
-            }
-            for (AxiosBaseBo a : axiosBaseBos) {
-                if (timeIntervalMap.containsKey(a.getDateTimeStr()) && a.getValue() != null) {
-                    timeIntervalMap.remove(a.getDateTimeStr());
-                }
-            }
-            for (Map.Entry<String, Integer> timeIntervalTemp : timeIntervalMap.entrySet()) {
-                try {
-                    AxiosBaseBo axiosBaseBo = new AxiosBaseBo();
-                    axiosBaseBo.setDateTimeStr(timeIntervalTemp.getKey());
-                    axiosBaseBo = getAxiosBaseBo(stockMinuterEmotion.getDate(), templateId, timeIntervalTemp.getKey());
-                    axiosBaseBos.add(axiosBaseBo);
-                } catch (Exception e) {
-                    log.error(e.getMessage(), e);
-                }
-            }
-            stockMinuterEmotion.setObjectStaticArray(JsonUtil.toJson(axiosBaseBos));
-        }
-        stockMinuterEmotionMapper.updateByPrimaryKeySelective(stockMinuterEmotion);
-    }
-
 
     private AxiosBaseBo getAxiosBaseBo(String dateStr, String templateId, String timeStr) throws NoSuchMethodException, ScriptException, FileNotFoundException {
         StockStrategyQueryDTO stockStrategyQueryDTO = new StockStrategyQueryDTO();
@@ -389,8 +277,7 @@ public class StockMinuteEmotinStaticService {
             AxiosYinfoDataBo axiosYinfoDataBo = new AxiosYinfoDataBo();
             //y轴名称
             if (StringUtils.isNotBlank(stockMinuterEmotion.getTemplateId())) {
-                StockTemplateDto templateById = riverRemoteService.getTemplateById(stockMinuterEmotion.getTemplateId());
-                axiosYinfoDataBo.setName(templateById.getName());
+                axiosYinfoDataBo.setName(riverRemoteService.getTemplateNameById(stockMinuterEmotion.getTemplateId()));
 
             } else {
                 axiosYinfoDataBo.setName(stockMinuterEmotion.getName());
@@ -425,6 +312,7 @@ public class StockMinuteEmotinStaticService {
                     List<AxiosBaseBo> axiosBaseBos = JsonUtil.readToValue(objectStaticArray, new TypeReference<List<AxiosBaseBo>>() {
                     });
                     Map<String, Integer> map = new HashMap<>();
+                    //过滤掉值为空的数据
                     List<AxiosBaseBo> newList = new ArrayList<>();
                     for (AxiosBaseBo axiosBaseBo : axiosBaseBos) {
                         if (map.containsKey(axiosBaseBo.getDateTimeStr())) {
@@ -440,6 +328,86 @@ public class StockMinuteEmotinStaticService {
                     stockMinuterEmotionMapper.updateByPrimaryKeySelective(stockMinuterEmotion);
                 }
             }
+        }
+    }
+
+    private Map<String, Integer> convertListToMap(List<String> timeIntervalListData) {
+        Map<String, Integer> map = new HashMap<>();
+        for (String timeStr : timeIntervalListData) {
+            if (!map.containsKey(timeStr)) {
+                map.put(timeStr, 1);
+            }
+        }
+        return map;
+    }
+
+    public void supplementRefreshDay(StockEmotionDayDTO dto) throws IllegalAccessException {
+        //模型策略数据
+        StockStaticTemplate stockStaticTemplate = stockVerifyService.verifyObjectSign(dto.getObjectEnumSign());
+        //获取模型对象中的模板id集合,便于根据模板id查询对应的数据结果
+        List<String> templateIdList = stockStrategyService.getTemplateIdList(stockStaticTemplate);
+        //获取间隔时间字符串
+        List<String> timeIntervalListData = stockVerifyService.getRemoteTimeInterval(dto.getTimeInterval());
+
+        for (String templateId : templateIdList) {
+            filterTimeInfo(dto, timeIntervalListData, templateId);
+        }
+    }
+
+
+    /**
+     * 过滤
+     *
+     * @param dto
+     * @param timeIntervalListData 时间数组
+     * @param templateId           模板id
+     */
+    private void filterTimeInfo(StockEmotionDayDTO dto, List<String> timeIntervalListData, String templateId) {
+        //当前日期的模板数据随机取一行
+        StockMinuterEmotion stockMinuterEmotion = stockMinuterEmotionMapper.selectAllByDateAndObjectSignAndTemplateId(dto.getDateStr(), dto.getObjectEnumSign(), templateId);
+        //转换成map
+        Map<String, Integer> stringIntegerMap = convertListToMap(timeIntervalListData);
+        if (stockMinuterEmotion != null && StringUtils.isNotBlank(stockMinuterEmotion.getObjectStaticArray())) {
+            String objectStaticArray = stockMinuterEmotion.getObjectStaticArray();
+            List<AxiosBaseBo> axiosBaseBos = JsonUtil.readToValue(objectStaticArray, new TypeReference<List<AxiosBaseBo>>() {
+            });
+            Map<String, AxiosBaseBo> haveValue = axiosBaseBos.stream().collect(Collectors.toMap(AxiosBaseBo::getDateTimeStr, Function.identity(), (o1, o2) -> o1));
+            //移出已经有的数据
+            for (Map.Entry<String, AxiosBaseBo> set : haveValue.entrySet()) {
+                if (stringIntegerMap.containsKey(set.getKey())) {
+                    stringIntegerMap.remove(set.getKey());
+                }
+            }
+        }
+        //将剩余的time更新到表中
+        for (Map.Entry<String, Integer> set : stringIntegerMap.entrySet()) {
+            dto.setTimeStr(set.getKey());
+            timeStrProcess(dto, templateId);
+        }
+    }
+
+
+    public void forceRefreshDay(StockEmotionDayDTO dto) throws IllegalAccessException, InterruptedException, ParseException {
+        stockMinuterEmotionMapper.deleteByDateAndObjectSign(dto.getDateStr(), dto.getObjectEnumSign());
+        refreshDay(dto);
+    }
+
+    public void supplementRefreshDayRange(StockEmotionDayRangeDTO dto) {
+        List<String> dateIntervalList = riverRemoteService.getDateIntervalList(dto.getBeginDate(), dto.getEndDate());
+        for (String dateStr : dateIntervalList) {
+            StockEmotionDayDTO stockEmotionDayDTO = new StockEmotionDayDTO();
+            stockEmotionDayDTO.setDateStr(dateStr);
+            stockEmotionDayDTO.setObjectEnumSign(dto.getObjectEnumSign());
+            stockEmotionDayDTO.setTimeInterval(dto.getTimeInterval());
+            Constant.emotionIntervalByDateThreadPool.submit(() -> {
+                try {
+                    filterDate(stockEmotionDayDTO);
+                    supplementRefreshDay(stockEmotionDayDTO);
+                } catch (IllegalAccessException e) {
+                    log.error(e.getLocalizedMessage(), e);
+                }
+            });
+
         }
     }
 }

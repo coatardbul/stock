@@ -24,5 +24,8 @@ public interface StockMinuterEmotionMapper {
     int deleteByDateAndObjectSignAndTemplateId(@Param("date")String date,@Param("objectSign")String objectSign,@Param("templateId")String templateId);
 
 
+    int deleteByDateAndObjectSign(@Param("date")String date,@Param("objectSign")String objectSign);
+
+
 
 }

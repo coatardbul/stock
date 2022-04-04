@@ -4,9 +4,10 @@ import com.coatardbul.stock.common.util.DateTimeUtil;
 import com.coatardbul.stock.common.util.JsonUtil;
 import com.coatardbul.stock.model.dto.StockEmotionDayDTO;
 import com.coatardbul.stock.model.dto.StockExcelStaticQueryDTO;
-import com.coatardbul.stock.service.statistic.StockDayEmotionStaticService;
-import com.coatardbul.stock.service.statistic.StockDayStaticService;
-import com.coatardbul.stock.service.statistic.StockScatterUpLimitService;
+import com.coatardbul.stock.service.statistic.dayBaseChart.StockDayStaticService;
+import com.coatardbul.stock.service.statistic.dayBaseChart.StockDayTrumpetCalcService;
+import com.coatardbul.stock.service.statistic.scatter.StockScatterService;
+import com.coatardbul.stock.service.statistic.scatter.ScatterDayUpLimitService;
 import com.coatardbul.stock.service.base.StockStrategyService;
 import com.xxl.job.core.context.XxlJobHelper;
 import com.xxl.job.core.handler.annotation.XxlJob;
@@ -30,16 +31,17 @@ import java.util.Date;
 @Component
 public class DayStatisticJob {
     @Autowired
-    StockDayStaticService stockDayStaticService;
+    StockDayTrumpetCalcService stockDayTrumpetCalcService;
 
     @Autowired
     StockStrategyService stockStrategyService;
+@Autowired
+    StockScatterService stockScatterService;
+    @Autowired
+    StockDayStaticService stockDayStaticService;
 
     @Autowired
-    StockDayEmotionStaticService stockDayEmotionStaticService;
-
-    @Autowired
-    StockScatterUpLimitService stockScatterUpLimitService;
+    ScatterDayUpLimitService stockScatterUpLimitService;
 
     @XxlJob("dayStaticJobHandler")
     public void dayStaticJobHandler() {
@@ -49,7 +51,7 @@ public class DayStatisticJob {
         stockExcelStaticQueryDTO.setDateBeginStr(DateTimeUtil.getDateFormat(new Date(), DateTimeUtil.YYYY_MM_DD));
         stockExcelStaticQueryDTO.setDateEndStr(DateTimeUtil.getDateFormat(new Date(), DateTimeUtil.YYYY_MM_DD));
         log.info("刷新喇叭口统计数据参数"+JsonUtil.toJson(stockExcelStaticQueryDTO));
-        stockDayStaticService.saveDate(stockExcelStaticQueryDTO);
+        stockDayTrumpetCalcService.saveDate(stockExcelStaticQueryDTO);
         log.info("刷新喇叭口统计数据结束");
     }
 
@@ -62,7 +64,7 @@ public class DayStatisticJob {
             StockEmotionDayDTO dto = JsonUtil.readToValue(param, StockEmotionDayDTO.class);
             dto.setDateStr(DateTimeUtil.getDateFormat(new Date(),DateTimeUtil.YYYY_MM_DD));
             log.info("刷新每日涨跌统计数据参数"+JsonUtil.toJson(dto));
-            stockDayEmotionStaticService.refreshDay(dto);
+            stockDayStaticService.refreshDay(dto);
         }
         log.info("刷新每日涨跌统计数据结束");
     }
@@ -80,5 +82,20 @@ public class DayStatisticJob {
 
         }
         log.info("刷新两板以上集合竞价数据开始");
+    }
+
+
+    @XxlJob("dayMarketValueUpLimitJobHandler")
+    public void dayMarketValueUpLimitJobHandler() throws IllegalAccessException, ParseException {
+        String param = XxlJobHelper.getJobParam();
+        log.info("刷新涨停市值散点数据开始"+param);
+        if (StringUtils.isNotBlank(param)) {
+            StockEmotionDayDTO dto = JsonUtil.readToValue(param, StockEmotionDayDTO.class);
+            dto.setDateStr(DateTimeUtil.getDateFormat(new Date(),DateTimeUtil.YYYY_MM_DD));
+            log.info("刷新涨停市值散点数据参数"+JsonUtil.toJson(dto));
+            stockScatterService.refreshDay(dto);
+
+        }
+        log.info("刷新涨停市值散点数据结束");
     }
 }

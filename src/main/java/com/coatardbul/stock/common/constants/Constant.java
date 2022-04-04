@@ -33,17 +33,7 @@ public class Constant {
                     TimeUnit.MINUTES,
                     new ArrayBlockingQueue<Runnable>(1000));
 
-    /**
-     * 每日情绪统计,
-     * 模板，时间间隔存入
-     */
-    public static ThreadPoolExecutor emotionTemplateAndIntervalByDateThreadPool =
-            new ThreadPoolExecutor(
-                    Runtime.getRuntime().availableProcessors(),
-                    100,
-                    30,
-                    TimeUnit.MINUTES,
-                    new ArrayBlockingQueue<Runnable>(1000));
+
 
 
     /**

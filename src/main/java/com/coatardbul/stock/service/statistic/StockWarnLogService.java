@@ -71,8 +71,7 @@ public class StockWarnLogService {
             strategyStockInfo.add(stockWarnLog);
         });
         //获取模板名称
-        String templateName = riverRemoteService.getTemplateById(query.getRiverStockTemplateId()).getName();
-
+        String templateName = riverRemoteService.getTemplateNameById(query.getRiverStockTemplateId());
         Map<String, StockWarnLog> stockCodeMap = strategyStockInfo.stream().collect(Collectors.toMap(StockWarnLog::getStockCode, Function.identity()));
 
         List<StockWarnLog> stockWarnLogs = stockWarnLogMapper.selectAllByTemplateIdAndDate(query.getRiverStockTemplateId(), query.getDateStr());

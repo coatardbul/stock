@@ -5,8 +5,9 @@ package com.coatardbul.stock.feign.river.fallback;
 import com.coatardbul.stock.common.api.CommonResult;
 import com.coatardbul.stock.feign.river.RiverServerFeign;
 import com.coatardbul.stock.model.feign.CalendarDateDTO;
+import com.coatardbul.stock.model.feign.CalendarSpecialDTO;
 import com.coatardbul.stock.model.feign.StockTemplateDto;
-import com.coatardbul.stock.model.feign.StockTemplateQueryDto;
+import com.coatardbul.stock.model.feign.StockTemplateQueryDTO;
 import com.coatardbul.stock.model.feign.StockTimeInterval;
 import feign.hystrix.FallbackFactory;
 import lombok.extern.slf4j.Slf4j;
@@ -27,7 +28,7 @@ public class RiverServerFeignFallback implements FallbackFactory<RiverServerFeig
     public RiverServerFeign create(Throwable throwable) {
         return new RiverServerFeign() {
             @Override
-            public CommonResult<String> getQuery(StockTemplateQueryDto dto) {
+            public CommonResult<String> getQuery(StockTemplateQueryDTO dto) {
                 log.error("调用失败", throwable);
                 return null;
             }
@@ -55,6 +56,11 @@ public class RiverServerFeignFallback implements FallbackFactory<RiverServerFeig
                 log.error("调用失败", throwable);
                 return null;
             }
+
+            @Override
+            public CommonResult<String> getSpecialDay(CalendarSpecialDTO dto) {
+                log.error("调用失败", throwable);
+                return null;            }
         };
     }
 }

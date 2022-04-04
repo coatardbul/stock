@@ -4,9 +4,8 @@ import com.coatardbul.stock.common.annotation.WebLog;
 import com.coatardbul.stock.common.api.CommonResult;
 import com.coatardbul.stock.model.dto.StockEmotionDayDTO;
 import com.coatardbul.stock.model.dto.StockEmotionDayRangeDTO;
-import com.coatardbul.stock.model.dto.StockEmotionQueryDTO;
 import com.coatardbul.stock.model.dto.StockEmotionRangeDayDTO;
-import com.coatardbul.stock.service.statistic.StockScatterService;
+import com.coatardbul.stock.service.statistic.scatter.StockScatterService;
 import io.swagger.annotations.Api;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,9 +15,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.text.ParseException;
+
 /**
  * <p>
- * Note:
+ * Note:散点统计
  * <p>
  * Date: 2022/3/1
  *
@@ -37,7 +38,7 @@ public class StockScatterStaticController {
      */
     @WebLog(value = "")
     @RequestMapping(path = "/refreshDay", method = RequestMethod.POST)
-    public CommonResult refreshDay(@Validated @RequestBody StockEmotionDayDTO dto) throws IllegalAccessException {
+    public CommonResult refreshDay(@Validated @RequestBody StockEmotionDayDTO dto) throws IllegalAccessException, ParseException {
         stockScatterService.refreshDay(dto);
         return CommonResult.success(null);
     }
@@ -72,14 +73,5 @@ public class StockScatterStaticController {
     public CommonResult getRangeStatic(@Validated @RequestBody StockEmotionRangeDayDTO dto) {
         return CommonResult.success(stockScatterService.getRangeStatic(dto));
     }
-
-//    /**
-//     * 获取对应时间，对应标识的统计数据
-//     */
-//    @WebLog(value = "")
-//    @RequestMapping(path = "/getDayStatic", method = RequestMethod.POST)
-//    public CommonResult getDayStatic(@Validated @RequestBody StockEmotionQueryDTO dto) {
-//        return CommonResult.success(stockDayEmotionStaticService.getDayStatic(dto));
-//    }
 
 }

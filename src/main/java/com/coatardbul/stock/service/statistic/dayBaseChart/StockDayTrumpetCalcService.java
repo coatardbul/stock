@@ -1,23 +1,43 @@
-package com.coatardbul.stock.service.statistic;
+package com.coatardbul.stock.service.statistic.dayBaseChart;
 
 import com.alibaba.fastjson.JSONObject;
 import com.coatardbul.stock.common.constants.Constant;
 import com.coatardbul.stock.common.constants.CookieEnum;
+import com.coatardbul.stock.common.exception.BusinessException;
 import com.coatardbul.stock.common.util.BigRoot;
+import com.coatardbul.stock.common.util.JsonUtil;
+import com.coatardbul.stock.common.util.ReflexUtil;
+import com.coatardbul.stock.common.util.StockStaticModuleUtil;
+import com.coatardbul.stock.feign.river.BaseServerFeign;
+import com.coatardbul.stock.feign.river.RiverServerFeign;
 import com.coatardbul.stock.mapper.StockCookieMapper;
 import com.coatardbul.stock.mapper.StockDateStaticMapper;
+import com.coatardbul.stock.mapper.StockDayEmotionMapper;
+import com.coatardbul.stock.mapper.StockMinuterEmotionMapper;
+import com.coatardbul.stock.mapper.StockStaticTemplateMapper;
+import com.coatardbul.stock.model.bo.DayAxiosBaseBO;
+import com.coatardbul.stock.model.bo.DayAxiosMiddleBaseBO;
+import com.coatardbul.stock.model.bo.DayTrumpetCalcStatisticBo;
 import com.coatardbul.stock.model.bo.StockStaticBO;
 import com.coatardbul.stock.model.bo.StockStaticBaseBO;
 import com.coatardbul.stock.model.bo.StrategyBO;
+import com.coatardbul.stock.model.dto.StockEmotionDayDTO;
+import com.coatardbul.stock.model.dto.StockEmotionDayRangeDTO;
+import com.coatardbul.stock.model.dto.StockEmotionQueryDTO;
+import com.coatardbul.stock.model.dto.StockEmotionRangeDayDTO;
 import com.coatardbul.stock.model.dto.StockExcelStaticQueryDTO;
 import com.coatardbul.stock.model.dto.StockStaticQueryDTO;
 import com.coatardbul.stock.model.dto.StockStrategyQueryDTO;
 import com.coatardbul.stock.model.entity.StockCookie;
 import com.coatardbul.stock.model.entity.StockDateStatic;
+import com.coatardbul.stock.model.entity.StockDayEmotion;
 import com.coatardbul.stock.model.entity.StockExcelTemplate;
+import com.coatardbul.stock.model.entity.StockStaticTemplate;
+import com.coatardbul.stock.model.feign.StockTemplateDto;
 import com.coatardbul.stock.service.StockExcelTemplateService;
 import com.coatardbul.stock.service.romote.RiverRemoteService;
 import com.coatardbul.stock.service.base.StockStrategyService;
+import com.coatardbul.stock.service.statistic.StockVerifyService;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang.StringUtils;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
@@ -36,9 +56,12 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.math.BigDecimal;
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 /**
@@ -51,7 +74,7 @@ import java.util.stream.Collectors;
  */
 @Slf4j
 @Service
-public class StockDayStaticService {
+public class StockDayTrumpetCalcService extends BaseChartDayAbstractService {
 
     @Autowired
     RiverRemoteService riverRemoteService;
@@ -63,23 +86,103 @@ public class StockDayStaticService {
 
     @Autowired
     StockStrategyService stockStrategyService;
-
-
-
-    private String cookieValue;
-
     @Autowired
-    public void refreshCookie() {
-        List<StockCookie> stockCookies = stockCookieMapper.selectAll();
-        if (stockCookies != null && stockCookies.size() > 0) {
-            cookieValue = stockCookies.stream().filter(o1 -> CookieEnum.strategy.getCode().equals(o1.getTypeKey()))
-                    .collect(Collectors.toList()).get(0).getCookieValue();
+    BaseServerFeign baseServerFeign;
+    @Autowired
+    RiverServerFeign riverServerFeign;
+    @Autowired
+    StockStaticTemplateMapper stockStaticTemplateMapper;
+    @Autowired
+    StockMinuterEmotionMapper stockMinuterEmotionMapper;
+    @Autowired
+    StockDayEmotionMapper stockDayEmotionMapper;
+    @Autowired
+    StockVerifyService stockVerifyService;
+
+
+    /**
+     * 刷新当日数据，全量刷新
+     *
+     * @param dto
+     * @throws IllegalAccessException
+     */
+    @Override
+    public void refreshDayProcess(StockEmotionDayDTO dto, StockStaticTemplate stockStaticTemplate) throws IllegalAccessException, ParseException {
+        String orderByStr = stockStaticTemplate.getOrderBy().replace("dateStr", dto.getDateStr().replaceAll("-", ""));
+
+        //获取模型对象中的模板id集合,便于根据模板id查询对应的数据结果
+        List<String> templateIdList = stockStrategyService.getTemplateIdList(stockStaticTemplate);
+
+        if (templateIdList != null && templateIdList.size() > 0) {
+            StockDayEmotion addStockDayEmotion = new StockDayEmotion();
+            addStockDayEmotion.setId(baseServerFeign.getSnowflakeId());
+            addStockDayEmotion.setDate(dto.getDateStr());
+            addStockDayEmotion.setObjectSign(dto.getObjectEnumSign());
+
+            //获取数组里面的对象
+            Map<String, StrategyBO> map = new HashMap<>();
+            for (String templateId : templateIdList) {
+                StockStrategyQueryDTO stockStrategyQueryDTO = new StockStrategyQueryDTO();
+                stockStrategyQueryDTO.setRiverStockTemplateId(templateId);
+                stockStrategyQueryDTO.setDateStr(dto.getDateStr());
+                stockStrategyQueryDTO.setOrderStr(orderByStr);
+                stockStrategyQueryDTO.setOrderBy("desc");
+                StrategyBO strategy = null;
+                try {
+                    strategy = stockStrategyService.strategy(stockStrategyQueryDTO);
+                } catch (Exception e) {
+                    log.error(e.getMessage(), e);
+                }
+                map.put(templateId, strategy);
+            }
+            List<DayAxiosBaseBO> rebuild = rebuild( dto,stockStaticTemplate, map);
+            addStockDayEmotion.setObjectStaticArray(JsonUtil.toJson(rebuild));
+            stockDayEmotionMapper.deleteByDateAndObjectSign(dto.getDateStr(), dto.getObjectEnumSign());
+            stockDayEmotionMapper.insertSelective(addStockDayEmotion);
         }
+
     }
 
-    @Autowired
-    StockCookieMapper stockCookieMapper;
+    private List<DayAxiosBaseBO> rebuild(StockEmotionDayDTO dto,StockStaticTemplate stockStaticTemplate, Map<String, StrategyBO> map)  {
+        //排序字段
+        String orderByStr = stockStaticTemplate.getOrderBy().replace("dateStr", dto.getDateStr().replaceAll("-", ""));
+        //解析
+        Class classBySign = StockStaticModuleUtil.getClassBySign(stockStaticTemplate.getObjectSign());
+        DayTrumpetCalcStatisticBo o = (DayTrumpetCalcStatisticBo) JsonUtil.readToValue(stockStaticTemplate.getObjectStr(), classBySign);
+        List<DayAxiosBaseBO> result = new ArrayList<>();
+//        DayAxiosBaseBO adjs = getAdjs(map.get(o.getRiseId()), map.get(o.getFailId()));
+//        result.add(adjs);
+        List<DayAxiosBaseBO> firstUpLimit = getStandardDeviationAndMedian(map.get(o.getFirstUpLimitId()), orderByStr, "首板");
+        List<DayAxiosBaseBO> secondUpLimit = getStandardDeviationAndMedian(map.get(o.getSecondUpLimitId()), orderByStr, "二板以上");
+       result.addAll(firstUpLimit);
+        result.addAll(secondUpLimit);
+        return result;
+    }
 
+
+    public DayAxiosBaseBO getAdjs(StrategyBO riseBo, StrategyBO failBo) {
+        DayAxiosBaseBO dayAxiosBaseBO = new DayAxiosBaseBO();
+        BigDecimal subtract = new BigDecimal(riseBo.getTotalNum()).subtract(new BigDecimal(failBo.getTotalNum()));
+        dayAxiosBaseBO.setName("adjs");
+        dayAxiosBaseBO.setValue(subtract);
+
+        return dayAxiosBaseBO;
+    }
+
+    public List<DayAxiosBaseBO> getStandardDeviationAndMedian(StrategyBO limitUpStrategy, String orderByStr, String appendName) {
+        List<DayAxiosBaseBO> result = new ArrayList<>();
+        //基本统计信息
+        StockStaticBaseBO staticBase = getStaticBase(limitUpStrategy, orderByStr);
+        DayAxiosBaseBO standardDeviation = new DayAxiosBaseBO();
+        standardDeviation.setName(appendName+"标准差");
+        standardDeviation.setValue(staticBase.getStandardDeviation());
+        result.add(standardDeviation);
+        DayAxiosBaseBO median = new DayAxiosBaseBO();
+        median.setName(appendName+"中位数");
+        median.setValue(staticBase.getMedian());
+        result.add(median);
+        return result;
+    }
 
 
     /**
@@ -110,7 +213,7 @@ public class StockDayStaticService {
      */
     public StockStaticBO getStatic(StockStaticQueryDTO dto) throws NoSuchMethodException, ScriptException, FileNotFoundException {
         //模板数据
-        StockExcelTemplate excelTemplateInfo = stockExcelTemplateService.getStandardInfo(dto.getExcelTemplateId(),dto.getDateStr());
+        StockExcelTemplate excelTemplateInfo = stockExcelTemplateService.getStandardInfo(dto.getExcelTemplateId(), dto.getDateStr());
 
         StockStaticBO result = new StockStaticBO();
         result.setDateStr(dto.getDateStr());
@@ -193,17 +296,17 @@ public class StockDayStaticService {
 
     public void saveDate(StockExcelStaticQueryDTO dto) {
         // 根据开始结束时间查询工作日信息
-        List<String> data = riverRemoteService.getDateIntervalList(dto.getDateBeginStr(),dto.getDateEndStr());
+        List<String> data = riverRemoteService.getDateIntervalList(dto.getDateBeginStr(), dto.getDateEndStr());
         //根据dto，日期查询信息
         for (String dateStr : data) {
-            Constant.dateJobThreadPool.execute(()->{
+            Constant.dateJobThreadPool.execute(() -> {
                 stockDateStaticMapper.deleteByPrimaryKey(dateStr);
                 StockStaticQueryDTO temp = convert(dto, dateStr);
                 StockStaticBO aStatic = null;
                 try {
                     aStatic = getStatic(temp);
                 } catch (Exception e) {
-                log.error(e.getMessage(),e);
+                    log.error(e.getMessage(), e);
                 }
                 insertDate(aStatic);
             });
@@ -226,7 +329,7 @@ public class StockDayStaticService {
 
     public void saveExcel(StockExcelStaticQueryDTO dto) throws NoSuchMethodException, ScriptException, FileNotFoundException {
         // 根据开始结束时间查询工作日信息
-        List<String> data = riverRemoteService.getDateIntervalList(dto.getDateBeginStr(),dto.getDateEndStr());
+        List<String> data = riverRemoteService.getDateIntervalList(dto.getDateBeginStr(), dto.getDateEndStr());
         //策略数据
         List<StockStaticBO> result = new ArrayList<>();
         ;
@@ -423,9 +526,9 @@ public class StockDayStaticService {
             for (int i = 0; i < result.size(); i++) {
                 StockStaticBO stockStaticBO = result.get(i);
                 BigDecimal standardDeviation = stockStaticBO.getStandardDeviationTwo();
-               if(standardDeviation==null){
-                   continue;
-               }
+                if (standardDeviation == null) {
+                    continue;
+                }
                 row.createCell(i + 2).setCellValue(new Double(standardDeviation.toString()));
             }
         }
@@ -433,7 +536,7 @@ public class StockDayStaticService {
             for (int i = 0; i < result.size(); i++) {
                 StockStaticBO stockStaticBO = result.get(i);
                 BigDecimal median = stockStaticBO.getMedianTwo();
-                if(median==null){
+                if (median == null) {
                     continue;
                 }
                 row.createCell(i + 2).setCellValue(new Double(median.toString()));
@@ -443,24 +546,12 @@ public class StockDayStaticService {
             for (int i = 0; i < result.size(); i++) {
                 StockStaticBO stockStaticBO = result.get(i);
                 Integer raiseLimitNum = stockStaticBO.getRaiseLimitNumTwo();
-                if(raiseLimitNum==null){
+                if (raiseLimitNum == null) {
                     continue;
                 }
                 row.createCell(i + 2).setCellValue(raiseLimitNum);
             }
         }
-    }
-
-
-    /**
-     * 2022-12-12
-     *
-     * @param dateStr
-     * @return
-     */
-    private String getOrderStr(String dateStr) {
-        String s = dateStr.replaceAll("-", "");
-        return "竞价涨幅[" + s + "]";
     }
 
     public List<StockDateStatic> getAllStatic(StockExcelStaticQueryDTO dto) {

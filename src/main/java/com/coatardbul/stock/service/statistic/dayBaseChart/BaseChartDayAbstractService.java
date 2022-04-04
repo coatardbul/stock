@@ -1,5 +1,6 @@
-package com.coatardbul.stock.service.statistic;
+package com.coatardbul.stock.service.statistic.dayBaseChart;
 
+import com.coatardbul.stock.common.constants.Constant;
 import com.coatardbul.stock.common.exception.BusinessException;
 import com.coatardbul.stock.common.util.JsonUtil;
 import com.coatardbul.stock.common.util.ReflexUtil;
@@ -22,6 +23,7 @@ import com.coatardbul.stock.model.entity.StockStaticTemplate;
 import com.coatardbul.stock.model.feign.StockTemplateDto;
 import com.coatardbul.stock.service.base.StockStrategyService;
 import com.coatardbul.stock.service.romote.RiverRemoteService;
+import com.coatardbul.stock.service.statistic.StockVerifyService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -45,7 +47,11 @@ import java.util.stream.Collectors;
  */
 @Slf4j
 @Service
-public class StockDayEmotionStaticService {
+public abstract class BaseChartDayAbstractService {
+    @Autowired
+    StockVerifyService stockVerifyService;
+    @Autowired
+    StockStaticTemplateMapper stockStaticTemplateMapper;
     @Autowired
     BaseServerFeign baseServerFeign;
     @Autowired
@@ -55,13 +61,10 @@ public class StockDayEmotionStaticService {
     @Autowired
     RiverServerFeign riverServerFeign;
     @Autowired
-    StockStaticTemplateMapper stockStaticTemplateMapper;
-    @Autowired
     StockMinuterEmotionMapper stockMinuterEmotionMapper;
     @Autowired
     StockDayEmotionMapper stockDayEmotionMapper;
-@Autowired
-    StockVerifyService  stockVerifyService;
+
     /**
      * 刷新当日数据，全量刷新
      *
@@ -69,7 +72,7 @@ public class StockDayEmotionStaticService {
      * @throws IllegalAccessException
      */
     public void refreshDay(StockEmotionDayDTO dto) throws IllegalAccessException, ParseException {
-        if(stockVerifyService.isIllegalDate(dto.getDateStr())){
+        if (stockVerifyService.isIllegalDate(dto.getDateStr())) {
             return;
         }
         List<StockStaticTemplate> stockStaticTemplates = stockStaticTemplateMapper.selectAllByObjectSign(dto.getObjectEnumSign());
@@ -78,69 +81,20 @@ public class StockDayEmotionStaticService {
         }
         //模型策略数据
         StockStaticTemplate stockStaticTemplate = stockStaticTemplates.get(0);
-        //获取模型对象中的模板id集合,便于根据模板id查询对应的数据结果
-        List<String> templateIdList = stockStrategyService.getTemplateIdList(stockStaticTemplate);
 
-        if (templateIdList != null && templateIdList.size() > 0) {
-            StockDayEmotion addStockDayEmotion = new StockDayEmotion();
-            addStockDayEmotion.setId(baseServerFeign.getSnowflakeId());
-            addStockDayEmotion.setDate(dto.getDateStr());
-            addStockDayEmotion.setObjectSign(dto.getObjectEnumSign());
-
-            //获取数组里面的对象
-            List<DayAxiosMiddleBaseBO> list = new ArrayList<>();
-            for (String templateId : templateIdList) {
-                StockStrategyQueryDTO stockStrategyQueryDTO = new StockStrategyQueryDTO();
-                stockStrategyQueryDTO.setRiverStockTemplateId(templateId);
-                stockStrategyQueryDTO.setDateStr(dto.getDateStr());
-                StrategyBO strategy = null;
-                try {
-                    strategy = stockStrategyService.strategy(stockStrategyQueryDTO);
-                } catch (Exception e) {
-                    log.error(e.getMessage(), e);
-                }
-                DayAxiosMiddleBaseBO axiosBaseBo = new DayAxiosMiddleBaseBO();
-                //todo
-                axiosBaseBo.setId(templateId);
-                axiosBaseBo.setValue(new BigDecimal(strategy.getTotalNum()));
-                list.add(axiosBaseBo);
-            }
-            List<DayAxiosBaseBO> rebuild = rebuild(stockStaticTemplate, list);
-            addStockDayEmotion.setObjectStaticArray(JsonUtil.toJson(rebuild));
-            stockDayEmotionMapper.deleteByDateAndObjectSign(dto.getDateStr(), dto.getObjectEnumSign());
-            stockDayEmotionMapper.insertSelective(addStockDayEmotion);
-        }
+        refreshDayProcess(dto, stockStaticTemplate);
     }
 
+    /**
+     * 子类实现
+     *
+     * @param dto
+     * @param stockStaticTemplate
+     * @throws IllegalAccessException
+     * @throws ParseException
+     */
+    public void refreshDayProcess(StockEmotionDayDTO dto, StockStaticTemplate stockStaticTemplate) throws IllegalAccessException, ParseException {
 
-    private List<DayAxiosBaseBO> rebuild(StockStaticTemplate stockStaticTemplate, List<DayAxiosMiddleBaseBO> list) throws IllegalAccessException {
-        Class classBySign = StockStaticModuleUtil.getClassBySign(stockStaticTemplate.getObjectSign());
-        Object o = JsonUtil.readToValue(stockStaticTemplate.getObjectStr(), classBySign);
-        List<String> specialIdList = new ArrayList<>();
-        Map<String, DayAxiosMiddleBaseBO> specialMap = new HashMap<>();
-        //todo 每种模板对应方式不用，目前先不判断
-        String o1 = (String) ReflexUtil.readValueByName("riseId", o);
-        specialIdList.add(o1);
-        String o2 = (String) ReflexUtil.readValueByName("failId", o);
-        specialIdList.add(o2);
-        List<DayAxiosBaseBO> result = new ArrayList<>();
-        for (DayAxiosMiddleBaseBO dayAxiosMiddleBaseBO : list) {
-            if (specialIdList.contains(dayAxiosMiddleBaseBO.getId())) {
-                specialMap.put(dayAxiosMiddleBaseBO.getId(), dayAxiosMiddleBaseBO);
-                continue;
-            }
-            DayAxiosBaseBO dayAxiosBaseBO = new DayAxiosBaseBO();
-            StockTemplateDto templateById = riverRemoteService.getTemplateById(dayAxiosMiddleBaseBO.getId());
-            dayAxiosBaseBO.setName(templateById.getName());
-            dayAxiosBaseBO.setValue(dayAxiosMiddleBaseBO.getValue());
-            result.add(dayAxiosBaseBO);
-        }
-        DayAxiosBaseBO dayAxiosBaseBO = new DayAxiosBaseBO();
-        BigDecimal subtract = specialMap.get(o1).getValue().subtract(specialMap.get(o2).getValue());
-        dayAxiosBaseBO.setName("adjs");
-        dayAxiosBaseBO.setValue(subtract);
-        result.add(dayAxiosBaseBO);
-        return result;
     }
 
 
@@ -152,20 +106,23 @@ public class StockDayEmotionStaticService {
     public void refreshDayRange(StockEmotionDayRangeDTO dto) {
         List<String> dateIntervalList = riverRemoteService.getDateIntervalList(dto.getBeginDate(), dto.getEndDate());
         for (String dateStr : dateIntervalList) {
-            //表中有数据，直接返回，没有再查询
-            List<StockDayEmotion> stockDayEmotions = stockDayEmotionMapper.selectAllByDateAndObjectSign(dateStr, dto.getObjectEnumSign());
-            if (stockDayEmotions != null && stockDayEmotions.size() > 0) {
-                continue;
-            }
-            StockEmotionDayDTO stockEmotionDayDTO = new StockEmotionDayDTO();
-            stockEmotionDayDTO.setDateStr(dateStr);
-            stockEmotionDayDTO.setObjectEnumSign(dto.getObjectEnumSign());
-            stockEmotionDayDTO.setTimeInterval(dto.getTimeInterval());
-            try {
-                refreshDay(stockEmotionDayDTO);
-            } catch (IllegalAccessException | ParseException e) {
-                log.error(e.getMessage(), e);
-            }
+            Constant.emotionByDateRangeThreadPool.submit(() -> {
+                //表中有数据，直接返回，没有再查询
+                List<StockDayEmotion> stockDayEmotions = stockDayEmotionMapper.selectAllByDateAndObjectSign(dateStr, dto.getObjectEnumSign());
+                if (stockDayEmotions != null && stockDayEmotions.size() > 0) {
+                    return;
+                }
+                StockEmotionDayDTO stockEmotionDayDTO = new StockEmotionDayDTO();
+                stockEmotionDayDTO.setDateStr(dateStr);
+                stockEmotionDayDTO.setObjectEnumSign(dto.getObjectEnumSign());
+                stockEmotionDayDTO.setTimeInterval(dto.getTimeInterval());
+                try {
+                    refreshDay(stockEmotionDayDTO);
+                } catch (IllegalAccessException | ParseException e) {
+                    log.error(e.getMessage(), e);
+                }
+            });
+
 
         }
     }
@@ -187,17 +144,22 @@ public class StockDayEmotionStaticService {
     public void forceRefreshDayRange(StockEmotionDayRangeDTO dto) {
         List<String> dateIntervalList = riverRemoteService.getDateIntervalList(dto.getBeginDate(), dto.getEndDate());
         for (String dateStr : dateIntervalList) {
+            Constant.emotionByDateRangeThreadPool.submit(() -> {
                 StockEmotionDayDTO stockEmotionDayDTO = new StockEmotionDayDTO();
                 stockEmotionDayDTO.setDateStr(dateStr);
                 stockEmotionDayDTO.setObjectEnumSign(dto.getObjectEnumSign());
                 stockEmotionDayDTO.setTimeInterval(dto.getTimeInterval());
                 try {
-                    Thread.sleep(1000);
                     refreshDay(stockEmotionDayDTO);
                 } catch (Exception e) {
                     log.error(e.getMessage(), e);
                 }
-
+            });
         }
+    }
+
+    public void deleteDay(StockEmotionDayDTO dto) {
+        stockDayEmotionMapper.deleteByDateAndObjectSign(dto.getDateStr(), dto.getObjectEnumSign());
+
     }
 }

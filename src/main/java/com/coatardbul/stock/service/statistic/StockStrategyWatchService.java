@@ -82,6 +82,12 @@ public class StockStrategyWatchService {
         if(stockVerifyService.isIllegalDate(dto.getDateStr())){
             return;
         }
+        if(dto.getTimeStr().compareTo("09:30")<0){
+            return;
+        }
+        if(dto.getTimeStr().compareTo("11:30")>0&&dto.getTimeStr().compareTo("13:00")<0){
+            return;
+        }
         //todo 根据类型，查询出需要扫描的策略
         List<StockStrategyWatch> stockStrategyWatches = stockStrategyWatchMapper.selectAllByType(2);
         //过滤符合要求的信息
@@ -154,8 +160,7 @@ public class StockStrategyWatchService {
     }
 
     private StockStrategyWatch setTemplatedName(StockStrategyWatch dto) {
-        StockTemplateDto templateById = riverRemoteService.getTemplateById(dto.getTemplatedId());
-        dto.setTemplatedName(templateById.getName());
+        dto.setTemplatedName(riverRemoteService.getTemplateNameById(dto.getTemplatedId()));
         return dto;
     }
 

@@ -4,7 +4,6 @@ import com.coatardbul.stock.common.annotation.WebLog;
 import com.coatardbul.stock.common.api.CommonResult;
 import com.coatardbul.stock.model.dto.StockEmotionDayDTO;
 import com.coatardbul.stock.model.dto.StockEmotionDayRangeDTO;
-import com.coatardbul.stock.model.dto.StockEmotionQueryDTO;
 import com.coatardbul.stock.service.statistic.StockMinuteEmotinStaticService;
 import io.swagger.annotations.Api;
 import lombok.extern.slf4j.Slf4j;
@@ -42,7 +41,7 @@ public class StockMinuteStaticController {
     @WebLog(value = "")
     @RequestMapping(path = "/refreshDay", method = RequestMethod.POST)
     public CommonResult refreshDay(@Validated @RequestBody StockEmotionDayDTO dto) throws IllegalAccessException, ParseException, InterruptedException {
-        stockMinuteEmotinStaticService.refreshDay(dto,true);
+        stockMinuteEmotinStaticService.refreshDay(dto);
         return CommonResult.success(null);
     }
 
@@ -56,10 +55,22 @@ public class StockMinuteStaticController {
     @WebLog(value = "")
     @RequestMapping(path = "/supplementRefreshDay", method = RequestMethod.POST)
     public CommonResult supplementRefreshDay(@Validated @RequestBody StockEmotionDayDTO dto) throws IllegalAccessException, ParseException, InterruptedException {
-        stockMinuteEmotinStaticService.refreshDay(dto);
+        stockMinuteEmotinStaticService.supplementRefreshDay(dto);
         return CommonResult.success(null);
     }
-
+    /**
+     * 强制刷新
+     * @param dto
+     * @return
+     * @throws IllegalAccessException
+     * @throws ParseException
+     */
+    @WebLog(value = "")
+    @RequestMapping(path = "/forceRefreshDay", method = RequestMethod.POST)
+    public CommonResult forceRefreshDay(@Validated @RequestBody StockEmotionDayDTO dto) throws IllegalAccessException, ParseException, InterruptedException {
+        stockMinuteEmotinStaticService.forceRefreshDay(dto);
+        return CommonResult.success(null);
+    }
 
 
     /**
@@ -71,6 +82,14 @@ public class StockMinuteStaticController {
     @RequestMapping(path = "/refreshDayRange", method = RequestMethod.POST)
     public CommonResult refreshDayRange(@Validated @RequestBody StockEmotionDayRangeDTO dto) {
         stockMinuteEmotinStaticService.refreshDayRange(dto);
+        return CommonResult.success(null);
+    }
+
+
+    @WebLog(value = "")
+    @RequestMapping(path = "/supplementRefreshDayRange", method = RequestMethod.POST)
+    public CommonResult supplementRefreshDayRange(@Validated @RequestBody StockEmotionDayRangeDTO dto) {
+        stockMinuteEmotinStaticService.supplementRefreshDayRange(dto);
         return CommonResult.success(null);
     }
 
