@@ -56,4 +56,9 @@ public class StockScatterService {
        return buildScatterService(dto.getObjectEnumSign()).getRangeStatic(dto);
 
     }
+
+    public void deleteDay(StockEmotionDayDTO dto) {
+        buildScatterService(dto.getObjectEnumSign()).deleteDay(dto);
+
+    }
 }

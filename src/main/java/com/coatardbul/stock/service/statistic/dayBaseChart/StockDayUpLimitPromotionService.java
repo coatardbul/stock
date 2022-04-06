@@ -112,27 +112,46 @@ public class StockDayUpLimitPromotionService extends BaseChartDayAbstractService
             result.add(dayAxiosBaseBO);
         }
         DayAxiosBaseBO dayAxiosBaseBO1 = new DayAxiosBaseBO();
-        BigDecimal subtract1 = new BigDecimal(map.get(o.getFirstUpLimitTodayId()).getTotalNum()).divide(new BigDecimal(map.get(o.getFirstUpLimitYesterdayId()).getTotalNum()),4,BigDecimal.ROUND_HALF_UP);
-        dayAxiosBaseBO1.setName("一板晋级率");
-        dayAxiosBaseBO1.setValue(subtract1);
+        dayAxiosBaseBO1.setName("二板板晋级率");
+        try {
+            BigDecimal subtract1 = new BigDecimal(map.get(o.getFirstUpLimitTodayId()).getTotalNum()).divide(new BigDecimal(map.get(o.getFirstUpLimitYesterdayId()).getTotalNum()), 4, BigDecimal.ROUND_HALF_UP);
+            dayAxiosBaseBO1.setValue(subtract1);
+        } catch (Exception e) {
+            log.error(e.getMessage(), e);
+        }
         result.add(dayAxiosBaseBO1);
 
+
         DayAxiosBaseBO dayAxiosBaseBO2 = new DayAxiosBaseBO();
-        BigDecimal subtract2 = new BigDecimal(map.get(o.getSecondUpLimitTodayId()).getTotalNum()).divide(new BigDecimal(map.get(o.getSecondUpLimitYesterdayId()).getTotalNum()),4,BigDecimal.ROUND_HALF_UP);
-        dayAxiosBaseBO2.setName("二板晋级率");
-        dayAxiosBaseBO2.setValue(subtract2);
+        dayAxiosBaseBO2.setName("三板晋级率");
+        try {
+            BigDecimal subtract2 = new BigDecimal(map.get(o.getSecondUpLimitTodayId()).getTotalNum()).divide(new BigDecimal(map.get(o.getSecondUpLimitYesterdayId()).getTotalNum()), 4, BigDecimal.ROUND_HALF_UP);
+            dayAxiosBaseBO2.setValue(subtract2);
+        } catch (Exception e) {
+            log.error(e.getMessage(), e);
+
+        }
         result.add(dayAxiosBaseBO2);
 
+
         DayAxiosBaseBO dayAxiosBaseBO3 = new DayAxiosBaseBO();
-        BigDecimal subtract3 = new BigDecimal(map.get(o.getThirdUpLimitTodayId()).getTotalNum()).divide(new BigDecimal(map.get(o.getThirdUpLimitYesterdayId()).getTotalNum()),4,BigDecimal.ROUND_HALF_UP);
-        dayAxiosBaseBO3.setName("三板晋级率");
-        dayAxiosBaseBO3.setValue(subtract3);
+        dayAxiosBaseBO3.setName("四板晋级率");
+        try {
+            BigDecimal subtract3 = new BigDecimal(map.get(o.getThirdUpLimitTodayId()).getTotalNum()).divide(new BigDecimal(map.get(o.getThirdUpLimitYesterdayId()).getTotalNum()), 4, BigDecimal.ROUND_HALF_UP);
+            dayAxiosBaseBO3.setValue(subtract3);
+        } catch (Exception e) {
+            log.error(e.getMessage(), e);
+        }
         result.add(dayAxiosBaseBO3);
 
         DayAxiosBaseBO dayAxiosBaseBO4 = new DayAxiosBaseBO();
-        BigDecimal subtract4 = new BigDecimal(map.get(o.getFourUpLimitTodayId()).getTotalNum()).divide(new BigDecimal(map.get(o.getFourUpLimitYesterdayId()).getTotalNum()),4,BigDecimal.ROUND_HALF_UP);
         dayAxiosBaseBO4.setName("四板以上晋级率");
-        dayAxiosBaseBO4.setValue(subtract4);
+        try {
+            BigDecimal subtract4 = new BigDecimal(map.get(o.getFourUpLimitTodayId()).getTotalNum()).divide(new BigDecimal(map.get(o.getFourUpLimitYesterdayId()).getTotalNum()), 4, BigDecimal.ROUND_HALF_UP);
+            dayAxiosBaseBO4.setValue(subtract4);
+        } catch (Exception e) {
+            log.error(e.getMessage(), e);
+        }
         result.add(dayAxiosBaseBO4);
         return result;
     }

@@ -1,5 +1,6 @@
 package com.coatardbul.stock.service.statistic.scatter;
 
+import com.coatardbul.stock.common.exception.BusinessException;
 import com.coatardbul.stock.feign.river.BaseServerFeign;
 import com.coatardbul.stock.feign.river.RiverServerFeign;
 import com.coatardbul.stock.mapper.StockDayEmotionMapper;
@@ -10,8 +11,10 @@ import com.coatardbul.stock.model.dto.StockEmotionDayDTO;
 import com.coatardbul.stock.model.dto.StockEmotionDayRangeDTO;
 import com.coatardbul.stock.model.dto.StockEmotionRangeDayDTO;
 import com.coatardbul.stock.model.entity.StockScatterStatic;
+import com.coatardbul.stock.model.entity.StockStaticTemplate;
 import com.coatardbul.stock.service.base.StockStrategyService;
 import com.coatardbul.stock.service.romote.RiverRemoteService;
+import com.coatardbul.stock.service.statistic.StockVerifyService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -48,8 +51,32 @@ public abstract class ScatterDayAbstractService {
     StockDayEmotionMapper stockDayEmotionMapper;
     @Autowired
     StockScatterStaticMapper stockScatterStaticMapper;
-
+    @Autowired
+    StockVerifyService stockVerifyService;
     public void refreshDay(StockEmotionDayDTO dto) throws IllegalAccessException, ParseException {
+        if (stockVerifyService.isIllegalDate(dto.getDateStr())) {
+            return;
+        }
+        List<StockStaticTemplate> stockStaticTemplates = stockStaticTemplateMapper.selectAllByObjectSign(dto.getObjectEnumSign());
+        if (stockStaticTemplates == null || stockStaticTemplates.size() == 0) {
+            throw new BusinessException("对象标识异常");
+        }
+        //模型策略数据
+        StockStaticTemplate stockStaticTemplate = stockStaticTemplates.get(0);
+
+        refreshDayProcess(dto, stockStaticTemplate);
+    }
+
+    /**
+     * 子类实现
+     *
+     * @param dto
+     * @param stockStaticTemplate
+     * @throws IllegalAccessException
+     * @throws ParseException
+     */
+    public void refreshDayProcess(StockEmotionDayDTO dto, StockStaticTemplate stockStaticTemplate) throws IllegalAccessException, ParseException {
+
     }
 
     public void refreshDayRange(StockEmotionDayRangeDTO dto) {

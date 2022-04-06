@@ -74,4 +74,13 @@ public class StockScatterStaticController {
         return CommonResult.success(stockScatterService.getRangeStatic(dto));
     }
 
+    /**
+     *获取日期区间的数据
+     */
+    @WebLog(value = "")
+    @RequestMapping(path = "/deleteDay", method = RequestMethod.POST)
+    public CommonResult deleteDay(@Validated @RequestBody StockEmotionDayDTO dto) {
+        stockScatterService.deleteDay(dto);
+        return CommonResult.success(null);
+    }
 }

@@ -64,16 +64,7 @@ public class ScatterDayUpLimitService extends ScatterDayAbstractService {
     StockVerifyService stockVerifyService;
 
     @Override
-    public void refreshDay(StockEmotionDayDTO dto) throws IllegalAccessException, ParseException {
-        if (stockVerifyService.isIllegalDate(dto.getDateStr())) {
-            return;
-        }
-        List<StockStaticTemplate> stockStaticTemplates = stockStaticTemplateMapper.selectAllByObjectSign(dto.getObjectEnumSign());
-        if (stockStaticTemplates == null || stockStaticTemplates.size() == 0) {
-            throw new BusinessException("对象标识异常");
-        }
-        //模型策略数据
-        StockStaticTemplate stockStaticTemplate = stockStaticTemplates.get(0);
+    public void refreshDayProcess(StockEmotionDayDTO dto, StockStaticTemplate stockStaticTemplate) throws IllegalAccessException, ParseException {
         //获取模型对象中的模板id集合,便于根据模板id查询对应的数据结果
         List<String> templateIdList = stockStrategyService.getTemplateIdList(stockStaticTemplate);
 

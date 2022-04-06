@@ -127,10 +127,16 @@ public class StockStrategyService {
                 throw new BusinessException("请求同花顺策略问句异常，" + requestObject.getString(STATUS_MSG));
             }
             //基础信息
-            JSONObject baseObject = requestObject.getJSONObject("data").getJSONArray("answer")
+            JSONArray componentsArray = requestObject.getJSONObject("data").getJSONArray("answer")
                     .getJSONObject(0).getJSONArray("txt").getJSONObject(0)
-                    .getJSONObject("content").getJSONArray("components")
-                    .getJSONObject(0).getJSONObject("data");
+                    .getJSONObject("content").getJSONArray("components");
+
+            JSONObject baseObject=null;
+            if (componentsArray.size() ==1) {
+                baseObject=  componentsArray.getJSONObject(0).getJSONObject("data");
+            } else {
+                baseObject=  componentsArray.getJSONObject(componentsArray.size()-1).getJSONObject("data");
+            }
             //解析的数据信息
             JSONArray data = baseObject.getJSONArray("datas");
             //总数
@@ -173,7 +179,7 @@ public class StockStrategyService {
                 retryNum--;
                 continue;
             }
-            if(StringUtils.isNotBlank(result)){
+            if (StringUtils.isNotBlank(result)) {
                 break;
             }
         }
@@ -197,9 +203,9 @@ public class StockStrategyService {
         defaultStrategyQuery.setSort_key(dto.getOrderStr());
         defaultStrategyQuery.setSort_order(dto.getOrderBy());
         // 此接口可以通过调用river获取实时动态数据
-        if(StringUtils.isNotBlank(dto.getQueryStr())){
+        if (StringUtils.isNotBlank(dto.getQueryStr())) {
             defaultStrategyQuery.setQuestion(dto.getQueryStr());
-        }else {
+        } else {
             //feign
             StockTemplateQueryDTO stockTemplateQueryDto = new StockTemplateQueryDTO();
             stockTemplateQueryDto.setId(dto.getRiverStockTemplateId());

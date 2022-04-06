@@ -19,6 +19,10 @@ public class StockTemplatePredict {
      * 模板id
      */
     private String templatedId;
+    /**
+     * 模板id
+     */
+    private String templatedName;
 
     /**
      * 持有天数

@@ -59,13 +59,7 @@ public class ScatterDayUpLimitMarketValueService extends ScatterDayAbstractServi
     StockScatterStaticMapper stockScatterStaticMapper;
 
     @Override
-    public void refreshDay(StockEmotionDayDTO dto) throws IllegalAccessException {
-        List<StockStaticTemplate> stockStaticTemplates = stockStaticTemplateMapper.selectAllByObjectSign(dto.getObjectEnumSign());
-        if (stockStaticTemplates == null || stockStaticTemplates.size() == 0) {
-            throw new BusinessException("对象标识异常");
-        }
-        //模型策略数据
-        StockStaticTemplate stockStaticTemplate = stockStaticTemplates.get(0);
+    public void refreshDayProcess(StockEmotionDayDTO dto, StockStaticTemplate stockStaticTemplate) throws IllegalAccessException {
         //获取模型对象中的模板id集合,便于根据模板id查询对应的数据结果
         List<String> templateIdList = stockStrategyService.getTemplateIdList(stockStaticTemplate);
 
@@ -78,7 +72,6 @@ public class ScatterDayUpLimitMarketValueService extends ScatterDayAbstractServi
 
 
             //获取数组里面的对象
-            List<DayAxiosMiddleBaseBO> list = new ArrayList<>();
             String templateId = templateIdList.get(0);
             StockStrategyQueryDTO stockStrategyQueryDTO = new StockStrategyQueryDTO();
             stockStrategyQueryDTO.setRiverStockTemplateId(templateId);

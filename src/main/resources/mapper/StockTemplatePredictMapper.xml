@@ -203,6 +203,7 @@
       <if test="holdDay != null">
         and hold_day=#{holdDay,jdbcType=INTEGER}
       </if>
+      order by date asc
     </where>
   </select>
 </mapper>

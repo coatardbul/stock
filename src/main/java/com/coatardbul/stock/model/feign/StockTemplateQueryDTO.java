@@ -2,16 +2,19 @@ package com.coatardbul.stock.model.feign;
 
 import lombok.Data;
 
-import javax.validation.constraints.NotBlank;
-
 /**
     * 股票问句模板
     */
 @Data
-public class StockTemplateQueryDto {
-    @NotBlank(message = "id不能为空")
+public class StockTemplateQueryDTO {
     private String id;
+    /**
+     * HH:mm
+     */
+    private String  timeStr;
 
+
+    private String stockCode;
     /**
     * 模板名称
     */
@@ -20,11 +23,12 @@ public class StockTemplateQueryDto {
     /**
      * 当前问句查询日期YYYY-MM-DD
      */
-    @NotBlank(message = "日期不能为空")
     private String dateStr;
+
+
     /**
-     * HH:mm
+     * 股票脚本
      */
-    private String  timeStr;
-    private String stockCode;
+    private String stockScript;
+
 }

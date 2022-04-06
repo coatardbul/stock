@@ -28,7 +28,10 @@ import javax.script.ScriptException;
 import java.io.FileNotFoundException;
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
 /**
  * <p>
@@ -62,7 +65,7 @@ public class StockPredictService {
         if (!StringUtils.isNotBlank(dto.getId())) {
             throw new BusinessException("id不能为空");
         }
-       Assert.notNull(dto.getHoleDay(),"天数不不能为空");
+        Assert.notNull(dto.getHoleDay(), "天数不不能为空");
         //获取时间区间
         List<String> dateIntervalList = riverRemoteService.getDateIntervalList(dto.getBeginDate(), dto.getEndDate());
 
@@ -155,17 +158,17 @@ public class StockPredictService {
                 if (key.contains(saleDateFormat) && key.contains("分时收盘价:不复权")) {
                     if (StringUtils.isNotBlank(dto.getSaleTime())) {
                         if (key.contains(dto.getSaleTime())) {
-                            addInfo.setSalePrice(new BigDecimal((String) ((JSONObject) jo).get(key)));
+                            addInfo.setSalePrice(convert(((JSONObject) jo).get(key)));
                         }
                     } else {
-                        addInfo.setSalePrice(new BigDecimal((String) ((JSONObject) jo).get(key)));
+                        addInfo.setSalePrice(convert(((JSONObject) jo).get(key)));
                     }
                 }
-                if (key.contains("a股市值")) {
-                    addInfo.setMarketValue(new BigDecimal(((JSONObject) jo).get(key).toString()));
+                if (key.contains("市值")) {
+                    addInfo.setMarketValue(convert(((JSONObject) jo).get(key)));
                 }
                 if (key.contains(dateFormat) && key.contains("收盘价:不复权")) {
-                    addInfo.setBuyPrice((BigDecimal) ((JSONObject) jo).get(key));
+                    addInfo.setBuyPrice(convert(((JSONObject) jo).get(key)));
                 }
             }
             addInfo.setDetail(jo.toString());
@@ -174,7 +177,40 @@ public class StockPredictService {
 
     }
 
+    private BigDecimal convert(Object value) {
+        if (value instanceof Integer) {
+            return new BigDecimal((Integer) value);
+        }
+        if (value instanceof Long) {
+            return new BigDecimal((Long) value);
+        }
+        if (value instanceof BigDecimal) {
+            return (BigDecimal) value;
+        }
+        if (value instanceof String) {
+            return new BigDecimal((String) value);
+        }
+        return (BigDecimal) value;
+    }
+
+
     public List<StockTemplatePredict> getAll(StockPredictDto dto) {
-        return stockTemplatePredictMapper.selectAllByDateBetweenEqualAndTemplatedIdAndHoldDay(dto.getBeginDate(), dto.getEndDate(), dto.getId(), dto.getHoleDay());
+
+        List<StockTemplatePredict> stockTemplatePredicts = stockTemplatePredictMapper.selectAllByDateBetweenEqualAndTemplatedIdAndHoldDay(dto.getBeginDate(), dto.getEndDate(), dto.getId(), dto.getHoleDay());
+
+        if (stockTemplatePredicts != null && stockTemplatePredicts.size() > 0) {
+            Map<String, String> templateIdMap = stockTemplatePredicts.stream().collect(Collectors.toMap(StockTemplatePredict::getTemplatedId, StockTemplatePredict::getTemplatedId, (o1, o2) -> o1));
+            for (Map.Entry<String,String> entry : templateIdMap.entrySet()) {
+                String templateName = riverRemoteService.getTemplateNameById(entry.getKey());
+                entry.setValue(templateName);
+            }
+            stockTemplatePredicts= stockTemplatePredicts.stream().map(o1->convert(o1,templateIdMap)).collect(Collectors.toList());
+        }
+        return stockTemplatePredicts;
+    }
+
+    private StockTemplatePredict convert(StockTemplatePredict stockTemplatePredict, Map<String, String> templateIdMap){
+        stockTemplatePredict.setTemplatedName(templateIdMap.get(stockTemplatePredict.getTemplatedId()));
+        return  stockTemplatePredict;
     }
 }

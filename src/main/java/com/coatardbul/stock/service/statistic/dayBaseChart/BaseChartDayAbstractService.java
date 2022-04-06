@@ -130,7 +130,7 @@ public abstract class BaseChartDayAbstractService {
     public List<StockDayEmotion> getDayStatic(StockEmotionQueryDTO dto) {
         List<StockDayEmotion> stockDayEmotions = stockDayEmotionMapper.selectAllByDateAndObjectSign(dto.getDateStr(), dto.getObjectEnumSign());
         if (stockDayEmotions != null && stockDayEmotions.size() > 0) {
-            return stockDayEmotions.stream().sorted().sorted(Comparator.comparing(StockDayEmotion::getDate)).collect(Collectors.toList());
+            return stockDayEmotions.stream().sorted(Comparator.comparing(StockDayEmotion::getDate)).collect(Collectors.toList());
         } else {
             return null;
         }
