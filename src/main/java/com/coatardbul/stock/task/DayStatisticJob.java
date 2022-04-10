@@ -3,11 +3,13 @@ package com.coatardbul.stock.task;
 import com.coatardbul.stock.common.util.DateTimeUtil;
 import com.coatardbul.stock.common.util.JsonUtil;
 import com.coatardbul.stock.model.dto.StockEmotionDayDTO;
-import com.coatardbul.stock.model.dto.StockExcelStaticQueryDTO;
-import com.coatardbul.stock.service.statistic.dayBaseChart.StockDayStaticService;
-import com.coatardbul.stock.service.statistic.dayBaseChart.StockDayTrumpetCalcService;
-import com.coatardbul.stock.service.statistic.scatter.StockScatterService;
-import com.coatardbul.stock.service.statistic.scatter.ScatterDayUpLimitService;
+import com.coatardbul.stock.model.dto.StockStrategyQueryDTO;
+import com.coatardbul.stock.model.feign.StockTemplateQueryDTO;
+import com.coatardbul.stock.service.statistic.StockUpLimitValPriceService;
+import com.coatardbul.stock.service.statistic.dayStatic.StockDayStaticService;
+import com.coatardbul.stock.service.statistic.dayStatic.dayBaseChart.StockDayTrumpetCalcService;
+import com.coatardbul.stock.service.statistic.dayStatic.scatter.StockScatterService;
+import com.coatardbul.stock.service.statistic.dayStatic.scatter.ScatterDayUpLimitCallAuctionService;
 import com.coatardbul.stock.service.base.StockStrategyService;
 import com.xxl.job.core.context.XxlJobHelper;
 import com.xxl.job.core.handler.annotation.XxlJob;
@@ -41,19 +43,10 @@ public class DayStatisticJob {
     StockDayStaticService stockDayStaticService;
 
     @Autowired
-    ScatterDayUpLimitService stockScatterUpLimitService;
+    ScatterDayUpLimitCallAuctionService stockScatterUpLimitService;
+@Autowired
+StockUpLimitValPriceService stockUpLimitValPriceService;
 
-    @XxlJob("dayStaticJobHandler")
-    public void dayStaticJobHandler() {
-        log.info("刷新喇叭口统计数据开始");
-        StockExcelStaticQueryDTO stockExcelStaticQueryDTO = new StockExcelStaticQueryDTO();
-        stockExcelStaticQueryDTO.setExcelTemplateId("1483051288928321536");
-        stockExcelStaticQueryDTO.setDateBeginStr(DateTimeUtil.getDateFormat(new Date(), DateTimeUtil.YYYY_MM_DD));
-        stockExcelStaticQueryDTO.setDateEndStr(DateTimeUtil.getDateFormat(new Date(), DateTimeUtil.YYYY_MM_DD));
-        log.info("刷新喇叭口统计数据参数"+JsonUtil.toJson(stockExcelStaticQueryDTO));
-        stockDayTrumpetCalcService.saveDate(stockExcelStaticQueryDTO);
-        log.info("刷新喇叭口统计数据结束");
-    }
 
 
     @XxlJob("dayUpDownJobHandler")
@@ -79,10 +72,24 @@ public class DayStatisticJob {
             dto.setDateStr(DateTimeUtil.getDateFormat(new Date(),DateTimeUtil.YYYY_MM_DD));
             log.info("刷新两板以上集合竞价数据参数"+JsonUtil.toJson(dto));
             stockScatterUpLimitService.refreshDay(dto);
-
         }
         log.info("刷新两板以上集合竞价数据开始");
     }
+
+
+    @XxlJob("dayTwoAboveUpLimitVolPriceJobHandler")
+    public void dayTwoAboveUpLimitVolPriceJobHandler() throws  ParseException {
+        String param = XxlJobHelper.getJobParam();
+        log.info("刷新两板以上量价关系开始"+param);
+        if (StringUtils.isNotBlank(param)) {
+            StockStrategyQueryDTO dto = JsonUtil.readToValue(param, StockStrategyQueryDTO.class);
+            dto.setDateStr(DateTimeUtil.getDateFormat(new Date(),DateTimeUtil.YYYY_MM_DD));
+            log.info("刷新两板以上量价关系参数"+JsonUtil.toJson(dto));
+            stockUpLimitValPriceService.dayTwoAboveUpLimitVolPriceJobHandler(dto);
+        }
+        log.info("刷新两板以上量价关系结束");
+    }
+
 
 
     @XxlJob("dayMarketValueUpLimitJobHandler")

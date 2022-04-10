@@ -43,13 +43,6 @@ public class TaskController {
     @Autowired
     StockStrategyWatchService stockStrategyWatchService;
 
-    @WebLog(value = "")
-    @RequestMapping(path = "/dayStatic", method = RequestMethod.POST)
-    public CommonResult dayStatic() {
-        dayStatisticJob.dayStaticJobHandler();
-        return null;
-    }
-
 
     @WebLog(value = "")
     @RequestMapping(path = "/minuterEmotion", method = RequestMethod.POST)

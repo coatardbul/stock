@@ -75,8 +75,8 @@ public class StockStaticTemplateController {
      * @return
      */
     @RequestMapping(path = "/findAll", method = RequestMethod.POST)
-    public CommonResult<List<StockStaticTemplateBaseDTO>> findAll() {
-        return CommonResult.success(stockStaticTemplateService.findAll());
+    public CommonResult<List<StockStaticTemplateBaseDTO>> findAll(@Validated @RequestBody StockStaticTemplateBaseDTO dto) {
+        return CommonResult.success(stockStaticTemplateService.findAll(dto));
     }
 
 }

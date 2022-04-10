@@ -28,9 +28,19 @@ public class DayTrumpetCalcStatisticBo {
     private String firstUpLimitId;
 
     /**
-     * 主板连续两天以上涨停
+     * 主板连续两天涨停
      */
     private String secondUpLimitId;
+
+    /**
+     * 主板连续两天以上涨停
+     */
+    private String secondUpLimitAboveId;
+
+    /**
+     * 主板连续三天以上涨停
+     */
+    private String threeUpLimitAboveId;
     /**
      * 创业板涨停
      */

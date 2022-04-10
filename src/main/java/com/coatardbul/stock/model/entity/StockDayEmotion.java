@@ -27,5 +27,5 @@ public class StockDayEmotion {
     /**
      * 如果是组合计算，需要标注名称
      */
-    private String name;
+    private String remark;
 }

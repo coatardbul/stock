@@ -1,10 +1,7 @@
 package com.coatardbul.stock.mapper;
-import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Param;
-import java.util.List;
 
-import com.coatardbul.stock.model.entity.StockDayEmotion;
-@Mapper
+import com.coatardbul.stock.model.entity.StockDayEmotion;import org.apache.ibatis.annotations.Param;import java.util.List;
+
 public interface StockDayEmotionMapper {
     int deleteByPrimaryKey(String id);
 
@@ -18,14 +15,9 @@ public interface StockDayEmotionMapper {
 
     int updateByPrimaryKey(StockDayEmotion record);
 
-    int deleteByDateAndObjectSign(@Param("date")String date,@Param("objectSign")String objectSign);
+    int deleteByDateAndObjectSign(@Param("date") String date, @Param("objectSign") String objectSign);
 
+    List<StockDayEmotion> selectAllByDateAndObjectSign(@Param("date") String date, @Param("objectSign") String objectSign);
 
-
-    List<StockDayEmotion> selectAllByDateAndObjectSign(@Param("date")String date,@Param("objectSign")String objectSign);
-
-
-    List<StockDayEmotion> selectAllByDateBetweenEqualAndObjectSign(@Param("minDate")String minDate,@Param("maxDate")String maxDate,@Param("objectSign")String objectSign);
-
-
+    List<StockDayEmotion> selectAllByDateBetweenEqualAndObjectSign(@Param("minDate") String minDate, @Param("maxDate") String maxDate, @Param("objectSign") String objectSign);
 }

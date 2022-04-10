@@ -87,8 +87,8 @@ public class StockStaticTemplateService {
         result.setObjectJson(dto.getObjectStr());
         return result;
     }
-    public List<StockStaticTemplateBaseDTO> findAll() {
-        List<StockStaticTemplate> stockStaticTemplates = stockStaticTemplateMapper.selectAll();
+    public List<StockStaticTemplateBaseDTO> findAll(StockStaticTemplateBaseDTO dto) {
+        List<StockStaticTemplate> stockStaticTemplates = stockStaticTemplateMapper.selectAllByStaticLatitudeAndObjectSignAndRemarkLike(dto.getStaticLatitude(),dto.getObjectEnumSign(),dto.getRemark());
         if (stockStaticTemplates != null && stockStaticTemplates.size() > 0) {
             return stockStaticTemplates.stream().map(this::convert).collect(Collectors.toList());
         }

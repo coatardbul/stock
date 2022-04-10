@@ -12,14 +12,12 @@ import com.coatardbul.stock.common.util.StockStaticModuleUtil;
 import com.coatardbul.stock.common.util.TongHuaShunUtil;
 import com.coatardbul.stock.feign.river.RiverServerFeign;
 import com.coatardbul.stock.mapper.StockCookieMapper;
-import com.coatardbul.stock.mapper.StockDateStaticMapper;
 import com.coatardbul.stock.model.bo.StrategyBO;
 import com.coatardbul.stock.model.bo.StrategyQueryBO;
 import com.coatardbul.stock.model.dto.StockStrategyQueryDTO;
 import com.coatardbul.stock.model.entity.StockCookie;
 import com.coatardbul.stock.model.entity.StockStaticTemplate;
 import com.coatardbul.stock.model.feign.StockTemplateQueryDTO;
-import com.coatardbul.stock.service.StockExcelTemplateService;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang.StringUtils;
 import org.apache.http.Header;
@@ -47,10 +45,7 @@ public class StockStrategyService {
 
     @Autowired
     RiverServerFeign riverServerFeign;
-    @Autowired
-    StockDateStaticMapper stockDateStaticMapper;
-    @Autowired
-    StockExcelTemplateService stockExcelTemplateService;
+
     @Autowired
     HttpService httpService;
     //同花顺问财地址

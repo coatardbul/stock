@@ -22,6 +22,10 @@ public interface StockStaticTemplateMapper {
 
     List<StockStaticTemplate> selectAll();
 
+    List<StockStaticTemplate> selectAllByStaticLatitudeAndObjectSignAndRemarkLike(@Param("staticLatitude")String staticLatitude,@Param("objectSign")String objectSign,@Param("likeRemark")String likeRemark);
+
+
+
     List<StockStaticTemplate> selectAllByObjectSign(@Param("objectSign") String objectSign);
 
 }

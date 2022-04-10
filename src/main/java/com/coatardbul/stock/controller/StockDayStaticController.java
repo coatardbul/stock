@@ -6,11 +6,9 @@ import com.coatardbul.stock.model.dto.StockEmotionDayDTO;
 import com.coatardbul.stock.model.dto.StockEmotionDayRangeDTO;
 import com.coatardbul.stock.model.dto.StockEmotionQueryDTO;
 import com.coatardbul.stock.model.dto.StockEmotionRangeDayDTO;
-import com.coatardbul.stock.model.dto.StockExcelStaticQueryDTO;
-import com.coatardbul.stock.model.dto.StockStaticQueryDTO;
 import com.coatardbul.stock.model.dto.StockStrategyQueryDTO;
-import com.coatardbul.stock.service.statistic.dayBaseChart.StockDayStaticService;
-import com.coatardbul.stock.service.statistic.dayBaseChart.StockDayTrumpetCalcService;
+import com.coatardbul.stock.service.statistic.dayStatic.StockDayStaticService;
+import com.coatardbul.stock.service.statistic.dayStatic.dayBaseChart.StockDayTrumpetCalcService;
 import com.coatardbul.stock.service.base.StockStrategyService;
 import io.swagger.annotations.Api;
 import lombok.extern.slf4j.Slf4j;
@@ -62,40 +60,6 @@ public class StockDayStaticController {
         return CommonResult.success(stockStrategyService.directStrategy(dto));
     }
 
-    /**
-     * 获取当前时间的统计数据
-     *
-     * @param dto 当前时间对象，支持模板
-     * @return
-     */
-    @WebLog(value = "获取连板标准差，中位数，adjs")
-    @RequestMapping(path = "/getStatic", method = RequestMethod.POST)
-    public CommonResult getStatic(@Validated @RequestBody StockStaticQueryDTO dto) throws NoSuchMethodException, ScriptException, FileNotFoundException {
-        return CommonResult.success(stockDayTrumpetCalcService.getStatic(dto));
-    }
-
-    @WebLog(value = "获取连板标准差，中位数，adjs")
-    @RequestMapping(path = "/getAllStatic", method = RequestMethod.POST)
-    public CommonResult getAllStatic(@Validated @RequestBody StockExcelStaticQueryDTO dto) {
-
-        return CommonResult.success(stockDayTrumpetCalcService.getAllStatic(dto));
-    }
-
-    @WebLog(value = "获取连板标准差，中位数，adjs")
-    @RequestMapping(path = "/saveExcel", method = RequestMethod.POST)
-    public CommonResult saveExcel(@Validated @RequestBody StockExcelStaticQueryDTO dto) throws NoSuchMethodException, ScriptException, FileNotFoundException {
-        stockDayTrumpetCalcService.saveExcel(dto);
-        return CommonResult.success(null);
-    }
-
-
-    @WebLog(value = "保存连板标准差，中位数，adjs")
-    @RequestMapping(path = "/saveDate", method = RequestMethod.POST)
-    public CommonResult saveDate(@Validated @RequestBody StockExcelStaticQueryDTO dto) {
-        stockDayTrumpetCalcService.saveDate(dto);
-        return CommonResult.success(null);
-    }
-
 
     /**
      * 刷新某天所有的数据，
@@ -136,7 +100,6 @@ public class StockDayStaticController {
         stockDayStaticService.forceRefreshDayRange(dto);
         return CommonResult.success(null);
     }
-
 
     /**
      *获取日期区间的数据

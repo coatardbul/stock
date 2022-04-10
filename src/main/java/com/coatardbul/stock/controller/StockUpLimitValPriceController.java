@@ -2,9 +2,8 @@ package com.coatardbul.stock.controller;
 
 import com.coatardbul.stock.common.annotation.WebLog;
 import com.coatardbul.stock.common.api.CommonResult;
-import com.coatardbul.stock.model.dto.StockPredictDto;
+import com.coatardbul.stock.model.dto.StockUpLimitNumDTO;
 import com.coatardbul.stock.model.dto.StockValPriceDTO;
-import com.coatardbul.stock.service.statistic.StockPredictService;
 import com.coatardbul.stock.service.statistic.StockUpLimitValPriceService;
 import io.swagger.annotations.Api;
 import lombok.extern.slf4j.Slf4j;
@@ -14,6 +13,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.text.ParseException;
 
 /**
  * <p>
@@ -38,6 +39,12 @@ public class StockUpLimitValPriceController {
         return CommonResult.success(null);
     }
     @WebLog(value = "")
+    @RequestMapping(path = "/strongWeak", method = RequestMethod.POST)
+    public CommonResult strongWeak(@Validated @RequestBody StockValPriceDTO dto) throws ParseException {
+        stockUpLimitValPriceService.strongWeak(dto);
+        return CommonResult.success(null);
+    }
+    @WebLog(value = "")
     @RequestMapping(path = "/delete", method = RequestMethod.POST)
     public CommonResult delete(@Validated @RequestBody StockValPriceDTO dto) {
         stockUpLimitValPriceService.delete(dto);
@@ -48,5 +55,12 @@ public class StockUpLimitValPriceController {
     @RequestMapping(path = "/getAll", method = RequestMethod.POST)
     public CommonResult getAll(@Validated @RequestBody StockValPriceDTO dto) {
         return CommonResult.success( stockUpLimitValPriceService.getAll(dto));
+    }
+
+
+    @WebLog(value = "")
+    @RequestMapping(path = "/getDescribe", method = RequestMethod.POST)
+    public CommonResult getDescribe(@Validated @RequestBody StockUpLimitNumDTO dto) {
+        return CommonResult.success( stockUpLimitValPriceService.getDescribe(dto));
     }
 }

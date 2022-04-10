@@ -5,7 +5,7 @@ import com.coatardbul.stock.common.api.CommonResult;
 import com.coatardbul.stock.model.dto.StockEmotionDayDTO;
 import com.coatardbul.stock.model.dto.StockEmotionDayRangeDTO;
 import com.coatardbul.stock.model.dto.StockEmotionRangeDayDTO;
-import com.coatardbul.stock.service.statistic.scatter.StockScatterService;
+import com.coatardbul.stock.service.statistic.dayStatic.scatter.StockScatterService;
 import io.swagger.annotations.Api;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
