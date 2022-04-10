@@ -46,6 +46,13 @@ public class StockCookieController {
         return CommonResult.success(null);
     }
 
+    @WebLog(value = "同花顺新版问财功能cookie修改")
+    @RequestMapping(path = "/simpleModify", method = RequestMethod.POST)
+    public CommonResult simpleModify(@Validated @RequestBody StockCookieDTO dto) {
+        stockCookieService.simpleModify(dto);
+        return CommonResult.success(null);
+    }
+
     @RequestMapping(path = "/findAll", method = RequestMethod.POST)
     public CommonResult findAll() {
         return CommonResult.success(stockCookieService.findAll());

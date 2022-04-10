@@ -23,6 +23,9 @@ public interface StockCookieMapper {
     List<StockCookie> selectAll();
 
 
+    int updateCookieValue(@Param("updatedCookieValue")String updatedCookieValue);
+
+
 
 
 }

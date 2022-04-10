@@ -15,4 +15,7 @@ public class StockUpLimitInfoBO {
 
     private List<String> nameList;
 
+    private Integer num;
+
+
 }

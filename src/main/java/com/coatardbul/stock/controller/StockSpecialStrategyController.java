@@ -3,6 +3,7 @@ package com.coatardbul.stock.controller;
 import com.coatardbul.stock.common.annotation.WebLog;
 import com.coatardbul.stock.common.api.CommonResult;
 import com.coatardbul.stock.model.dto.StockEmotionDayDTO;
+import com.coatardbul.stock.model.dto.StockStrategyQueryDTO;
 import com.coatardbul.stock.service.statistic.StockSpecialStrategyService;
 import io.swagger.annotations.Api;
 import lombok.extern.slf4j.Slf4j;
@@ -13,6 +14,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.script.ScriptException;
+import java.io.FileNotFoundException;
 import java.text.ParseException;
 
 /**
@@ -37,8 +40,27 @@ public class StockSpecialStrategyController {
     @WebLog(value = "")
     @RequestMapping(path = "/getUpLimitInfo", method = RequestMethod.POST)
     public CommonResult getUpLimitInfo(@Validated @RequestBody StockEmotionDayDTO dto) throws IllegalAccessException, ParseException {
-       ;
         return CommonResult.success( stockSpecialStrategyService.getUpLimitInfo(dto));
     }
+
+
+    /**
+     *获取昨曾模式强弱信息
+     */
+    @WebLog(value = "")
+    @RequestMapping(path = "/getOnceUpLimitStrongWeakInfo", method = RequestMethod.POST)
+    public CommonResult getOnceUpLimitStrongWeakInfo(@Validated @RequestBody StockStrategyQueryDTO dto) throws  NoSuchMethodException, ScriptException, FileNotFoundException {
+        return CommonResult.success( stockSpecialStrategyService.getOnceUpLimitStrongWeakInfo(dto));
+    }
+
+    /**
+     *获取涨停题材
+     */
+    @WebLog(value = "")
+    @RequestMapping(path = "/getUpLimitTheme", method = RequestMethod.POST)
+    public CommonResult getUpLimitTheme(@Validated @RequestBody StockStrategyQueryDTO dto) throws  NoSuchMethodException, ScriptException, FileNotFoundException {
+        return CommonResult.success( stockSpecialStrategyService.getUpLimitTheme(dto));
+    }
+
 
 }

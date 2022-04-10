@@ -11,6 +11,7 @@ import com.coatardbul.stock.feign.river.BaseServerFeign;
 import com.coatardbul.stock.feign.river.RiverServerFeign;
 import com.coatardbul.stock.mapper.StockUpLimitValPriceMapper;
 import com.coatardbul.stock.model.bo.AxiosBaseBo;
+import com.coatardbul.stock.model.bo.OnceUpLimitStrongWeakBO;
 import com.coatardbul.stock.model.bo.StockUpLimitInfoBO;
 import com.coatardbul.stock.model.bo.StrategyBO;
 import com.coatardbul.stock.model.bo.UpLimitDetailInfo;
@@ -493,9 +494,36 @@ public class StockUpLimitValPriceService {
         return upLimitStrongWeakBO;
     }
 
-    private Object getOnceUpLimitStrongWeakInfo(List<UpLimitDetailInfo> upLimitDetailList) {
+    public OnceUpLimitStrongWeakBO getStrongWeakInfo(JSONObject jo){
+        //取里面的数组信息
+        Set<String> keys = jo.keySet();
+        List<UpLimitDetailInfo> upLimitDetailList = new ArrayList<>();
+        for (String key : keys) {
+            if (key.contains("涨停明细数据")) {
+                String upLimitDetailStr = (String) jo.get(key);
+                upLimitDetailList = JsonUtil.readToValue(upLimitDetailStr, new TypeReference<List<UpLimitDetailInfo>>() {
+                });
+            }
+        }
+        //对单个涨停策略分析
+        OnceUpLimitStrongWeakBO onceUpLimitStrongWeakInfo = getOnceUpLimitStrongWeakInfo(upLimitDetailList);
+        //分析结果
+        return onceUpLimitStrongWeakInfo;
+    }
 
-        return null;
+
+    private OnceUpLimitStrongWeakBO getOnceUpLimitStrongWeakInfo(List<UpLimitDetailInfo> upLimitDetailList) {
+        OnceUpLimitStrongWeakBO onceUpLimitStrongWeakBO=new OnceUpLimitStrongWeakBO();
+        onceUpLimitStrongWeakBO.setFirstUpLimitDate(new Date(upLimitDetailList.get(0).getTime()));
+
+        onceUpLimitStrongWeakBO.setOpenUpLimitDate(new Date(upLimitDetailList.get(upLimitDetailList.size()-1).getOpenTime()));
+        long sumMinuter = upLimitDetailList.stream().map(UpLimitDetailInfo::getDuration).mapToLong(Long::longValue).sum() / 1000 / 60;
+        onceUpLimitStrongWeakBO.setDuration(sumMinuter);
+        onceUpLimitStrongWeakBO.setOpenNum(upLimitDetailList.size());
+        onceUpLimitStrongWeakBO.setFirstVol(upLimitDetailList.get(0).getFirstVol());
+        onceUpLimitStrongWeakBO.setHighestVol(upLimitDetailList.get(0).getHighestVol());
+
+        return onceUpLimitStrongWeakBO;
     }
 
     public String getDescribe(StockUpLimitNumDTO dto) {
@@ -542,14 +570,12 @@ public class StockUpLimitValPriceService {
         } catch (Exception e) {
             log.error(e.getMessage(), e);
         }
-
         //调用方法
         for (String code : codeList) {
             StockValPriceDTO stockValPriceDTO=new StockValPriceDTO();
             stockValPriceDTO.setCode(code);
             stockValPriceDTO.setDateStr(dto.getDateStr());
             execute(stockValPriceDTO);
-
         }
 
     }

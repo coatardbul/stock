@@ -68,4 +68,9 @@ public class StockCookieService {
         return dto;
 
     }
+
+    public void simpleModify(StockCookieDTO dto) {
+        stockCookieMapper.updateCookieValue(dto.getCookie());
+
+    }
 }
