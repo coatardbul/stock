@@ -2,7 +2,6 @@ package com.coatardbul.stock.service.statistic;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
-import com.coatardbul.stock.common.api.CommonResult;
 import com.coatardbul.stock.common.constants.Constant;
 import com.coatardbul.stock.common.exception.BusinessException;
 import com.coatardbul.stock.common.util.DateTimeUtil;
@@ -10,35 +9,25 @@ import com.coatardbul.stock.common.util.JsonUtil;
 import com.coatardbul.stock.feign.river.BaseServerFeign;
 import com.coatardbul.stock.feign.river.RiverServerFeign;
 import com.coatardbul.stock.mapper.StockUpLimitValPriceMapper;
-import com.coatardbul.stock.model.bo.AxiosBaseBo;
-import com.coatardbul.stock.model.bo.OnceUpLimitStrongWeakBO;
-import com.coatardbul.stock.model.bo.StockUpLimitInfoBO;
 import com.coatardbul.stock.model.bo.StrategyBO;
-import com.coatardbul.stock.model.bo.UpLimitDetailInfo;
 import com.coatardbul.stock.model.bo.UpLimitStrongWeakBO;
 import com.coatardbul.stock.model.bo.UpLimitValPriceBO;
 import com.coatardbul.stock.model.dto.StockStrategyQueryDTO;
 import com.coatardbul.stock.model.dto.StockUpLimitNumDTO;
 import com.coatardbul.stock.model.dto.StockValPriceDTO;
 import com.coatardbul.stock.model.entity.StockUpLimitValPrice;
-import com.coatardbul.stock.model.feign.StockTemplateQueryDTO;
 import com.coatardbul.stock.service.base.StockStrategyService;
 import com.coatardbul.stock.service.romote.RiverRemoteService;
 import com.fasterxml.jackson.core.type.TypeReference;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.script.ScriptException;
-import java.io.FileNotFoundException;
 import java.math.BigDecimal;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Comparator;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -71,48 +60,79 @@ public class StockUpLimitValPriceService {
     @Autowired
     StockUpLimitValPriceMapper stockUpLimitValPriceMapper;
 
-    public void execute(StockValPriceDTO dto) {
-        //获取查询股票的脚本
+    @Autowired
+    UpLimitStrongWeakService  upLimitStrongWeakService;
+
+
+    /**
+     * 量价关系
+     * @param dto
+     */
+    public void volPriceProcess(StockValPriceDTO dto) {
+        //获取量价关系的问句脚本
         String queryScript = getQueryScript();
-        //获取查询的问句
-        String queryInfo = getTongHuaShunQueryResult(queryScript, dto.getDateStr(), dto.getCode());
         //策略查询
-        StockStrategyQueryDTO stockStrategyQueryDTO = new StockStrategyQueryDTO();
-        stockStrategyQueryDTO.setStockCode(dto.getCode());
-        stockStrategyQueryDTO.setQueryStr(queryInfo);
+        StockStrategyQueryDTO stockStrategyQueryDTO = buildStrategyInfo(queryScript,dto);
         try {
             StrategyBO strategy = stockStrategyService.strategy(stockStrategyQueryDTO);
             //动态结果解析
             if (strategy != null) {
-                parseStrategyResult(strategy);
-                strongWeak(dto);
+                //解析，合并，入库
+                parseStrategyProcess(strategy);
+                //强弱分析
+                strongWeakProcess(dto);
             }
         } catch (Exception e) {
             log.error(e.getMessage(), e);
         }
     }
 
-    private void parseStrategyResult(StrategyBO strategy) {
+    /**
+     * 量价关系的问句脚本
+     *
+     * @return
+     */
+    private String getQueryScript() {
+        StringBuffer sb = new StringBuffer();
+        sb.append("股票代码包含{{stockCode}},");
+        //前4天
+        for (int i = 4; i > 0; i--) {
+            String dateScript = "{{lastDay" + i + "}}";
+            sb.append(getIndexQueryScript(dateScript));
+        }
+        //当日
+        sb.append(getIndexQueryScript("{{today}}"));
+        return sb.toString();
+    }
+
+    /**
+     * 解析策略中的涨停信息，包括竞价信息，成交信息
+     * 过滤非涨停的数据
+     * 合并表中数据，更新数据
+     * @param strategy
+     */
+    private void parseStrategyProcess(StrategyBO strategy) {
         JSONArray data = strategy.getData();
-        Object jo = data.get(0);
-        //key YYYYMMDD  value 具体信息
+        JSONObject jo = data.getJSONObject(0);
+        //key YYYYMMDD  value为每天的竞价信息和成交信息
         Map<String, UpLimitValPriceBO> allDateMap = new HashMap<>();
         //解析http请求
-        rebuildUpLimitValPrice((JSONObject) jo, allDateMap);
+        setUpLimitValPrice( jo, allDateMap);
         //股票代码和名称
-        String code = ((JSONObject) jo).getString("code");
-        String stockName = ((JSONObject) jo).getString("股票简称");
+        String code = jo.getString("code");
+        String stockName = jo.getString("股票简称");
 
-        //查询表中的信息,将表中的信息添加到总的信息里面
-        addTableUpLimitValPrice(code, allDateMap);
+        //查询表中的信息,将表中的信息合并到总的信息里面
+        mergeTableUpLimitValPrice(code, allDateMap);
 
+        //转换map为list并根据时间排序
         List<UpLimitValPriceBO> allUpLimitValPriceList = allDateMap.values().stream().collect(Collectors.toList());
         allUpLimitValPriceList = allUpLimitValPriceList.stream().sorted(Comparator.comparing(UpLimitValPriceBO::getDateStr)).collect(Collectors.toList());
 
         //过滤数据
         List<UpLimitValPriceBO> filterUpLimitValPriceList = filterUpLimitValPrice(allUpLimitValPriceList);
         //将数据更新到表中
-        addUpdateTableDate(code, stockName, filterUpLimitValPriceList);
+        reAddTableDate(code, stockName, filterUpLimitValPriceList);
     }
 
     /**
@@ -122,7 +142,7 @@ public class StockUpLimitValPriceService {
      * @param stockName
      * @param filterUpLimitValPriceList 时间由小到大排序
      */
-    private void addUpdateTableDate(String code, String stockName, List<UpLimitValPriceBO> filterUpLimitValPriceList) {
+    private void reAddTableDate(String code, String stockName, List<UpLimitValPriceBO> filterUpLimitValPriceList) {
         StockUpLimitValPrice addInfo = new StockUpLimitValPrice();
         addInfo.setId(baseServerFeign.getSnowflakeId());
         addInfo.setCode(code);
@@ -179,12 +199,12 @@ public class StockUpLimitValPriceService {
 
 
     /**
-     * 将表中的数据添加到中数据中
+     * 将表中的数据合并到http数据中
      *
      * @param code
-     * @param dateMap
+     * @param dateMap  http解析的量价关系数据
      */
-    private void addTableUpLimitValPrice(String code, Map<String, UpLimitValPriceBO> dateMap) {
+    private void mergeTableUpLimitValPrice(String code, Map<String, UpLimitValPriceBO> dateMap) {
         StockUpLimitValPrice stockUpLimitValPriceTemp = stockUpLimitValPriceMapper.selectAllByCode(code);
         if (stockUpLimitValPriceTemp != null) {
             Map<String, UpLimitValPriceBO> tableMap = new HashMap<>();
@@ -210,9 +230,9 @@ public class StockUpLimitValPriceService {
      * 将http请求的涨停量价关系放到map存储
      *
      * @param jo
-     * @param dateMap
+     * @param dateMap  key为日期，value为每天的竞价信息和成交信息
      */
-    private void rebuildUpLimitValPrice(JSONObject jo, Map<String, UpLimitValPriceBO> dateMap) {
+    private void setUpLimitValPrice(JSONObject jo, Map<String, UpLimitValPriceBO> dateMap) {
         Set<String> keys = jo.keySet();
         for (String key : keys) {
             if (key.contains("竞价金额")) {
@@ -286,23 +306,6 @@ public class StockUpLimitValPriceService {
         return (BigDecimal) value;
     }
 
-    /**
-     * 量价关系的问句脚本
-     *
-     * @return
-     */
-    private String getQueryScript() {
-        StringBuffer sb = new StringBuffer();
-        sb.append("股票代码包含{{stockCode}},");
-        //前4天
-        for (int i = 4; i > 0; i--) {
-            String dateScript = "{{lastDay" + i + "}}";
-            sb.append(getIndexQueryScript(dateScript));
-        }
-        //当日
-        sb.append(getIndexQueryScript("{{today}}"));
-        return sb.toString();
-    }
 
     /**
      * 遍历中每一小部分的脚本
@@ -325,21 +328,14 @@ public class StockUpLimitValPriceService {
      * 根据脚本，其他参数从river上获取最终的查询语句
      *
      * @param queryScript 脚本
-     * @param dateStr     时间
-     * @param code        股票代码
      * @return
      */
-    private String getTongHuaShunQueryResult(String queryScript, String dateStr, String code) {
-        StockTemplateQueryDTO stockTemplateQueryDto = new StockTemplateQueryDTO();
-        stockTemplateQueryDto.setDateStr(dateStr);
-        stockTemplateQueryDto.setStockCode(code);
-        stockTemplateQueryDto.setStockScript(queryScript);
-        CommonResult<String> riverServerFeignResult = riverServerFeign.getQuery(stockTemplateQueryDto);
-        if (riverServerFeignResult != null) {
-            return riverServerFeignResult.getData();
-        } else {
-            return null;
-        }
+    private StockStrategyQueryDTO buildStrategyInfo(String queryScript, StockValPriceDTO dto) {
+        StockStrategyQueryDTO stockStrategyQueryDTO=new StockStrategyQueryDTO();
+        stockStrategyQueryDTO.setStockTemplateScript(queryScript);
+        stockStrategyQueryDTO.setDateStr(dto.getDateStr());
+        stockStrategyQueryDTO.setStockCode(dto.getCode());
+        return stockStrategyQueryDTO;
     }
 
     public void delete(StockValPriceDTO dto) {
@@ -361,7 +357,7 @@ public class StockUpLimitValPriceService {
      *
      * @param dto
      */
-    public void strongWeak(StockValPriceDTO dto) throws ParseException {
+    public void strongWeakProcess(StockValPriceDTO dto) throws ParseException {
         StockUpLimitValPrice stockUpLimitValPrice = stockUpLimitValPriceMapper.selectAllByCode(dto.getCode());
         if (!StringUtils.isNotBlank(stockUpLimitValPrice.getBeginDate())) {
             throw new BusinessException("开始时间为空，无法分析");
@@ -369,161 +365,48 @@ public class StockUpLimitValPriceService {
         if (!StringUtils.isNotBlank(stockUpLimitValPrice.getEndDate())) {
             throw new BusinessException("结束时间为空，无法分析");
         }
-
         String beginDateStr = DateTimeUtil.getDateFormat(DateTimeUtil.parseDateStr(stockUpLimitValPrice.getBeginDate(), DateTimeUtil.YYYYMMDD), DateTimeUtil.YYYY_MM_DD);
         String endDateStr = DateTimeUtil.getDateFormat(DateTimeUtil.parseDateStr(stockUpLimitValPrice.getEndDate(), DateTimeUtil.YYYYMMDD), DateTimeUtil.YYYY_MM_DD);
-
         List<String> dateIntervalList = riverRemoteService.getDateIntervalList(beginDateStr, endDateStr);
-
+        //多线程同步策略
         CountDownLatch countDownLatch = new CountDownLatch(dateIntervalList.size());
-
         List<UpLimitStrongWeakBO> strongWeakList = new ArrayList<>();
         for (String dateStr : dateIntervalList) {
-            StockStrategyQueryDTO strategyQueryDTO = new StockStrategyQueryDTO();
-            strategyQueryDTO.setRiverStockTemplateId("1509349533765730304");
-            strategyQueryDTO.setDateStr(dateStr);
-            strategyQueryDTO.setStockCode(stockUpLimitValPrice.getCode());
-            List<UpLimitStrongWeakBO> finalStrongWeakList = strongWeakList;
             Constant.emotionIntervalByDateThreadPool.submit(() -> {
+                StockStrategyQueryDTO strategyQueryDTO = new StockStrategyQueryDTO();
+                strategyQueryDTO.setRiverStockTemplateId("1509349533765730304");
+                strategyQueryDTO.setDateStr(dateStr);
+                strategyQueryDTO.setStockCode(stockUpLimitValPrice.getCode());
                 try {
                     StrategyBO strategy = stockStrategyService.strategy(strategyQueryDTO);
                     if (strategy.getTotalNum() > 0) {
-                        UpLimitStrongWeakBO rebuild = rebuild(strategy, dateStr);
-                        finalStrongWeakList.add(rebuild);
+                        UpLimitStrongWeakBO rebuild = rebuild(strategy);
+                        strongWeakList.add(rebuild);
                     }
                 } catch (Exception e) {
                     log.error(e.getMessage(), e);
                 } finally {
+                    //执行完成计数
                     countDownLatch.countDown();
                 }
             });
         }
         try {
+            //等待最终的完成
             countDownLatch.await();
         } catch (InterruptedException e) {
             log.error(e.getMessage(), e);
         }
-        strongWeakList = strongWeakList.stream().sorted(Comparator.comparing(UpLimitStrongWeakBO::getDateStr)).collect(Collectors.toList());
+//        strongWeakList = strongWeakList.stream().sorted(Comparator.comparing(UpLimitStrongWeakBO::getDateStr)).collect(Collectors.toList());
         stockUpLimitValPrice.setStrongWeakArray(JsonUtil.toJson(strongWeakList));
         stockUpLimitValPriceMapper.updateByPrimaryKeySelective(stockUpLimitValPrice);
     }
 
-    private UpLimitStrongWeakBO rebuild(StrategyBO strategy, String dateStr) {
+    private UpLimitStrongWeakBO rebuild(StrategyBO strategy) {
         //取里面的数组信息
         JSONObject jo = (JSONObject) strategy.getData().get(0);
-        return rebuild(jo, dateStr);
+        return upLimitStrongWeakService.getUpLimitStrongWeak(jo);
 
-    }
-
-    private UpLimitStrongWeakBO rebuild(JSONObject jo, String dateStr) {
-        //取里面的数组信息
-        Set<String> keys = jo.keySet();
-        List<UpLimitDetailInfo> upLimitDetailList = new ArrayList<>();
-        for (String key : keys) {
-            if (key.contains("涨停明细数据")) {
-                String upLimitDetailStr = (String) jo.get(key);
-                upLimitDetailList = JsonUtil.readToValue(upLimitDetailStr, new TypeReference<List<UpLimitDetailInfo>>() {
-                });
-            }
-        }
-        //对单个涨停策略分析
-        UpLimitStrongWeakBO upLimitStrongWeakInfo = getUpLimitStrongWeakInfo(upLimitDetailList, dateStr);
-        //分析结果
-        return upLimitStrongWeakInfo;
-    }
-
-    /**
-     * 涨停分析
-     *
-     * @param upLimitDetailList
-     * @param dateStr
-     * @return
-     */
-    private UpLimitStrongWeakBO getUpLimitStrongWeakInfo(List<UpLimitDetailInfo> upLimitDetailList, String dateStr) {
-        UpLimitStrongWeakBO upLimitStrongWeakBO = new UpLimitStrongWeakBO();
-        upLimitStrongWeakBO.setDateStr(dateStr);
-        upLimitStrongWeakBO.setFirstUpLimitDate(new Date(upLimitDetailList.get(0).getTime()));
-        long sumMinuter = upLimitDetailList.stream().map(UpLimitDetailInfo::getDuration).mapToLong(Long::longValue).sum() / 1000 / 60;
-        upLimitStrongWeakBO.setDuration(sumMinuter);
-        upLimitStrongWeakBO.setOpenNum(upLimitDetailList.size());
-        upLimitStrongWeakBO.setFirstVol(upLimitDetailList.get(0).getFirstVol());
-        upLimitStrongWeakBO.setHighestVol(upLimitDetailList.get(0).getHighestVol());
-
-        String firstUpLimitTimeStr = DateTimeUtil.getDateFormat(upLimitStrongWeakBO.getFirstUpLimitDate(), DateTimeUtil.HH_MM);
-
-        //封板时间早
-        if (firstUpLimitTimeStr.compareTo("09:30") == 0) {
-            if (upLimitDetailList.get(0).getDuration() / 1000 / 10 > 5) {
-                if (upLimitStrongWeakBO.getDuration() > 4 * 60 * 0.9) {
-                    upLimitStrongWeakBO.setStrongWeakDescribe("T字强回封");
-                } else {
-                    upLimitStrongWeakBO.setStrongWeakDescribe("T字弱回封");
-                }
-            }
-        } else if (firstUpLimitTimeStr.compareTo("10:00") < 0) {
-            if (upLimitDetailList.size() > 3) {
-                if (upLimitStrongWeakBO.getDuration() < 4 * 60 * 0.75) {
-                    upLimitStrongWeakBO.setStrongWeakDescribe("弱");
-                } else if (upLimitStrongWeakBO.getDuration() < 4 * 60 * 0.9) {
-                    upLimitStrongWeakBO.setStrongWeakDescribe("弱中带强");
-                } else {
-                    upLimitStrongWeakBO.setStrongWeakDescribe("强势换手");
-                }
-            } else if (upLimitDetailList.size() == 2) {
-                if (upLimitStrongWeakBO.getDuration() < 3 * 60) {
-                    upLimitStrongWeakBO.setStrongWeakDescribe("中偏弱");
-                } else {
-                    upLimitStrongWeakBO.setStrongWeakDescribe("中");
-                }
-            } else {
-                upLimitStrongWeakBO.setStrongWeakDescribe("强");
-            }
-        } else if (firstUpLimitTimeStr.compareTo("11:00") < 0) {
-            if (upLimitDetailList.size() == 1) {
-                upLimitStrongWeakBO.setStrongWeakDescribe("弱中带强");
-            }
-        } else {
-            upLimitStrongWeakBO.setStrongWeakDescribe("未知");
-
-        }
-        if (upLimitStrongWeakBO.getFirstVol() > 10 * 100 * 10000) {
-            upLimitStrongWeakBO.setStrongWeakDescribe(upLimitStrongWeakBO.getStrongWeakDescribe() + "     封单量大");
-        } else {
-            upLimitStrongWeakBO.setStrongWeakDescribe(upLimitStrongWeakBO.getStrongWeakDescribe() + "     封单量小");
-        }
-        return upLimitStrongWeakBO;
-    }
-
-    public OnceUpLimitStrongWeakBO getStrongWeakInfo(JSONObject jo){
-        //取里面的数组信息
-        Set<String> keys = jo.keySet();
-        List<UpLimitDetailInfo> upLimitDetailList = new ArrayList<>();
-        for (String key : keys) {
-            if (key.contains("涨停明细数据")) {
-                String upLimitDetailStr = (String) jo.get(key);
-                upLimitDetailList = JsonUtil.readToValue(upLimitDetailStr, new TypeReference<List<UpLimitDetailInfo>>() {
-                });
-            }
-        }
-        //对单个涨停策略分析
-        OnceUpLimitStrongWeakBO onceUpLimitStrongWeakInfo = getOnceUpLimitStrongWeakInfo(upLimitDetailList);
-        //分析结果
-        return onceUpLimitStrongWeakInfo;
-    }
-
-
-    private OnceUpLimitStrongWeakBO getOnceUpLimitStrongWeakInfo(List<UpLimitDetailInfo> upLimitDetailList) {
-        OnceUpLimitStrongWeakBO onceUpLimitStrongWeakBO=new OnceUpLimitStrongWeakBO();
-        onceUpLimitStrongWeakBO.setFirstUpLimitDate(new Date(upLimitDetailList.get(0).getTime()));
-
-        onceUpLimitStrongWeakBO.setOpenUpLimitDate(new Date(upLimitDetailList.get(upLimitDetailList.size()-1).getOpenTime()));
-        long sumMinuter = upLimitDetailList.stream().map(UpLimitDetailInfo::getDuration).mapToLong(Long::longValue).sum() / 1000 / 60;
-        onceUpLimitStrongWeakBO.setDuration(sumMinuter);
-        onceUpLimitStrongWeakBO.setOpenNum(upLimitDetailList.size());
-        onceUpLimitStrongWeakBO.setFirstVol(upLimitDetailList.get(0).getFirstVol());
-        onceUpLimitStrongWeakBO.setHighestVol(upLimitDetailList.get(0).getHighestVol());
-
-        return onceUpLimitStrongWeakBO;
     }
 
     public String getDescribe(StockUpLimitNumDTO dto) {
@@ -539,18 +422,17 @@ public class StockUpLimitValPriceService {
             upLimitStrongWeakBOList = upLimitStrongWeakBOList.stream().sorted(Comparator.comparing(UpLimitStrongWeakBO::getDateStr)).collect(Collectors.toList());
             StringBuffer sb = new StringBuffer();
             for (UpLimitStrongWeakBO up : upLimitStrongWeakBOList) {
-                sb.append("时间：" + up.getDateStr() + "\n");
-                sb.append("首次封单：" + new BigDecimal(up.getFirstVol()).divide(new BigDecimal(100 * 10000), 2, BigDecimal.ROUND_HALF_UP).toString() + "万   ");
-                sb.append("最高封单：" + new BigDecimal(up.getHighestVol()).divide(new BigDecimal(100 * 10000), 2, BigDecimal.ROUND_HALF_UP).toString() + "万  \n");
-                sb.append("封板时长：" + up.getDuration() + "分钟  ");
-                sb.append("开板次数：" + (up.getOpenNum() - 1) + "次数\n");
-                sb.append("评价描述：" + up.getStrongWeakDescribe() + "\n");
-                sb.append("----------------------------------------------\n");
+                if(StringUtils.isNotBlank(dto.getDateStr())&&up.getDateStr().compareTo(dto.getDateStr())>=0){
+                    continue;
+                }
+                sb.append(upLimitStrongWeakService.getUpLimitStrongWeakDescribe(up));
+                sb.append("-------------------------------------\n");
             }
             return sb.toString();
         }
         return null;
     }
+
 
 
     /**
@@ -575,7 +457,7 @@ public class StockUpLimitValPriceService {
             StockValPriceDTO stockValPriceDTO=new StockValPriceDTO();
             stockValPriceDTO.setCode(code);
             stockValPriceDTO.setDateStr(dto.getDateStr());
-            execute(stockValPriceDTO);
+            volPriceProcess(stockValPriceDTO);
         }
 
     }

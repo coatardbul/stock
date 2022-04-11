@@ -57,7 +57,7 @@ public class StockDayStaticController {
     @WebLog(value = "同花顺新版问财功能")
     @RequestMapping(path = "/strategy", method = RequestMethod.POST)
     public CommonResult strategy(@Validated @RequestBody StockStrategyQueryDTO dto) throws NoSuchMethodException, ScriptException, FileNotFoundException {
-        return CommonResult.success(stockStrategyService.directStrategy(dto));
+        return CommonResult.success(stockStrategyService.strategy(dto));
     }
 
 

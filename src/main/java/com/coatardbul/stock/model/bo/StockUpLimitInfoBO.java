@@ -2,18 +2,16 @@ package com.coatardbul.stock.model.bo;
 
 import lombok.Data;
 
-import javax.validation.constraints.NotBlank;
 import java.util.List;
 
 /**
-    *
-    */
+ * 首板涨停信息
+ */
 @Data
 public class StockUpLimitInfoBO {
+    private String themeName;
 
-    private String upLimitNum;
-
-    private List<String> nameList;
+    private List<UpLimitBaseInfoBO> nameList;
 
     private Integer num;
 

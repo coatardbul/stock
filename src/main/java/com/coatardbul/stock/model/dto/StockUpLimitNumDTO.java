@@ -14,4 +14,6 @@ import lombok.Data;
 public class StockUpLimitNumDTO {
 
     private String name;
+    private String dateStr;
+
 }

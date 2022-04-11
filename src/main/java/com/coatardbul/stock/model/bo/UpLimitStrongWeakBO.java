@@ -18,14 +18,24 @@ public class UpLimitStrongWeakBO {
     private String dateStr;
 
     /**
-     * 涨停时间
+     * 首次涨停时间
      */
     private Date firstUpLimitDate;
+
+    /**
+     * 最后涨停时间
+     */
+    private Date lastUpLimitDate;
 
     /**
      * 持续时间，单位分钟
      */
     private Long duration;
+
+    /**
+     * 持续时间，单位分钟
+     */
+    private Long idealDuration;
 
 
     private Integer openNum;

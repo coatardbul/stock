@@ -149,9 +149,7 @@ public class DateTimeUtil {
         Integer endHour = Integer.valueOf(endTime.substring(0, 2));
         Integer endMinute = Integer.valueOf(endTime.substring(3, 5));
 
-
         int minuteAdd=0;
-
         for (int i = beginHour; i <= endHour; i++) {
             //小时相等
             if (beginHour.equals(endHour)) {

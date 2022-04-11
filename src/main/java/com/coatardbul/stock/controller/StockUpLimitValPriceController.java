@@ -32,16 +32,21 @@ public class StockUpLimitValPriceController {
     @Autowired
     StockUpLimitValPriceService stockUpLimitValPriceService;
 
+    /**
+     * 对当前股票的量价关系（竞价金额，竞价换手，竞价涨幅，成交额，成交换手）进行分析，并描述涨停信息
+     * @param dto  股票代码和时间
+     * @return
+     */
     @WebLog(value = "")
     @RequestMapping(path = "/execute", method = RequestMethod.POST)
     public CommonResult execute(@Validated @RequestBody StockValPriceDTO dto) {
-        stockUpLimitValPriceService.execute(dto);
+        stockUpLimitValPriceService.volPriceProcess(dto);
         return CommonResult.success(null);
     }
     @WebLog(value = "")
     @RequestMapping(path = "/strongWeak", method = RequestMethod.POST)
     public CommonResult strongWeak(@Validated @RequestBody StockValPriceDTO dto) throws ParseException {
-        stockUpLimitValPriceService.strongWeak(dto);
+        stockUpLimitValPriceService.strongWeakProcess(dto);
         return CommonResult.success(null);
     }
     @WebLog(value = "")
@@ -58,6 +63,11 @@ public class StockUpLimitValPriceController {
     }
 
 
+    /**
+     * 根据名称获取涨停信息
+     * @param dto
+     * @return
+     */
     @WebLog(value = "")
     @RequestMapping(path = "/getDescribe", method = RequestMethod.POST)
     public CommonResult getDescribe(@Validated @RequestBody StockUpLimitNumDTO dto) {

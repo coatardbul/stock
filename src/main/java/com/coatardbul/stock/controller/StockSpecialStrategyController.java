@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.script.ScriptException;
 import java.io.FileNotFoundException;
-import java.text.ParseException;
 
 /**
  * <p>
@@ -35,12 +34,12 @@ public class StockSpecialStrategyController {
     StockSpecialStrategyService stockSpecialStrategyService;
 
     /**
-     *获取涨停数据
+     *获取2板以上涨停数据
      */
     @WebLog(value = "")
     @RequestMapping(path = "/getUpLimitInfo", method = RequestMethod.POST)
-    public CommonResult getUpLimitInfo(@Validated @RequestBody StockEmotionDayDTO dto) throws IllegalAccessException, ParseException {
-        return CommonResult.success( stockSpecialStrategyService.getUpLimitInfo(dto));
+    public CommonResult getUpLimitInfo(@Validated @RequestBody StockEmotionDayDTO dto)  {
+        return CommonResult.success( stockSpecialStrategyService.getTwoAboveUpLimitInfo(dto));
     }
 
 
