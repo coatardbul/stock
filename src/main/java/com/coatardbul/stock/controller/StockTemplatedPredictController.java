@@ -43,4 +43,11 @@ public class StockTemplatedPredictController {
     public CommonResult getAll(@Validated @RequestBody StockPredictDto dto) {
         return CommonResult.success( stockPredictService.getAll(dto));
     }
+
+    @WebLog(value = "")
+    @RequestMapping(path = "/deleteById", method = RequestMethod.POST)
+    public CommonResult deleteById(@Validated @RequestBody StockPredictDto dto) {
+        stockPredictService.deleteById(dto);
+        return CommonResult.success(null);
+    }
 }

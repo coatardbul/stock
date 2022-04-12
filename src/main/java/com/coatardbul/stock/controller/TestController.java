@@ -3,7 +3,10 @@ package com.coatardbul.stock.controller;
 import com.coatardbul.stock.common.annotation.WebLog;
 import com.coatardbul.stock.common.api.CommonResult;
 import com.coatardbul.stock.model.dto.StockEmotionDayDTO;
+import com.coatardbul.stock.model.dto.StockLastUpLimitDetailDTO;
+import com.coatardbul.stock.model.dto.StockStrategyQueryDTO;
 import com.coatardbul.stock.service.statistic.StockMinuteEmotinStaticService;
+import com.coatardbul.stock.service.statistic.StockSpecialStrategyService;
 import com.coatardbul.stock.task.DayStatisticJob;
 import io.swagger.annotations.Api;
 import lombok.extern.slf4j.Slf4j;
@@ -36,6 +39,8 @@ import java.io.FileReader;
 @Api(tags = "")
 @RequestMapping("/test")
 public class TestController {
+    @Autowired
+    StockSpecialStrategyService stockSpecialStrategyService;
 
     @WebLog(value = "")
     @RequestMapping(path = "/test", method = RequestMethod.POST)
@@ -57,5 +62,14 @@ public class TestController {
 
     }
 
+    /**
+     *获取昨曾，过去数据
+     */
+    @WebLog(value = "")
+    @RequestMapping(path = "/buildLastUpLimitInfo", method = RequestMethod.POST)
+    public CommonResult buildLastUpLimitInfo(@Validated @RequestBody StockLastUpLimitDetailDTO dto) throws  NoSuchMethodException, ScriptException, FileNotFoundException {
+        stockSpecialStrategyService.buildLastUpLimitInfo(dto);
+        return CommonResult.success(null);
+    }
 
 }

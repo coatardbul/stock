@@ -196,6 +196,20 @@ public class UpLimitStrongWeakService {
         }
         //分析结果
         return upLimitStrongWeakInfo;
+    }
+
+
+    public String getUpLimitStrongWeakType(JSONObject jo) {
+        UpLimitStrongWeakBO upLimitStrongWeak = getUpLimitStrongWeak(jo);
+
+        if (upLimitStrongWeak.getLastUpLimitDate() == null) {
+            return "涨停";
+        }
+        if ("15:00:00".equals(DateTimeUtil.getDateFormat(upLimitStrongWeak.getLastUpLimitDate(),DateTimeUtil.HH_MM_SS))) {
+            return "涨停";
+        }else {
+            return "昨曾";
+        }
 
     }
 

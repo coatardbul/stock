@@ -116,6 +116,12 @@ public class StockVerifyService {
         if (new Date().compareTo(date) < 0) {
             return true;
         }
+        if(timeStr.compareTo("09:30")<0){
+            return true;
+        }
+        if(timeStr.compareTo("11:30")>0&&timeStr.compareTo("13:00")<0){
+            return true;
+        }
         return false;
     }
 

@@ -3,6 +3,7 @@ package com.coatardbul.stock.controller;
 import com.coatardbul.stock.common.annotation.WebLog;
 import com.coatardbul.stock.common.api.CommonResult;
 import com.coatardbul.stock.model.dto.StockEmotionDayDTO;
+import com.coatardbul.stock.model.dto.StockLastUpLimitDetailDTO;
 import com.coatardbul.stock.model.dto.StockStrategyQueryDTO;
 import com.coatardbul.stock.service.statistic.StockSpecialStrategyService;
 import io.swagger.annotations.Api;
@@ -59,6 +60,16 @@ public class StockSpecialStrategyController {
     @RequestMapping(path = "/getUpLimitTheme", method = RequestMethod.POST)
     public CommonResult getUpLimitTheme(@Validated @RequestBody StockStrategyQueryDTO dto) throws  NoSuchMethodException, ScriptException, FileNotFoundException {
         return CommonResult.success( stockSpecialStrategyService.getUpLimitTheme(dto));
+    }
+
+
+    /**
+     *获取昨曾，过去数据
+     */
+    @WebLog(value = "")
+    @RequestMapping(path = "/getOnceUpLimitData", method = RequestMethod.POST)
+    public CommonResult getOnceUpLimitData(@Validated @RequestBody StockLastUpLimitDetailDTO dto) throws  NoSuchMethodException, ScriptException, FileNotFoundException {
+        return CommonResult.success( stockSpecialStrategyService.getOnceUpLimitData(dto));
     }
 
 

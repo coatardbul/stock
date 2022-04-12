@@ -213,4 +213,8 @@ public class StockPredictService {
         stockTemplatePredict.setTemplatedName(templateIdMap.get(stockTemplatePredict.getTemplatedId()));
         return  stockTemplatePredict;
     }
+
+    public void deleteById(StockPredictDto dto) {
+        stockTemplatePredictMapper.deleteByPrimaryKey(dto.getId());
+    }
 }
