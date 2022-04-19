@@ -7,6 +7,7 @@ import com.coatardbul.stock.model.dto.StockLastUpLimitDetailDTO;
 import com.coatardbul.stock.model.dto.StockStrategyQueryDTO;
 import com.coatardbul.stock.service.statistic.StockSpecialStrategyService;
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
@@ -28,16 +29,14 @@ import java.io.FileNotFoundException;
  */
 @Slf4j
 @RestController
-@Api(tags = "")
+@Api(tags = "特殊策略")
 @RequestMapping("/specialStrategy")
 public class StockSpecialStrategyController {
 @Autowired
     StockSpecialStrategyService stockSpecialStrategyService;
 
-    /**
-     *获取2板以上涨停数据
-     */
-    @WebLog(value = "")
+
+    @ApiOperation("获取2板以上涨停数据")
     @RequestMapping(path = "/getUpLimitInfo", method = RequestMethod.POST)
     public CommonResult getUpLimitInfo(@Validated @RequestBody StockEmotionDayDTO dto)  {
         return CommonResult.success( stockSpecialStrategyService.getTwoAboveUpLimitInfo(dto));
@@ -62,15 +61,24 @@ public class StockSpecialStrategyController {
         return CommonResult.success( stockSpecialStrategyService.getUpLimitTheme(dto));
     }
 
-
     /**
-     *获取昨曾，过去数据
+     *早上开盘最上面的股票异动信息构建
+     * 只需要传入日期确定哪一天
      */
     @WebLog(value = "")
-    @RequestMapping(path = "/getOnceUpLimitData", method = RequestMethod.POST)
-    public CommonResult getOnceUpLimitData(@Validated @RequestBody StockLastUpLimitDetailDTO dto) throws  NoSuchMethodException, ScriptException, FileNotFoundException {
-        return CommonResult.success( stockSpecialStrategyService.getOnceUpLimitData(dto));
+    @RequestMapping(path = "/amAbOne", method = RequestMethod.POST)
+    public CommonResult amAbOne(@Validated @RequestBody StockStrategyQueryDTO dto) throws  NoSuchMethodException, ScriptException, FileNotFoundException {
+        stockSpecialStrategyService.amAbOne(dto);
+        return CommonResult.success( null);
     }
-
-
+    /**
+     *早上开盘最上面的股票异动信息构建
+     * 只需要传入日期确定哪一天
+     */
+    @WebLog(value = "")
+    @RequestMapping(path = "/amAbTwo", method = RequestMethod.POST)
+    public CommonResult amAbTwo(@Validated @RequestBody StockStrategyQueryDTO dto) throws  NoSuchMethodException, ScriptException, FileNotFoundException {
+        stockSpecialStrategyService.amAbTwo(dto);
+        return CommonResult.success( null);
+    }
 }

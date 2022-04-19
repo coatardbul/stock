@@ -62,14 +62,6 @@ public class TestController {
 
     }
 
-    /**
-     *获取昨曾，过去数据
-     */
-    @WebLog(value = "")
-    @RequestMapping(path = "/buildLastUpLimitInfo", method = RequestMethod.POST)
-    public CommonResult buildLastUpLimitInfo(@Validated @RequestBody StockLastUpLimitDetailDTO dto) throws  NoSuchMethodException, ScriptException, FileNotFoundException {
-        stockSpecialStrategyService.buildLastUpLimitInfo(dto);
-        return CommonResult.success(null);
-    }
+
 
 }

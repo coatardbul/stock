@@ -2,6 +2,8 @@ package com.coatardbul.stock.model.dto;
 
 import lombok.Data;
 
+import java.util.List;
+
 /**
  * <p>
  * Date: 2022/1/5
@@ -30,6 +32,7 @@ public class StockLastUpLimitDetailDTO {
      */
     private String endDateStr;
 
+    private List<String> plateList;
 
     /**
      *股票代码

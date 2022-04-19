@@ -1,8 +1,7 @@
 package com.coatardbul.stock.mapper;
-import org.apache.ibatis.annotations.Param;
-import java.util.List;
+import java.util.Collection;
 
-import com.coatardbul.stock.model.entity.StockOptionalPool;
+import com.coatardbul.stock.model.entity.StockOptionalPool;import org.apache.ibatis.annotations.Param;import java.util.List;
 
 public interface StockOptionalPoolMapper {
     int deleteByPrimaryKey(String id);
@@ -13,13 +12,16 @@ public interface StockOptionalPoolMapper {
 
     StockOptionalPool selectByPrimaryKey(String id);
 
-    List<StockOptionalPool> selectByAll(StockOptionalPool stockOptionalPool);
-
-StockOptionalPool selectAllByCodeAndType(@Param("code")String code,@Param("type")Integer type);
-
-
-
     int updateByPrimaryKeySelective(StockOptionalPool record);
 
     int updateByPrimaryKey(StockOptionalPool record);
+
+int deleteByPlateId(@Param("plateId")String plateId);
+
+
+
+    List<StockOptionalPool> selectAllByNameLikeAndPlateIdIn(@Param("likeName")String likeName,@Param("plateIdCollection")Collection<String> plateIdCollection);
+
+
+
 }

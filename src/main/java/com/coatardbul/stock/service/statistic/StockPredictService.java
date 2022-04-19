@@ -177,7 +177,7 @@ public class StockPredictService {
 
     }
 
-    private BigDecimal convert(Object value) {
+    public BigDecimal convert(Object value) {
         if (value instanceof Integer) {
             return new BigDecimal((Integer) value);
         }
@@ -191,6 +191,24 @@ public class StockPredictService {
             return new BigDecimal((String) value);
         }
         return (BigDecimal) value;
+    }
+
+
+    /**
+     * 获取金额
+     * @param money
+     * @return
+     */
+    public String getMoneyFormat(BigDecimal money){
+        String moneyStr="";
+        BigDecimal divide = money.divide(new BigDecimal(10000*10000), 2, BigDecimal.ROUND_HALF_DOWN);
+        if(divide.compareTo(BigDecimal.ONE)>0){
+            moneyStr=divide+"亿";
+        }else {
+            BigDecimal divide1 = money.divide(new BigDecimal(10000), 2, BigDecimal.ROUND_HALF_DOWN);
+            moneyStr=divide1+"万";
+        }
+        return  moneyStr;
     }
 
 

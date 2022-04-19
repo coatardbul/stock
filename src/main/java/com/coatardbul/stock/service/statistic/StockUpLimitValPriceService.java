@@ -10,7 +10,7 @@ import com.coatardbul.stock.feign.river.BaseServerFeign;
 import com.coatardbul.stock.feign.river.RiverServerFeign;
 import com.coatardbul.stock.mapper.StockUpLimitValPriceMapper;
 import com.coatardbul.stock.model.bo.StrategyBO;
-import com.coatardbul.stock.model.bo.UpLimitStrongWeakBO;
+import com.coatardbul.stock.model.bo.LimitStrongWeakBO;
 import com.coatardbul.stock.model.bo.UpLimitValPriceBO;
 import com.coatardbul.stock.model.dto.StockStrategyQueryDTO;
 import com.coatardbul.stock.model.dto.StockUpLimitNumDTO;
@@ -370,7 +370,7 @@ public class StockUpLimitValPriceService {
         List<String> dateIntervalList = riverRemoteService.getDateIntervalList(beginDateStr, endDateStr);
         //多线程同步策略
         CountDownLatch countDownLatch = new CountDownLatch(dateIntervalList.size());
-        List<UpLimitStrongWeakBO> strongWeakList = new ArrayList<>();
+        List<LimitStrongWeakBO> strongWeakList = new ArrayList<>();
         for (String dateStr : dateIntervalList) {
             Constant.emotionIntervalByDateThreadPool.submit(() -> {
                 StockStrategyQueryDTO strategyQueryDTO = new StockStrategyQueryDTO();
@@ -380,7 +380,7 @@ public class StockUpLimitValPriceService {
                 try {
                     StrategyBO strategy = stockStrategyService.strategy(strategyQueryDTO);
                     if (strategy.getTotalNum() > 0) {
-                        UpLimitStrongWeakBO rebuild = rebuild(strategy);
+                        LimitStrongWeakBO rebuild = rebuild(strategy);
                         strongWeakList.add(rebuild);
                     }
                 } catch (Exception e) {
@@ -402,10 +402,10 @@ public class StockUpLimitValPriceService {
         stockUpLimitValPriceMapper.updateByPrimaryKeySelective(stockUpLimitValPrice);
     }
 
-    private UpLimitStrongWeakBO rebuild(StrategyBO strategy) {
+    private LimitStrongWeakBO rebuild(StrategyBO strategy) {
         //取里面的数组信息
         JSONObject jo = (JSONObject) strategy.getData().get(0);
-        return upLimitStrongWeakService.getUpLimitStrongWeak(jo);
+        return upLimitStrongWeakService.getLimitStrongWeak(jo,"涨停明细数据");
 
     }
 
@@ -417,15 +417,15 @@ public class StockUpLimitValPriceService {
         String strongWeakArray = stockUpLimitValPrice.getStrongWeakArray();
 
         if (StringUtils.isNotBlank(strongWeakArray)) {
-            List<UpLimitStrongWeakBO> upLimitStrongWeakBOList = JsonUtil.readToValue(strongWeakArray, new TypeReference<List<UpLimitStrongWeakBO>>() {
+            List<LimitStrongWeakBO> limitStrongWeakBOList = JsonUtil.readToValue(strongWeakArray, new TypeReference<List<LimitStrongWeakBO>>() {
             });
-            upLimitStrongWeakBOList = upLimitStrongWeakBOList.stream().sorted(Comparator.comparing(UpLimitStrongWeakBO::getDateStr)).collect(Collectors.toList());
+            limitStrongWeakBOList = limitStrongWeakBOList.stream().sorted(Comparator.comparing(LimitStrongWeakBO::getDateStr)).collect(Collectors.toList());
             StringBuffer sb = new StringBuffer();
-            for (UpLimitStrongWeakBO up : upLimitStrongWeakBOList) {
+            for (LimitStrongWeakBO up : limitStrongWeakBOList) {
                 if(StringUtils.isNotBlank(dto.getDateStr())&&up.getDateStr().compareTo(dto.getDateStr())>=0){
                     continue;
                 }
-                sb.append(upLimitStrongWeakService.getUpLimitStrongWeakDescribe(up));
+                sb.append(upLimitStrongWeakService.getLimitStrongWeakDescribe(up));
                 sb.append("-------------------------------------\n");
             }
             return sb.toString();

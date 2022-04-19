@@ -11,7 +11,7 @@ import java.util.List;
 public class StockUpLimitInfoBO {
     private String themeName;
 
-    private List<UpLimitBaseInfoBO> nameList;
+    private List<LimitBaseInfoBO> nameList;
 
     private Integer num;
 

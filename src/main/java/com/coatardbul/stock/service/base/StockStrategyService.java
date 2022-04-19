@@ -6,7 +6,6 @@ import com.alibaba.fastjson.JSONObject;
 import com.coatardbul.stock.common.api.CommonResult;
 import com.coatardbul.stock.common.constants.CookieEnum;
 import com.coatardbul.stock.common.exception.BusinessException;
-import com.coatardbul.stock.common.util.DateTimeUtil;
 import com.coatardbul.stock.common.util.JsonUtil;
 import com.coatardbul.stock.common.util.ReflexUtil;
 import com.coatardbul.stock.common.util.StockStaticModuleUtil;
@@ -15,15 +14,11 @@ import com.coatardbul.stock.feign.river.RiverServerFeign;
 import com.coatardbul.stock.mapper.StockCookieMapper;
 import com.coatardbul.stock.model.bo.StrategyBO;
 import com.coatardbul.stock.model.bo.StrategyQueryBO;
-import com.coatardbul.stock.model.bo.UpLimitDetailInfo;
-import com.coatardbul.stock.model.bo.UpLimitStrongWeakBO;
 import com.coatardbul.stock.model.dto.StockStrategyQueryDTO;
 import com.coatardbul.stock.model.entity.StockCookie;
 import com.coatardbul.stock.model.entity.StockStaticTemplate;
 import com.coatardbul.stock.model.feign.StockTemplateQueryDTO;
-import com.coatardbul.stock.service.statistic.StockUpLimitValPriceService;
 import com.coatardbul.stock.service.statistic.UpLimitStrongWeakService;
-import com.fasterxml.jackson.core.type.TypeReference;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang.StringUtils;
 import org.apache.http.Header;
@@ -33,10 +28,8 @@ import org.springframework.stereotype.Service;
 
 import javax.script.ScriptException;
 import java.io.FileNotFoundException;
-import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 import java.util.stream.Collectors;
 
 /**
@@ -146,7 +139,7 @@ public class StockStrategyService {
             }
             //解析的数据信息
             JSONArray data = baseObject.getJSONArray("datas");
-            if(data==null||data.size()==0){
+            if(data==null){
                 return null;
             }
             //总数
@@ -175,7 +168,7 @@ public class StockStrategyService {
         }
     }
     private void rebuild(JSONObject jo) {
-        String upLimitStrongWeakDescribe = upLimitStrongWeakService.getUpLimitStrongWeakDescribe(jo);
+        String upLimitStrongWeakDescribe = upLimitStrongWeakService.getLimitStrongWeakDescribe(jo);
         if (StringUtils.isNotBlank(upLimitStrongWeakDescribe)) {
            jo.put("涨停强弱概览", upLimitStrongWeakDescribe);
         }

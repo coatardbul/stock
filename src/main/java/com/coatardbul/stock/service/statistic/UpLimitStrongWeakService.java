@@ -6,13 +6,13 @@ import com.coatardbul.stock.common.util.JsonUtil;
 import com.coatardbul.stock.feign.river.BaseServerFeign;
 import com.coatardbul.stock.feign.river.RiverServerFeign;
 import com.coatardbul.stock.mapper.StockUpLimitValPriceMapper;
-import com.coatardbul.stock.model.bo.UpLimitDetailInfo;
-import com.coatardbul.stock.model.bo.UpLimitStrongWeakBO;
+import com.coatardbul.stock.model.bo.DetailBaseInfoBO;
+import com.coatardbul.stock.model.bo.LimitDetailInfoBO;
+import com.coatardbul.stock.model.bo.LimitStrongWeakBO;
 import com.coatardbul.stock.service.base.StockStrategyService;
 import com.coatardbul.stock.service.romote.RiverRemoteService;
 import com.fasterxml.jackson.core.type.TypeReference;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -46,7 +46,8 @@ public class UpLimitStrongWeakService {
     StockVerifyService stockVerifyService;
     @Autowired
     StockUpLimitValPriceMapper stockUpLimitValPriceMapper;
-
+    @Autowired
+    StockPredictService stockPredictService;
 
     /**
      * 涨停分析
@@ -55,47 +56,48 @@ public class UpLimitStrongWeakService {
      * @param dateStr
      * @return
      */
-    public UpLimitStrongWeakBO getUpLimitStrongWeakInfo(List<UpLimitDetailInfo> upLimitDetailList, String dateStr) {
-        UpLimitStrongWeakBO upLimitStrongWeakBO = new UpLimitStrongWeakBO();
-        upLimitStrongWeakBO.setDateStr(dateStr);
-        upLimitStrongWeakBO.setFirstUpLimitDate(new Date(upLimitDetailList.get(0).getTime()));
+    public LimitStrongWeakBO getUpLimitStrongWeakInfo(List<LimitDetailInfoBO> upLimitDetailList, String dateStr) {
+        LimitStrongWeakBO limitStrongWeakBO = new LimitStrongWeakBO();
+        limitStrongWeakBO.setDateStr(dateStr);
+        limitStrongWeakBO.setFirstUpLimitDate(new Date(upLimitDetailList.get(0).getTime()));
         if (upLimitDetailList.get(upLimitDetailList.size() - 1).getOpenTime() != null) {
-            upLimitStrongWeakBO.setLastUpLimitDate(new Date(upLimitDetailList.get(upLimitDetailList.size() - 1).getOpenTime()));
+            limitStrongWeakBO.setLastUpLimitDate(new Date(upLimitDetailList.get(upLimitDetailList.size() - 1).getOpenTime()));
         } else {
             try {
                 Date lastTime = DateTimeUtil.parseDateStr(dateStr + " 15:00:00", DateTimeUtil.YYYY_MM_DD_HH_MM_SS);
-                upLimitStrongWeakBO.setLastUpLimitDate(lastTime);
+                limitStrongWeakBO.setLastUpLimitDate(lastTime);
             } catch (ParseException e) {
                 log.error(e.getMessage(), e);
             }
         }
         //理想时间
-        long subTime = getIdealDuration(upLimitStrongWeakBO);
-        upLimitStrongWeakBO.setIdealDuration(subTime / 1000 / 60);
-        long sumMinuter = upLimitDetailList.stream().map(UpLimitDetailInfo::getDuration).mapToLong(Long::longValue).sum() / 1000 / 60;
-        upLimitStrongWeakBO.setDuration(sumMinuter);
-        upLimitStrongWeakBO.setOpenNum(upLimitDetailList.size());
-        upLimitStrongWeakBO.setFirstVol(upLimitDetailList.get(0).getFirstVol());
-        upLimitStrongWeakBO.setHighestVol(upLimitDetailList.get(0).getHighestVol());
+        long subTime = getIdealDuration(limitStrongWeakBO);
+        limitStrongWeakBO.setIdealDuration(subTime / 1000 / 60);
+        long sumMinuter = upLimitDetailList.stream().map(LimitDetailInfoBO::getDuration).mapToLong(Long::longValue).sum() / 1000 / 60;
+        limitStrongWeakBO.setDuration(sumMinuter);
+        limitStrongWeakBO.setOpenNum(upLimitDetailList.size());
+        limitStrongWeakBO.setFirstVol(upLimitDetailList.get(0).getFirstVol());
+        limitStrongWeakBO.setHighestVol(upLimitDetailList.get(0).getHighestVol());
         //描述
-        rebuildUpLimitStrongWeakDescribe(upLimitDetailList, upLimitStrongWeakBO);
-        return upLimitStrongWeakBO;
+        rebuildUpLimitStrongWeakDescribe(upLimitDetailList, limitStrongWeakBO);
+        return limitStrongWeakBO;
     }
 
 
-    private long getIdealDuration(UpLimitStrongWeakBO upLimitStrongWeakBO) {
+
+    private long getIdealDuration(LimitStrongWeakBO limitStrongWeakBO) {
         long subTime = 0L;
         try {
-            Date amTime = DateTimeUtil.parseDateStr(upLimitStrongWeakBO.getDateStr() + " 11:30:00", DateTimeUtil.YYYY_MM_DD_HH_MM_SS);
-            Date pmtTime = DateTimeUtil.parseDateStr(upLimitStrongWeakBO.getDateStr() + " 13:00:00", DateTimeUtil.YYYY_MM_DD_HH_MM_SS);
+            Date amTime = DateTimeUtil.parseDateStr(limitStrongWeakBO.getDateStr() + " 11:30:00", DateTimeUtil.YYYY_MM_DD_HH_MM_SS);
+            Date pmtTime = DateTimeUtil.parseDateStr(limitStrongWeakBO.getDateStr() + " 13:00:00", DateTimeUtil.YYYY_MM_DD_HH_MM_SS);
 
-            if (upLimitStrongWeakBO.getLastUpLimitDate().compareTo(amTime) <= 0 || upLimitStrongWeakBO.getFirstUpLimitDate().compareTo(pmtTime) >= 0) {
-                subTime = upLimitStrongWeakBO.getLastUpLimitDate().getTime() - upLimitStrongWeakBO.getFirstUpLimitDate().getTime();
+            if (limitStrongWeakBO.getLastUpLimitDate().compareTo(amTime) <= 0 || limitStrongWeakBO.getFirstUpLimitDate().compareTo(pmtTime) >= 0) {
+                subTime = limitStrongWeakBO.getLastUpLimitDate().getTime() - limitStrongWeakBO.getFirstUpLimitDate().getTime();
             }
 
-            if (upLimitStrongWeakBO.getFirstUpLimitDate().compareTo(amTime) <= 0 && upLimitStrongWeakBO.getLastUpLimitDate().compareTo(pmtTime) >= 0) {
-                long time1 = amTime.getTime() - upLimitStrongWeakBO.getFirstUpLimitDate().getTime();
-                long time2 = upLimitStrongWeakBO.getLastUpLimitDate().getTime() - pmtTime.getTime();
+            if (limitStrongWeakBO.getFirstUpLimitDate().compareTo(amTime) <= 0 && limitStrongWeakBO.getLastUpLimitDate().compareTo(pmtTime) >= 0) {
+                long time1 = amTime.getTime() - limitStrongWeakBO.getFirstUpLimitDate().getTime();
+                long time2 = limitStrongWeakBO.getLastUpLimitDate().getTime() - pmtTime.getTime();
                 subTime = time1 + time2;
             }
         } catch (Exception e) {
@@ -109,49 +111,49 @@ public class UpLimitStrongWeakService {
      * 强弱描述重新构建
      *
      * @param upLimitDetailList
-     * @param upLimitStrongWeakBO
+     * @param limitStrongWeakBO
      */
-    private void rebuildUpLimitStrongWeakDescribe(List<UpLimitDetailInfo> upLimitDetailList, UpLimitStrongWeakBO upLimitStrongWeakBO) {
-        String firstUpLimitTimeStr = DateTimeUtil.getDateFormat(upLimitStrongWeakBO.getFirstUpLimitDate(), DateTimeUtil.HH_MM);
+    private void rebuildUpLimitStrongWeakDescribe(List<LimitDetailInfoBO> upLimitDetailList, LimitStrongWeakBO limitStrongWeakBO) {
+        String firstUpLimitTimeStr = DateTimeUtil.getDateFormat(limitStrongWeakBO.getFirstUpLimitDate(), DateTimeUtil.HH_MM);
         //封板时间早
         if (firstUpLimitTimeStr.compareTo("09:30") == 0) {
             if (upLimitDetailList.get(0).getDuration() / 1000 / 10 > 5) {
-                if (upLimitStrongWeakBO.getDuration() > 4 * 60 * 0.9) {
-                    upLimitStrongWeakBO.setStrongWeakDescribe("T字强回封");
+                if (limitStrongWeakBO.getDuration() > 4 * 60 * 0.9) {
+                    limitStrongWeakBO.setStrongWeakDescribe("T字强回封");
                 } else {
-                    upLimitStrongWeakBO.setStrongWeakDescribe("T字弱回封");
+                    limitStrongWeakBO.setStrongWeakDescribe("T字弱回封");
                 }
             }
         } else if (firstUpLimitTimeStr.compareTo("10:00") < 0) {
             if (upLimitDetailList.size() > 3) {
-                if (upLimitStrongWeakBO.getDuration() < 4 * 60 * 0.75) {
-                    upLimitStrongWeakBO.setStrongWeakDescribe("弱");
-                } else if (upLimitStrongWeakBO.getDuration() < 4 * 60 * 0.9) {
-                    upLimitStrongWeakBO.setStrongWeakDescribe("弱中带强");
+                if (limitStrongWeakBO.getDuration() < 4 * 60 * 0.75) {
+                    limitStrongWeakBO.setStrongWeakDescribe("弱");
+                } else if (limitStrongWeakBO.getDuration() < 4 * 60 * 0.9) {
+                    limitStrongWeakBO.setStrongWeakDescribe("弱中带强");
                 } else {
-                    upLimitStrongWeakBO.setStrongWeakDescribe("强势换手");
+                    limitStrongWeakBO.setStrongWeakDescribe("强势换手");
                 }
             } else if (upLimitDetailList.size() == 2) {
-                if (upLimitStrongWeakBO.getDuration() < 3 * 60) {
-                    upLimitStrongWeakBO.setStrongWeakDescribe("中偏弱");
+                if (limitStrongWeakBO.getDuration() < 3 * 60) {
+                    limitStrongWeakBO.setStrongWeakDescribe("中偏弱");
                 } else {
-                    upLimitStrongWeakBO.setStrongWeakDescribe("中");
+                    limitStrongWeakBO.setStrongWeakDescribe("中");
                 }
             } else {
-                upLimitStrongWeakBO.setStrongWeakDescribe("强");
+                limitStrongWeakBO.setStrongWeakDescribe("强");
             }
         } else if (firstUpLimitTimeStr.compareTo("11:00") < 0) {
             if (upLimitDetailList.size() == 1) {
-                upLimitStrongWeakBO.setStrongWeakDescribe("弱中带强");
+                limitStrongWeakBO.setStrongWeakDescribe("弱中带强");
             }
         } else {
-            upLimitStrongWeakBO.setStrongWeakDescribe("未知");
+            limitStrongWeakBO.setStrongWeakDescribe("未知");
 
         }
-        if (upLimitStrongWeakBO.getFirstVol() > 10 * 100 * 10000) {
-            upLimitStrongWeakBO.setStrongWeakDescribe(upLimitStrongWeakBO.getStrongWeakDescribe() + "     封单量大");
+        if (limitStrongWeakBO.getFirstVol() > 10 * 100 * 10000) {
+            limitStrongWeakBO.setStrongWeakDescribe(limitStrongWeakBO.getStrongWeakDescribe() + "     封单量大");
         } else {
-            upLimitStrongWeakBO.setStrongWeakDescribe(upLimitStrongWeakBO.getStrongWeakDescribe() + "     封单量小");
+            limitStrongWeakBO.setStrongWeakDescribe(limitStrongWeakBO.getStrongWeakDescribe() + "     封单量小");
         }
     }
 
@@ -160,15 +162,16 @@ public class UpLimitStrongWeakService {
      * 将涨停信息放到list中，并返回涨停时间
      *
      * @param jo
-     * @param upLimitDetailList
+     * @param upLimitDetailList 涨停的基础信息
+     * @param strategyColumnKey 涨停，跌停字段
      * @return YYYY-MM-DD
      */
-    private String parseUpLimitDetail(JSONObject jo, List<UpLimitDetailInfo> upLimitDetailList) {
+    private String parseUpLimitDetail(JSONObject jo, List<LimitDetailInfoBO> upLimitDetailList, String strategyColumnKey) {
         String dateStr = null;
         //取里面的数组信息
         Set<String> keys = jo.keySet();
         for (String key : keys) {
-            if (key.contains("涨停明细数据")) {
+            if (key.contains(strategyColumnKey)) {
                 try {
                     dateStr = DateTimeUtil.getDateFormat(DateTimeUtil.parseDateStr(key.trim().substring(7, 15), DateTimeUtil.YYYYMMDD), DateTimeUtil.YYYY_MM_DD);
                 } catch (ParseException e) {
@@ -176,20 +179,27 @@ public class UpLimitStrongWeakService {
                 }
                 //解析涨停数据
                 String upLimitDetailStr = (String) jo.get(key);
-                upLimitDetailList.addAll(JsonUtil.readToValue(upLimitDetailStr, new TypeReference<List<UpLimitDetailInfo>>() {
+                upLimitDetailList.addAll(JsonUtil.readToValue(upLimitDetailStr, new TypeReference<List<LimitDetailInfoBO>>() {
                 }));
             }
         }
         return dateStr;
     }
 
-    public UpLimitStrongWeakBO getUpLimitStrongWeak(JSONObject jo) {
-        UpLimitStrongWeakBO upLimitStrongWeakInfo = null;
+    /**
+     * 解析涨停，跌停信息
+     *
+     * @param jo
+     * @param strategyColumnKey
+     * @return
+     */
+    public LimitStrongWeakBO getLimitStrongWeak(JSONObject jo, String strategyColumnKey) {
+        LimitStrongWeakBO upLimitStrongWeakInfo = null;
         String dateStr = null;
         //涨停信息
-        List<UpLimitDetailInfo> upLimitDetailList = new ArrayList<>();
+        List<LimitDetailInfoBO> upLimitDetailList = new ArrayList<>();
         //解析涨停信息
-        dateStr = parseUpLimitDetail(jo, upLimitDetailList);
+        dateStr = parseUpLimitDetail(jo, upLimitDetailList, strategyColumnKey);
         if (upLimitDetailList.size() > 0) {
             //对单个涨停策略分析
             upLimitStrongWeakInfo = getUpLimitStrongWeakInfo(upLimitDetailList, dateStr);
@@ -198,38 +208,157 @@ public class UpLimitStrongWeakService {
         return upLimitStrongWeakInfo;
     }
 
+    /**
+     * 解析涨停，跌停信息
+     *
+     * @param jo
+     * @return
+     */
+    public DetailBaseInfoBO getDetailStrongWeak(JSONObject jo) {
+        DetailBaseInfoBO result=new DetailBaseInfoBO();
+        Set<String> keys = jo.keySet();
+        for (String key : keys) {
+            if (key.contains("开盘价")) {
+                result.setOpenPrice(stockPredictService.convert(jo.get(key)));
+            }
+            if (key.contains("收盘价:不复权")) {
+                result.setClosePrice(stockPredictService.convert(jo.get(key)));
+            }
+            if (key.contains("最高价:不复权")) {
+                result.setHighPrice(stockPredictService.convert(jo.get(key)));
+            }
+
+            if (key.contains("最低价:不复权")) {
+                result.setLowPrice(stockPredictService.convert(jo.get(key)));
+            }
+            if (key.contains("竞价涨幅")) {
+                result.setOpenIncreaseRate(stockPredictService.convert(jo.get(key)));
+            }
+
+            if (key.contains("最大涨幅")) {
+                result.setHighIncreaseRate(stockPredictService.convert(jo.get(key)));
+            }
+            if (key.contains("振幅")) {
+                result.setDifferenceRate(stockPredictService.convert(jo.get(key)));
+            }
+            if (key.contains("竞价金额")) {
+                result.setCallAuctionTradeAmount(stockPredictService.convert(jo.get(key)));
+            }
+            if (key.contains("成交额")) {
+                result.setTradeAmount(stockPredictService.convert(jo.get(key)));
+            }
+            if (key.contains("换手率")) {
+                result.setTurnOverRate(stockPredictService.convert(jo.get(key)));
+            }
+            if (key.contains("a股市值")) {
+                result.setMarketValue(stockPredictService.convert(jo.get(key)));
+            }
+
+        }
+        //基础价格，即昨日收盘价
+        BigDecimal basePrice = result.getHighPrice().divide(result.getHighIncreaseRate().divide(new BigDecimal(100)).add(BigDecimal.ONE),4, BigDecimal.ROUND_HALF_UP);
+        result.setCloseIncreaseRate((result.getClosePrice().subtract(basePrice)).multiply(new BigDecimal(100)).divide(basePrice,2,BigDecimal.ROUND_HALF_UP));
+        result.setLowIncreaseRate(result.getHighIncreaseRate().subtract(result.getDifferenceRate()));
+        //分析结果
+        return result;
+    }
+
 
     public String getUpLimitStrongWeakType(JSONObject jo) {
-        UpLimitStrongWeakBO upLimitStrongWeak = getUpLimitStrongWeak(jo);
+        LimitStrongWeakBO upLimitStrongWeak = getLimitStrongWeak(jo, "涨停明细数据");
 
         if (upLimitStrongWeak.getLastUpLimitDate() == null) {
             return "涨停";
         }
-        if ("15:00:00".equals(DateTimeUtil.getDateFormat(upLimitStrongWeak.getLastUpLimitDate(),DateTimeUtil.HH_MM_SS))) {
+        if ("15:00:00".equals(DateTimeUtil.getDateFormat(upLimitStrongWeak.getLastUpLimitDate(), DateTimeUtil.HH_MM_SS))) {
             return "涨停";
-        }else {
-            return "昨曾";
+        } else {
+            return "曾涨停";
         }
 
     }
 
+    public String getDownLimitStrongWeakType(JSONObject jo) {
+        LimitStrongWeakBO upLimitStrongWeak = getLimitStrongWeak(jo, "跌停明细数据");
+        if (upLimitStrongWeak.getLastUpLimitDate() == null) {
+            return "跌停";
+        }
+        if ("15:00:00".equals(DateTimeUtil.getDateFormat(upLimitStrongWeak.getLastUpLimitDate(), DateTimeUtil.HH_MM_SS))) {
+            return "跌停";
+        } else {
+            return "曾跌停";
+        }
 
-    public String getUpLimitStrongWeakDescribe(JSONObject jo) {
+    }
+
+    public String getDetailStrongWeakType(JSONObject jo) {
+        StringBuffer sb=new StringBuffer();
+        DetailBaseInfoBO detailBaseInfoBO = getDetailStrongWeak(jo);
+        if(detailBaseInfoBO.getHighIncreaseRate().compareTo(new BigDecimal(7.5))>0){
+            sb.append( "涨幅"+detailBaseInfoBO.getHighIncreaseRate().setScale(2,BigDecimal.ROUND_HALF_UP)+"%");
+        }
+        if(detailBaseInfoBO.getCloseIncreaseRate().compareTo(new BigDecimal(-7.5))<0){
+            sb.append( "跌幅"+detailBaseInfoBO.getCloseIncreaseRate().setScale(2,BigDecimal.ROUND_HALF_UP)+"%");
+        }
+        if(detailBaseInfoBO.getDifferenceRate().compareTo(new BigDecimal(15))>0){
+            sb.append( "振幅"+detailBaseInfoBO.getDifferenceRate().setScale(2,BigDecimal.ROUND_HALF_UP)+"%");
+        }
+        return sb.toString();
+
+    }
+
+
+    public String getLimitStrongWeakDescribe(JSONObject jo) {
         String upLimitStrongWeakDescribe = null;
-        UpLimitStrongWeakBO upLimitStrongWeak = getUpLimitStrongWeak(jo);
+        LimitStrongWeakBO upLimitStrongWeak = getLimitStrongWeak(jo, "涨停明细数据");
         if (upLimitStrongWeak != null) {
-            upLimitStrongWeakDescribe = getUpLimitStrongWeakDescribe(upLimitStrongWeak);
+            upLimitStrongWeakDescribe = getLimitStrongWeakDescribe(upLimitStrongWeak);
         }
         //分析结果
         return upLimitStrongWeakDescribe;
     }
 
-    public String getUpLimitStrongWeakDescribe(UpLimitStrongWeakBO up) {
+    public String getDownLimitStrongWeakDescribe(JSONObject jo) {
+        String upLimitStrongWeakDescribe = null;
+        LimitStrongWeakBO upLimitStrongWeak = getLimitStrongWeak(jo, "跌停明细数据");
+        if (upLimitStrongWeak != null) {
+            upLimitStrongWeakDescribe = getLimitStrongWeakDescribe(upLimitStrongWeak);
+        }
+        //分析结果
+        return upLimitStrongWeakDescribe;
+    }
+
+    public String getDetailStrongWeakDescribe(JSONObject jo) {
+        String upLimitStrongWeakDescribe = null;
+        DetailBaseInfoBO detailBaseInfoBO = getDetailStrongWeak(jo);
+        if (detailBaseInfoBO != null) {
+            upLimitStrongWeakDescribe = getDetailWeakDescribe(detailBaseInfoBO);
+        }
+        //分析结果
+        return upLimitStrongWeakDescribe;
+    }
+    public String getDetailWeakDescribe( DetailBaseInfoBO detailBaseInfoBO) {
+        StringBuffer sb = new StringBuffer();
+        sb.append("开盘涨幅：" + detailBaseInfoBO.getOpenIncreaseRate().setScale(2,BigDecimal.ROUND_HALF_UP)+"%------"+detailBaseInfoBO.getOpenPrice() + "\n");
+        sb.append("收盘涨幅：" + detailBaseInfoBO.getCloseIncreaseRate().setScale(2,BigDecimal.ROUND_HALF_UP)+"%------"+detailBaseInfoBO.getClosePrice()  + "\n");
+        sb.append("最高涨幅：" + detailBaseInfoBO.getHighIncreaseRate().setScale(2,BigDecimal.ROUND_HALF_UP)+"%------"+detailBaseInfoBO.getHighPrice()  + "\n");
+        sb.append("最低涨幅：" + detailBaseInfoBO.getLowIncreaseRate().setScale(2,BigDecimal.ROUND_HALF_UP)+"%------"+detailBaseInfoBO.getLowPrice()  + "\n");
+        sb.append("竞价金额：" + stockPredictService.getMoneyFormat(detailBaseInfoBO.getCallAuctionTradeAmount())  + "\n");
+        sb.append("成交额：" + stockPredictService.getMoneyFormat(detailBaseInfoBO.getTradeAmount())  + "\n");
+        sb.append("换手率：" + detailBaseInfoBO.getTurnOverRate().setScale(2,BigDecimal.ROUND_HALF_UP)  + "%\n");
+        sb.append("市值：" + stockPredictService.getMoneyFormat(detailBaseInfoBO.getMarketValue())   + "\n");
+        return sb.toString();
+    }
+
+
+
+
+    public String getLimitStrongWeakDescribe(LimitStrongWeakBO up) {
         StringBuffer sb = new StringBuffer();
         sb.append("时间：" + up.getDateStr() + "\n");
-        sb.append("首次涨停时间：" + DateTimeUtil.getDateFormat(up.getFirstUpLimitDate(), DateTimeUtil.HH_MM_SS) + "\n");
+        sb.append("首次涨跌停时间：" + DateTimeUtil.getDateFormat(up.getFirstUpLimitDate(), DateTimeUtil.HH_MM_SS) + "\n");
         if (up.getLastUpLimitDate() != null) {
-            sb.append("最后一次涨停时间：" + DateTimeUtil.getDateFormat(up.getLastUpLimitDate(), DateTimeUtil.HH_MM_SS) + "\n");
+            sb.append("最后一次涨跌停时间：" + DateTimeUtil.getDateFormat(up.getLastUpLimitDate(), DateTimeUtil.HH_MM_SS) + "\n");
             sb.append("理论封板时长：" + up.getIdealDuration() + "分钟  \n");
         }
         sb.append("封板时长：" + up.getDuration() + "分钟  \n");

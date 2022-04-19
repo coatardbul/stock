@@ -5,6 +5,7 @@ import com.coatardbul.stock.common.api.CommonResult;
 import com.coatardbul.stock.model.dto.StockCookieDTO;
 import com.coatardbul.stock.model.dto.StockStrategyQueryDTO;
 import com.coatardbul.stock.service.StockCookieService;
+import com.coatardbul.stock.service.base.StockStrategyService;
 import io.swagger.annotations.Api;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,7 +31,8 @@ public class StockCookieController {
 
     @Autowired
     StockCookieService stockCookieService;
-
+    @Autowired
+    StockStrategyService stockStrategyService;
 
     @WebLog(value = "同花顺新版问财功能cookie新增")
     @RequestMapping(path = "/add", method = RequestMethod.POST)
@@ -57,5 +59,6 @@ public class StockCookieController {
     public CommonResult findAll() {
         return CommonResult.success(stockCookieService.findAll());
     }
+
 
 }

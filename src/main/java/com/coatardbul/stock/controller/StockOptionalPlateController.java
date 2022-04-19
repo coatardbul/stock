@@ -2,12 +2,9 @@ package com.coatardbul.stock.controller;
 
 import com.coatardbul.stock.common.annotation.WebLog;
 import com.coatardbul.stock.common.api.CommonResult;
-import com.coatardbul.stock.model.dto.PlateStockAddDTO;
-import com.coatardbul.stock.model.dto.StockOptionalPoolQueryDTO;
-import com.coatardbul.stock.model.entity.StockOptionalPool;
-import com.coatardbul.stock.model.entity.StockStrategyWatch;
-import com.coatardbul.stock.service.statistic.StockOptionalPoolService;
-import com.coatardbul.stock.service.statistic.StockStrategyWatchService;
+import com.coatardbul.stock.model.dto.StockOptionalPlateQueryDTO;
+import com.coatardbul.stock.model.entity.StockOptionalPlate;
+import com.coatardbul.stock.service.statistic.StockOptionalPlateService;
 import io.swagger.annotations.Api;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,11 +27,11 @@ import java.util.List;
 @Slf4j
 @RestController
 @Api(tags = "")
-@RequestMapping("/stockOptionalPool")
-public class StockOptionalPoolController {
+@RequestMapping("/stockOptionalPlate")
+public class StockOptionalPlateController {
 
     @Autowired
-    StockOptionalPoolService stockOptionalPoolService;
+    StockOptionalPlateService stockOptionalPlateService;
     /**
      * 策略新增
      * @param dto 请求参数
@@ -42,17 +39,10 @@ public class StockOptionalPoolController {
      */
     @WebLog(value = "")
     @RequestMapping(path = "/add", method = RequestMethod.POST)
-    public CommonResult add(@Validated @RequestBody StockOptionalPool dto) {
-        stockOptionalPoolService.add(dto);
+    public CommonResult add(@Validated @RequestBody StockOptionalPlate dto) {
+        stockOptionalPlateService.add(dto);
         return CommonResult.success(null);
     }
-
-    @RequestMapping(path = "/addPlateStock", method = RequestMethod.POST)
-    public CommonResult addPlateStock(@Validated @RequestBody PlateStockAddDTO dto) {
-        stockOptionalPoolService.addPlateStock(dto);
-        return CommonResult.success(null);
-    }
-
     /**
      * 策略修改
      * @param dto 请求参数
@@ -60,8 +50,8 @@ public class StockOptionalPoolController {
      */
     @WebLog(value = "")
     @RequestMapping(path = "/modify", method = RequestMethod.POST)
-    public CommonResult modify(@Validated @RequestBody StockOptionalPool dto) {
-        stockOptionalPoolService.modify(dto);
+    public CommonResult modify(@Validated @RequestBody StockOptionalPlate dto) {
+        stockOptionalPlateService.modify(dto);
         return CommonResult.success(null);
     }
     /**
@@ -71,8 +61,8 @@ public class StockOptionalPoolController {
      */
     @WebLog(value = "")
     @RequestMapping(path = "/delete", method = RequestMethod.POST)
-    public CommonResult delete(@Validated @RequestBody StockOptionalPool dto) {
-        stockOptionalPoolService.delete(dto);
+    public CommonResult delete(@Validated @RequestBody StockOptionalPlate dto) {
+        stockOptionalPlateService.delete(dto);
         return CommonResult.success(null);
     }
 
@@ -82,8 +72,8 @@ public class StockOptionalPoolController {
      * @return
      */
     @RequestMapping(path = "/findAll", method = RequestMethod.POST)
-    public CommonResult<List<StockOptionalPool>> findAll(@RequestBody StockOptionalPoolQueryDTO dto) {
-        return CommonResult.success(stockOptionalPoolService.findAll(dto));
+    public CommonResult<List<StockOptionalPlate>> findAll(@RequestBody  StockOptionalPlateQueryDTO dto) {
+        return CommonResult.success(stockOptionalPlateService.findAll(dto));
     }
 
 }

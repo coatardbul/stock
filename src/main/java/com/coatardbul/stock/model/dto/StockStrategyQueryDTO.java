@@ -17,7 +17,10 @@ public class StockStrategyQueryDTO {
 
     private String riverStockTemplateId;
 
-
+    /**
+     * 模板标识
+     */
+    private String riverStockTemplateSign;
     /**
      * 股票脚本
      */

@@ -11,7 +11,7 @@ import lombok.Data;
  * @author Su Xiaolei
  */
 @Data
-public class UpLimitBaseInfoBO extends UpLimitStrongWeakBO{
+public class LimitBaseInfoBO extends LimitStrongWeakBO {
     private String name;
 
     private String code;

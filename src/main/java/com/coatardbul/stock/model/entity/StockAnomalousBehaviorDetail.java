@@ -3,7 +3,7 @@ package com.coatardbul.stock.model.entity;
 import lombok.Data;
 
 @Data
-public class StockUpLimitDescribe {
+public class StockAnomalousBehaviorDetail {
     private String id;
 
     private String date;

@@ -13,19 +13,9 @@ import java.util.concurrent.TimeUnit;
  * @author Su Xiaolei
  */
 public class Constant {
-    /**
-     * 当天方差，标准差线程池统计
-     */
-    public static ThreadPoolExecutor dateJobThreadPool =
-            new ThreadPoolExecutor(
-                    Runtime.getRuntime().availableProcessors(),
-                    100,
-                    30,
-                    TimeUnit.MINUTES,
-                    new ArrayBlockingQueue<Runnable>(1000));
 
 
-    public static ThreadPoolExecutor dateTimeJobThreadPool =
+    public static ThreadPoolExecutor onceUpLimitThreadPool =
             new ThreadPoolExecutor(
                     Runtime.getRuntime().availableProcessors(),
                     100,

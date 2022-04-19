@@ -79,4 +79,8 @@ public class ProxyIpService {
             return null;
         }
     }
+
+    public  List<ProxyIp> getAllIps() {
+        return proxyIpMapper.selectAll();
+    }
 }

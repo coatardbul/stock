@@ -27,4 +27,7 @@ public interface ProxyIpMapper {
     int deleteByIp(@Param("ip")String ip);
 
 
+    List<ProxyIp> selectAll();
+
+
 }

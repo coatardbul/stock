@@ -4,6 +4,7 @@ import com.coatardbul.stock.feign.river.BaseServerFeign;
 import com.coatardbul.stock.mapper.StockCookieMapper;
 import com.coatardbul.stock.model.dto.StockCookieDTO;
 import com.coatardbul.stock.model.entity.StockCookie;
+import com.coatardbul.stock.service.base.StockStrategyService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -28,7 +29,8 @@ public class StockCookieService {
     StockCookieMapper stockCookieMapper;
     @Autowired
     BaseServerFeign baseServerFeign;
-
+@Autowired
+StockStrategyService stockStrategyService;
 
     public void add(StockCookieDTO dto) {
         StockCookie convert = convert(dto);
@@ -71,6 +73,6 @@ public class StockCookieService {
 
     public void simpleModify(StockCookieDTO dto) {
         stockCookieMapper.updateCookieValue(dto.getCookie());
-
+        stockStrategyService.refreshCookie();
     }
 }

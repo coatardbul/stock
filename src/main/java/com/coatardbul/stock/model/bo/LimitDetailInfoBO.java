@@ -13,7 +13,7 @@ import java.math.BigDecimal;
  * @author Su Xiaolei
  */
 @Data
-public class UpLimitDetailInfo {
+public class LimitDetailInfoBO {
 
     private String code;
     /**

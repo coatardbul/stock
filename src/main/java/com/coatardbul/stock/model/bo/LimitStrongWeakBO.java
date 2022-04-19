@@ -13,7 +13,7 @@ import java.util.Date;
  * @author Su Xiaolei
  */
 @Data
-public class UpLimitStrongWeakBO {
+public class LimitStrongWeakBO {
 
     private String dateStr;
 

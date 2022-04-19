@@ -2,6 +2,8 @@ package com.coatardbul.stock.service.statistic;
 
 import com.coatardbul.stock.feign.river.BaseServerFeign;
 import com.coatardbul.stock.mapper.StockOptionalPoolMapper;
+import com.coatardbul.stock.model.dto.PlateStockAddDTO;
+import com.coatardbul.stock.model.dto.StockOptionalPoolQueryDTO;
 import com.coatardbul.stock.model.entity.StockOptionalPool;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,17 +22,13 @@ import java.util.List;
 @Slf4j
 @Service
 public class StockOptionalPoolService {
-@Autowired
+    @Autowired
     BaseServerFeign baseServerFeign;
-@Autowired
-StockOptionalPoolMapper stockOptionalPoolMapper;
+    @Autowired
+    StockOptionalPoolMapper stockOptionalPoolMapper;
 
     public void add(StockOptionalPool dto) {
         dto.setId(baseServerFeign.getSnowflakeId());
-        StockOptionalPool stockOptionalPool = stockOptionalPoolMapper.selectAllByCodeAndType(dto.getCode(), dto.getType());
-        if(stockOptionalPool!=null){
-            return;
-        }
         stockOptionalPoolMapper.insertSelective(dto);
     }
 
@@ -42,7 +40,21 @@ StockOptionalPoolMapper stockOptionalPoolMapper;
         stockOptionalPoolMapper.deleteByPrimaryKey(dto.getId());
     }
 
-    public List<StockOptionalPool> findAll() {
-      return   stockOptionalPoolMapper.selectByAll(null);
+    public List<StockOptionalPool> findAll(StockOptionalPoolQueryDTO dto) {
+        return stockOptionalPoolMapper.selectAllByNameLikeAndPlateIdIn(dto.getName(),dto.getPlateList());
+    }
+
+    public void addPlateStock(PlateStockAddDTO dto) {
+        List<StockOptionalPool> stockOptionalPoolList = dto.getStockOptionalPoolList();
+        for (StockOptionalPool stockOptionalPool : stockOptionalPoolList) {
+            try {
+                stockOptionalPool.setId(baseServerFeign.getSnowflakeId());
+                stockOptionalPool.setPlateId(dto.getStockOptionalPlate().getId());
+                stockOptionalPoolMapper.insertSelective(stockOptionalPool);
+            } catch (Exception e) {
+                log.error(e.getMessage(), e);
+            }
+
+        }
     }
 }
