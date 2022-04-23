@@ -19,9 +19,11 @@ import org.springframework.stereotype.Service;
 import java.math.BigDecimal;
 import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 /**
  * <p>
@@ -48,7 +50,8 @@ public class UpLimitStrongWeakService {
     StockUpLimitValPriceMapper stockUpLimitValPriceMapper;
     @Autowired
     StockPredictService stockPredictService;
-
+    @Autowired
+    StockParseAndConvertService stockParseAndConvertService;
     /**
      * 涨停分析
      *
@@ -78,6 +81,12 @@ public class UpLimitStrongWeakService {
         limitStrongWeakBO.setOpenNum(upLimitDetailList.size());
         limitStrongWeakBO.setFirstVol(upLimitDetailList.get(0).getFirstVol());
         limitStrongWeakBO.setHighestVol(upLimitDetailList.get(0).getHighestVol());
+
+        //最高量
+        List<LimitDetailInfoBO> highInfoList = upLimitDetailList.stream().sorted(Comparator.comparing(LimitDetailInfoBO::getHighestVol)).collect(Collectors.toList());
+        limitStrongWeakBO.setHighestValidVol(highInfoList.get(highInfoList.size()-1).getHighestVol());
+        limitStrongWeakBO.setFirstValidVol(highInfoList.get(highInfoList.size()-1).getFirstVol());
+
         //描述
         rebuildUpLimitStrongWeakDescribe(upLimitDetailList, limitStrongWeakBO);
         return limitStrongWeakBO;
@@ -219,39 +228,39 @@ public class UpLimitStrongWeakService {
         Set<String> keys = jo.keySet();
         for (String key : keys) {
             if (key.contains("开盘价")) {
-                result.setOpenPrice(stockPredictService.convert(jo.get(key)));
+                result.setOpenPrice(stockParseAndConvertService.convert(jo.get(key)));
             }
             if (key.contains("收盘价:不复权")) {
-                result.setClosePrice(stockPredictService.convert(jo.get(key)));
+                result.setClosePrice(stockParseAndConvertService.convert(jo.get(key)));
             }
             if (key.contains("最高价:不复权")) {
-                result.setHighPrice(stockPredictService.convert(jo.get(key)));
+                result.setHighPrice(stockParseAndConvertService.convert(jo.get(key)));
             }
 
             if (key.contains("最低价:不复权")) {
-                result.setLowPrice(stockPredictService.convert(jo.get(key)));
+                result.setLowPrice(stockParseAndConvertService.convert(jo.get(key)));
             }
             if (key.contains("竞价涨幅")) {
-                result.setOpenIncreaseRate(stockPredictService.convert(jo.get(key)));
+                result.setOpenIncreaseRate(stockParseAndConvertService.convert(jo.get(key)));
             }
 
             if (key.contains("最大涨幅")) {
-                result.setHighIncreaseRate(stockPredictService.convert(jo.get(key)));
+                result.setHighIncreaseRate(stockParseAndConvertService.convert(jo.get(key)));
             }
             if (key.contains("振幅")) {
-                result.setDifferenceRate(stockPredictService.convert(jo.get(key)));
+                result.setDifferenceRate(stockParseAndConvertService.convert(jo.get(key)));
             }
             if (key.contains("竞价金额")) {
-                result.setCallAuctionTradeAmount(stockPredictService.convert(jo.get(key)));
+                result.setCallAuctionTradeAmount(stockParseAndConvertService.convert(jo.get(key)));
             }
             if (key.contains("成交额")) {
-                result.setTradeAmount(stockPredictService.convert(jo.get(key)));
+                result.setTradeAmount(stockParseAndConvertService.convert(jo.get(key)));
             }
             if (key.contains("换手率")) {
-                result.setTurnOverRate(stockPredictService.convert(jo.get(key)));
+                result.setTurnOverRate(stockParseAndConvertService.convert(jo.get(key)));
             }
             if (key.contains("a股市值")) {
-                result.setMarketValue(stockPredictService.convert(jo.get(key)));
+                result.setMarketValue(stockParseAndConvertService.convert(jo.get(key)));
             }
 
         }
@@ -307,6 +316,36 @@ public class UpLimitStrongWeakService {
 
     }
 
+    public String getLimitStrongWeakFirstSubVolDescribe(JSONObject jo) {
+        String upLimitStrongWeakDescribe = null;
+        LimitStrongWeakBO upLimitStrongWeak = getLimitStrongWeak(jo, "涨停明细数据");
+        if (upLimitStrongWeak != null) {
+            StringBuffer sb = new StringBuffer();
+            sb.append(new BigDecimal(upLimitStrongWeak.getHighestVol()).divide(new BigDecimal(100 * 10000), 2, BigDecimal.ROUND_HALF_DOWN)
+                    .subtract(new BigDecimal(upLimitStrongWeak.getFirstVol()).divide(new BigDecimal(100 * 10000), 2, BigDecimal.ROUND_HALF_DOWN)) + "万");
+            upLimitStrongWeakDescribe = sb.toString();        }
+        //分析结果
+        return upLimitStrongWeakDescribe;
+    }
+
+    /**
+     * 有效封单差值
+     * @param jo
+     * @return
+     */
+    public String getLimitStrongWeakValidSubVolDescribe(JSONObject jo) {
+        String upLimitStrongWeakDescribe = null;
+        LimitStrongWeakBO upLimitStrongWeak = getLimitStrongWeak(jo, "涨停明细数据");
+        if (upLimitStrongWeak != null) {
+            StringBuffer sb = new StringBuffer();
+            sb.append(new BigDecimal(upLimitStrongWeak.getHighestValidVol()).divide(new BigDecimal(100 * 10000), 2, BigDecimal.ROUND_HALF_DOWN)
+                    .subtract(new BigDecimal(upLimitStrongWeak.getFirstValidVol()).divide(new BigDecimal(100 * 10000), 2, BigDecimal.ROUND_HALF_DOWN)) + "万");
+            upLimitStrongWeakDescribe = sb.toString();
+        }
+        //分析结果
+        return upLimitStrongWeakDescribe;
+    }
+
 
     public String getLimitStrongWeakDescribe(JSONObject jo) {
         String upLimitStrongWeakDescribe = null;
@@ -343,27 +382,32 @@ public class UpLimitStrongWeakService {
         sb.append("收盘涨幅：" + detailBaseInfoBO.getCloseIncreaseRate().setScale(2,BigDecimal.ROUND_HALF_UP)+"%------"+detailBaseInfoBO.getClosePrice()  + "\n");
         sb.append("最高涨幅：" + detailBaseInfoBO.getHighIncreaseRate().setScale(2,BigDecimal.ROUND_HALF_UP)+"%------"+detailBaseInfoBO.getHighPrice()  + "\n");
         sb.append("最低涨幅：" + detailBaseInfoBO.getLowIncreaseRate().setScale(2,BigDecimal.ROUND_HALF_UP)+"%------"+detailBaseInfoBO.getLowPrice()  + "\n");
-        sb.append("竞价金额：" + stockPredictService.getMoneyFormat(detailBaseInfoBO.getCallAuctionTradeAmount())  + "\n");
-        sb.append("成交额：" + stockPredictService.getMoneyFormat(detailBaseInfoBO.getTradeAmount())  + "\n");
+        sb.append("竞价金额：" + stockParseAndConvertService.getMoneyFormat(detailBaseInfoBO.getCallAuctionTradeAmount())  + "\n");
+        sb.append("成交额：" + stockParseAndConvertService.getMoneyFormat(detailBaseInfoBO.getTradeAmount())  + "\n");
         sb.append("换手率：" + detailBaseInfoBO.getTurnOverRate().setScale(2,BigDecimal.ROUND_HALF_UP)  + "%\n");
-        sb.append("市值：" + stockPredictService.getMoneyFormat(detailBaseInfoBO.getMarketValue())   + "\n");
+        sb.append("市值：" + stockParseAndConvertService.getMoneyFormat(detailBaseInfoBO.getMarketValue())   + "\n");
         return sb.toString();
     }
-
-
 
 
     public String getLimitStrongWeakDescribe(LimitStrongWeakBO up) {
         StringBuffer sb = new StringBuffer();
         sb.append("时间：" + up.getDateStr() + "\n");
-        sb.append("首次涨跌停时间：" + DateTimeUtil.getDateFormat(up.getFirstUpLimitDate(), DateTimeUtil.HH_MM_SS) + "\n");
+        sb.append("涨跌停时间：" + DateTimeUtil.getDateFormat(up.getFirstUpLimitDate(), DateTimeUtil.HH_MM_SS) + "--");
         if (up.getLastUpLimitDate() != null) {
-            sb.append("最后一次涨跌停时间：" + DateTimeUtil.getDateFormat(up.getLastUpLimitDate(), DateTimeUtil.HH_MM_SS) + "\n");
-            sb.append("理论封板时长：" + up.getIdealDuration() + "分钟  \n");
+            //涨停结束时间
+            sb.append( DateTimeUtil.getDateFormat(up.getLastUpLimitDate(), DateTimeUtil.HH_MM_SS) + "\n");
         }
-        sb.append("封板时长：" + up.getDuration() + "分钟  \n");
+        sb.append("封板时长情况：" + up.getDuration() + "/");
+        if (up.getLastUpLimitDate() != null) {
+            //理想时间
+            sb.append( up.getIdealDuration() + "分钟  ");
+        }else {
+            sb.append("分钟  ");
+        }
         try {
-            sb.append("开板时长：" + (up.getIdealDuration() - up.getDuration() - 1) + "分钟  \n");
+            //开板时长
+            sb.append("=" + (up.getIdealDuration() - up.getDuration() - 1) + "分钟  \n");
             if (up.getIdealDuration() != null) {
                 sb.append("封板比率：" + new BigDecimal(up.getDuration()).divide(new BigDecimal(up.getIdealDuration()), 2, BigDecimal.ROUND_HALF_DOWN).toString() + "  \n");
             }
@@ -371,13 +415,23 @@ public class UpLimitStrongWeakService {
 
         }
         sb.append("开板次数：" + (up.getOpenNum() - 1) + "次数\n");
-        sb.append("首次封单：" + new BigDecimal(up.getFirstVol()).divide(new BigDecimal(100 * 10000), 2, BigDecimal.ROUND_HALF_DOWN).toString() + "万   ");
-        sb.append("最高封单：" + new BigDecimal(up.getHighestVol()).divide(new BigDecimal(100 * 10000), 2, BigDecimal.ROUND_HALF_DOWN).toString() + "万  \n");
-        sb.append("封单差值：" + new BigDecimal(up.getHighestVol()).divide(new BigDecimal(100 * 10000), 2, BigDecimal.ROUND_HALF_DOWN)
+        sb.append("首次封单：" + new BigDecimal(up.getFirstVol()).divide(new BigDecimal(100 * 10000), 2, BigDecimal.ROUND_HALF_DOWN).toString() + "万");
+        sb.append("/" + new BigDecimal(up.getHighestVol()).divide(new BigDecimal(100 * 10000), 2, BigDecimal.ROUND_HALF_DOWN).toString() + "万");
+        //封单差值
+        sb.append("=" + new BigDecimal(up.getHighestVol()).divide(new BigDecimal(100 * 10000), 2, BigDecimal.ROUND_HALF_DOWN)
                 .subtract(new BigDecimal(up.getFirstVol()).divide(new BigDecimal(100 * 10000), 2, BigDecimal.ROUND_HALF_DOWN)) + "万  \n");
+
+        sb.append("有效封单：" + new BigDecimal(up.getFirstValidVol()).divide(new BigDecimal(100 * 10000), 2, BigDecimal.ROUND_HALF_DOWN).toString() + "万");
+        sb.append("/" + new BigDecimal(up.getHighestValidVol()).divide(new BigDecimal(100 * 10000), 2, BigDecimal.ROUND_HALF_DOWN).toString() + "万");
+        //封单差值
+        sb.append("=" + new BigDecimal(up.getHighestValidVol()).divide(new BigDecimal(100 * 10000), 2, BigDecimal.ROUND_HALF_DOWN)
+                .subtract(new BigDecimal(up.getFirstValidVol()).divide(new BigDecimal(100 * 10000), 2, BigDecimal.ROUND_HALF_DOWN)) + "万  \n");
+
         sb.append("评价描述：" + up.getStrongWeakDescribe() + "\n");
         return sb.toString();
     }
+
+
 
 
 }

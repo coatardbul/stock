@@ -1,18 +1,12 @@
-package com.coatardbul.stock.service;
+package com.coatardbul.stock.service.history;
 import java.math.BigDecimal;
 
-import com.coatardbul.stock.model.bo.ThsBaseInfoBO;
 import com.coatardbul.stock.model.dto.StockPriceRequestDTO;
 import com.coatardbul.stock.model.entity.StockBase;
+import com.coatardbul.stock.service.history.BaseService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang.StringUtils;
-import org.apache.http.HttpEntity;
-import org.apache.http.client.methods.CloseableHttpResponse;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.impl.client.CloseableHttpClient;
-import org.apache.http.impl.client.HttpClientBuilder;
-import org.apache.http.util.EntityUtils;
 import org.springframework.stereotype.Service;
 import javax.annotation.Resource;
 
@@ -24,7 +18,7 @@ import java.util.Map;
 
 @Service
 @Slf4j
-public class StockBaseService extends BaseService{
+public class StockBaseService extends BaseService {
 
     @Resource
     private StockBaseMapper stockBaseMapper;

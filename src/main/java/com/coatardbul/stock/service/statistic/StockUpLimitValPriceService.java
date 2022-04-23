@@ -61,18 +61,20 @@ public class StockUpLimitValPriceService {
     StockUpLimitValPriceMapper stockUpLimitValPriceMapper;
 
     @Autowired
-    UpLimitStrongWeakService  upLimitStrongWeakService;
-
+    UpLimitStrongWeakService upLimitStrongWeakService;
+    @Autowired
+    StockParseAndConvertService stockParseAndConvertService;
 
     /**
      * 量价关系
+     *
      * @param dto
      */
     public void volPriceProcess(StockValPriceDTO dto) {
         //获取量价关系的问句脚本
         String queryScript = getQueryScript();
         //策略查询
-        StockStrategyQueryDTO stockStrategyQueryDTO = buildStrategyInfo(queryScript,dto);
+        StockStrategyQueryDTO stockStrategyQueryDTO = buildStrategyInfo(queryScript, dto);
         try {
             StrategyBO strategy = stockStrategyService.strategy(stockStrategyQueryDTO);
             //动态结果解析
@@ -109,6 +111,7 @@ public class StockUpLimitValPriceService {
      * 解析策略中的涨停信息，包括竞价信息，成交信息
      * 过滤非涨停的数据
      * 合并表中数据，更新数据
+     *
      * @param strategy
      */
     private void parseStrategyProcess(StrategyBO strategy) {
@@ -117,10 +120,10 @@ public class StockUpLimitValPriceService {
         //key YYYYMMDD  value为每天的竞价信息和成交信息
         Map<String, UpLimitValPriceBO> allDateMap = new HashMap<>();
         //解析http请求
-        setUpLimitValPrice( jo, allDateMap);
+        setUpLimitValPrice(jo, allDateMap);
         //股票代码和名称
-        String code = jo.getString("code");
-        String stockName = jo.getString("股票简称");
+        String code = stockParseAndConvertService.getStockCode(jo);
+        String stockName = stockParseAndConvertService.getStockName(jo);
 
         //查询表中的信息,将表中的信息合并到总的信息里面
         mergeTableUpLimitValPrice(code, allDateMap);
@@ -202,7 +205,7 @@ public class StockUpLimitValPriceService {
      * 将表中的数据合并到http数据中
      *
      * @param code
-     * @param dateMap  http解析的量价关系数据
+     * @param dateMap http解析的量价关系数据
      */
     private void mergeTableUpLimitValPrice(String code, Map<String, UpLimitValPriceBO> dateMap) {
         StockUpLimitValPrice stockUpLimitValPriceTemp = stockUpLimitValPriceMapper.selectAllByCode(code);
@@ -230,7 +233,7 @@ public class StockUpLimitValPriceService {
      * 将http请求的涨停量价关系放到map存储
      *
      * @param jo
-     * @param dateMap  key为日期，value为每天的竞价信息和成交信息
+     * @param dateMap key为日期，value为每天的竞价信息和成交信息
      */
     private void setUpLimitValPrice(JSONObject jo, Map<String, UpLimitValPriceBO> dateMap) {
         Set<String> keys = jo.keySet();
@@ -331,7 +334,7 @@ public class StockUpLimitValPriceService {
      * @return
      */
     private StockStrategyQueryDTO buildStrategyInfo(String queryScript, StockValPriceDTO dto) {
-        StockStrategyQueryDTO stockStrategyQueryDTO=new StockStrategyQueryDTO();
+        StockStrategyQueryDTO stockStrategyQueryDTO = new StockStrategyQueryDTO();
         stockStrategyQueryDTO.setStockTemplateScript(queryScript);
         stockStrategyQueryDTO.setDateStr(dto.getDateStr());
         stockStrategyQueryDTO.setStockCode(dto.getCode());
@@ -405,7 +408,7 @@ public class StockUpLimitValPriceService {
     private LimitStrongWeakBO rebuild(StrategyBO strategy) {
         //取里面的数组信息
         JSONObject jo = (JSONObject) strategy.getData().get(0);
-        return upLimitStrongWeakService.getLimitStrongWeak(jo,"涨停明细数据");
+        return upLimitStrongWeakService.getLimitStrongWeak(jo, "涨停明细数据");
 
     }
 
@@ -422,7 +425,7 @@ public class StockUpLimitValPriceService {
             limitStrongWeakBOList = limitStrongWeakBOList.stream().sorted(Comparator.comparing(LimitStrongWeakBO::getDateStr)).collect(Collectors.toList());
             StringBuffer sb = new StringBuffer();
             for (LimitStrongWeakBO up : limitStrongWeakBOList) {
-                if(StringUtils.isNotBlank(dto.getDateStr())&&up.getDateStr().compareTo(dto.getDateStr())>=0){
+                if (StringUtils.isNotBlank(dto.getDateStr()) && up.getDateStr().compareTo(dto.getDateStr()) >= 0) {
                     continue;
                 }
                 sb.append(upLimitStrongWeakService.getLimitStrongWeakDescribe(up));
@@ -434,9 +437,9 @@ public class StockUpLimitValPriceService {
     }
 
 
-
     /**
      * 根据id和日期，将code收集起来，进行量价分析
+     *
      * @param dto
      */
     public void dayTwoAboveUpLimitVolPriceJobHandler(StockStrategyQueryDTO dto) throws ParseException {
@@ -448,13 +451,13 @@ public class StockUpLimitValPriceService {
         try {
             StrategyBO strategy = stockStrategyService.strategy(dto);
             //获取所有的code
-            codeList=getStrategyCodeInfo(strategy);
+            codeList = getStrategyCodeInfo(strategy);
         } catch (Exception e) {
             log.error(e.getMessage(), e);
         }
         //调用方法
         for (String code : codeList) {
-            StockValPriceDTO stockValPriceDTO=new StockValPriceDTO();
+            StockValPriceDTO stockValPriceDTO = new StockValPriceDTO();
             stockValPriceDTO.setCode(code);
             stockValPriceDTO.setDateStr(dto.getDateStr());
             volPriceProcess(stockValPriceDTO);
@@ -462,11 +465,11 @@ public class StockUpLimitValPriceService {
 
     }
 
-    private  List<String> getStrategyCodeInfo(StrategyBO strategy) {
+    private List<String> getStrategyCodeInfo(StrategyBO strategy) {
         List<String> codeList = new ArrayList<>();
 
         JSONArray data = strategy.getData();
-        for( Object jo :data){
+        for (Object jo : data) {
             //股票代码和名称
             String code = ((JSONObject) jo).getString("code");
             codeList.add(code);

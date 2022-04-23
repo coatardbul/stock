@@ -44,15 +44,6 @@ public class StockSpecialStrategyController {
 
 
     /**
-     *获取昨曾模式强弱信息
-     */
-    @WebLog(value = "")
-    @RequestMapping(path = "/getOnceUpLimitStrongWeakInfo", method = RequestMethod.POST)
-    public CommonResult getOnceUpLimitStrongWeakInfo(@Validated @RequestBody StockStrategyQueryDTO dto) throws  NoSuchMethodException, ScriptException, FileNotFoundException {
-        return CommonResult.success( stockSpecialStrategyService.getOnceUpLimitStrongWeakInfo(dto));
-    }
-
-    /**
      *获取涨停题材
      */
     @WebLog(value = "")
@@ -67,7 +58,7 @@ public class StockSpecialStrategyController {
      */
     @WebLog(value = "")
     @RequestMapping(path = "/amAbOne", method = RequestMethod.POST)
-    public CommonResult amAbOne(@Validated @RequestBody StockStrategyQueryDTO dto) throws  NoSuchMethodException, ScriptException, FileNotFoundException {
+    public CommonResult amAbOne(@Validated @RequestBody StockStrategyQueryDTO dto)  {
         stockSpecialStrategyService.amAbOne(dto);
         return CommonResult.success( null);
     }
@@ -77,7 +68,7 @@ public class StockSpecialStrategyController {
      */
     @WebLog(value = "")
     @RequestMapping(path = "/amAbTwo", method = RequestMethod.POST)
-    public CommonResult amAbTwo(@Validated @RequestBody StockStrategyQueryDTO dto) throws  NoSuchMethodException, ScriptException, FileNotFoundException {
+    public CommonResult amAbTwo(@Validated @RequestBody StockStrategyQueryDTO dto) {
         stockSpecialStrategyService.amAbTwo(dto);
         return CommonResult.success( null);
     }

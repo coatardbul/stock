@@ -1,4 +1,4 @@
-package com.coatardbul.stock.service;
+package com.coatardbul.stock.service.history;
 
 import com.coatardbul.stock.model.dto.StockPriceRequestDTO;
 import lombok.extern.slf4j.Slf4j;

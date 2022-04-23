@@ -1,35 +1,36 @@
-package com.coatardbul.stock.service;
+package com.coatardbul.stock.service.history;
 
 import com.coatardbul.stock.common.constants.PlateTypeEnum;
-import com.coatardbul.stock.mapper.BaseInfoDictMapper;
 import com.coatardbul.stock.model.dto.StockPriceRequestDTO;
-import com.coatardbul.stock.model.entity.BaseInfoDict;
+import com.coatardbul.stock.service.history.BaseService;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.nodes.Node;
 import org.jsoup.nodes.TextNode;
 import org.springframework.stereotype.Service;
-
 import javax.annotation.Resource;
+import com.coatardbul.stock.model.entity.BaseInfoDict;
+import com.coatardbul.stock.mapper.BaseInfoDictMapper;
+
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 @Service
-public class TerritoryBaseInfoService extends BaseService {
+public class ConceptBaseInfoService extends BaseService {
 
     @Resource
     private BaseInfoDictMapper baseInfoDictMapper;
 
     public void refreshModuleBaseInfo(StockPriceRequestDTO dto) {
-        baseInfoDictMapper.deleteByType(PlateTypeEnum.TERRITORY.getType());
+        baseInfoDictMapper.deleteByType(PlateTypeEnum.CONCEPT.getType());
         stockProcess(dto);
     }
 
     @Override
     protected String getStockUrl(String code) {
-        return "http://q.10jqka.com.cn/dy/";
+        return "http://q.10jqka.com.cn/gn/";
     }
 
     @Override
@@ -58,7 +59,7 @@ public class TerritoryBaseInfoService extends BaseService {
             }
             BaseInfoDict baseBO = new BaseInfoDict();
             String url = n.attributes().get("href");
-            baseBO.setType(PlateTypeEnum.TERRITORY.getType());
+            baseBO.setType(PlateTypeEnum.CONCEPT.getType());
             baseBO.setUrl(url);
             baseBO.setCode(url.substring(url.length() - 7, url.length() - 1));
             baseBO.setName(n.childNodes().get(0).toString());

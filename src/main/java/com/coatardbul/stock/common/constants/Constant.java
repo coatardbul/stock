@@ -23,9 +23,6 @@ public class Constant {
                     TimeUnit.MINUTES,
                     new ArrayBlockingQueue<Runnable>(1000));
 
-
-
-
     /**
      * 每日情绪统计,
      * 时间间隔存入
@@ -50,4 +47,21 @@ public class Constant {
                     TimeUnit.MINUTES,
                     new ArrayBlockingQueue<Runnable>(1000));
 
+
+
+    /**
+     * 异动数据
+     */
+    public static ThreadPoolExecutor abThreadPool =
+            new ThreadPoolExecutor(
+                    Runtime.getRuntime().availableProcessors(),
+                    100,
+                    30,
+                    TimeUnit.MINUTES,
+                    new ArrayBlockingQueue<Runnable>(1000));
+
+
+    /**
+     * 每日涨停信息，
+     */
 }

@@ -1,17 +1,12 @@
-package com.coatardbul.stock.service;
+package com.coatardbul.stock.service.history;
 
 import com.coatardbul.stock.model.bo.ThsPriceBO;
 import com.coatardbul.stock.model.bo.YearDayBO;
 import com.coatardbul.stock.model.dto.StockPriceRequestDTO;
+import com.coatardbul.stock.service.history.BaseService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang.StringUtils;
-import org.apache.http.HttpEntity;
-import org.apache.http.client.methods.CloseableHttpResponse;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.impl.client.CloseableHttpClient;
-import org.apache.http.impl.client.HttpClientBuilder;
-import org.apache.http.util.EntityUtils;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;

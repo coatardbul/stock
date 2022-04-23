@@ -172,6 +172,14 @@ public class StockStrategyService {
         if (StringUtils.isNotBlank(upLimitStrongWeakDescribe)) {
            jo.put("涨停强弱概览", upLimitStrongWeakDescribe);
         }
+        String limitStrongWeakFirstSubVolDescribe = upLimitStrongWeakService.getLimitStrongWeakFirstSubVolDescribe(jo);
+        if (StringUtils.isNotBlank(limitStrongWeakFirstSubVolDescribe)) {
+            jo.put("首次封单差值", limitStrongWeakFirstSubVolDescribe);
+        }
+        String limitStrongWeakValidSubVolDescribe = upLimitStrongWeakService.getLimitStrongWeakValidSubVolDescribe(jo);
+        if (StringUtils.isNotBlank(limitStrongWeakValidSubVolDescribe)) {
+            jo.put("有效封单差值", limitStrongWeakValidSubVolDescribe);
+        }
     }
 
     private String getStrategyResponseStr(StockStrategyQueryDTO dto) throws BusinessException, NoSuchMethodException, ScriptException, FileNotFoundException {

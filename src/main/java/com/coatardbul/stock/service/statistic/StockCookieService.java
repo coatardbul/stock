@@ -1,4 +1,4 @@
-package com.coatardbul.stock.service;
+package com.coatardbul.stock.service.statistic;
 
 import com.coatardbul.stock.feign.river.BaseServerFeign;
 import com.coatardbul.stock.mapper.StockCookieMapper;
@@ -29,8 +29,8 @@ public class StockCookieService {
     StockCookieMapper stockCookieMapper;
     @Autowired
     BaseServerFeign baseServerFeign;
-@Autowired
-StockStrategyService stockStrategyService;
+    @Autowired
+    StockStrategyService stockStrategyService;
 
     public void add(StockCookieDTO dto) {
         StockCookie convert = convert(dto);
@@ -43,11 +43,11 @@ StockStrategyService stockStrategyService;
         stockCookieMapper.updateByPrimaryKeySelective(convert);
     }
 
-    public  List<StockCookieDTO> findAll() {
+    public List<StockCookieDTO> findAll() {
         List<StockCookie> stockCookies = stockCookieMapper.selectAll();
-        if(stockCookies!=null &&stockCookies.size()>0){
-           return   stockCookies.stream().map(this::convert).collect(Collectors.toList());
-        }else {
+        if (stockCookies != null && stockCookies.size() > 0) {
+            return stockCookies.stream().map(this::convert).collect(Collectors.toList());
+        } else {
             return new ArrayList<>();
         }
     }

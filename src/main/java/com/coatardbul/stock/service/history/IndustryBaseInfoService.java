@@ -1,9 +1,10 @@
-package com.coatardbul.stock.service;
+package com.coatardbul.stock.service.history;
 
 import com.coatardbul.stock.common.constants.PlateTypeEnum;
 import com.coatardbul.stock.mapper.BaseInfoDictMapper;
 import com.coatardbul.stock.model.dto.StockPriceRequestDTO;
 import com.coatardbul.stock.model.entity.BaseInfoDict;
+import com.coatardbul.stock.service.history.BaseService;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;

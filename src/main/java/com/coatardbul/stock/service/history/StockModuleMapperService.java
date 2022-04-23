@@ -1,9 +1,10 @@
-package com.coatardbul.stock.service;
+package com.coatardbul.stock.service.history;
 
 import com.coatardbul.stock.common.constants.PlateTypeEnum;
 import com.coatardbul.stock.mapper.BaseInfoDictMapper;
 import com.coatardbul.stock.model.dto.StockPriceRequestDTO;
 import com.coatardbul.stock.model.entity.BaseInfoDict;
+import com.coatardbul.stock.service.history.BaseService;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang.StringUtils;
 import org.jsoup.Jsoup;
@@ -19,7 +20,6 @@ import com.coatardbul.stock.mapper.StockModuleMapperMapper;
 import com.coatardbul.stock.model.entity.StockModuleMapper;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;

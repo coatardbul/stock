@@ -11,8 +11,14 @@ import java.util.List;
 @Data
 public class StockUpLimitNameBO {
 
+    /**
+     * 涨停板块
+     */
     private String upLimitNum;
 
+    /**
+     * 名称List
+     */
     private List<String> nameList;
 
 }

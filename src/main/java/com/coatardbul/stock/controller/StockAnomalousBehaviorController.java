@@ -34,11 +34,11 @@ public class StockAnomalousBehaviorController {
 
 
     /**
-     *构建昨曾，过去数据
+     *构建昨曾，过去数据，补充构建
      */
     @WebLog(value = "")
     @RequestMapping(path = "/buildLastUpLimitInfo", method = RequestMethod.POST)
-    public CommonResult buildLastUpLimitInfo(@Validated @RequestBody StockLastUpLimitDetailDTO dto) throws  NoSuchMethodException, ScriptException, FileNotFoundException {
+    public CommonResult buildLastUpLimitInfo(@Validated @RequestBody StockLastUpLimitDetailDTO dto) {
         stockSpecialStrategyService.buildLastUpLimitInfo(dto);
         return CommonResult.success(null);
     }
@@ -54,15 +54,13 @@ public class StockAnomalousBehaviorController {
     }
 
     /**
-     *根据code补充数据
+     *获取过去异动数据数据
      */
     @WebLog(value = "")
-    @RequestMapping(path = "/supplementBuildLastUpLimitInfo", method = RequestMethod.POST)
-    public CommonResult supplementBuildLastUpLimitInfo(@Validated @RequestBody StockLastUpLimitDetailDTO dto)  {
-        stockSpecialStrategyService.supplementBuildLastUpLimitInfo(dto);
-        return CommonResult.success(null);
+    @RequestMapping(path = "/getAllAnomalousBehaviorData", method = RequestMethod.POST)
+    public CommonResult getAllAnomalousBehaviorData(@Validated @RequestBody StockLastUpLimitDetailDTO dto) {
+        return CommonResult.success( stockSpecialStrategyService.getAllAnomalousBehaviorData(dto));
     }
-
 
 
 
@@ -70,12 +68,11 @@ public class StockAnomalousBehaviorController {
      *获取过去异动数据数据
      */
     @WebLog(value = "")
-    @RequestMapping(path = "/getAllAnomalousBehaviorData", method = RequestMethod.POST)
-    public CommonResult getAllAnomalousBehaviorData(@Validated @RequestBody StockLastUpLimitDetailDTO dto) throws  NoSuchMethodException, ScriptException, FileNotFoundException {
-        return CommonResult.success( stockSpecialStrategyService.getAllAnomalousBehaviorData(dto));
+    @RequestMapping(path = "/deleteAnomalousBehaviorData", method = RequestMethod.POST)
+    public CommonResult deleteAnomalousBehaviorData(@Validated @RequestBody StockLastUpLimitDetailDTO dto) {
+        stockSpecialStrategyService.deleteAnomalousBehaviorData(dto);
+        return CommonResult.success( null);
     }
-
-
 
 
 }

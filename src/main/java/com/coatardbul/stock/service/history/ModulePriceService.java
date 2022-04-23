@@ -1,14 +1,14 @@
-package com.coatardbul.stock.service;
+package com.coatardbul.stock.service.history;
 
 import com.coatardbul.stock.model.bo.ModuleBaseBO;
 import com.coatardbul.stock.model.dto.StockPriceRequestDTO;
+import com.coatardbul.stock.service.history.BaseService;
 import lombok.extern.slf4j.Slf4j;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.nodes.Node;
 import org.jsoup.nodes.TextNode;
-import org.jsoup.select.Elements;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;

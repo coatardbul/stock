@@ -1,4 +1,4 @@
-package com.coatardbul.stock.service;
+package com.coatardbul.stock.service.history;
 
 import org.springframework.stereotype.Service;
 import javax.annotation.Resource;

@@ -38,12 +38,29 @@ public class LimitStrongWeakBO {
     private Long idealDuration;
 
 
+    /**
+     * 打开次数
+     */
     private Integer openNum;
 
+    /**
+     * 首次封单量
+     */
     private Long firstVol;
 
     private Long highestVol;
 
+
+    /**
+     * 有效的封单量
+     */
+    private Long firstValidVol;
+
+    private Long highestValidVol;
+
+    /**
+     * 强弱描述
+     */
     private String strongWeakDescribe;
 
 }

@@ -60,6 +60,8 @@ public class StockPredictService {
     StockVerifyService stockVerifyService;
     @Autowired
     StockTemplatePredictMapper stockTemplatePredictMapper;
+    @Autowired
+    StockParseAndConvertService stockParseAndConvertService;
 
     public void execute(StockPredictDto dto) {
         if (!StringUtils.isNotBlank(dto.getId())) {
@@ -158,57 +160,23 @@ public class StockPredictService {
                 if (key.contains(saleDateFormat) && key.contains("分时收盘价:不复权")) {
                     if (StringUtils.isNotBlank(dto.getSaleTime())) {
                         if (key.contains(dto.getSaleTime())) {
-                            addInfo.setSalePrice(convert(((JSONObject) jo).get(key)));
+                            addInfo.setSalePrice(stockParseAndConvertService.convert(((JSONObject) jo).get(key)));
                         }
                     } else {
-                        addInfo.setSalePrice(convert(((JSONObject) jo).get(key)));
+                        addInfo.setSalePrice(stockParseAndConvertService.convert(((JSONObject) jo).get(key)));
                     }
                 }
                 if (key.contains("市值")) {
-                    addInfo.setMarketValue(convert(((JSONObject) jo).get(key)));
+                    addInfo.setMarketValue(stockParseAndConvertService.convert(((JSONObject) jo).get(key)));
                 }
                 if (key.contains(dateFormat) && key.contains("收盘价:不复权")) {
-                    addInfo.setBuyPrice(convert(((JSONObject) jo).get(key)));
+                    addInfo.setBuyPrice(stockParseAndConvertService.convert(((JSONObject) jo).get(key)));
                 }
             }
             addInfo.setDetail(jo.toString());
             stockTemplatePredictMapper.insertSelective(addInfo);
         }
 
-    }
-
-    public BigDecimal convert(Object value) {
-        if (value instanceof Integer) {
-            return new BigDecimal((Integer) value);
-        }
-        if (value instanceof Long) {
-            return new BigDecimal((Long) value);
-        }
-        if (value instanceof BigDecimal) {
-            return (BigDecimal) value;
-        }
-        if (value instanceof String) {
-            return new BigDecimal((String) value);
-        }
-        return (BigDecimal) value;
-    }
-
-
-    /**
-     * 获取金额
-     * @param money
-     * @return
-     */
-    public String getMoneyFormat(BigDecimal money){
-        String moneyStr="";
-        BigDecimal divide = money.divide(new BigDecimal(10000*10000), 2, BigDecimal.ROUND_HALF_DOWN);
-        if(divide.compareTo(BigDecimal.ONE)>0){
-            moneyStr=divide+"亿";
-        }else {
-            BigDecimal divide1 = money.divide(new BigDecimal(10000), 2, BigDecimal.ROUND_HALF_DOWN);
-            moneyStr=divide1+"万";
-        }
-        return  moneyStr;
     }
 
 
@@ -218,18 +186,18 @@ public class StockPredictService {
 
         if (stockTemplatePredicts != null && stockTemplatePredicts.size() > 0) {
             Map<String, String> templateIdMap = stockTemplatePredicts.stream().collect(Collectors.toMap(StockTemplatePredict::getTemplatedId, StockTemplatePredict::getTemplatedId, (o1, o2) -> o1));
-            for (Map.Entry<String,String> entry : templateIdMap.entrySet()) {
+            for (Map.Entry<String, String> entry : templateIdMap.entrySet()) {
                 String templateName = riverRemoteService.getTemplateNameById(entry.getKey());
                 entry.setValue(templateName);
             }
-            stockTemplatePredicts= stockTemplatePredicts.stream().map(o1->convert(o1,templateIdMap)).collect(Collectors.toList());
+            stockTemplatePredicts = stockTemplatePredicts.stream().map(o1 -> convert(o1, templateIdMap)).collect(Collectors.toList());
         }
         return stockTemplatePredicts;
     }
 
-    private StockTemplatePredict convert(StockTemplatePredict stockTemplatePredict, Map<String, String> templateIdMap){
+    private StockTemplatePredict convert(StockTemplatePredict stockTemplatePredict, Map<String, String> templateIdMap) {
         stockTemplatePredict.setTemplatedName(templateIdMap.get(stockTemplatePredict.getTemplatedId()));
-        return  stockTemplatePredict;
+        return stockTemplatePredict;
     }
 
     public void deleteById(StockPredictDto dto) {

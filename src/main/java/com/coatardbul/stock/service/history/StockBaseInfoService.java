@@ -1,9 +1,10 @@
-package com.coatardbul.stock.service;
+package com.coatardbul.stock.service.history;
 
 import com.coatardbul.stock.common.constants.PlateTypeEnum;
 import com.coatardbul.stock.mapper.BaseInfoDictMapper;
 import com.coatardbul.stock.model.dto.StockPriceRequestDTO;
 import com.coatardbul.stock.model.entity.BaseInfoDict;
+import com.coatardbul.stock.service.history.BaseService;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.http.HttpEntity;
 import org.apache.http.client.methods.CloseableHttpResponse;
@@ -20,7 +21,6 @@ import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 
 @Service

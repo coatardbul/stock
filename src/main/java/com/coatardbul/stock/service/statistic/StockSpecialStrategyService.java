@@ -5,6 +5,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.coatardbul.stock.common.constants.Constant;
 import com.coatardbul.stock.common.constants.PlateEnum;
 import com.coatardbul.stock.common.constants.StockTemplateEnum;
+import com.coatardbul.stock.common.exception.BusinessException;
 import com.coatardbul.stock.feign.river.BaseServerFeign;
 import com.coatardbul.stock.mapper.StockAnomalousBehaviorDetailMapper;
 import com.coatardbul.stock.mapper.StockAnomalousBehaviorStaticMapper;
@@ -67,29 +68,38 @@ public class StockSpecialStrategyService {
     StockAnomalousBehaviorStaticMapper stockAnomalousBehaviorStaticMapper;
     @Autowired
     StockOptionalPoolMapper stockOptionalPoolMapper;
+    @Autowired
+    StockParseAndConvertService stockParseAndConvertService;
 
+    /**
+     * 两板及两板以上数据，最高到8板
+     *
+     * @param dto
+     * @return
+     */
     public List<StockUpLimitNameBO> getTwoAboveUpLimitInfo(StockEmotionDayDTO dto) {
 
         List<StockUpLimitNameBO> result = new ArrayList<>();
         CountDownLatch countDownLatch = new CountDownLatch(7);
-
         for (int i = 2; i < 9; i++) {
             final int num = i;
-            Constant.emotionIntervalByDateThreadPool.submit(() -> {
-                StockUpLimitNameBO stockUpLimitNameBO = new StockUpLimitNameBO();
-                stockUpLimitNameBO.setUpLimitNum(num + "板");
+            Constant.abThreadPool.submit(() -> {
+                //涨停脚本语句
                 String upLimitNumScript = getUpLimitNumScript(num);
                 StockStrategyQueryDTO stockStrategyQueryDTO = new StockStrategyQueryDTO();
                 stockStrategyQueryDTO.setDateStr(dto.getDateStr());
                 stockStrategyQueryDTO.setStockTemplateScript(upLimitNumScript);
                 StrategyBO strategy = null;
                 try {
+                    //策略查询
                     strategy = stockStrategyService.strategy(stockStrategyQueryDTO);
                     JSONArray data = strategy.getData();
                     List<String> nameList = new ArrayList<>();
-                    for (Object jo : data) {
-                        nameList.add(((String) ((JSONObject) jo).get("股票简称")));
+                    for (int j = 0; j < data.size(); j++) {
+                        nameList.add(stockParseAndConvertService.getStockName(data.getJSONObject(j)));
                     }
+                    StockUpLimitNameBO stockUpLimitNameBO = new StockUpLimitNameBO();
+                    stockUpLimitNameBO.setUpLimitNum(num + "板");
                     stockUpLimitNameBO.setNameList(nameList);
                     if (stockUpLimitNameBO.getNameList().size() > 0) {
                         result.add(stockUpLimitNameBO);
@@ -132,11 +142,15 @@ public class StockSpecialStrategyService {
     }
 
 
-    public StrategyBO getOnceUpLimitStrongWeakInfo(StockStrategyQueryDTO dto) throws NoSuchMethodException, ScriptException, FileNotFoundException {
-        return stockStrategyService.strategy(dto);
-    }
-
-
+    /**
+     * 涨停题材
+     *
+     * @param dto
+     * @return
+     * @throws NoSuchMethodException
+     * @throws ScriptException
+     * @throws FileNotFoundException
+     */
     public List<StockUpLimitInfoBO> getUpLimitTheme(StockStrategyQueryDTO dto) throws NoSuchMethodException, ScriptException, FileNotFoundException {
         StrategyBO strategy = stockStrategyService.strategy(dto);
         if (strategy.getTotalNum() > 0) {
@@ -146,6 +160,12 @@ public class StockSpecialStrategyService {
         return null;
     }
 
+    /**
+     * 题材相关
+     *
+     * @param data
+     * @return
+     */
     public List<StockUpLimitInfoBO> rebuildThemeInfo(JSONArray data) {
         //key 为题材名称 value为股票名称
         Map<String, List<String>> themeMap = new HashMap<>();
@@ -156,7 +176,7 @@ public class StockSpecialStrategyService {
             JSONObject jo = data.getJSONObject(i);
             //取里面的数组信息
             Set<String> keys = jo.keySet();
-            String stockName = (String) jo.get("股票简称");
+            String stockName = stockParseAndConvertService.getStockName(jo);
             LimitStrongWeakBO upLimitStrongWeak = upLimitStrongWeakService.getLimitStrongWeak(jo, "涨停明细数据");
             LimitBaseInfoBO upLimitBaseInfoBO = new LimitBaseInfoBO();
             BeanUtils.copyProperties(upLimitStrongWeak, upLimitBaseInfoBO);
@@ -206,7 +226,7 @@ public class StockSpecialStrategyService {
     }
 
     public List<StockAnomalousBehaviorDetail> getAllAnomalousBehaviorData(StockLastUpLimitDetailDTO dto) {
-        List<String> codeList = getCodeList(dto);
+        List<String> codeList = getCodeListByStrategy(dto);
         List<StockAnomalousBehaviorDetail> stockAnomalousBehaviorDetails = stockAnomalousBehaviorDetailMapper.selectAllByCodeInAndDateBetweenEqual(codeList, dto.getBeginDateStr(), dto.getEndDateStr());
         return stockAnomalousBehaviorDetails;
     }
@@ -221,45 +241,78 @@ public class StockSpecialStrategyService {
      */
     public void buildLastUpLimitInfo(StockLastUpLimitDetailDTO dto) {
         //获取code集合
-        List<String> codeList = getCodeList(dto);
+        List<String> codeList = getCodeListByStrategy(dto);
         //时间区间
         if (!StringUtils.isNotBlank(dto.getBeginDateStr()) || !StringUtils.isNotBlank(dto.getEndDateStr())) {
             dto.setEndDateStr(riverRemoteService.getSpecialDay(dto.getDateStr(), -1));
             dto.setBeginDateStr(riverRemoteService.getSpecialDay(dto.getDateStr(), -30));
         }
-
-        List<String> dateIntervalList = riverRemoteService.getDateIntervalList(dto.getBeginDateStr(), dto.getEndDateStr());
         for (String code : codeList) {
             //查询表中有的数据
             StockAnomalousBehaviorStatic stockAnomalousBehaviorStatic = stockAnomalousBehaviorStaticMapper.selectByCode(code);
-
+            //新增
             if (stockAnomalousBehaviorStatic == null) {
+                List<String> dateIntervalList = riverRemoteService.getDateIntervalList(dto.getBeginDateStr(), dto.getEndDateStr());
                 asynAddAnormalousBehaviorDetail(code, dateIntervalList);
                 //添加
                 addOrUpdateStockAnomalousBehaviorStatic(code, dateIntervalList.get(0), dateIntervalList.get(dateIntervalList.size() - 1), true);
             } else {
-                if (stockAnomalousBehaviorStatic.getEndDate().equals(dateIntervalList.get(dateIntervalList.size() - 1))) {
-                    return;
+                //更新，有日期
+                try {
+                    StockLastUpLimitDetailDTO addDateStrInfo = getAddDateInfo(dto, stockAnomalousBehaviorStatic);
+                    List<String> dateIntervalList = riverRemoteService.getDateIntervalList(addDateStrInfo.getBeginDateStr(), addDateStrInfo.getEndDateStr());
+                    asynAddAnormalousBehaviorDetail(code, dateIntervalList);
+                    //更新
+                    if(dto.getEndDateStr().compareTo(stockAnomalousBehaviorStatic.getBeginDate())<=0){
+                        addOrUpdateStockAnomalousBehaviorStatic(code, addDateStrInfo.getBeginDateStr(), stockAnomalousBehaviorStatic.getEndDate(), false);
+                    }else {
+                        addOrUpdateStockAnomalousBehaviorStatic(code, stockAnomalousBehaviorStatic.getBeginDate(), addDateStrInfo.getEndDateStr(), false);
+                    }
+                }catch (Exception e){
+                    log.error(e.getMessage(),e);
                 }
-                List<String> dateIntervalList1 = riverRemoteService.getDateIntervalList(stockAnomalousBehaviorStatic.getEndDate(), dateIntervalList.get(dateIntervalList.size() - 1));
-                asynAddAnormalousBehaviorDetail(code, dateIntervalList1);
-                //更新
-                addOrUpdateStockAnomalousBehaviorStatic(code, dateIntervalList1.get(0), dateIntervalList1.get(dateIntervalList1.size() - 1), false);
-
             }
-
         }
     }
 
 
-    private List<String> getCodeList(StockLastUpLimitDetailDTO dto) {
-        List<String> codeList = new ArrayList<>();
-        if (StringUtils.isNotBlank(dto.getRiverStockTemplateId()) && StringUtils.isNotBlank(dto.getDateStr())) {
-            codeList.addAll(getCodeList(dto.getDateStr(), dto.getRiverStockTemplateId()));
+    /**
+     * 获取过滤后的数据，传入的开始结束时间必须得与表中开始结束时间粘合
+     *
+     * @return
+     */
+    private StockLastUpLimitDetailDTO getAddDateInfo(StockLastUpLimitDetailDTO dto, StockAnomalousBehaviorStatic stockAnomalousBehaviorStatic) {
+        StockLastUpLimitDetailDTO result = new StockLastUpLimitDetailDTO();
+        if (dto.getEndDateStr().compareTo(stockAnomalousBehaviorStatic.getEndDate()) > 0) {
+            result.setBeginDateStr(stockAnomalousBehaviorStatic.getEndDate());
+            result.setEndDateStr(dto.getEndDateStr());
+        } else if (dto.getEndDateStr().compareTo(stockAnomalousBehaviorStatic.getEndDate()) == 0) {
+            if (dto.getBeginDateStr().compareTo(stockAnomalousBehaviorStatic.getBeginDate()) >= 0) {
+                throw new BusinessException("传入的日期区间在表中已经存在");
+            } else {
+                result.setBeginDateStr(dto.getBeginDateStr());
+                result.setEndDateStr(stockAnomalousBehaviorStatic.getBeginDate());
+            }
+        } else {
+            result.setBeginDateStr(dto.getBeginDateStr());
+            result.setEndDateStr(stockAnomalousBehaviorStatic.getBeginDate());
         }
+        return result;
+
+    }
+
+
+    private List<String> getCodeListByStrategy(StockLastUpLimitDetailDTO dto) {
+        List<String> codeList = new ArrayList<>();
+        //策略查询
+        if (StringUtils.isNotBlank(dto.getRiverStockTemplateId()) && StringUtils.isNotBlank(dto.getDateStr())) {
+            codeList.addAll(getCodeListByStrategy(dto.getDateStr(), dto.getRiverStockTemplateId()));
+        }
+        //单只股票
         if (StringUtils.isNotBlank(dto.getStockCode())) {
             codeList.add(dto.getStockCode());
         }
+        //自选板块
         if (dto.getPlateList() != null && dto.getPlateList().size() > 0) {
             List<StockOptionalPool> stockOptionalPools = stockOptionalPoolMapper.selectAllByNameLikeAndPlateIdIn(null, dto.getPlateList());
             if (stockOptionalPools != null && stockOptionalPools.size() > 0) {
@@ -295,9 +348,14 @@ public class StockSpecialStrategyService {
     }
 
 
+    /**
+     * 异步添加 详情的移动信息
+     * @param code
+     * @param dateStrList
+     */
     private void asynAddAnormalousBehaviorDetail(String code, List<String> dateStrList) {
         for (String dateStr : dateStrList) {
-            Constant.onceUpLimitThreadPool.submit(() -> {
+            Constant.abThreadPool.submit(() -> {
                 StockAnomalousBehaviorDetail stockAnomalousBehaviorDetail = stockAnomalousBehaviorDetailMapper.selectAllByCodeAndDate(code, dateStr);
                 if (stockAnomalousBehaviorDetail == null) {
                     addStockAnomalousBehaviorDescribe(code, dateStr);
@@ -307,7 +365,13 @@ public class StockSpecialStrategyService {
     }
 
 
-    private List<String> getCodeList(String dateStr, String riverStockTemplateId) {
+    /**
+     * 根据策略code数据
+     * @param dateStr
+     * @param riverStockTemplateId
+     * @return
+     */
+    private List<String> getCodeListByStrategy(String dateStr, String riverStockTemplateId) {
         List<String> codeList = new ArrayList<>();
         StockStrategyQueryDTO stockStrategyQueryDTO = new StockStrategyQueryDTO();
         stockStrategyQueryDTO.setDateStr(dateStr);
@@ -392,7 +456,7 @@ public class StockSpecialStrategyService {
      */
     private StockAnomalousBehaviorDetail getStockAnomalousBehaviorDetail(JSONObject jsonObject, StockTemplateEnum stockTemplateEnum) {
         StockAnomalousBehaviorDetail stockAnomalousBehaviorDetail = new StockAnomalousBehaviorDetail();
-        String stockName = jsonObject.getString("股票简称");
+        String stockName = stockParseAndConvertService.getStockName(jsonObject);
         stockAnomalousBehaviorDetail.setName(stockName);
         //描述类型
         String strongWeakType = null;
@@ -421,8 +485,12 @@ public class StockSpecialStrategyService {
     }
 
 
+    /**
+     * 强制更新
+     * @param dto
+     */
     public void forceBuildLastUpLimitInfo(StockLastUpLimitDetailDTO dto) {
-        List<String> codeList = getCodeList(dto);
+        List<String> codeList = getCodeListByStrategy(dto);
         for (String code : codeList) {
             StockLastUpLimitDetailDTO target = new StockLastUpLimitDetailDTO();
             BeanUtils.copyProperties(dto, target);
@@ -434,23 +502,12 @@ public class StockSpecialStrategyService {
 
     }
 
-    public void supplementBuildLastUpLimitInfo(StockLastUpLimitDetailDTO dto) {
-        StockAnomalousBehaviorStatic stockAnomalousBehaviorStatic = stockAnomalousBehaviorStaticMapper.selectByCode(dto.getStockCode());
-        dto.setBeginDateStr(stockAnomalousBehaviorStatic.getBeginDate());
-        dto.setEndDateStr(stockAnomalousBehaviorStatic.getEndDate());
-        List<String> dateIntervalList = riverRemoteService.getDateIntervalList(stockAnomalousBehaviorStatic.getBeginDate(), stockAnomalousBehaviorStatic.getEndDate());
-        //获取时间区间
-        List<String> codeList = new ArrayList<>();
-        if (StringUtils.isNotBlank(dto.getStockCode())) {
-            codeList.add(dto.getStockCode());
-        }
-        asynAddAnormalousBehaviorDetail(dto.getStockCode(), dateIntervalList);
-        //添加
-        addOrUpdateStockAnomalousBehaviorStatic(dto.getStockCode(), dateIntervalList.get(0), dateIntervalList.get(dateIntervalList.size() - 1), true);
-    }
 
+    /**
+     * 收盘预览中的最上面的数据
+     * @param dto
+     */
     public void amAbOne(StockStrategyQueryDTO dto) {
-
         List<String> templatedIdList = new ArrayList<>();
         templatedIdList.add(StockTemplateEnum.TWO_PLATE_HIGH_EXPECT.getId());
         templatedIdList.add(StockTemplateEnum.TWO_PLATE_QUICK_TO_UP.getId());
@@ -460,16 +517,23 @@ public class StockSpecialStrategyService {
             StockLastUpLimitDetailDTO stockLastUpLimitDetailDTO = new StockLastUpLimitDetailDTO();
             stockLastUpLimitDetailDTO.setRiverStockTemplateId(templateId);
             stockLastUpLimitDetailDTO.setDateStr(dto.getDateStr());
+            //强制更新到表中
             forceBuildLastUpLimitInfo(stockLastUpLimitDetailDTO);
-            //将code 添加到A板块
         }
+        //将code 添加到A板块
         addOptionalPoolInfo(templatedIdList, PlateEnum.AM_OPEN_LOW_LIMIT_ONE.getId(), dto.getDateStr());
     }
 
+    /**
+     * 添加自选股票信息
+     * @param templatedIdList
+     * @param plateId
+     * @param dateStr
+     */
     public void addOptionalPoolInfo(List<String> templatedIdList, String plateId, String dateStr) {
         stockOptionalPoolMapper.deleteByPlateId(plateId);
         for (String templateId : templatedIdList) {
-            Constant.emotionByDateRangeThreadPool.submit(() -> {
+            Constant.abThreadPool.submit(() -> {
                 StockStrategyQueryDTO stockStrategyQueryDTO = new StockStrategyQueryDTO();
                 stockStrategyQueryDTO.setDateStr(dateStr);
                 stockStrategyQueryDTO.setRiverStockTemplateId(templateId);
@@ -483,8 +547,8 @@ public class StockSpecialStrategyService {
                         JSONObject jsonObject = data.getJSONObject(i);
                         StockOptionalPool stockOptionalPool = new StockOptionalPool();
                         stockOptionalPool.setId(baseServerFeign.getSnowflakeId());
-                        stockOptionalPool.setCode(jsonObject.getString("code"));
-                        stockOptionalPool.setName(jsonObject.getString("股票简称"));
+                        stockOptionalPool.setCode(stockParseAndConvertService.getStockCode(jsonObject));
+                        stockOptionalPool.setName(stockParseAndConvertService.getStockName(jsonObject));
                         stockOptionalPool.setPlateId(plateId);
                         stockOptionalPoolMapper.insertSelective(stockOptionalPool);
                     }
@@ -502,9 +566,15 @@ public class StockSpecialStrategyService {
             StockLastUpLimitDetailDTO stockLastUpLimitDetailDTO = new StockLastUpLimitDetailDTO();
             stockLastUpLimitDetailDTO.setRiverStockTemplateId(templateId);
             stockLastUpLimitDetailDTO.setDateStr(dto.getDateStr());
+            //强制更新到表中
             forceBuildLastUpLimitInfo(stockLastUpLimitDetailDTO);
-            //将code 添加到A板块
         }
+        //将code 添加到A板块
         addOptionalPoolInfo(templatedIdList, PlateEnum.AM_OPEN_LOW_LIMIT_TWO.getId(), dto.getDateStr());
+    }
+
+    public void deleteAnomalousBehaviorData(StockLastUpLimitDetailDTO dto) {
+        stockAnomalousBehaviorStaticMapper.deleteByCode(dto.getStockCode());
+        stockAnomalousBehaviorDetailMapper.deleteByCode(dto.getStockCode());
     }
 }
