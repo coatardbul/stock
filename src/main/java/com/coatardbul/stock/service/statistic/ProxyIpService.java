@@ -33,6 +33,19 @@ public class ProxyIpService {
     @Autowired
     ProxyIpMapper proxyIpMapper;
 
+    public List<ProxyIp> getProxyIps() {
+        return proxyIps;
+    }
+    @Autowired
+    public void setProxyIps() {
+        Date beforeDate = DateTimeUtil.getBeforeDate(1, Calendar.MINUTE);
+        List<ProxyIp> proxyIps = proxyIpMapper.selectAllByCreateTimeGreaterThanEqualAndUseTimeLessThanEqual(beforeDate, 8);
+        this.proxyIps = proxyIps;
+    }
+
+    private  List<ProxyIp> proxyIps;
+
+
     @Autowired
     HttpService httpService;
     public void addIpProcess(ProxyIpQueryDTO dto) {
@@ -60,6 +73,7 @@ public class ProxyIpService {
                 proxyIpMapper.insertSelective(proxyIp);
             }
         }
+        setProxyIps();
     }
 
 
@@ -68,12 +82,8 @@ public class ProxyIpService {
      * @return
      */
     public HttpHost getNewProxyHttpHost(){
-        Date beforeDate = DateTimeUtil.getBeforeDate(1, Calendar.MINUTE);
-        List<ProxyIp> proxyIps = proxyIpMapper.selectAllByCreateTimeGreaterThanEqualAndUseTimeLessThanEqual(beforeDate, 8);
         if(proxyIps!=null &&proxyIps.size()>0){
             ProxyIp proxyIp = proxyIps.get(0);
-//            proxyIp.setUseTime(proxyIp.getUseTime()+1);
-//            proxyIpMapper.updateByPrimaryKey(proxyIp);
             return  new HttpHost(proxyIp.getIp(),Integer.valueOf(proxyIp.getPort()));
         }else {
             return null;
@@ -82,5 +92,11 @@ public class ProxyIpService {
 
     public  List<ProxyIp> getAllIps() {
         return proxyIpMapper.selectAll();
+    }
+
+    public void  deleteByIp(String ip){
+        proxyIpMapper.deleteByIp(ip);
+        proxyIps.remove(0);
+
     }
 }

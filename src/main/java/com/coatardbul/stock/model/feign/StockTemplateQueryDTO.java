@@ -14,6 +14,12 @@ public class StockTemplateQueryDTO {
     private String  timeStr;
 
 
+    /**
+     * 题材
+     */
+    private String themeStr;
+
+
     private String stockCode;
     /**
     * 模板名称

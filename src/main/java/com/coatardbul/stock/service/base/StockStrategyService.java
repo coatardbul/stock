@@ -73,6 +73,10 @@ public class StockStrategyService {
         }
     }
 
+    public void setCookieValue(String cookieValue) {
+        this.cookieValue = cookieValue;
+    }
+
     @Autowired
     StockCookieMapper stockCookieMapper;
 
@@ -172,6 +176,10 @@ public class StockStrategyService {
         if (StringUtils.isNotBlank(upLimitStrongWeakDescribe)) {
            jo.put("涨停强弱概览", upLimitStrongWeakDescribe);
         }
+        String limitStrongWeakRangeVolDescribe = upLimitStrongWeakService.getLimitStrongWeakRangeVolDescribe(jo);
+        if (StringUtils.isNotBlank(limitStrongWeakRangeVolDescribe)) {
+            jo.put("封单范围", limitStrongWeakRangeVolDescribe);
+        }
         String limitStrongWeakFirstSubVolDescribe = upLimitStrongWeakService.getLimitStrongWeakFirstSubVolDescribe(jo);
         if (StringUtils.isNotBlank(limitStrongWeakFirstSubVolDescribe)) {
             jo.put("首次封单差值", limitStrongWeakFirstSubVolDescribe);
@@ -179,6 +187,18 @@ public class StockStrategyService {
         String limitStrongWeakValidSubVolDescribe = upLimitStrongWeakService.getLimitStrongWeakValidSubVolDescribe(jo);
         if (StringUtils.isNotBlank(limitStrongWeakValidSubVolDescribe)) {
             jo.put("有效封单差值", limitStrongWeakValidSubVolDescribe);
+        }
+        String limitStrongWeakValidTimeRateDescribe = upLimitStrongWeakService.getLimitStrongWeakValidTimeRateDescribe(jo);
+        if (StringUtils.isNotBlank(limitStrongWeakValidTimeRateDescribe)) {
+            jo.put("封单比率", limitStrongWeakValidTimeRateDescribe);
+        }
+        String limitStrongWeakFirstUpLimitTimeDescribe = upLimitStrongWeakService.getLimitStrongWeakFirstUpLimitTimeDescribe(jo);
+        if (StringUtils.isNotBlank(limitStrongWeakFirstUpLimitTimeDescribe)) {
+            jo.put("首次涨停时间", limitStrongWeakFirstUpLimitTimeDescribe);
+        }
+        String limitStrongWeakOpenNumDescribe = upLimitStrongWeakService.getLimitStrongWeakOpenNumDescribe(jo);
+        if (StringUtils.isNotBlank(limitStrongWeakOpenNumDescribe)) {
+            jo.put("打开涨停次数", limitStrongWeakOpenNumDescribe);
         }
     }
 
@@ -240,6 +260,7 @@ public class StockStrategyService {
             stockTemplateQueryDto.setDateStr(dto.getDateStr());
             stockTemplateQueryDto.setTimeStr(dto.getTimeStr());
             stockTemplateQueryDto.setStockCode(dto.getStockCode());
+            stockTemplateQueryDto.setThemeStr(dto.getThemeStr());
             stockTemplateQueryDto.setStockScript(dto.getStockTemplateScript());
             CommonResult<String> riverServerFeignResult = riverServerFeign.getQuery(stockTemplateQueryDto);
             if (riverServerFeignResult != null) {

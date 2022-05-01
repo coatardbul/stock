@@ -1,5 +1,9 @@
 package com.coatardbul.stock.mapper;
+
+import java.util.Collection;
+
 import org.apache.ibatis.annotations.Param;
+
 import java.util.List;
 
 import com.coatardbul.stock.model.entity.StockAnomalousBehaviorStatic;
@@ -17,10 +21,14 @@ public interface StockAnomalousBehaviorStaticMapper {
 
     int updateByPrimaryKey(StockAnomalousBehaviorStatic record);
 
-    StockAnomalousBehaviorStatic selectByCode(@Param("code")String code);
+    StockAnomalousBehaviorStatic selectByCode(@Param("code") String code);
 
-    int deleteByCode(@Param("code")String code);
+    int deleteByCode(@Param("code") String code);
 
+    List<StockAnomalousBehaviorStatic> selectAll();
+
+
+    List<StockAnomalousBehaviorStatic> selectAllByCodeIn(@Param("plateIdCollection") Collection<String> plateIdCollection);
 
 
 }

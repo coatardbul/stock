@@ -43,8 +43,8 @@ import java.util.List;
 public class HttpService {
     @Autowired
     ProxyIpService proxyIpService;
-@Autowired
-    ProxyIpMapper proxyIpMapper;
+
+
     public String doGet(String url) {
 
         //创建HttpClient对象
@@ -110,7 +110,7 @@ public class HttpService {
      * @param headerList
      * @return
      */
-    public String doPost(String url, String jsonString, List<Header> headerList) throws  ConnectTimeoutException {
+    public String doPost(String url, String jsonString, List<Header> headerList) throws ConnectTimeoutException {
         return doPost(url, jsonString, headerList, true);
     }
 
@@ -124,9 +124,9 @@ public class HttpService {
         httpPost.setHeader("Content-Type", "application/json;charset=utf8");
         httpPost.setHeader("User-Agent", "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/98.0.4758.102 Safari/537.36");
         //有代理
-        HttpHost proxy=null;
+        HttpHost proxy = null;
         if (isProxy) {
-             proxy = proxyIpService.getNewProxyHttpHost();
+            proxy = proxyIpService.getNewProxyHttpHost();
             RequestConfig defaultRequestConfig = RequestConfig.custom().setConnectTimeout(4000)
                     .setProxy(proxy).build();
             httpClient = HttpClients.custom().setDefaultRequestConfig(defaultRequestConfig).build();
@@ -151,7 +151,7 @@ public class HttpService {
             response = httpClient.execute(httpPost);
             // 从响应模型中获取响应实体
             HttpEntity responseEntity = response.getEntity();
-            log.info(httpPost.toString() + "响应状态为:" + response.getStatusLine());
+            log.info("结果响应："+httpPost.toString() + "响应状态为:" + response.getStatusLine());
             if (responseEntity != null) {
 //                log.info("响应内容长度为:" + responseEntity.getContentLength());
                 String responseStr = EntityUtils.toString(responseEntity);
@@ -160,7 +160,7 @@ public class HttpService {
             }
         } catch (ConnectTimeoutException | HttpHostConnectException e) {
             //删除当前ip，重试
-            proxyIpMapper.deleteByIp(proxy.getHostName());
+            proxyIpService.deleteByIp(proxy.getHostName());
             throw new ConnectTimeoutException("连接超时");
         } catch (IOException e) {
             log.error(e.getMessage(), e);

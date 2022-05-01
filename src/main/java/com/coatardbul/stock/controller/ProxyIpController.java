@@ -55,4 +55,10 @@ public class ProxyIpController {
         return CommonResult.success(  proxyIpService.getAllIps());
     }
 
+    @ApiOperation("获取所有cache ip信息")
+    @RequestMapping(path = "/getAllCacheIps", method = RequestMethod.POST)
+    public CommonResult<List<ProxyIp>> getAllCacheIps() {
+        return CommonResult.success(  proxyIpService.getProxyIps());
+    }
+
 }

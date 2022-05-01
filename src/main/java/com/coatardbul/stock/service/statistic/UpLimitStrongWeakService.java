@@ -52,6 +52,7 @@ public class UpLimitStrongWeakService {
     StockPredictService stockPredictService;
     @Autowired
     StockParseAndConvertService stockParseAndConvertService;
+
     /**
      * 涨停分析
      *
@@ -84,14 +85,13 @@ public class UpLimitStrongWeakService {
 
         //最高量
         List<LimitDetailInfoBO> highInfoList = upLimitDetailList.stream().sorted(Comparator.comparing(LimitDetailInfoBO::getHighestVol)).collect(Collectors.toList());
-        limitStrongWeakBO.setHighestValidVol(highInfoList.get(highInfoList.size()-1).getHighestVol());
-        limitStrongWeakBO.setFirstValidVol(highInfoList.get(highInfoList.size()-1).getFirstVol());
+        limitStrongWeakBO.setHighestValidVol(highInfoList.get(highInfoList.size() - 1).getHighestVol());
+        limitStrongWeakBO.setFirstValidVol(highInfoList.get(highInfoList.size() - 1).getFirstVol());
 
         //描述
         rebuildUpLimitStrongWeakDescribe(upLimitDetailList, limitStrongWeakBO);
         return limitStrongWeakBO;
     }
-
 
 
     private long getIdealDuration(LimitStrongWeakBO limitStrongWeakBO) {
@@ -224,7 +224,7 @@ public class UpLimitStrongWeakService {
      * @return
      */
     public DetailBaseInfoBO getDetailStrongWeak(JSONObject jo) {
-        DetailBaseInfoBO result=new DetailBaseInfoBO();
+        DetailBaseInfoBO result = new DetailBaseInfoBO();
         Set<String> keys = jo.keySet();
         for (String key : keys) {
             if (key.contains("开盘价")) {
@@ -265,8 +265,8 @@ public class UpLimitStrongWeakService {
 
         }
         //基础价格，即昨日收盘价
-        BigDecimal basePrice = result.getHighPrice().divide(result.getHighIncreaseRate().divide(new BigDecimal(100)).add(BigDecimal.ONE),4, BigDecimal.ROUND_HALF_UP);
-        result.setCloseIncreaseRate((result.getClosePrice().subtract(basePrice)).multiply(new BigDecimal(100)).divide(basePrice,2,BigDecimal.ROUND_HALF_UP));
+        BigDecimal basePrice = result.getHighPrice().divide(result.getHighIncreaseRate().divide(new BigDecimal(100)).add(BigDecimal.ONE), 4, BigDecimal.ROUND_HALF_UP);
+        result.setCloseIncreaseRate((result.getClosePrice().subtract(basePrice)).multiply(new BigDecimal(100)).divide(basePrice, 2, BigDecimal.ROUND_HALF_UP));
         result.setLowIncreaseRate(result.getHighIncreaseRate().subtract(result.getDifferenceRate()));
         //分析结果
         return result;
@@ -301,16 +301,16 @@ public class UpLimitStrongWeakService {
     }
 
     public String getDetailStrongWeakType(JSONObject jo) {
-        StringBuffer sb=new StringBuffer();
+        StringBuffer sb = new StringBuffer();
         DetailBaseInfoBO detailBaseInfoBO = getDetailStrongWeak(jo);
-        if(detailBaseInfoBO.getHighIncreaseRate().compareTo(new BigDecimal(7.5))>0){
-            sb.append( "涨幅"+detailBaseInfoBO.getHighIncreaseRate().setScale(2,BigDecimal.ROUND_HALF_UP)+"%");
+        if (detailBaseInfoBO.getHighIncreaseRate().compareTo(new BigDecimal(7.5)) > 0) {
+            sb.append("涨幅" + detailBaseInfoBO.getHighIncreaseRate().setScale(2, BigDecimal.ROUND_HALF_UP) + "%");
         }
-        if(detailBaseInfoBO.getCloseIncreaseRate().compareTo(new BigDecimal(-7.5))<0){
-            sb.append( "跌幅"+detailBaseInfoBO.getCloseIncreaseRate().setScale(2,BigDecimal.ROUND_HALF_UP)+"%");
+        if (detailBaseInfoBO.getCloseIncreaseRate().compareTo(new BigDecimal(-7.5)) < 0) {
+            sb.append("跌幅" + detailBaseInfoBO.getCloseIncreaseRate().setScale(2, BigDecimal.ROUND_HALF_UP) + "%");
         }
-        if(detailBaseInfoBO.getDifferenceRate().compareTo(new BigDecimal(15))>0){
-            sb.append( "振幅"+detailBaseInfoBO.getDifferenceRate().setScale(2,BigDecimal.ROUND_HALF_UP)+"%");
+        if (detailBaseInfoBO.getDifferenceRate().compareTo(new BigDecimal(15)) > 0) {
+            sb.append("振幅" + detailBaseInfoBO.getDifferenceRate().setScale(2, BigDecimal.ROUND_HALF_UP) + "%");
         }
         return sb.toString();
 
@@ -323,13 +323,28 @@ public class UpLimitStrongWeakService {
             StringBuffer sb = new StringBuffer();
             sb.append(new BigDecimal(upLimitStrongWeak.getHighestVol()).divide(new BigDecimal(100 * 10000), 2, BigDecimal.ROUND_HALF_DOWN)
                     .subtract(new BigDecimal(upLimitStrongWeak.getFirstVol()).divide(new BigDecimal(100 * 10000), 2, BigDecimal.ROUND_HALF_DOWN)) + "万");
-            upLimitStrongWeakDescribe = sb.toString();        }
+            upLimitStrongWeakDescribe = sb.toString();
+        }
+        //分析结果
+        return upLimitStrongWeakDescribe;
+    }
+
+    public String getLimitStrongWeakRangeVolDescribe(JSONObject jo) {
+        String upLimitStrongWeakDescribe = null;
+        LimitStrongWeakBO upLimitStrongWeak = getLimitStrongWeak(jo, "涨停明细数据");
+        if (upLimitStrongWeak != null) {
+            StringBuffer sb = new StringBuffer();
+            sb.append(new BigDecimal(upLimitStrongWeak.getFirstVol()).divide(new BigDecimal(100 * 10000), 2, BigDecimal.ROUND_HALF_DOWN) + "万--" +
+                    (new BigDecimal(upLimitStrongWeak.getHighestVol()).divide(new BigDecimal(100 * 10000), 2, BigDecimal.ROUND_HALF_DOWN)) + "万");
+            upLimitStrongWeakDescribe = sb.toString();
+        }
         //分析结果
         return upLimitStrongWeakDescribe;
     }
 
     /**
      * 有效封单差值
+     *
      * @param jo
      * @return
      */
@@ -340,6 +355,64 @@ public class UpLimitStrongWeakService {
             StringBuffer sb = new StringBuffer();
             sb.append(new BigDecimal(upLimitStrongWeak.getHighestValidVol()).divide(new BigDecimal(100 * 10000), 2, BigDecimal.ROUND_HALF_DOWN)
                     .subtract(new BigDecimal(upLimitStrongWeak.getFirstValidVol()).divide(new BigDecimal(100 * 10000), 2, BigDecimal.ROUND_HALF_DOWN)) + "万");
+            upLimitStrongWeakDescribe = sb.toString();
+        }
+        //分析结果
+        return upLimitStrongWeakDescribe;
+    }
+
+    /**
+     * 封单比率
+     *
+     * @param jo
+     * @return
+     */
+    public String getLimitStrongWeakValidTimeRateDescribe(JSONObject jo) {
+        String upLimitStrongWeakDescribe = null;
+        LimitStrongWeakBO upLimitStrongWeak = getLimitStrongWeak(jo, "涨停明细数据");
+        if (upLimitStrongWeak != null) {
+            StringBuffer sb = new StringBuffer();
+            if (upLimitStrongWeak.getIdealDuration().compareTo(0L) == 0) {
+                sb.append("0");
+            } else {
+                sb.append(new BigDecimal(upLimitStrongWeak.getDuration()).divide(new BigDecimal(upLimitStrongWeak.getIdealDuration()), 2, BigDecimal.ROUND_HALF_DOWN));
+            }
+            upLimitStrongWeakDescribe = sb.toString();
+        }
+        //分析结果
+        return upLimitStrongWeakDescribe;
+    }
+
+    /**
+     * 首次涨停时间
+     *
+     * @param jo
+     * @return
+     */
+    public String getLimitStrongWeakFirstUpLimitTimeDescribe(JSONObject jo) {
+        String upLimitStrongWeakDescribe = null;
+        LimitStrongWeakBO upLimitStrongWeak = getLimitStrongWeak(jo, "涨停明细数据");
+        if (upLimitStrongWeak != null) {
+            StringBuffer sb = new StringBuffer();
+            sb.append(DateTimeUtil.getDateFormat(upLimitStrongWeak.getFirstUpLimitDate(), DateTimeUtil.HH_MM_SS));
+            upLimitStrongWeakDescribe = sb.toString();
+        }
+        //分析结果
+        return upLimitStrongWeakDescribe;
+    }
+
+    /**
+     * 打开涨停次数
+     *
+     * @param jo
+     * @return
+     */
+    public String getLimitStrongWeakOpenNumDescribe(JSONObject jo) {
+        String upLimitStrongWeakDescribe = null;
+        LimitStrongWeakBO upLimitStrongWeak = getLimitStrongWeak(jo, "涨停明细数据");
+        if (upLimitStrongWeak != null) {
+            StringBuffer sb = new StringBuffer();
+            sb.append(upLimitStrongWeak.getOpenNum() - 1);
             upLimitStrongWeakDescribe = sb.toString();
         }
         //分析结果
@@ -376,16 +449,17 @@ public class UpLimitStrongWeakService {
         //分析结果
         return upLimitStrongWeakDescribe;
     }
-    public String getDetailWeakDescribe( DetailBaseInfoBO detailBaseInfoBO) {
+
+    public String getDetailWeakDescribe(DetailBaseInfoBO detailBaseInfoBO) {
         StringBuffer sb = new StringBuffer();
-        sb.append("开盘涨幅：" + detailBaseInfoBO.getOpenIncreaseRate().setScale(2,BigDecimal.ROUND_HALF_UP)+"%------"+detailBaseInfoBO.getOpenPrice() + "\n");
-        sb.append("收盘涨幅：" + detailBaseInfoBO.getCloseIncreaseRate().setScale(2,BigDecimal.ROUND_HALF_UP)+"%------"+detailBaseInfoBO.getClosePrice()  + "\n");
-        sb.append("最高涨幅：" + detailBaseInfoBO.getHighIncreaseRate().setScale(2,BigDecimal.ROUND_HALF_UP)+"%------"+detailBaseInfoBO.getHighPrice()  + "\n");
-        sb.append("最低涨幅：" + detailBaseInfoBO.getLowIncreaseRate().setScale(2,BigDecimal.ROUND_HALF_UP)+"%------"+detailBaseInfoBO.getLowPrice()  + "\n");
-        sb.append("竞价金额：" + stockParseAndConvertService.getMoneyFormat(detailBaseInfoBO.getCallAuctionTradeAmount())  + "\n");
-        sb.append("成交额：" + stockParseAndConvertService.getMoneyFormat(detailBaseInfoBO.getTradeAmount())  + "\n");
-        sb.append("换手率：" + detailBaseInfoBO.getTurnOverRate().setScale(2,BigDecimal.ROUND_HALF_UP)  + "%\n");
-        sb.append("市值：" + stockParseAndConvertService.getMoneyFormat(detailBaseInfoBO.getMarketValue())   + "\n");
+        sb.append("开盘涨幅：" + detailBaseInfoBO.getOpenIncreaseRate().setScale(2, BigDecimal.ROUND_HALF_UP) + "%------" + detailBaseInfoBO.getOpenPrice() + "\n");
+        sb.append("收盘涨幅：" + detailBaseInfoBO.getCloseIncreaseRate().setScale(2, BigDecimal.ROUND_HALF_UP) + "%------" + detailBaseInfoBO.getClosePrice() + "\n");
+        sb.append("最高涨幅：" + detailBaseInfoBO.getHighIncreaseRate().setScale(2, BigDecimal.ROUND_HALF_UP) + "%------" + detailBaseInfoBO.getHighPrice() + "\n");
+        sb.append("最低涨幅：" + detailBaseInfoBO.getLowIncreaseRate().setScale(2, BigDecimal.ROUND_HALF_UP) + "%------" + detailBaseInfoBO.getLowPrice() + "\n");
+        sb.append("竞价金额：" + stockParseAndConvertService.getMoneyFormat(detailBaseInfoBO.getCallAuctionTradeAmount()) + "\n");
+        sb.append("成交额：" + stockParseAndConvertService.getMoneyFormat(detailBaseInfoBO.getTradeAmount()) + "\n");
+        sb.append("换手率：" + detailBaseInfoBO.getTurnOverRate().setScale(2, BigDecimal.ROUND_HALF_UP) + "%\n");
+        sb.append("市值：" + stockParseAndConvertService.getMoneyFormat(detailBaseInfoBO.getMarketValue()) + "\n");
         return sb.toString();
     }
 
@@ -396,13 +470,13 @@ public class UpLimitStrongWeakService {
         sb.append("涨跌停时间：" + DateTimeUtil.getDateFormat(up.getFirstUpLimitDate(), DateTimeUtil.HH_MM_SS) + "--");
         if (up.getLastUpLimitDate() != null) {
             //涨停结束时间
-            sb.append( DateTimeUtil.getDateFormat(up.getLastUpLimitDate(), DateTimeUtil.HH_MM_SS) + "\n");
+            sb.append(DateTimeUtil.getDateFormat(up.getLastUpLimitDate(), DateTimeUtil.HH_MM_SS) + "\n");
         }
         sb.append("封板时长情况：" + up.getDuration() + "/");
         if (up.getLastUpLimitDate() != null) {
             //理想时间
-            sb.append( up.getIdealDuration() + "分钟  ");
-        }else {
+            sb.append(up.getIdealDuration() + "分钟  ");
+        } else {
             sb.append("分钟  ");
         }
         try {
@@ -430,8 +504,6 @@ public class UpLimitStrongWeakService {
         sb.append("评价描述：" + up.getStrongWeakDescribe() + "\n");
         return sb.toString();
     }
-
-
 
 
 }

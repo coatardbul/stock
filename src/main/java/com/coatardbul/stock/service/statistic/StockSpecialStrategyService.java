@@ -577,4 +577,13 @@ public class StockSpecialStrategyService {
         stockAnomalousBehaviorStaticMapper.deleteByCode(dto.getStockCode());
         stockAnomalousBehaviorDetailMapper.deleteByCode(dto.getStockCode());
     }
+
+
+    public  List<StockAnomalousBehaviorStatic> getAbStatic(StockLastUpLimitDetailDTO dto) {
+        //根据板块查询
+        if(dto.getPlateList()!=null &&dto.getPlateList().size()>0){
+            return stockAnomalousBehaviorStaticMapper.selectAllByCodeIn(dto.getPlateList());
+        }
+       return stockAnomalousBehaviorStaticMapper.selectAll();
+    }
 }

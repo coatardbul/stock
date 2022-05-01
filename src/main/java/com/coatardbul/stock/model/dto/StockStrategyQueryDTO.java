@@ -31,6 +31,11 @@ public class StockStrategyQueryDTO {
     private String dateStr;
 
     /**
+     * 题材
+     */
+    private String themeStr;
+
+    /**
      * HH:MM
      */
     private String timeStr;
