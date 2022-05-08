@@ -39,6 +39,9 @@ public class StockParseAndConvertService {
      */
     public String getMoneyFormat(BigDecimal money){
         String moneyStr="";
+        if(money==null){
+            return "null";
+        }
         BigDecimal divide = money.divide(new BigDecimal(10000*10000), 2, BigDecimal.ROUND_HALF_DOWN);
         if(divide.compareTo(BigDecimal.ONE)>0){
             moneyStr=divide+"亿";
@@ -48,7 +51,14 @@ public class StockParseAndConvertService {
         }
         return  moneyStr;
     }
-
+    public String getIncreaseRateFormat(BigDecimal increaseRate){
+        String increaseRateFormat="";
+        if(increaseRate==null){
+            return "null";
+        }
+        increaseRateFormat= increaseRate.setScale(2, BigDecimal.ROUND_HALF_UP)+"%";
+        return  increaseRateFormat;
+    }
 
     /**
      * 转换金额

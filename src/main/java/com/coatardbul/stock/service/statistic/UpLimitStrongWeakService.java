@@ -9,6 +9,7 @@ import com.coatardbul.stock.mapper.StockUpLimitValPriceMapper;
 import com.coatardbul.stock.model.bo.DetailBaseInfoBO;
 import com.coatardbul.stock.model.bo.LimitDetailInfoBO;
 import com.coatardbul.stock.model.bo.LimitStrongWeakBO;
+import com.coatardbul.stock.model.bo.UpLimitValPriceBO;
 import com.coatardbul.stock.service.base.StockStrategyService;
 import com.coatardbul.stock.service.romote.RiverRemoteService;
 import com.fasterxml.jackson.core.type.TypeReference;
@@ -424,7 +425,7 @@ public class UpLimitStrongWeakService {
         String upLimitStrongWeakDescribe = null;
         LimitStrongWeakBO upLimitStrongWeak = getLimitStrongWeak(jo, "涨停明细数据");
         if (upLimitStrongWeak != null) {
-            upLimitStrongWeakDescribe = getLimitStrongWeakDescribe(upLimitStrongWeak);
+            upLimitStrongWeakDescribe = getLimitStrongWeakDescribe(upLimitStrongWeak,jo);
         }
         //分析结果
         return upLimitStrongWeakDescribe;
@@ -434,7 +435,7 @@ public class UpLimitStrongWeakService {
         String upLimitStrongWeakDescribe = null;
         LimitStrongWeakBO upLimitStrongWeak = getLimitStrongWeak(jo, "跌停明细数据");
         if (upLimitStrongWeak != null) {
-            upLimitStrongWeakDescribe = getLimitStrongWeakDescribe(upLimitStrongWeak);
+            upLimitStrongWeakDescribe = getLimitStrongWeakDescribe(upLimitStrongWeak,jo);
         }
         //分析结果
         return upLimitStrongWeakDescribe;
@@ -506,4 +507,50 @@ public class UpLimitStrongWeakService {
     }
 
 
+    public String getLimitStrongWeakDescribe(LimitStrongWeakBO up, JSONObject jo) {
+        String result = getLimitStrongWeakDescribe(up);
+        StringBuffer sb = new StringBuffer();
+        sb.append(result);
+        String dateStr = up.getDateStr();
+        String replaceDateStr = dateStr.replace("-", "");
+
+        UpLimitValPriceBO callAuctionUpLimitInfo = getCallAuctionUpLimitInfo(jo, replaceDateStr);
+        String callAuctionUpLimitInfoDescribe = getCallAuctionUpLimitInfoDescribe(callAuctionUpLimitInfo);
+        sb.append(callAuctionUpLimitInfoDescribe);
+        return sb.toString();
+    }
+
+    private UpLimitValPriceBO getCallAuctionUpLimitInfo(JSONObject jo, String replaceDateStr) {
+        UpLimitValPriceBO upLimitValPriceBO=new UpLimitValPriceBO();
+        for (String key : jo.keySet()) {
+            if (key.contains("竞价涨幅") && key.contains(replaceDateStr)) {
+                upLimitValPriceBO.setCallAuctionIncreaseRate(stockParseAndConvertService.convert(jo.get(key)));
+            }
+            if (key.contains("竞价金额") && key.contains(replaceDateStr)&& !key.contains("{/}")) {
+                upLimitValPriceBO.setCallAuctionTradeAmount(stockParseAndConvertService.convert(jo.get(key)));
+            }
+            if (key.contains("分时换手率") && key.contains(replaceDateStr)) {
+                upLimitValPriceBO.setCallAuctionTurnOverRate(stockParseAndConvertService.convert(jo.get(key)));
+            }
+            if (key.contains("成交额") && key.contains(replaceDateStr)) {
+                upLimitValPriceBO.setTradeAmount(stockParseAndConvertService.convert(jo.get(key)));
+            }
+            if (key.contains("换手率") && key.contains(replaceDateStr)&&!key.contains("分时")) {
+                upLimitValPriceBO.setTurnOverRate(stockParseAndConvertService.convert(jo.get(key)));
+            }
+        }
+        return upLimitValPriceBO;
+    }
+
+
+    private String getCallAuctionUpLimitInfoDescribe( UpLimitValPriceBO upLimitValPriceBO){
+
+        StringBuffer sb=new StringBuffer();
+        sb.append("竞价涨幅："+stockParseAndConvertService.getIncreaseRateFormat(upLimitValPriceBO.getCallAuctionIncreaseRate())+"--涨停\n");
+        sb.append("竞价金额："+stockParseAndConvertService.getMoneyFormat(upLimitValPriceBO.getCallAuctionTradeAmount())+"--"
+                +stockParseAndConvertService.getMoneyFormat(upLimitValPriceBO.getTradeAmount())+"\n");
+        sb.append("竞价换手："+stockParseAndConvertService.getIncreaseRateFormat(upLimitValPriceBO.getCallAuctionTurnOverRate())+"--"
+                +stockParseAndConvertService.getIncreaseRateFormat(upLimitValPriceBO.getTurnOverRate())+"\n");
+        return sb.toString();
+    }
 }
