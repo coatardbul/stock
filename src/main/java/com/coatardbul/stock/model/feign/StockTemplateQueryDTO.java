@@ -19,6 +19,7 @@ public class StockTemplateQueryDTO {
      */
     private String themeStr;
 
+    private String objectSign;
 
     private String stockCode;
     /**

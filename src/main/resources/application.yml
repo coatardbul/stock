@@ -1,6 +1,7 @@
 
 server:
   port: 9006
+#  port: 10002
   servlet:
     #  全局路径配置
     context-path: /stock

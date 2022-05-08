@@ -260,6 +260,7 @@ public class StockStrategyService {
             stockTemplateQueryDto.setDateStr(dto.getDateStr());
             stockTemplateQueryDto.setTimeStr(dto.getTimeStr());
             stockTemplateQueryDto.setStockCode(dto.getStockCode());
+            stockTemplateQueryDto.setObjectSign(dto.getRiverStockTemplateSign());
             stockTemplateQueryDto.setThemeStr(dto.getThemeStr());
             stockTemplateQueryDto.setStockScript(dto.getStockTemplateScript());
             CommonResult<String> riverServerFeignResult = riverServerFeign.getQuery(stockTemplateQueryDto);
