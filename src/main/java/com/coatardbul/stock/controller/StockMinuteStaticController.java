@@ -4,7 +4,7 @@ import com.coatardbul.stock.common.annotation.WebLog;
 import com.coatardbul.stock.common.api.CommonResult;
 import com.coatardbul.stock.model.dto.StockEmotionDayDTO;
 import com.coatardbul.stock.model.dto.StockEmotionDayRangeDTO;
-import com.coatardbul.stock.service.statistic.StockMinuteEmotinStaticService;
+import com.coatardbul.stock.service.statistic.minuteStatic.StockMinuteEmotinStaticService;
 import io.swagger.annotations.Api;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,7 +46,26 @@ public class StockMinuteStaticController {
     }
 
     /**
+     * 根据日期重新刷新所有的数据，
+     * 如果日期为当天以前，判断是交易日，返回最近的交易日
+     * 如果是当天的，请启动定时任务
+     */
+    @WebLog(value = "")
+    @RequestMapping(path = "/quickRefreshDay", method = RequestMethod.POST)
+    public CommonResult quickRefreshDay(@Validated @RequestBody StockEmotionDayDTO dto) throws IllegalAccessException, ParseException, InterruptedException {
+        stockMinuteEmotinStaticService.quickRefreshDay(dto);
+        return CommonResult.success(null);
+    }
+    @WebLog(value = "")
+    @RequestMapping(path = "/quickSaveRedisData", method = RequestMethod.POST)
+    public CommonResult quickSaveRedisData(@Validated @RequestBody StockEmotionDayDTO dto) throws IllegalAccessException, ParseException, InterruptedException {
+        stockMinuteEmotinStaticService.quickSaveRedisData(dto);
+        return CommonResult.success(null);
+    }
+
+    /**
      * 补充刷新，已经有的数据不会重新刷新
+     *
      * @param dto
      * @return
      * @throws IllegalAccessException
@@ -58,8 +77,10 @@ public class StockMinuteStaticController {
         stockMinuteEmotinStaticService.supplementRefreshDay(dto);
         return CommonResult.success(null);
     }
+
     /**
      * 强制刷新
+     *
      * @param dto
      * @return
      * @throws IllegalAccessException
@@ -95,6 +116,7 @@ public class StockMinuteStaticController {
 
     /**
      * 过滤数据，
+     *
      * @param dto
      * @return
      */
@@ -111,12 +133,8 @@ public class StockMinuteStaticController {
     @WebLog(value = "")
     @RequestMapping(path = "/getDayDetail", method = RequestMethod.POST)
     public CommonResult getDayDetail(@Validated @RequestBody StockEmotionDayDTO dto) {
-        return CommonResult.success( stockMinuteEmotinStaticService.getDayDetail(dto));
+        return CommonResult.success(stockMinuteEmotinStaticService.getDayDetail(dto));
     }
-
-
-
-
 
 
 }

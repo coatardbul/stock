@@ -42,7 +42,6 @@ public class CountAddTask extends RecursiveTask<Integer> {
         ForkJoinPool f=new ForkJoinPool();
         CountAddTask countAddTask = new CountAddTask(1, 10000);
         ForkJoinTask<Integer> submit = f.submit(countAddTask);
-        System.out.println(submit.get());
         long end = System.currentTimeMillis();
         System.out.println(end-start);
 

@@ -115,7 +115,7 @@ public class HttpService {
     }
 
 
-    public String doPost(String url, String jsonString, List<Header> headerList, boolean isProxy) throws ConnectTimeoutException {
+    public   String   doPost(String url, String jsonString, List<Header> headerList, boolean isProxy) throws ConnectTimeoutException {
         // 获得Http客户端(可以理解为:你得先有一个浏览器;注意:实际上HttpClient与浏览器是不一样的)
         CloseableHttpClient httpClient = HttpClientBuilder.create().build();
         // 创建Post请求
@@ -128,6 +128,8 @@ public class HttpService {
         if (isProxy) {
             proxy = proxyIpService.getNewProxyHttpHost();
             RequestConfig defaultRequestConfig = RequestConfig.custom().setConnectTimeout(4000)
+                    .setConnectionRequestTimeout(4000)
+                    .setSocketTimeout(4000)
                     .setProxy(proxy).build();
             httpClient = HttpClients.custom().setDefaultRequestConfig(defaultRequestConfig).build();
         } else {
@@ -151,6 +153,7 @@ public class HttpService {
             response = httpClient.execute(httpPost);
             // 从响应模型中获取响应实体
             HttpEntity responseEntity = response.getEntity();
+
             log.info("结果响应："+httpPost.toString() + "响应状态为:" + response.getStatusLine());
             if (responseEntity != null) {
 //                log.info("响应内容长度为:" + responseEntity.getContentLength());
@@ -179,5 +182,7 @@ public class HttpService {
         }
         return null;
     }
+
+
 
 }

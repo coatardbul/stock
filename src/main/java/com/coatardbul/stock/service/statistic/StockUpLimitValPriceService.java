@@ -375,7 +375,7 @@ public class StockUpLimitValPriceService {
         CountDownLatch countDownLatch = new CountDownLatch(dateIntervalList.size());
         List<LimitStrongWeakBO> strongWeakList = new ArrayList<>();
         for (String dateStr : dateIntervalList) {
-            Constant.emotionIntervalByDateThreadPool.submit(() -> {
+            Constant.emotionIntervalByDateThreadPool.execute(() -> {
                 StockStrategyQueryDTO strategyQueryDTO = new StockStrategyQueryDTO();
                 strategyQueryDTO.setRiverStockTemplateId("1509349533765730304");
                 strategyQueryDTO.setDateStr(dateStr);

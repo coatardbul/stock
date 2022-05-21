@@ -1,4 +1,4 @@
-package com.coatardbul.stock.service.statistic;
+package com.coatardbul.stock.service.statistic.minuteStatic;
 
 import com.coatardbul.stock.common.constants.Constant;
 import com.coatardbul.stock.common.constants.StaticLatitudeEnum;
@@ -13,6 +13,7 @@ import com.coatardbul.stock.model.bo.AxiosBaseBo;
 import com.coatardbul.stock.model.bo.StrategyBO;
 import com.coatardbul.stock.service.base.StockStrategyService;
 import com.coatardbul.stock.service.romote.RiverRemoteService;
+import com.coatardbul.stock.service.statistic.StockVerifyService;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.coatardbul.stock.model.bo.AxiosYinfoDataBo;
 import com.coatardbul.stock.model.dto.StockEmotionDayDTO;
@@ -25,6 +26,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 
 import javax.script.ScriptException;
@@ -35,6 +37,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
@@ -63,7 +66,8 @@ public class StockMinuteEmotinStaticService {
     StockMinuterEmotionMapper stockMinuterEmotionMapper;
     @Autowired
     StockVerifyService stockVerifyService;
-
+    @Autowired
+    RedisTemplate redisTemplate;
 
     /**
      * 刷新某天的分钟情绪数据，
@@ -105,6 +109,99 @@ public class StockMinuteEmotinStaticService {
 
         }
     }
+
+
+    public void quickRefreshDay(StockEmotionDayDTO dto) throws ParseException, IllegalAccessException {
+        //验证日期
+        if (stockVerifyService.isIllegalDate(dto.getDateStr())) {
+            return;
+        }
+        //模型策略数据
+        StockStaticTemplate stockStaticTemplate = stockVerifyService.verifyObjectSign(dto.getObjectEnumSign());
+        //获取模型对象中的模板id集合,便于根据模板id查询对应的数据结果
+        List<String> templateIdList = stockStrategyService.getTemplateIdList(stockStaticTemplate);
+        //按照天统计
+        if (StaticLatitudeEnum.day.getCode().equals(stockStaticTemplate.getStaticLatitude())) {
+            //todo
+        }
+        //分钟
+        if (StaticLatitudeEnum.minuter.getCode().equals(stockStaticTemplate.getStaticLatitude())) {
+            if (dto.getTimeInterval() != null) {
+                timeIntervalQuickProcess(dto, templateIdList);
+            }
+
+        }
+    }
+
+    private void timeIntervalQuickProcess(StockEmotionDayDTO dto, List<String> templateIdList)  {
+        //存入分钟间隔数据
+        if (templateIdList == null || templateIdList.size() == 0) {
+            return;
+        }
+        //获取间隔时间字符串
+        List<String> timeIntervalListData = stockVerifyService.getRemoteTimeInterval(dto.getTimeInterval());
+
+        for (String templateId : templateIdList) {
+
+            List<String> executeTimeList = new ArrayList<>();
+            String key = templateId + "_" + dto.getDateStr();
+            if (redisTemplate.opsForValue().get(key) != null) {
+                String objectStaticArray = (String) redisTemplate.opsForValue().get(key);
+                List<AxiosBaseBo> axiosBaseBos = JsonUtil.readToValue(objectStaticArray, new TypeReference<List<AxiosBaseBo>>() {
+                });
+                List<String> collect = axiosBaseBos.stream().map(AxiosBaseBo::getDateTimeStr).collect(Collectors.toList());
+                executeTimeList= timeIntervalListData.stream().filter(o1->!collect.contains(o1)).collect(Collectors.toList());
+            } else {
+                executeTimeList = timeIntervalListData;
+            }
+            //执行
+            for (String timeStr : executeTimeList) {
+                String dateStr=dto.getDateStr();
+                Constant.emotionByMinuterThreadPool.execute(() -> {
+                    try {
+                        timeStrQuickProcess(dateStr, timeStr, templateId);
+                    }catch (Exception e){
+                        log.error(e.getMessage(),e);
+                    }
+                });
+            }
+        }
+    }
+
+
+
+
+
+    private void timeStrQuickProcess(String dateStr, String timeStr, String templateId) {
+        //获取远程数据
+        AxiosBaseBo axiosBaseBo = null;
+        try {
+            axiosBaseBo = getAxiosBaseBo(dateStr, templateId, timeStr);
+        } catch (Exception e) {
+            log.error(e.getMessage(), e);
+        }
+        if (axiosBaseBo == null) {
+            return;
+        }
+        String key = templateId + "_" + dateStr;
+        String currentDateTimeStr = axiosBaseBo.getDateTimeStr();
+        if (redisTemplate.opsForValue().get(key) != null) {
+            String objectStaticArray = (String) redisTemplate.opsForValue().get(key);
+            List<AxiosBaseBo> axiosBaseBos = JsonUtil.readToValue(objectStaticArray, new TypeReference<List<AxiosBaseBo>>() {
+            });
+            List<AxiosBaseBo> collect = axiosBaseBos.stream().filter(o1 -> o1.getDateTimeStr().equals(currentDateTimeStr)).collect(Collectors.toList());
+            if (collect == null || collect.size() == 0) {
+                axiosBaseBos.add(axiosBaseBo);
+                redisTemplate.opsForValue().set(key, JsonUtil.toJson(axiosBaseBos), 1, TimeUnit.HOURS);
+            }
+        } else {
+            List<AxiosBaseBo> list = new ArrayList<>();
+            list.add(axiosBaseBo);
+            redisTemplate.opsForValue().set(key, JsonUtil.toJson(list), 1, TimeUnit.HOURS);
+        }
+
+    }
+
 
     /**
      * 刷新某个HH:mm的数据
@@ -223,7 +320,7 @@ public class StockMinuteEmotinStaticService {
     public void refreshDayRange(StockEmotionDayRangeDTO dto) {
         List<String> dateIntervalList = riverRemoteService.getDateIntervalList(dto.getBeginDate(), dto.getEndDate());
         for (String dateStr : dateIntervalList) {
-            Constant.emotionIntervalByDateThreadPool.submit(() -> {
+            Constant.emotionIntervalByDateThreadPool.execute(() -> {
                 StockEmotionDayDTO stockEmotionDayDTO = new StockEmotionDayDTO();
                 stockEmotionDayDTO.setDateStr(dateStr);
                 stockEmotionDayDTO.setObjectEnumSign(dto.getObjectEnumSign());
@@ -399,7 +496,7 @@ public class StockMinuteEmotinStaticService {
             stockEmotionDayDTO.setDateStr(dateStr);
             stockEmotionDayDTO.setObjectEnumSign(dto.getObjectEnumSign());
             stockEmotionDayDTO.setTimeInterval(dto.getTimeInterval());
-            Constant.emotionIntervalByDateThreadPool.submit(() -> {
+            Constant.emotionIntervalByDateThreadPool.execute(() -> {
                 try {
                     filterDate(stockEmotionDayDTO);
                     supplementRefreshDay(stockEmotionDayDTO);
@@ -407,6 +504,43 @@ public class StockMinuteEmotinStaticService {
                     log.error(e.getLocalizedMessage(), e);
                 }
             });
+
+        }
+    }
+
+
+    public void quickSaveRedisData(StockEmotionDayDTO dto) throws ParseException, IllegalAccessException {
+        //验证日期
+        if (stockVerifyService.isIllegalDate(dto.getDateStr())) {
+            return;
+        }
+        //模型策略数据
+        StockStaticTemplate stockStaticTemplate = stockVerifyService.verifyObjectSign(dto.getObjectEnumSign());
+        //获取模型对象中的模板id集合,便于根据模板id查询对应的数据结果
+        List<String> templateIdList = stockStrategyService.getTemplateIdList(stockStaticTemplate);
+        //按照天统计
+        if (StaticLatitudeEnum.day.getCode().equals(stockStaticTemplate.getStaticLatitude())) {
+            //todo
+        }
+        //分钟
+        if (StaticLatitudeEnum.minuter.getCode().equals(stockStaticTemplate.getStaticLatitude())) {
+            if (dto.getTimeInterval() != null) {
+                //存入分钟间隔数据
+                if (templateIdList == null || templateIdList.size() == 0) {
+                    return;
+                }
+                for (String templateId : templateIdList) {
+                    String key = templateId + "_" + dto.getDateStr();
+                    if (redisTemplate.opsForValue().get(key) != null) {
+                        String objectStaticArray = (String) redisTemplate.opsForValue().get(key);
+                        StockMinuterEmotion defaultAddStockMinuterEmotion = getDefaultAddStockMinuterEmotion(dto.getDateStr(), dto.getObjectEnumSign(), templateId);
+                        defaultAddStockMinuterEmotion.setObjectStaticArray(objectStaticArray);
+                        stockMinuterEmotionMapper.deleteByDateAndObjectSignAndTemplateId(dto.getDateStr(),dto.getObjectEnumSign(),templateId);
+                        stockMinuterEmotionMapper.insertSelective(defaultAddStockMinuterEmotion);
+                    }
+
+                }
+            }
 
         }
     }

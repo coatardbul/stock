@@ -1,5 +1,7 @@
 package com.coatardbul.stock.common.constants;
 
+import com.google.common.util.concurrent.ThreadFactoryBuilder;
+
 import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
@@ -19,7 +21,7 @@ public class Constant {
             new ThreadPoolExecutor(
                     Runtime.getRuntime().availableProcessors(),
                     100,
-                    30,
+                    1,
                     TimeUnit.MINUTES,
                     new ArrayBlockingQueue<Runnable>(1000));
 
@@ -31,9 +33,11 @@ public class Constant {
             new ThreadPoolExecutor(
                     Runtime.getRuntime().availableProcessors(),
                     100,
-                    30,
+                    1,
                     TimeUnit.MINUTES,
-                    new ArrayBlockingQueue<Runnable>(1000));
+                    new ArrayBlockingQueue<Runnable>(1000),
+                    new ThreadFactoryBuilder().setNameFormat("date-emotion-%d").build()
+            );
 
 
     /**
@@ -43,9 +47,12 @@ public class Constant {
             new ThreadPoolExecutor(
                     Runtime.getRuntime().availableProcessors(),
                     100,
-                    30,
+                    1,
                     TimeUnit.MINUTES,
-                    new ArrayBlockingQueue<Runnable>(1000));
+                    new ArrayBlockingQueue<Runnable>(1000),
+                    new ThreadFactoryBuilder().setNameFormat("date-range-%d").build()
+
+            );
 
 
 
@@ -56,12 +63,23 @@ public class Constant {
             new ThreadPoolExecutor(
                     Runtime.getRuntime().availableProcessors(),
                     100,
-                    30,
+                    1,
                     TimeUnit.MINUTES,
-                    new ArrayBlockingQueue<Runnable>(1000));
+                    new ArrayBlockingQueue<Runnable>(1000),
+                    new ThreadFactoryBuilder().setNameFormat("ab-pool-%d").build()
 
+            );
 
     /**
-     * 每日涨停信息，
+     * 分钟情绪统计,统计涨跌幅，
      */
+    public static ThreadPoolExecutor emotionByMinuterThreadPool =
+            new ThreadPoolExecutor(
+                    Math.max(Runtime.getRuntime().availableProcessors(),12),
+                    100,
+                    1,
+                    TimeUnit.MINUTES,
+                    new ArrayBlockingQueue<Runnable>(5000),
+                    new ThreadFactoryBuilder().setNameFormat("minute-pool-%d").build()
+            );
 }

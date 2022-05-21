@@ -45,7 +45,6 @@ public class JoinTask extends RecursiveTask<List<String>> {
         ForkJoinPool forkJoinPool = new ForkJoinPool(8);
         JoinTask jt = new JoinTask(urlList);
         ForkJoinTask<List<String>> submit = forkJoinPool.submit(jt);
-        System.out.println(submit.get());
 
     }
 }

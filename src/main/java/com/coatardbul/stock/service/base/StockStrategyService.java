@@ -4,6 +4,7 @@ import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONException;
 import com.alibaba.fastjson.JSONObject;
 import com.coatardbul.stock.common.api.CommonResult;
+import com.coatardbul.stock.common.constants.Constant;
 import com.coatardbul.stock.common.constants.CookieEnum;
 import com.coatardbul.stock.common.exception.BusinessException;
 import com.coatardbul.stock.common.util.JsonUtil;
@@ -23,13 +24,19 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang.StringUtils;
 import org.apache.http.Header;
 import org.apache.http.conn.ConnectTimeoutException;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.script.ScriptException;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.Future;
 import java.util.stream.Collectors;
 
 /**
@@ -43,6 +50,7 @@ import java.util.stream.Collectors;
 @Slf4j
 @Service
 public class StockStrategyService {
+    private static final String ID_SPLIT = ",";
 
     @Autowired
     RiverServerFeign riverServerFeign;
@@ -111,9 +119,109 @@ public class StockStrategyService {
      * @throws BusinessException
      */
     public StrategyBO strategy(StockStrategyQueryDTO dto) throws BusinessException, NoSuchMethodException, ScriptException, FileNotFoundException {
-        StrategyBO strategyBO = strategyCommon(dto);
-        return strategyBO;
+        List<StrategyBO> list = batchStrategy(dto);
+        if (list.size() == 1) {
+            return list.get(0);
+        }
+        if (list.size() > 1) {
+          return   calcStrategy(list);
+        }
+        return new StrategyBO();
     }
+
+    /**
+     * 合并list数据，取交集
+     * @param list
+     * @return
+     */
+    public StrategyBO calcStrategy(List<StrategyBO> list) {
+        StrategyBO result=new StrategyBO();
+        JSONArray jsonArray = new JSONArray();
+        Map<String,JSONObject> codeInfo=new HashMap<>();
+        Map<String,Integer> codeNum=new HashMap<>();
+        for (int i = 0; i < list.get(0).getData().size(); i++) {
+            JSONObject jsonObject = list.get(0).getData().getJSONObject(i);
+            codeInfo.put(jsonObject.getString("code"),jsonObject);
+            codeNum.put(jsonObject.getString("code"),1);
+        }
+        for(int i=1;i<list.size();i++){
+            for(int j=0;j<list.get(i).getData().size();j++){
+                JSONObject jsonObject = list.get(i).getData().getJSONObject(j);
+                if(codeNum.containsKey(jsonObject.getString("code"))){
+                    codeNum.put(jsonObject.getString("code"),codeNum.get(jsonObject.getString("code"))+1);
+                }
+            }
+        }
+        for(Map.Entry<String,Integer> map: codeNum.entrySet()){
+            if(map.getValue()==list.size()){
+                jsonArray.add(codeInfo.get(map.getKey()));
+            }
+        }
+        result.setData(jsonArray);
+        result.setTotalNum(jsonArray.size());
+        return result;
+    }
+
+    /**
+     * 多个策略，用逗号隔开，
+     *
+     * @param dto
+     * @return
+     */
+    public List<StrategyBO> batchStrategy(StockStrategyQueryDTO dto) throws NoSuchMethodException, ScriptException, FileNotFoundException {
+        List<StrategyBO> list = new ArrayList<>();
+        CountDownLatch countDownLatch =null;
+        if (StringUtils.isNotBlank(dto.getRiverStockTemplateId())&&dto.getRiverStockTemplateId().contains(ID_SPLIT)) {
+            String[] split = dto.getRiverStockTemplateId().split(ID_SPLIT);
+             countDownLatch = new CountDownLatch(split.length);
+            for (String id : split) {
+                CountDownLatch finalCountDownLatch = countDownLatch;
+                Constant.abThreadPool.submit(() -> {
+                    StockStrategyQueryDTO stockStrategyQueryDTO = new StockStrategyQueryDTO();
+                    BeanUtils.copyProperties(dto, stockStrategyQueryDTO);
+                    stockStrategyQueryDTO.setRiverStockTemplateId(id);
+                    try {
+                        StrategyBO strategyBO = strategyCommon(stockStrategyQueryDTO);
+                        list.add(strategyBO);
+                    } catch (Exception e) {
+                        log.error(e.getMessage(), e);
+                    } finally {
+                        finalCountDownLatch.countDown();
+                    }
+                });
+            }
+        } else if (StringUtils.isNotBlank(dto.getRiverStockTemplateSign())&&dto.getRiverStockTemplateSign().contains(ID_SPLIT)) {
+            String[] split = dto.getRiverStockTemplateSign().split(ID_SPLIT);
+             countDownLatch = new CountDownLatch(split.length);
+            for (String objectSign : split) {
+                CountDownLatch finalCountDownLatch1 = countDownLatch;
+                Constant.abThreadPool.submit(() -> {
+                    StockStrategyQueryDTO stockStrategyQueryDTO = new StockStrategyQueryDTO();
+                    BeanUtils.copyProperties(dto, stockStrategyQueryDTO);
+                    stockStrategyQueryDTO.setRiverStockTemplateSign(objectSign);
+                    try {
+                        StrategyBO strategyBO = strategyCommon(stockStrategyQueryDTO);
+                        list.add(strategyBO);
+                    } catch (Exception e) {
+                        log.error(e.getMessage(), e);
+                    } finally {
+                        finalCountDownLatch1.countDown();
+                    }
+
+                });
+            }
+        } else {
+            StrategyBO strategyBO = strategyCommon(dto);
+            list.add(strategyBO);
+        }
+        try {
+            countDownLatch.await();
+        } catch (InterruptedException e) {
+            log.error(e.getMessage(), e);
+        }
+        return list;
+    }
+
 
     public StrategyBO strategyCommon(StockStrategyQueryDTO dto) throws BusinessException, NoSuchMethodException, ScriptException, FileNotFoundException {
         StrategyBO result = new StrategyBO();
@@ -143,7 +251,7 @@ public class StockStrategyService {
             }
             //解析的数据信息
             JSONArray data = baseObject.getJSONArray("datas");
-            if(data==null){
+            if (data == null) {
                 return null;
             }
             //总数
@@ -171,10 +279,11 @@ public class StockStrategyService {
             rebuild(jsonArray.getJSONObject(i));
         }
     }
+
     private void rebuild(JSONObject jo) {
         String upLimitStrongWeakDescribe = upLimitStrongWeakService.getLimitStrongWeakDescribe(jo);
         if (StringUtils.isNotBlank(upLimitStrongWeakDescribe)) {
-           jo.put("涨停强弱概览", upLimitStrongWeakDescribe);
+            jo.put("涨停强弱概览", upLimitStrongWeakDescribe);
         }
         String limitStrongWeakRangeVolDescribe = upLimitStrongWeakService.getLimitStrongWeakRangeVolDescribe(jo);
         if (StringUtils.isNotBlank(limitStrongWeakRangeVolDescribe)) {

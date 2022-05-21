@@ -104,7 +104,7 @@ public class StockController {
     public CommonResult refreshAllStockBaseInfo(@Validated @RequestBody StockPriceRequestDTO dto) throws InterruptedException {
         for (int i = 0; i < 1000000; i += 10000) {
             final int sb=i;
-            postLoanThreadPool.submit(() -> {
+            postLoanThreadPool.execute(() -> {
                 for (int j = sb; j < sb + 10000; j++) {
                     StockPriceRequestDTO stockPriceRequestDTO = new StockPriceRequestDTO();
                     String zero = getZero(6 - String.valueOf(j).length()) + j;

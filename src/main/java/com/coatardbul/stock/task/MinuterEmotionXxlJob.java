@@ -4,7 +4,7 @@ import com.coatardbul.stock.common.util.DateTimeUtil;
 import com.coatardbul.stock.common.util.JsonUtil;
 import com.coatardbul.stock.model.dto.StockEmotionDayDTO;
 import com.coatardbul.stock.model.dto.StockLastUpLimitDetailDTO;
-import com.coatardbul.stock.service.statistic.StockMinuteEmotinStaticService;
+import com.coatardbul.stock.service.statistic.minuteStatic.StockMinuteEmotinStaticService;
 import com.coatardbul.stock.service.statistic.StockSpecialStrategyService;
 import com.coatardbul.stock.service.statistic.StockVerifyService;
 import com.xxl.job.core.context.XxlJobHelper;
@@ -15,7 +15,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.Date;
-import java.util.concurrent.TimeUnit;
 
 /**
  * <p>

@@ -83,7 +83,7 @@ public class StockSpecialStrategyService {
         CountDownLatch countDownLatch = new CountDownLatch(7);
         for (int i = 2; i < 9; i++) {
             final int num = i;
-            Constant.abThreadPool.submit(() -> {
+            Constant.abThreadPool.execute(() -> {
                 //涨停脚本语句
                 String upLimitNumScript = getUpLimitNumScript(num);
                 StockStrategyQueryDTO stockStrategyQueryDTO = new StockStrategyQueryDTO();
@@ -181,6 +181,8 @@ public class StockSpecialStrategyService {
             LimitBaseInfoBO upLimitBaseInfoBO = new LimitBaseInfoBO();
             BeanUtils.copyProperties(upLimitStrongWeak, upLimitBaseInfoBO);
             upLimitBaseInfoBO.setName(stockName);
+            upLimitBaseInfoBO.setCode(jo.getString("code"));
+
             nameMap.put(stockName, upLimitBaseInfoBO);
 
             for (String key : keys) {
@@ -355,7 +357,7 @@ public class StockSpecialStrategyService {
      */
     private void asynAddAnormalousBehaviorDetail(String code, List<String> dateStrList) {
         for (String dateStr : dateStrList) {
-            Constant.abThreadPool.submit(() -> {
+            Constant.abThreadPool.execute(() -> {
                 StockAnomalousBehaviorDetail stockAnomalousBehaviorDetail = stockAnomalousBehaviorDetailMapper.selectAllByCodeAndDate(code, dateStr);
                 if (stockAnomalousBehaviorDetail == null) {
                     addStockAnomalousBehaviorDescribe(code, dateStr);
@@ -533,7 +535,7 @@ public class StockSpecialStrategyService {
     public void addOptionalPoolInfo(List<String> templatedIdList, String plateId, String dateStr) {
         stockOptionalPoolMapper.deleteByPlateId(plateId);
         for (String templateId : templatedIdList) {
-            Constant.abThreadPool.submit(() -> {
+            Constant.abThreadPool.execute(() -> {
                 StockStrategyQueryDTO stockStrategyQueryDTO = new StockStrategyQueryDTO();
                 stockStrategyQueryDTO.setDateStr(dateStr);
                 stockStrategyQueryDTO.setRiverStockTemplateId(templateId);

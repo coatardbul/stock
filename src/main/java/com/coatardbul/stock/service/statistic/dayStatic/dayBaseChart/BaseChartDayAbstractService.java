@@ -95,7 +95,7 @@ public abstract class BaseChartDayAbstractService implements DayService {
     public void refreshDayRange(StockEmotionDayRangeDTO dto) {
         List<String> dateIntervalList = riverRemoteService.getDateIntervalList(dto.getBeginDate(), dto.getEndDate());
         for (String dateStr : dateIntervalList) {
-            Constant.emotionByDateRangeThreadPool.submit(() -> {
+            Constant.emotionByDateRangeThreadPool.execute(() -> {
                 //表中有数据，直接返回，没有再查询
                 List<StockDayEmotion> stockDayEmotions = stockDayEmotionMapper.selectAllByDateAndObjectSign(dateStr, dto.getObjectEnumSign());
                 if (stockDayEmotions != null && stockDayEmotions.size() > 0) {
@@ -133,7 +133,7 @@ public abstract class BaseChartDayAbstractService implements DayService {
     public void forceRefreshDayRange(StockEmotionDayRangeDTO dto) {
         List<String> dateIntervalList = riverRemoteService.getDateIntervalList(dto.getBeginDate(), dto.getEndDate());
         for (String dateStr : dateIntervalList) {
-            Constant.emotionByDateRangeThreadPool.submit(() -> {
+            Constant.emotionByDateRangeThreadPool.execute(() -> {
                 StockEmotionDayDTO stockEmotionDayDTO = new StockEmotionDayDTO();
                 stockEmotionDayDTO.setDateStr(dateStr);
                 stockEmotionDayDTO.setObjectEnumSign(dto.getObjectEnumSign());

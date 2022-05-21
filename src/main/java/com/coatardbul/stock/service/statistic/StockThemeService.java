@@ -212,7 +212,7 @@ public class StockThemeService {
     public void refreshDayRange(StockThemeDayRangeDTO dto) {
         List<String> dateIntervalList = riverRemoteService.getDateIntervalList(dto.getBeginDate(), dto.getEndDate());
         for (String dateStr : dateIntervalList) {
-            Constant.emotionByDateRangeThreadPool.submit(() -> {
+            Constant.emotionByDateRangeThreadPool.execute(() -> {
                 //表中有数据，直接返回，没有再查询
                 List<StockThemeStatic> stockThemeStatics = stockThemeStaticMapper.selectAllByDateAndObjectSignAndTheme(dateStr, dto.getObjectEnumSign(), dto.getThemeStr());
                 if (stockThemeStatics != null && stockThemeStatics.size() > 0) {
@@ -241,7 +241,7 @@ public class StockThemeService {
     public void forceRefreshDayRange(StockThemeDayRangeDTO dto) {
         List<String> dateIntervalList = riverRemoteService.getDateIntervalList(dto.getBeginDate(), dto.getEndDate());
         for (String dateStr : dateIntervalList) {
-            Constant.emotionByDateRangeThreadPool.submit(() -> {
+            Constant.emotionByDateRangeThreadPool.execute(() -> {
                 StockThemeDayDTO stockThemeDayDTO = new StockThemeDayDTO();
                 stockThemeDayDTO.setDateStr(dateStr);
                 stockThemeDayDTO.setObjectEnumSign(dto.getObjectEnumSign());

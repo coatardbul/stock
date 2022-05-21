@@ -4,7 +4,16 @@ spring:
     driverClassName: com.mysql.cj.jdbc.Driver
     username: root
     password: Dream1226.27!
-
+  redis:
+    host: 47.105.148.90
+    port: 6399
+    database: 0
+    password:
+    max-idle: 8
+    max-active: 8
+    max-wait: -1
+    min-idle: 0
+    timeout: 5000
 
 eureka:
   client:

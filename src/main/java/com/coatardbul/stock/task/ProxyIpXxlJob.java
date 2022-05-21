@@ -4,9 +4,7 @@ import com.coatardbul.stock.common.util.DateTimeUtil;
 import com.coatardbul.stock.common.util.JsonUtil;
 import com.coatardbul.stock.mapper.ProxyIpMapper;
 import com.coatardbul.stock.model.dto.ProxyIpQueryDTO;
-import com.coatardbul.stock.model.dto.StockEmotionDayDTO;
 import com.coatardbul.stock.service.statistic.ProxyIpService;
-import com.coatardbul.stock.service.statistic.StockMinuteEmotinStaticService;
 import com.xxl.job.core.context.XxlJobHelper;
 import com.xxl.job.core.handler.annotation.XxlJob;
 import lombok.extern.slf4j.Slf4j;
@@ -15,7 +13,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.Calendar;
-import java.util.Date;
 
 /**
  * <p>

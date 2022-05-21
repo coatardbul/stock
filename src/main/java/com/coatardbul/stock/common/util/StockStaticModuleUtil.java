@@ -5,6 +5,7 @@ import com.coatardbul.stock.model.bo.DayTrumpetCalcStatisticBo;
 import com.coatardbul.stock.model.bo.DayUpDowLimitStatisticBo;
 import com.coatardbul.stock.model.bo.DayUpLimitPromotionStatisticBo;
 import com.coatardbul.stock.model.bo.MinuteEmotionStaticIdBo;
+import com.coatardbul.stock.model.bo.MinuteUpDownNumStatisticBo;
 
 /**
  * <p>
@@ -18,7 +19,8 @@ public class StockStaticModuleUtil {
 
     //分钟情绪
     public static final String MINUTE_EMOTION_STATISTIC="minute_emotion_statistic";
-
+    //分钟涨跌家数
+    public static final String MINUTE_UP_DOWN_NUM_STATISTIC="minute_up_down_num_statistic";
     //日喇叭口
     public static final String DAY_TRUMPET_CALC_STATISTIC="day_trumpet_calc_statistic";
     //按天统计，统计涨跌数量信息
@@ -75,6 +77,9 @@ public class StockStaticModuleUtil {
         }
         if (DAY_UP_LIMIT_PROMOTION_STATISTIC.equals(objectSign)) {
             return DayUpLimitPromotionStatisticBo.class;
+        }
+        if(MINUTE_UP_DOWN_NUM_STATISTIC.equals(objectSign)){
+            return MinuteUpDownNumStatisticBo.class;
         }
         return Object.class;
     }

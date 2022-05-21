@@ -72,7 +72,7 @@ public class StockPredictService {
         List<String> dateIntervalList = riverRemoteService.getDateIntervalList(dto.getBeginDate(), dto.getEndDate());
 
         for (String dateStr : dateIntervalList) {
-            Constant.emotionByDateRangeThreadPool.submit(() -> {
+            Constant.emotionByDateRangeThreadPool.execute(() -> {
                 //将持有天数转换成脚本
                 String saleQueryScript = getSaleQueryScript(dto.getHoleDay());
                 //买入的查询语句
