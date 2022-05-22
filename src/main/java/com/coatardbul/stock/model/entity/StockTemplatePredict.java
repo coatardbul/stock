@@ -19,6 +19,7 @@ public class StockTemplatePredict {
      * 模板id
      */
     private String templatedId;
+
     /**
      * 模板id
      */
@@ -65,4 +66,9 @@ public class StockTemplatePredict {
      * 买入时间 年月日时分
      */
     private String buyTime;
+
+    /**
+     * 换手率
+     */
+    private BigDecimal turnoverRate;
 }

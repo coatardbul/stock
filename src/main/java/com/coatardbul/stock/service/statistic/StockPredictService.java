@@ -169,8 +169,11 @@ public class StockPredictService {
                 if (key.contains("市值")) {
                     addInfo.setMarketValue(stockParseAndConvertService.convert(((JSONObject) jo).get(key)));
                 }
-                if (key.contains(dateFormat) && key.contains("收盘价:不复权")) {
+                if (key.contains(dateFormat) && key.contains("收盘价:不复权")&&!key.contains("{-}")) {
                     addInfo.setBuyPrice(stockParseAndConvertService.convert(((JSONObject) jo).get(key)));
+                }
+                if (key.contains(dateFormat) && key.contains("换手率")) {
+                    addInfo.setTurnoverRate(stockParseAndConvertService.convert(((JSONObject) jo).get(key)));
                 }
             }
             addInfo.setDetail(jo.toString());

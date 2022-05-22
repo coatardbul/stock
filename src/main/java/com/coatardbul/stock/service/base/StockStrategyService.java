@@ -124,36 +124,37 @@ public class StockStrategyService {
             return list.get(0);
         }
         if (list.size() > 1) {
-          return   calcStrategy(list);
+            return calcStrategy(list);
         }
         return new StrategyBO();
     }
 
     /**
      * 合并list数据，取交集
+     *
      * @param list
      * @return
      */
     public StrategyBO calcStrategy(List<StrategyBO> list) {
-        StrategyBO result=new StrategyBO();
+        StrategyBO result = new StrategyBO();
         JSONArray jsonArray = new JSONArray();
-        Map<String,JSONObject> codeInfo=new HashMap<>();
-        Map<String,Integer> codeNum=new HashMap<>();
+        Map<String, JSONObject> codeInfo = new HashMap<>();
+        Map<String, Integer> codeNum = new HashMap<>();
         for (int i = 0; i < list.get(0).getData().size(); i++) {
             JSONObject jsonObject = list.get(0).getData().getJSONObject(i);
-            codeInfo.put(jsonObject.getString("code"),jsonObject);
-            codeNum.put(jsonObject.getString("code"),1);
+            codeInfo.put(jsonObject.getString("code"), jsonObject);
+            codeNum.put(jsonObject.getString("code"), 1);
         }
-        for(int i=1;i<list.size();i++){
-            for(int j=0;j<list.get(i).getData().size();j++){
+        for (int i = 1; i < list.size(); i++) {
+            for (int j = 0; j < list.get(i).getData().size(); j++) {
                 JSONObject jsonObject = list.get(i).getData().getJSONObject(j);
-                if(codeNum.containsKey(jsonObject.getString("code"))){
-                    codeNum.put(jsonObject.getString("code"),codeNum.get(jsonObject.getString("code"))+1);
+                if (codeNum.containsKey(jsonObject.getString("code"))) {
+                    codeNum.put(jsonObject.getString("code"), codeNum.get(jsonObject.getString("code")) + 1);
                 }
             }
         }
-        for(Map.Entry<String,Integer> map: codeNum.entrySet()){
-            if(map.getValue()==list.size()){
+        for (Map.Entry<String, Integer> map : codeNum.entrySet()) {
+            if (map.getValue() == list.size()) {
                 jsonArray.add(codeInfo.get(map.getKey()));
             }
         }
@@ -170,10 +171,10 @@ public class StockStrategyService {
      */
     public List<StrategyBO> batchStrategy(StockStrategyQueryDTO dto) throws NoSuchMethodException, ScriptException, FileNotFoundException {
         List<StrategyBO> list = new ArrayList<>();
-        CountDownLatch countDownLatch =null;
-        if (StringUtils.isNotBlank(dto.getRiverStockTemplateId())&&dto.getRiverStockTemplateId().contains(ID_SPLIT)) {
+        CountDownLatch countDownLatch = null;
+        if (StringUtils.isNotBlank(dto.getRiverStockTemplateId()) && dto.getRiverStockTemplateId().contains(ID_SPLIT)) {
             String[] split = dto.getRiverStockTemplateId().split(ID_SPLIT);
-             countDownLatch = new CountDownLatch(split.length);
+            countDownLatch = new CountDownLatch(split.length);
             for (String id : split) {
                 CountDownLatch finalCountDownLatch = countDownLatch;
                 Constant.abThreadPool.submit(() -> {
@@ -190,9 +191,9 @@ public class StockStrategyService {
                     }
                 });
             }
-        } else if (StringUtils.isNotBlank(dto.getRiverStockTemplateSign())&&dto.getRiverStockTemplateSign().contains(ID_SPLIT)) {
+        } else if (StringUtils.isNotBlank(dto.getRiverStockTemplateSign()) && dto.getRiverStockTemplateSign().contains(ID_SPLIT)) {
             String[] split = dto.getRiverStockTemplateSign().split(ID_SPLIT);
-             countDownLatch = new CountDownLatch(split.length);
+            countDownLatch = new CountDownLatch(split.length);
             for (String objectSign : split) {
                 CountDownLatch finalCountDownLatch1 = countDownLatch;
                 Constant.abThreadPool.submit(() -> {
@@ -214,10 +215,12 @@ public class StockStrategyService {
             StrategyBO strategyBO = strategyCommon(dto);
             list.add(strategyBO);
         }
-        try {
-            countDownLatch.await();
-        } catch (InterruptedException e) {
-            log.error(e.getMessage(), e);
+        if (countDownLatch != null) {
+            try {
+                countDownLatch.await();
+            } catch (InterruptedException e) {
+                log.error(e.getMessage(), e);
+            }
         }
         return list;
     }

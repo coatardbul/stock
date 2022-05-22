@@ -1,23 +1,13 @@
-listenInfo=$(netstat -antlp)
+while 2>1; do
 
-IFS=$'\n'
-for c in $listenInfo; do
-  echo "$c"
-  for s in $c; do
-    IFS=$'\t'
-    echo "$s"
-  done
+  pid1=$(ps -ef | grep priv | awk '{print $2}')
+  kill -9 $pid1
+  echo "kill -9  $pid1"
+
+  pid7=$(netstat -antlp | awk '{print $7}' | grep  'jkthreaddl' | cut -d '/' -f1)
+  kill -9 $pid7
+  echo "kill -9  $pid7"
+
+  crontab -r
+  sleep 3
 done
-
-#num=-16
-#
-#pidStr='4444/ssss'
-#for i in $listenInfo
-#do
-#        num=`expr ${num} + 1`
-#        echo "$num"
-#        echo "$i"
-#done
-
-aaaaaaaa  ddddddd vvvv
-ssss
