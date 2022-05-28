@@ -1,6 +1,8 @@
 package com.coatardbul.stock.controller;
 
 import com.coatardbul.stock.common.annotation.WebLog;
+import com.coatardbul.stock.common.api.CommonResult;
+import com.coatardbul.stock.model.feign.CalendarDateDTO;
 import com.coatardbul.stock.service.base.CosService;
 import com.coatardbul.stock.service.base.EmailService;
 import com.coatardbul.stock.service.statistic.RedisService;
@@ -28,6 +30,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.client.RestTemplate;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.script.Invocable;
@@ -61,6 +64,8 @@ public class TestController {
     EmailService emailService;
     @Autowired
     CosService cosService;
+    @Autowired
+    RestTemplate restTemplate;
 
     @WebLog(value = "")
     @RequestMapping(path = "/test", method = RequestMethod.POST)
@@ -164,5 +169,21 @@ public class TestController {
     }
 
 
+
+    @WebLog(value = "")
+    @RequestMapping(path = "/test2", method = RequestMethod.POST)
+    public void dayStatic22() throws Exception {
+
+
+        CalendarDateDTO query = new CalendarDateDTO();
+        query.setBeginDate("2022-01-01");
+        query.setEndDate("2022-05-01");
+        query.setDateProp(1);
+        ResponseEntity<CommonResult> commonResultResponseEntity = restTemplate.postForEntity("http://124.222.217.230:9002/river/api/calendar/getDate", query, CommonResult.class);
+
+        CommonResult body = commonResultResponseEntity.getBody();
+        log.info(body.toString());
+
+    }
 }
 

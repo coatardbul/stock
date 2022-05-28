@@ -55,3 +55,11 @@ cos:
   regionName: ap-nanjing
   bucketName: stable-up-1254163062
   folderPrefix: /files
+system:
+  proxy:
+    enabled: false
+    host: 7070
+    port: 6060
+  rest:
+    readTimeout: 30000
+    connectTimeout: 30000

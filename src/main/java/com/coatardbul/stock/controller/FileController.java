@@ -1,5 +1,6 @@
 package com.coatardbul.stock.controller;
 
+import com.coatardbul.stock.common.api.CommonResult;
 import com.coatardbul.stock.model.bo.FileBo;
 import com.coatardbul.stock.model.dto.FileQueryDto;
 import com.coatardbul.stock.service.base.CosService;
@@ -35,24 +36,25 @@ public class FileController {
     CosService cosService;
 
     @RequestMapping(path = "/upload", method = RequestMethod.POST)
-    public String cosUpload(MultipartFile file, HttpServletRequest req) throws Exception {
+    public CommonResult<String> cosUpload(MultipartFile file, HttpServletRequest req) throws Exception {
         String upload = cosService.upload( req.getParameter("path"), file);
-        return upload;
+        return CommonResult.success(upload) ;
     }
 
     @RequestMapping(path = "/getHeadList", method = RequestMethod.POST)
-    public List<FileBo> getHeadList(@RequestBody FileQueryDto dto) throws Exception {
+    public CommonResult<List<FileBo>> getHeadList(@RequestBody FileQueryDto dto) throws Exception {
         List<FileBo> pathInfo = cosService.getPathInfo(dto.getPath());
-        return pathInfo;
+        return CommonResult.success(pathInfo);
     }
     @RequestMapping(path = "/mkdir", method = RequestMethod.POST)
-    public void mkdir(@RequestBody FileQueryDto dto) throws Exception {
+    public CommonResult mkdir(@RequestBody FileQueryDto dto) throws Exception {
          cosService.mkdir(dto.getPath());
+         return CommonResult.success(null);
     }
 
     @RequestMapping(path = "/delete", method = RequestMethod.POST)
-    public void delete(@RequestBody FileQueryDto dto) throws Exception {
+    public CommonResult delete(@RequestBody FileQueryDto dto) throws Exception {
          cosService.delete(dto.getPath(),dto.getFileName());
-
+        return CommonResult.success(null);
     }
 }
