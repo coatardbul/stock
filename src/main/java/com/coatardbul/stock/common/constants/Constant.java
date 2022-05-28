@@ -54,6 +54,19 @@ public class Constant {
 
             );
 
+    /**
+     * 日期区间情绪统计,统计涨跌幅，
+     */
+    public static ThreadPoolExecutor fileThreadPool =
+            new ThreadPoolExecutor(
+                    Runtime.getRuntime().availableProcessors(),
+                    100,
+                    1,
+                    TimeUnit.MINUTES,
+                    new ArrayBlockingQueue<Runnable>(1000),
+                    new ThreadFactoryBuilder().setNameFormat("file-range-%d").build()
+
+            );
 
 
     /**

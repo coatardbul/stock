@@ -34,3 +34,24 @@ xxl:
       logretentiondays: 30
       #      logpath: /Users/coatardbul/Desktop/xxljob
       logpath: /usr/local/xxl_job/client
+
+
+##邮箱发送服务，sendFrom 发送邮箱，sendFromAuthCode 邮箱授权码，不是密码！！
+##emailProp 邮箱服务器 verifyCodeOutServiceTime 邮箱失效时间（分钟）
+##verifyCodeLength 验证码长度
+email:
+  service:
+    sendFrom: 953903969@qq.com
+    sendFromAuthCode: lsgajdcdlzhqbcih
+    emailProp: smtp.qq.com
+
+
+
+##腾讯云对象存储
+cos:
+  baseUrl: https://stable-up-1254163062.cos.ap-nanjing.myqcloud.com
+  secretId: AKIDc4JL8gy1oNhmbAUYNwGK9i26vWyB9uPf
+  secretKey: 3qOhkX5OREl36uUrzrUryqSovnPlriKK
+  regionName: ap-nanjing
+  bucketName: stable-up-1254163062
+  folderPrefix: /files
