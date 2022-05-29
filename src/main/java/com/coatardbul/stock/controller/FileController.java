@@ -8,11 +8,13 @@ import io.swagger.annotations.Api;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.http.HttpRequest;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
@@ -36,7 +38,14 @@ public class FileController {
     CosService cosService;
 
     @RequestMapping(path = "/upload", method = RequestMethod.POST)
-    public CommonResult<String> cosUpload(MultipartFile file, HttpServletRequest req) throws Exception {
+    public CommonResult<String> cosUpload( HttpServletRequest req) throws Exception {
+        MultiValueMap<String, MultipartFile> mf = null;
+        if (req instanceof MultipartHttpServletRequest) {
+            mf = ((MultipartHttpServletRequest) req).getMultiFileMap();
+        }
+        List<MultipartFile> files = mf.get("file");
+        log.info("此次上传文件个数：{}", files.size());
+        MultipartFile file = files.get(0);
         String upload = cosService.upload( req.getParameter("path"), file);
         return CommonResult.success(upload) ;
     }
@@ -55,6 +64,11 @@ public class FileController {
     @RequestMapping(path = "/delete", method = RequestMethod.POST)
     public CommonResult delete(@RequestBody FileQueryDto dto) throws Exception {
          cosService.delete(dto.getPath(),dto.getFileName());
+        return CommonResult.success(null);
+    }
+    @RequestMapping(path = "/deleteFolder", method = RequestMethod.POST)
+    public CommonResult deleteFolder(@RequestBody FileQueryDto dto) throws Exception {
+        cosService.deleteFolder(dto.getPath(),dto.getFileName());
         return CommonResult.success(null);
     }
 }

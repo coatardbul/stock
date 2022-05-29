@@ -8,14 +8,18 @@ import com.qcloud.cos.auth.BasicCOSCredentials;
 import com.qcloud.cos.auth.COSCredentials;
 import com.qcloud.cos.exception.CosClientException;
 import com.qcloud.cos.exception.CosServiceException;
+import com.qcloud.cos.exception.MultiObjectDeleteException;
 import com.qcloud.cos.http.HttpProtocol;
 import com.qcloud.cos.model.COSObjectSummary;
+import com.qcloud.cos.model.DeleteObjectsRequest;
+import com.qcloud.cos.model.DeleteObjectsResult;
 import com.qcloud.cos.model.ListObjectsRequest;
 import com.qcloud.cos.model.ObjectListing;
 import com.qcloud.cos.model.ObjectMetadata;
 import com.qcloud.cos.model.PutObjectRequest;
 import com.qcloud.cos.region.Region;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -112,7 +116,14 @@ public class CosService {
     }
 
     public void delete(String path, String fileName) {
-        cosClient.deleteObject(cosConfig.getBucketName(), path + fileName);
+        String delete="";
+        if(StringUtils.isNotBlank(path)){
+            delete+=path;
+        }
+        if(StringUtils.isNotBlank(fileName)){
+            delete+=fileName;
+        }
+        cosClient.deleteObject(cosConfig.getBucketName(), delete);
     }
 
 
@@ -145,8 +156,18 @@ public class CosService {
                 String keyTemp = cosObjectSummary.getKey();
                 FileBo fileBo = new FileBo();
                 URL objectUrl = cosClient.getObjectUrl(cosConfig.getBucketName(), keyTemp);
-                fileBo.setUrl(objectUrl.getHost() + objectUrl.getPath());
-                fileBo.setFileName(keyTemp);
+                fileBo.setUrl(objectUrl.toString());
+                if(keyTemp.contains("/")){
+                    String substring = keyTemp.substring(keyTemp.lastIndexOf("/")+1, keyTemp.length());
+                    fileBo.setFileName(substring);
+
+                }else {
+                    fileBo.setFileName(keyTemp);
+                }
+                fileBo.setFilePath(path);
+                if(keyTemp.equals(path)){
+                    continue;
+                }
                 fileBo.setFileType("2");
                 result.add(fileBo);
             }
@@ -167,4 +188,70 @@ public class CosService {
     }
 
 
+    public void deleteFolder(String path, String fileName) {
+        String delDir="";
+        if(StringUtils.isNotBlank(path)){
+            delDir+=path;
+        }
+        if(StringUtils.isNotBlank(fileName)){
+            delDir+=fileName;
+        }
+
+
+        ListObjectsRequest listObjectsRequest = new ListObjectsRequest();
+// 设置 bucket 名称
+        listObjectsRequest.setBucketName(cosConfig.getBucketName());
+// prefix 表示列出的对象名以 prefix 为前缀
+// 这里填要列出的目录的相对 bucket 的路径
+        listObjectsRequest.setPrefix(delDir);
+// 设置最大遍历出多少个对象, 一次 listobject 最大支持1000
+        listObjectsRequest.setMaxKeys(1000);
+
+// 保存每次列出的结果
+        ObjectListing objectListing = null;
+
+        do {
+            try {
+                objectListing = cosClient.listObjects(listObjectsRequest);
+            } catch (CosServiceException e) {
+                e.printStackTrace();
+                return;
+            } catch (CosClientException e) {
+                e.printStackTrace();
+                return;
+            }
+
+            // 这里保存列出的对象列表
+            List<COSObjectSummary> cosObjectSummaries = objectListing.getObjectSummaries();
+
+            ArrayList<DeleteObjectsRequest.KeyVersion> delObjects = new ArrayList<DeleteObjectsRequest.KeyVersion>();
+
+            for (COSObjectSummary cosObjectSummary : cosObjectSummaries) {
+                delObjects.add(new DeleteObjectsRequest.KeyVersion(cosObjectSummary.getKey()));
+            }
+
+            DeleteObjectsRequest deleteObjectsRequest = new DeleteObjectsRequest(cosConfig.getBucketName());
+
+            deleteObjectsRequest.setKeys(delObjects);
+
+            try {
+                DeleteObjectsResult deleteObjectsResult = cosClient.deleteObjects(deleteObjectsRequest);
+                List<DeleteObjectsResult.DeletedObject> deleteObjectResultArray = deleteObjectsResult.getDeletedObjects();
+            } catch (MultiObjectDeleteException mde) {
+                // 如果部分删除成功部分失败, 返回 MultiObjectDeleteException
+                List<DeleteObjectsResult.DeletedObject> deleteObjects = mde.getDeletedObjects();
+                List<MultiObjectDeleteException.DeleteError> deleteErrors = mde.getErrors();
+            } catch (CosServiceException e) {
+                e.printStackTrace();
+                return;
+            } catch (CosClientException e) {
+                e.printStackTrace();
+                return;
+            }
+
+            // 标记下一次开始的位置
+            String nextMarker = objectListing.getNextMarker();
+            listObjectsRequest.setMarker(nextMarker);
+        } while (objectListing.isTruncated());
+    }
 }

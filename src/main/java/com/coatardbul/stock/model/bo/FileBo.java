@@ -15,6 +15,8 @@ public class FileBo {
 
     private String url;
 
+    private String filePath;
+
     private String fileName;
 
     /**
