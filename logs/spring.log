@@ -1,498 +1,486 @@
-2022-05-29 00:01:16.131 DEBUG 62308 --- [http-nio-9006-exec-6] o.s.web.servlet.DispatcherServlet        : POST "/stock/file/getHeadList", parameters={}
-2022-05-29 00:01:16.164 DEBUG 62308 --- [http-nio-9006-exec-6] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to public com.coatardbul.stock.common.api.CommonResult<java.util.List<com.coatardbul.stock.model.bo.FileBo>> com.coatardbul.stock.controller.FileController.getHeadList(com.coatardbul.stock.model.dto.FileQueryDto) throws java.lang.Exception
-2022-05-29 00:01:16.165 DEBUG 62308 --- [http-nio-9006-exec-6] m.m.a.RequestResponseBodyMethodProcessor : Read "application/json;charset=UTF-8" to [FileQueryDto(path=, fileName=)]
-2022-05-29 00:01:16.825 DEBUG 62308 --- [http-nio-9006-exec-6] m.m.a.RequestResponseBodyMethodProcessor : Using 'application/json', given [application/json, text/plain, */*] and supported [application/json, application/*+json, application/json, application/*+json]
-2022-05-29 00:01:16.825 DEBUG 62308 --- [http-nio-9006-exec-6] m.m.a.RequestResponseBodyMethodProcessor : Writing [com.coatardbul.stock.common.api.CommonResult@3ecbd702]
-2022-05-29 00:01:16.826 DEBUG 62308 --- [http-nio-9006-exec-6] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
-2022-05-29 00:01:27.640 DEBUG 62308 --- [http-nio-9006-exec-9] o.s.web.servlet.DispatcherServlet        : POST "/stock/file/mkdir", parameters={}
-2022-05-29 00:01:27.642 DEBUG 62308 --- [http-nio-9006-exec-9] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to public com.coatardbul.stock.common.api.CommonResult com.coatardbul.stock.controller.FileController.mkdir(com.coatardbul.stock.model.dto.FileQueryDto) throws java.lang.Exception
-2022-05-29 00:01:27.643 DEBUG 62308 --- [http-nio-9006-exec-9] m.m.a.RequestResponseBodyMethodProcessor : Read "application/json;charset=UTF-8" to [FileQueryDto(path=hello, fileName=null)]
-2022-05-29 00:01:28.236 DEBUG 62308 --- [http-nio-9006-exec-9] m.m.a.RequestResponseBodyMethodProcessor : Using 'application/json', given [application/json, text/plain, */*] and supported [application/json, application/*+json, application/json, application/*+json]
-2022-05-29 00:01:28.237 DEBUG 62308 --- [http-nio-9006-exec-9] m.m.a.RequestResponseBodyMethodProcessor : Writing [com.coatardbul.stock.common.api.CommonResult@236e97a4]
-2022-05-29 00:01:28.237 DEBUG 62308 --- [http-nio-9006-exec-9] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
-2022-05-29 00:01:30.647 DEBUG 62308 --- [http-nio-9006-exec-8] o.s.web.servlet.DispatcherServlet        : POST "/stock/file/getHeadList", parameters={}
-2022-05-29 00:01:30.647 DEBUG 62308 --- [http-nio-9006-exec-8] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to public com.coatardbul.stock.common.api.CommonResult<java.util.List<com.coatardbul.stock.model.bo.FileBo>> com.coatardbul.stock.controller.FileController.getHeadList(com.coatardbul.stock.model.dto.FileQueryDto) throws java.lang.Exception
-2022-05-29 00:01:30.648 DEBUG 62308 --- [http-nio-9006-exec-8] m.m.a.RequestResponseBodyMethodProcessor : Read "application/json;charset=UTF-8" to [FileQueryDto(path=hello, fileName=)]
-2022-05-29 00:01:30.758 DEBUG 62308 --- [http-nio-9006-exec-8] m.m.a.RequestResponseBodyMethodProcessor : Using 'application/json', given [application/json, text/plain, */*] and supported [application/json, application/*+json, application/json, application/*+json]
-2022-05-29 00:01:30.758 DEBUG 62308 --- [http-nio-9006-exec-8] m.m.a.RequestResponseBodyMethodProcessor : Writing [com.coatardbul.stock.common.api.CommonResult@d04d376]
-2022-05-29 00:01:30.759 DEBUG 62308 --- [http-nio-9006-exec-8] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
-2022-05-29 00:01:37.426 DEBUG 62308 --- [http-nio-9006-exec-7] o.s.web.servlet.DispatcherServlet        : POST "/stock/file/getHeadList", parameters={}
-2022-05-29 00:01:37.426 DEBUG 62308 --- [http-nio-9006-exec-7] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to public com.coatardbul.stock.common.api.CommonResult<java.util.List<com.coatardbul.stock.model.bo.FileBo>> com.coatardbul.stock.controller.FileController.getHeadList(com.coatardbul.stock.model.dto.FileQueryDto) throws java.lang.Exception
-2022-05-29 00:01:37.427 DEBUG 62308 --- [http-nio-9006-exec-7] m.m.a.RequestResponseBodyMethodProcessor : Read "application/json;charset=UTF-8" to [FileQueryDto(path=, fileName=)]
-2022-05-29 00:01:37.900 DEBUG 62308 --- [http-nio-9006-exec-7] m.m.a.RequestResponseBodyMethodProcessor : Using 'application/json', given [application/json, text/plain, */*] and supported [application/json, application/*+json, application/json, application/*+json]
-2022-05-29 00:01:37.901 DEBUG 62308 --- [http-nio-9006-exec-7] m.m.a.RequestResponseBodyMethodProcessor : Writing [com.coatardbul.stock.common.api.CommonResult@32580ffd]
-2022-05-29 00:01:37.901 DEBUG 62308 --- [http-nio-9006-exec-7] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
-2022-05-29 00:01:43.328 DEBUG 62308 --- [http-nio-9006-exec-10] o.s.web.servlet.DispatcherServlet        : POST "/stock/file/getHeadList", parameters={}
-2022-05-29 00:01:43.328 DEBUG 62308 --- [http-nio-9006-exec-10] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to public com.coatardbul.stock.common.api.CommonResult<java.util.List<com.coatardbul.stock.model.bo.FileBo>> com.coatardbul.stock.controller.FileController.getHeadList(com.coatardbul.stock.model.dto.FileQueryDto) throws java.lang.Exception
-2022-05-29 00:01:43.329 DEBUG 62308 --- [http-nio-9006-exec-10] m.m.a.RequestResponseBodyMethodProcessor : Read "application/json;charset=UTF-8" to [FileQueryDto(path=hello/, fileName=)]
-2022-05-29 00:01:43.457 DEBUG 62308 --- [http-nio-9006-exec-10] m.m.a.RequestResponseBodyMethodProcessor : Using 'application/json', given [application/json, text/plain, */*] and supported [application/json, application/*+json, application/json, application/*+json]
-2022-05-29 00:01:43.458 DEBUG 62308 --- [http-nio-9006-exec-10] m.m.a.RequestResponseBodyMethodProcessor : Writing [com.coatardbul.stock.common.api.CommonResult@2e06be96]
-2022-05-29 00:01:43.458 DEBUG 62308 --- [http-nio-9006-exec-10] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
-2022-05-29 00:01:45.681 DEBUG 62308 --- [http-nio-9006-exec-1] o.s.web.servlet.DispatcherServlet        : POST "/stock/file/getHeadList", parameters={}
-2022-05-29 00:01:45.681 DEBUG 62308 --- [http-nio-9006-exec-1] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to public com.coatardbul.stock.common.api.CommonResult<java.util.List<com.coatardbul.stock.model.bo.FileBo>> com.coatardbul.stock.controller.FileController.getHeadList(com.coatardbul.stock.model.dto.FileQueryDto) throws java.lang.Exception
-2022-05-29 00:01:45.682 DEBUG 62308 --- [http-nio-9006-exec-1] m.m.a.RequestResponseBodyMethodProcessor : Read "application/json;charset=UTF-8" to [FileQueryDto(path=, fileName=)]
-2022-05-29 00:01:45.795 DEBUG 62308 --- [http-nio-9006-exec-1] m.m.a.RequestResponseBodyMethodProcessor : Using 'application/json', given [application/json, text/plain, */*] and supported [application/json, application/*+json, application/json, application/*+json]
-2022-05-29 00:01:45.795 DEBUG 62308 --- [http-nio-9006-exec-1] m.m.a.RequestResponseBodyMethodProcessor : Writing [com.coatardbul.stock.common.api.CommonResult@1a6dedb1]
-2022-05-29 00:01:45.795 DEBUG 62308 --- [http-nio-9006-exec-1] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
-2022-05-29 00:01:47.511 DEBUG 62308 --- [http-nio-9006-exec-2] o.s.web.servlet.DispatcherServlet        : POST "/stock/file/getHeadList", parameters={}
-2022-05-29 00:01:47.511 DEBUG 62308 --- [http-nio-9006-exec-2] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to public com.coatardbul.stock.common.api.CommonResult<java.util.List<com.coatardbul.stock.model.bo.FileBo>> com.coatardbul.stock.controller.FileController.getHeadList(com.coatardbul.stock.model.dto.FileQueryDto) throws java.lang.Exception
-2022-05-29 00:01:47.512 DEBUG 62308 --- [http-nio-9006-exec-2] m.m.a.RequestResponseBodyMethodProcessor : Read "application/json;charset=UTF-8" to [FileQueryDto(path=hello/, fileName=)]
-2022-05-29 00:01:47.633 DEBUG 62308 --- [http-nio-9006-exec-2] m.m.a.RequestResponseBodyMethodProcessor : Using 'application/json', given [application/json, text/plain, */*] and supported [application/json, application/*+json, application/json, application/*+json]
-2022-05-29 00:01:47.633 DEBUG 62308 --- [http-nio-9006-exec-2] m.m.a.RequestResponseBodyMethodProcessor : Writing [com.coatardbul.stock.common.api.CommonResult@fd8ee11]
-2022-05-29 00:01:47.633 DEBUG 62308 --- [http-nio-9006-exec-2] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
-2022-05-29 00:01:51.846 DEBUG 62308 --- [http-nio-9006-exec-3] o.s.web.servlet.DispatcherServlet        : POST "/stock/file/getHeadList", parameters={}
-2022-05-29 00:01:51.846 DEBUG 62308 --- [http-nio-9006-exec-3] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to public com.coatardbul.stock.common.api.CommonResult<java.util.List<com.coatardbul.stock.model.bo.FileBo>> com.coatardbul.stock.controller.FileController.getHeadList(com.coatardbul.stock.model.dto.FileQueryDto) throws java.lang.Exception
-2022-05-29 00:01:51.847 DEBUG 62308 --- [http-nio-9006-exec-3] m.m.a.RequestResponseBodyMethodProcessor : Read "application/json;charset=UTF-8" to [FileQueryDto(path=null, fileName=)]
-2022-05-29 00:01:51.849 DEBUG 62308 --- [http-nio-9006-exec-4] o.s.web.servlet.DispatcherServlet        : POST "/stock/file/upload", parameters={masked}
-2022-05-29 00:01:51.849 DEBUG 62308 --- [http-nio-9006-exec-4] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to public com.coatardbul.stock.common.api.CommonResult<java.lang.String> com.coatardbul.stock.controller.FileController.cosUpload(javax.servlet.http.HttpServletRequest) throws java.lang.Exception
-2022-05-29 00:01:51.850  INFO 62308 --- [http-nio-9006-exec-4] c.c.stock.controller.FileController      : 此次上传文件个数：1
-2022-05-29 00:01:51.981 DEBUG 62308 --- [http-nio-9006-exec-3] m.m.a.RequestResponseBodyMethodProcessor : Using 'application/json', given [application/json, text/plain, */*] and supported [application/json, application/*+json, application/json, application/*+json]
-2022-05-29 00:01:51.981 DEBUG 62308 --- [http-nio-9006-exec-3] m.m.a.RequestResponseBodyMethodProcessor : Writing [com.coatardbul.stock.common.api.CommonResult@140ff862]
-2022-05-29 00:01:51.982 DEBUG 62308 --- [http-nio-9006-exec-3] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
-2022-05-29 00:01:52.950 DEBUG 62308 --- [http-nio-9006-exec-4] m.m.a.RequestResponseBodyMethodProcessor : Using 'application/json', given [application/json, text/plain, */*] and supported [application/json, application/*+json, application/json, application/*+json]
-2022-05-29 00:01:52.950 DEBUG 62308 --- [http-nio-9006-exec-4] m.m.a.RequestResponseBodyMethodProcessor : Writing [com.coatardbul.stock.common.api.CommonResult@33c4447a]
-2022-05-29 00:01:52.951 DEBUG 62308 --- [http-nio-9006-exec-4] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
-2022-05-29 00:01:55.695 DEBUG 62308 --- [http-nio-9006-exec-5] o.s.web.servlet.DispatcherServlet        : POST "/stock/file/getHeadList", parameters={}
-2022-05-29 00:01:55.696 DEBUG 62308 --- [http-nio-9006-exec-5] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to public com.coatardbul.stock.common.api.CommonResult<java.util.List<com.coatardbul.stock.model.bo.FileBo>> com.coatardbul.stock.controller.FileController.getHeadList(com.coatardbul.stock.model.dto.FileQueryDto) throws java.lang.Exception
-2022-05-29 00:01:55.696 DEBUG 62308 --- [http-nio-9006-exec-5] m.m.a.RequestResponseBodyMethodProcessor : Read "application/json;charset=UTF-8" to [FileQueryDto(path=hello/, fileName=)]
-2022-05-29 00:01:55.828 DEBUG 62308 --- [http-nio-9006-exec-5] m.m.a.RequestResponseBodyMethodProcessor : Using 'application/json', given [application/json, text/plain, */*] and supported [application/json, application/*+json, application/json, application/*+json]
-2022-05-29 00:01:55.828 DEBUG 62308 --- [http-nio-9006-exec-5] m.m.a.RequestResponseBodyMethodProcessor : Writing [com.coatardbul.stock.common.api.CommonResult@2326341a]
-2022-05-29 00:01:55.829 DEBUG 62308 --- [http-nio-9006-exec-5] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
-2022-05-29 00:01:59.060 DEBUG 62308 --- [http-nio-9006-exec-6] o.s.web.servlet.DispatcherServlet        : POST "/stock/file/getHeadList", parameters={}
-2022-05-29 00:01:59.060 DEBUG 62308 --- [http-nio-9006-exec-6] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to public com.coatardbul.stock.common.api.CommonResult<java.util.List<com.coatardbul.stock.model.bo.FileBo>> com.coatardbul.stock.controller.FileController.getHeadList(com.coatardbul.stock.model.dto.FileQueryDto) throws java.lang.Exception
-2022-05-29 00:01:59.061 DEBUG 62308 --- [http-nio-9006-exec-6] m.m.a.RequestResponseBodyMethodProcessor : Read "application/json;charset=UTF-8" to [FileQueryDto(path=, fileName=)]
-2022-05-29 00:01:59.457 DEBUG 62308 --- [http-nio-9006-exec-6] m.m.a.RequestResponseBodyMethodProcessor : Using 'application/json', given [application/json, text/plain, */*] and supported [application/json, application/*+json, application/json, application/*+json]
-2022-05-29 00:01:59.457 DEBUG 62308 --- [http-nio-9006-exec-6] m.m.a.RequestResponseBodyMethodProcessor : Writing [com.coatardbul.stock.common.api.CommonResult@18153153]
-2022-05-29 00:01:59.458 DEBUG 62308 --- [http-nio-9006-exec-6] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
-2022-05-29 00:02:44.769  INFO 62308 --- [AsyncResolver-bootstrap-executor-0] c.n.d.s.r.aws.ConfigClusterResolver      : Resolving eureka endpoints via configuration
-2022-05-29 00:03:10.578 DEBUG 62308 --- [http-nio-9006-exec-9] o.s.web.servlet.DispatcherServlet        : POST "/stock/file/getHeadList", parameters={}
-2022-05-29 00:03:10.579 DEBUG 62308 --- [http-nio-9006-exec-9] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to public com.coatardbul.stock.common.api.CommonResult<java.util.List<com.coatardbul.stock.model.bo.FileBo>> com.coatardbul.stock.controller.FileController.getHeadList(com.coatardbul.stock.model.dto.FileQueryDto) throws java.lang.Exception
-2022-05-29 00:03:10.580 DEBUG 62308 --- [http-nio-9006-exec-9] m.m.a.RequestResponseBodyMethodProcessor : Read "application/json;charset=UTF-8" to [FileQueryDto(path=, fileName=)]
-2022-05-29 00:03:11.426 DEBUG 62308 --- [http-nio-9006-exec-9] m.m.a.RequestResponseBodyMethodProcessor : Using 'application/json', given [application/json, text/plain, */*] and supported [application/json, application/*+json, application/json, application/*+json]
-2022-05-29 00:03:11.426 DEBUG 62308 --- [http-nio-9006-exec-9] m.m.a.RequestResponseBodyMethodProcessor : Writing [com.coatardbul.stock.common.api.CommonResult@6f2b68e4]
-2022-05-29 00:03:11.427 DEBUG 62308 --- [http-nio-9006-exec-9] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
-2022-05-29 00:03:20.480 DEBUG 62308 --- [http-nio-9006-exec-8] o.s.web.servlet.DispatcherServlet        : POST "/stock/file/mkdir", parameters={}
-2022-05-29 00:03:20.481 DEBUG 62308 --- [http-nio-9006-exec-8] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to public com.coatardbul.stock.common.api.CommonResult com.coatardbul.stock.controller.FileController.mkdir(com.coatardbul.stock.model.dto.FileQueryDto) throws java.lang.Exception
-2022-05-29 00:03:20.481 DEBUG 62308 --- [http-nio-9006-exec-8] m.m.a.RequestResponseBodyMethodProcessor : Read "application/json;charset=UTF-8" to [FileQueryDto(path=sdfsdf, fileName=null)]
-2022-05-29 00:03:20.845 DEBUG 62308 --- [http-nio-9006-exec-8] m.m.a.RequestResponseBodyMethodProcessor : Using 'application/json', given [application/json, text/plain, */*] and supported [application/json, application/*+json, application/json, application/*+json]
-2022-05-29 00:03:20.845 DEBUG 62308 --- [http-nio-9006-exec-8] m.m.a.RequestResponseBodyMethodProcessor : Writing [com.coatardbul.stock.common.api.CommonResult@1e26d49]
-2022-05-29 00:03:20.846 DEBUG 62308 --- [http-nio-9006-exec-8] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
-2022-05-29 00:03:23.491 DEBUG 62308 --- [http-nio-9006-exec-7] o.s.web.servlet.DispatcherServlet        : POST "/stock/file/getHeadList", parameters={}
-2022-05-29 00:03:23.492 DEBUG 62308 --- [http-nio-9006-exec-7] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to public com.coatardbul.stock.common.api.CommonResult<java.util.List<com.coatardbul.stock.model.bo.FileBo>> com.coatardbul.stock.controller.FileController.getHeadList(com.coatardbul.stock.model.dto.FileQueryDto) throws java.lang.Exception
-2022-05-29 00:03:23.492 DEBUG 62308 --- [http-nio-9006-exec-7] m.m.a.RequestResponseBodyMethodProcessor : Read "application/json;charset=UTF-8" to [FileQueryDto(path=sdfsdf, fileName=)]
-2022-05-29 00:03:23.612 DEBUG 62308 --- [http-nio-9006-exec-7] m.m.a.RequestResponseBodyMethodProcessor : Using 'application/json', given [application/json, text/plain, */*] and supported [application/json, application/*+json, application/json, application/*+json]
-2022-05-29 00:03:23.612 DEBUG 62308 --- [http-nio-9006-exec-7] m.m.a.RequestResponseBodyMethodProcessor : Writing [com.coatardbul.stock.common.api.CommonResult@3cc947d8]
-2022-05-29 00:03:23.613 DEBUG 62308 --- [http-nio-9006-exec-7] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
-2022-05-29 00:05:19.188 DEBUG 62308 --- [http-nio-9006-exec-10] o.s.web.servlet.DispatcherServlet        : POST "/stock/file/getHeadList", parameters={}
-2022-05-29 00:05:19.189 DEBUG 62308 --- [http-nio-9006-exec-10] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to public com.coatardbul.stock.common.api.CommonResult<java.util.List<com.coatardbul.stock.model.bo.FileBo>> com.coatardbul.stock.controller.FileController.getHeadList(com.coatardbul.stock.model.dto.FileQueryDto) throws java.lang.Exception
-2022-05-29 00:05:19.190 DEBUG 62308 --- [http-nio-9006-exec-10] m.m.a.RequestResponseBodyMethodProcessor : Read "application/json;charset=UTF-8" to [FileQueryDto(path=, fileName=)]
-2022-05-29 00:05:19.785 DEBUG 62308 --- [http-nio-9006-exec-10] m.m.a.RequestResponseBodyMethodProcessor : Using 'application/json', given [application/json, text/plain, */*] and supported [application/json, application/*+json, application/json, application/*+json]
-2022-05-29 00:05:19.785 DEBUG 62308 --- [http-nio-9006-exec-10] m.m.a.RequestResponseBodyMethodProcessor : Writing [com.coatardbul.stock.common.api.CommonResult@30b674b0]
-2022-05-29 00:05:19.786 DEBUG 62308 --- [http-nio-9006-exec-10] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
-2022-05-29 00:05:31.384 DEBUG 62308 --- [http-nio-9006-exec-1] o.s.web.servlet.DispatcherServlet        : POST "/stock/file/mkdir", parameters={}
-2022-05-29 00:05:31.385 DEBUG 62308 --- [http-nio-9006-exec-1] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to public com.coatardbul.stock.common.api.CommonResult com.coatardbul.stock.controller.FileController.mkdir(com.coatardbul.stock.model.dto.FileQueryDto) throws java.lang.Exception
-2022-05-29 00:05:31.386 DEBUG 62308 --- [http-nio-9006-exec-1] m.m.a.RequestResponseBodyMethodProcessor : Read "application/json;charset=UTF-8" to [FileQueryDto(path=ffffff, fileName=null)]
-2022-05-29 00:05:31.903 DEBUG 62308 --- [http-nio-9006-exec-1] m.m.a.RequestResponseBodyMethodProcessor : Using 'application/json', given [application/json, text/plain, */*] and supported [application/json, application/*+json, application/json, application/*+json]
-2022-05-29 00:05:31.904 DEBUG 62308 --- [http-nio-9006-exec-1] m.m.a.RequestResponseBodyMethodProcessor : Writing [com.coatardbul.stock.common.api.CommonResult@53c662fa]
-2022-05-29 00:05:31.904 DEBUG 62308 --- [http-nio-9006-exec-1] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
-2022-05-29 00:05:34.394 DEBUG 62308 --- [http-nio-9006-exec-2] o.s.web.servlet.DispatcherServlet        : POST "/stock/file/getHeadList", parameters={}
-2022-05-29 00:05:34.395 DEBUG 62308 --- [http-nio-9006-exec-2] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to public com.coatardbul.stock.common.api.CommonResult<java.util.List<com.coatardbul.stock.model.bo.FileBo>> com.coatardbul.stock.controller.FileController.getHeadList(com.coatardbul.stock.model.dto.FileQueryDto) throws java.lang.Exception
-2022-05-29 00:05:34.395 DEBUG 62308 --- [http-nio-9006-exec-2] m.m.a.RequestResponseBodyMethodProcessor : Read "application/json;charset=UTF-8" to [FileQueryDto(path=, fileName=)]
-2022-05-29 00:05:34.504 DEBUG 62308 --- [http-nio-9006-exec-2] m.m.a.RequestResponseBodyMethodProcessor : Using 'application/json', given [application/json, text/plain, */*] and supported [application/json, application/*+json, application/json, application/*+json]
-2022-05-29 00:05:34.504 DEBUG 62308 --- [http-nio-9006-exec-2] m.m.a.RequestResponseBodyMethodProcessor : Writing [com.coatardbul.stock.common.api.CommonResult@796d43ae]
-2022-05-29 00:05:34.505 DEBUG 62308 --- [http-nio-9006-exec-2] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
-2022-05-29 00:06:24.355 DEBUG 62308 --- [http-nio-9006-exec-3] o.s.web.servlet.DispatcherServlet        : POST "/stock/file/getHeadList", parameters={}
-2022-05-29 00:06:24.355 DEBUG 62308 --- [http-nio-9006-exec-3] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to public com.coatardbul.stock.common.api.CommonResult<java.util.List<com.coatardbul.stock.model.bo.FileBo>> com.coatardbul.stock.controller.FileController.getHeadList(com.coatardbul.stock.model.dto.FileQueryDto) throws java.lang.Exception
-2022-05-29 00:06:24.357 DEBUG 62308 --- [http-nio-9006-exec-3] m.m.a.RequestResponseBodyMethodProcessor : Read "application/json;charset=UTF-8" to [FileQueryDto(path=, fileName=)]
-2022-05-29 00:06:24.891 DEBUG 62308 --- [http-nio-9006-exec-3] m.m.a.RequestResponseBodyMethodProcessor : Using 'application/json', given [application/json, text/plain, */*] and supported [application/json, application/*+json, application/json, application/*+json]
-2022-05-29 00:06:24.892 DEBUG 62308 --- [http-nio-9006-exec-3] m.m.a.RequestResponseBodyMethodProcessor : Writing [com.coatardbul.stock.common.api.CommonResult@7ff4bd8]
-2022-05-29 00:06:24.892 DEBUG 62308 --- [http-nio-9006-exec-3] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
-2022-05-29 00:07:34.068 DEBUG 62308 --- [http-nio-9006-exec-4] o.s.web.servlet.DispatcherServlet        : POST "/stock/file/getHeadList", parameters={}
-2022-05-29 00:07:34.069 DEBUG 62308 --- [http-nio-9006-exec-4] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to public com.coatardbul.stock.common.api.CommonResult<java.util.List<com.coatardbul.stock.model.bo.FileBo>> com.coatardbul.stock.controller.FileController.getHeadList(com.coatardbul.stock.model.dto.FileQueryDto) throws java.lang.Exception
-2022-05-29 00:07:34.070 DEBUG 62308 --- [http-nio-9006-exec-4] m.m.a.RequestResponseBodyMethodProcessor : Read "application/json;charset=UTF-8" to [FileQueryDto(path=, fileName=)]
-2022-05-29 00:07:34.407 DEBUG 62308 --- [http-nio-9006-exec-4] m.m.a.RequestResponseBodyMethodProcessor : Using 'application/json', given [application/json, text/plain, */*] and supported [application/json, application/*+json, application/json, application/*+json]
-2022-05-29 00:07:34.407 DEBUG 62308 --- [http-nio-9006-exec-4] m.m.a.RequestResponseBodyMethodProcessor : Writing [com.coatardbul.stock.common.api.CommonResult@1d34b169]
-2022-05-29 00:07:34.408 DEBUG 62308 --- [http-nio-9006-exec-4] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
-2022-05-29 00:07:44.779  INFO 62308 --- [AsyncResolver-bootstrap-executor-0] c.n.d.s.r.aws.ConfigClusterResolver      : Resolving eureka endpoints via configuration
-2022-05-29 00:08:17.198 DEBUG 62308 --- [http-nio-9006-exec-5] o.s.web.servlet.DispatcherServlet        : POST "/stock/file/getHeadList", parameters={}
-2022-05-29 00:08:17.199 DEBUG 62308 --- [http-nio-9006-exec-5] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to public com.coatardbul.stock.common.api.CommonResult<java.util.List<com.coatardbul.stock.model.bo.FileBo>> com.coatardbul.stock.controller.FileController.getHeadList(com.coatardbul.stock.model.dto.FileQueryDto) throws java.lang.Exception
-2022-05-29 00:08:17.200 DEBUG 62308 --- [http-nio-9006-exec-5] m.m.a.RequestResponseBodyMethodProcessor : Read "application/json;charset=UTF-8" to [FileQueryDto(path=, fileName=)]
-2022-05-29 00:08:17.674 DEBUG 62308 --- [http-nio-9006-exec-5] m.m.a.RequestResponseBodyMethodProcessor : Using 'application/json', given [application/json, text/plain, */*] and supported [application/json, application/*+json, application/json, application/*+json]
-2022-05-29 00:08:17.674 DEBUG 62308 --- [http-nio-9006-exec-5] m.m.a.RequestResponseBodyMethodProcessor : Writing [com.coatardbul.stock.common.api.CommonResult@4b7e844a]
-2022-05-29 00:08:17.675 DEBUG 62308 --- [http-nio-9006-exec-5] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
-2022-05-29 00:08:33.984 DEBUG 62308 --- [http-nio-9006-exec-6] o.s.web.servlet.DispatcherServlet        : POST "/stock/file/getHeadList", parameters={}
-2022-05-29 00:08:33.984 DEBUG 62308 --- [http-nio-9006-exec-6] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to public com.coatardbul.stock.common.api.CommonResult<java.util.List<com.coatardbul.stock.model.bo.FileBo>> com.coatardbul.stock.controller.FileController.getHeadList(com.coatardbul.stock.model.dto.FileQueryDto) throws java.lang.Exception
-2022-05-29 00:08:33.985 DEBUG 62308 --- [http-nio-9006-exec-6] m.m.a.RequestResponseBodyMethodProcessor : Read "application/json;charset=UTF-8" to [FileQueryDto(path=, fileName=)]
-2022-05-29 00:08:34.334 DEBUG 62308 --- [http-nio-9006-exec-6] m.m.a.RequestResponseBodyMethodProcessor : Using 'application/json', given [application/json, text/plain, */*] and supported [application/json, application/*+json, application/json, application/*+json]
-2022-05-29 00:08:34.334 DEBUG 62308 --- [http-nio-9006-exec-6] m.m.a.RequestResponseBodyMethodProcessor : Writing [com.coatardbul.stock.common.api.CommonResult@7eda0fa2]
-2022-05-29 00:08:34.335 DEBUG 62308 --- [http-nio-9006-exec-6] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
-2022-05-29 00:10:29.273 DEBUG 62308 --- [http-nio-9006-exec-9] o.s.web.servlet.DispatcherServlet        : POST "/stock/file/getHeadList", parameters={}
-2022-05-29 00:10:29.274 DEBUG 62308 --- [http-nio-9006-exec-9] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to public com.coatardbul.stock.common.api.CommonResult<java.util.List<com.coatardbul.stock.model.bo.FileBo>> com.coatardbul.stock.controller.FileController.getHeadList(com.coatardbul.stock.model.dto.FileQueryDto) throws java.lang.Exception
-2022-05-29 00:10:29.275 DEBUG 62308 --- [http-nio-9006-exec-9] m.m.a.RequestResponseBodyMethodProcessor : Read "application/json;charset=UTF-8" to [FileQueryDto(path=, fileName=)]
-2022-05-29 00:10:29.793 DEBUG 62308 --- [http-nio-9006-exec-9] m.m.a.RequestResponseBodyMethodProcessor : Using 'application/json', given [application/json, text/plain, */*] and supported [application/json, application/*+json, application/json, application/*+json]
-2022-05-29 00:10:29.793 DEBUG 62308 --- [http-nio-9006-exec-9] m.m.a.RequestResponseBodyMethodProcessor : Writing [com.coatardbul.stock.common.api.CommonResult@4d9d369b]
-2022-05-29 00:10:29.794 DEBUG 62308 --- [http-nio-9006-exec-9] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
-2022-05-29 00:12:44.820  INFO 62308 --- [AsyncResolver-bootstrap-executor-0] c.n.d.s.r.aws.ConfigClusterResolver      : Resolving eureka endpoints via configuration
-2022-05-29 00:12:45.538 DEBUG 62308 --- [http-nio-9006-exec-8] o.s.web.servlet.DispatcherServlet        : POST "/stock/file/getHeadList", parameters={}
-2022-05-29 00:12:45.541 DEBUG 62308 --- [http-nio-9006-exec-8] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to public com.coatardbul.stock.common.api.CommonResult<java.util.List<com.coatardbul.stock.model.bo.FileBo>> com.coatardbul.stock.controller.FileController.getHeadList(com.coatardbul.stock.model.dto.FileQueryDto) throws java.lang.Exception
-2022-05-29 00:12:45.544 DEBUG 62308 --- [http-nio-9006-exec-8] m.m.a.RequestResponseBodyMethodProcessor : Read "application/json;charset=UTF-8" to [FileQueryDto(path=, fileName=)]
-2022-05-29 00:12:46.611 DEBUG 62308 --- [http-nio-9006-exec-8] m.m.a.RequestResponseBodyMethodProcessor : Using 'application/json', given [application/json, text/plain, */*] and supported [application/json, application/*+json, application/json, application/*+json]
-2022-05-29 00:12:46.611 DEBUG 62308 --- [http-nio-9006-exec-8] m.m.a.RequestResponseBodyMethodProcessor : Writing [com.coatardbul.stock.common.api.CommonResult@6c92d29a]
-2022-05-29 00:12:46.613 DEBUG 62308 --- [http-nio-9006-exec-8] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
-2022-05-29 00:14:08.189 DEBUG 62308 --- [http-nio-9006-exec-7] o.s.web.servlet.DispatcherServlet        : POST "/stock/file/getHeadList", parameters={}
-2022-05-29 00:14:08.190 DEBUG 62308 --- [http-nio-9006-exec-7] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to public com.coatardbul.stock.common.api.CommonResult<java.util.List<com.coatardbul.stock.model.bo.FileBo>> com.coatardbul.stock.controller.FileController.getHeadList(com.coatardbul.stock.model.dto.FileQueryDto) throws java.lang.Exception
-2022-05-29 00:14:08.191 DEBUG 62308 --- [http-nio-9006-exec-7] m.m.a.RequestResponseBodyMethodProcessor : Read "application/json;charset=UTF-8" to [FileQueryDto(path=, fileName=)]
-2022-05-29 00:14:08.550 DEBUG 62308 --- [http-nio-9006-exec-7] m.m.a.RequestResponseBodyMethodProcessor : Using 'application/json', given [application/json, text/plain, */*] and supported [application/json, application/*+json, application/json, application/*+json]
-2022-05-29 00:14:08.550 DEBUG 62308 --- [http-nio-9006-exec-7] m.m.a.RequestResponseBodyMethodProcessor : Writing [com.coatardbul.stock.common.api.CommonResult@3b438ebe]
-2022-05-29 00:14:08.551 DEBUG 62308 --- [http-nio-9006-exec-7] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
-2022-05-29 00:14:10.524 DEBUG 62308 --- [http-nio-9006-exec-10] o.s.web.servlet.DispatcherServlet        : POST "/stock/file/delete", parameters={}
-2022-05-29 00:14:10.524 DEBUG 62308 --- [http-nio-9006-exec-10] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to public com.coatardbul.stock.common.api.CommonResult com.coatardbul.stock.controller.FileController.delete(com.coatardbul.stock.model.dto.FileQueryDto) throws java.lang.Exception
-2022-05-29 00:14:10.527 DEBUG 62308 --- [http-nio-9006-exec-10] m.m.a.RequestResponseBodyMethodProcessor : Read "application/json;charset=UTF-8" to [FileQueryDto(path=null, fileName=images/)]
-2022-05-29 00:14:10.659 DEBUG 62308 --- [http-nio-9006-exec-10] m.m.a.RequestResponseBodyMethodProcessor : Using 'application/json', given [application/json, text/plain, */*] and supported [application/json, application/*+json, application/json, application/*+json]
-2022-05-29 00:14:10.672 DEBUG 62308 --- [http-nio-9006-exec-10] m.m.a.RequestResponseBodyMethodProcessor : Writing [com.coatardbul.stock.common.api.CommonResult@3e6211b6]
-2022-05-29 00:14:10.672 DEBUG 62308 --- [http-nio-9006-exec-10] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
-2022-05-29 00:14:51.197 DEBUG 62308 --- [http-nio-9006-exec-1] o.s.web.servlet.DispatcherServlet        : POST "/stock/file/delete", parameters={}
-2022-05-29 00:14:51.198 DEBUG 62308 --- [http-nio-9006-exec-1] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to public com.coatardbul.stock.common.api.CommonResult com.coatardbul.stock.controller.FileController.delete(com.coatardbul.stock.model.dto.FileQueryDto) throws java.lang.Exception
-2022-05-29 00:14:51.198 DEBUG 62308 --- [http-nio-9006-exec-1] m.m.a.RequestResponseBodyMethodProcessor : Read "application/json;charset=UTF-8" to [FileQueryDto(path=null, fileName=hello/)]
-2022-05-29 00:14:51.701 DEBUG 62308 --- [http-nio-9006-exec-1] m.m.a.RequestResponseBodyMethodProcessor : Using 'application/json', given [application/json, text/plain, */*] and supported [application/json, application/*+json, application/json, application/*+json]
-2022-05-29 00:14:51.701 DEBUG 62308 --- [http-nio-9006-exec-1] m.m.a.RequestResponseBodyMethodProcessor : Writing [com.coatardbul.stock.common.api.CommonResult@13e810e6]
-2022-05-29 00:14:51.702 DEBUG 62308 --- [http-nio-9006-exec-1] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
-2022-05-29 00:14:56.628 DEBUG 62308 --- [http-nio-9006-exec-2] o.s.web.servlet.DispatcherServlet        : POST "/stock/file/getHeadList", parameters={}
-2022-05-29 00:14:56.628 DEBUG 62308 --- [http-nio-9006-exec-2] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to public com.coatardbul.stock.common.api.CommonResult<java.util.List<com.coatardbul.stock.model.bo.FileBo>> com.coatardbul.stock.controller.FileController.getHeadList(com.coatardbul.stock.model.dto.FileQueryDto) throws java.lang.Exception
-2022-05-29 00:14:56.629 DEBUG 62308 --- [http-nio-9006-exec-2] m.m.a.RequestResponseBodyMethodProcessor : Read "application/json;charset=UTF-8" to [FileQueryDto(path=, fileName=)]
-2022-05-29 00:14:56.742 DEBUG 62308 --- [http-nio-9006-exec-2] m.m.a.RequestResponseBodyMethodProcessor : Using 'application/json', given [application/json, text/plain, */*] and supported [application/json, application/*+json, application/json, application/*+json]
-2022-05-29 00:14:56.742 DEBUG 62308 --- [http-nio-9006-exec-2] m.m.a.RequestResponseBodyMethodProcessor : Writing [com.coatardbul.stock.common.api.CommonResult@66d723d1]
-2022-05-29 00:14:56.743 DEBUG 62308 --- [http-nio-9006-exec-2] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
-2022-05-29 00:15:22.185 DEBUG 62308 --- [http-nio-9006-exec-3] o.s.web.servlet.DispatcherServlet        : POST "/stock/file/delete", parameters={}
-2022-05-29 00:15:22.185 DEBUG 62308 --- [http-nio-9006-exec-3] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to public com.coatardbul.stock.common.api.CommonResult com.coatardbul.stock.controller.FileController.delete(com.coatardbul.stock.model.dto.FileQueryDto) throws java.lang.Exception
-2022-05-29 00:15:22.186 DEBUG 62308 --- [http-nio-9006-exec-3] m.m.a.RequestResponseBodyMethodProcessor : Read "application/json;charset=UTF-8" to [FileQueryDto(path=null, fileName=hello/)]
-2022-05-29 00:17:02.562 DEBUG 62308 --- [http-nio-9006-exec-4] o.s.web.servlet.DispatcherServlet        : POST "/stock/file/getHeadList", parameters={}
-2022-05-29 00:17:02.564 DEBUG 62308 --- [http-nio-9006-exec-4] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to public com.coatardbul.stock.common.api.CommonResult<java.util.List<com.coatardbul.stock.model.bo.FileBo>> com.coatardbul.stock.controller.FileController.getHeadList(com.coatardbul.stock.model.dto.FileQueryDto) throws java.lang.Exception
-2022-05-29 00:17:02.564 DEBUG 62308 --- [http-nio-9006-exec-4] m.m.a.RequestResponseBodyMethodProcessor : Read "application/json;charset=UTF-8" to [FileQueryDto(path=null, fileName=)]
-2022-05-29 00:17:02.925 DEBUG 62308 --- [http-nio-9006-exec-3] m.m.a.RequestResponseBodyMethodProcessor : Using 'application/json', given [application/json, text/plain, */*] and supported [application/json, application/*+json, application/json, application/*+json]
-2022-05-29 00:17:02.925 DEBUG 62308 --- [http-nio-9006-exec-3] m.m.a.RequestResponseBodyMethodProcessor : Writing [com.coatardbul.stock.common.api.CommonResult@696d3771]
-2022-05-29 00:17:02.926 DEBUG 62308 --- [http-nio-9006-exec-3] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
-2022-05-29 00:17:02.927 DEBUG 62308 --- [http-nio-9006-exec-4] m.m.a.RequestResponseBodyMethodProcessor : Using 'application/json', given [application/json, text/plain, */*] and supported [application/json, application/*+json, application/json, application/*+json]
-2022-05-29 00:17:02.927 DEBUG 62308 --- [http-nio-9006-exec-4] m.m.a.RequestResponseBodyMethodProcessor : Writing [com.coatardbul.stock.common.api.CommonResult@460b5d64]
-2022-05-29 00:17:02.928 DEBUG 62308 --- [http-nio-9006-exec-4] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
-2022-05-29 00:17:15.960  WARN 62308 --- [http-nio-9006-exec-5] o.m.s.mapper.ClassPathMapperScanner      : No MyBatis mapper was found in '[com.coatardbul.stock.mapper]' package. Please check your configuration.
-2022-05-29 00:17:15.989  INFO 62308 --- [http-nio-9006-exec-5] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data repositories in DEFAULT mode.
-2022-05-29 00:17:16.007  INFO 62308 --- [http-nio-9006-exec-5] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 18ms. Found 0 repository interfaces.
-2022-05-29 00:17:16.084  INFO 62308 --- [http-nio-9006-exec-5] f.a.AutowiredAnnotationBeanPostProcessor : Autowired annotation should only be used on methods with parameters: public void com.coatardbul.stock.service.base.CosService.setClientConfig()
-2022-05-29 00:17:16.137 DEBUG 62308 --- [http-nio-9006-exec-5] o.s.web.servlet.DispatcherServlet        : Detected StandardServletMultipartResolver
-2022-05-29 00:17:16.159 DEBUG 62308 --- [http-nio-9006-exec-5] o.s.web.servlet.DispatcherServlet        : POST "/stock/file/getHeadList", parameters={}
-2022-05-29 00:17:16.162 DEBUG 62308 --- [http-nio-9006-exec-5] o.s.w.s.handler.SimpleUrlHandlerMapping  : Patterns [/**/favicon.ico] in 'faviconHandlerMapping'
-2022-05-29 00:17:16.163 DEBUG 62308 --- [http-nio-9006-exec-5] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to public com.coatardbul.stock.common.api.CommonResult<java.util.List<com.coatardbul.stock.model.bo.FileBo>> com.coatardbul.stock.controller.FileController.getHeadList(com.coatardbul.stock.model.dto.FileQueryDto) throws java.lang.Exception
-2022-05-29 00:17:16.168 DEBUG 62308 --- [http-nio-9006-exec-5] m.m.a.RequestResponseBodyMethodProcessor : Read "application/json;charset=UTF-8" to [FileQueryDto(path=, fileName=)]
-2022-05-29 00:17:16.521 DEBUG 62308 --- [http-nio-9006-exec-5] m.m.a.RequestResponseBodyMethodProcessor : Using 'application/json', given [application/json, text/plain, */*] and supported [application/json, application/*+json, application/json, application/*+json]
-2022-05-29 00:17:16.521 DEBUG 62308 --- [http-nio-9006-exec-5] m.m.a.RequestResponseBodyMethodProcessor : Writing [com.coatardbul.stock.common.api.CommonResult@773e0b25]
-2022-05-29 00:17:16.523 DEBUG 62308 --- [http-nio-9006-exec-5] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
-2022-05-29 00:17:18.273 DEBUG 62308 --- [http-nio-9006-exec-6] o.s.web.servlet.DispatcherServlet        : POST "/stock/file/delete", parameters={}
-2022-05-29 00:17:18.274 DEBUG 62308 --- [http-nio-9006-exec-6] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to public com.coatardbul.stock.common.api.CommonResult com.coatardbul.stock.controller.FileController.delete(com.coatardbul.stock.model.dto.FileQueryDto) throws java.lang.Exception
-2022-05-29 00:17:18.275 DEBUG 62308 --- [http-nio-9006-exec-6] m.m.a.RequestResponseBodyMethodProcessor : Read "application/json;charset=UTF-8" to [FileQueryDto(path=null, fileName=hello/)]
-2022-05-29 00:17:20.749 DEBUG 62308 --- [http-nio-9006-exec-6] m.m.a.RequestResponseBodyMethodProcessor : Using 'application/json', given [application/json, text/plain, */*] and supported [application/json, application/*+json, application/json, application/*+json]
-2022-05-29 00:17:20.750 DEBUG 62308 --- [http-nio-9006-exec-6] m.m.a.RequestResponseBodyMethodProcessor : Writing [com.coatardbul.stock.common.api.CommonResult@651cc519]
-2022-05-29 00:17:20.750 DEBUG 62308 --- [http-nio-9006-exec-6] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
-2022-05-29 00:17:25.649 DEBUG 62308 --- [http-nio-9006-exec-9] o.s.web.servlet.DispatcherServlet        : POST "/stock/file/getHeadList", parameters={}
-2022-05-29 00:17:25.650 DEBUG 62308 --- [http-nio-9006-exec-9] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to public com.coatardbul.stock.common.api.CommonResult<java.util.List<com.coatardbul.stock.model.bo.FileBo>> com.coatardbul.stock.controller.FileController.getHeadList(com.coatardbul.stock.model.dto.FileQueryDto) throws java.lang.Exception
-2022-05-29 00:17:25.650 DEBUG 62308 --- [http-nio-9006-exec-9] m.m.a.RequestResponseBodyMethodProcessor : Read "application/json;charset=UTF-8" to [FileQueryDto(path=, fileName=)]
-2022-05-29 00:17:25.761 DEBUG 62308 --- [http-nio-9006-exec-9] m.m.a.RequestResponseBodyMethodProcessor : Using 'application/json', given [application/json, text/plain, */*] and supported [application/json, application/*+json, application/json, application/*+json]
-2022-05-29 00:17:25.761 DEBUG 62308 --- [http-nio-9006-exec-9] m.m.a.RequestResponseBodyMethodProcessor : Writing [com.coatardbul.stock.common.api.CommonResult@b20e0a2]
-2022-05-29 00:17:25.762 DEBUG 62308 --- [http-nio-9006-exec-9] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
-2022-05-29 00:17:30.746 DEBUG 62308 --- [http-nio-9006-exec-8] o.s.web.servlet.DispatcherServlet        : POST "/stock/file/delete", parameters={}
-2022-05-29 00:17:30.746 DEBUG 62308 --- [http-nio-9006-exec-8] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to public com.coatardbul.stock.common.api.CommonResult com.coatardbul.stock.controller.FileController.delete(com.coatardbul.stock.model.dto.FileQueryDto) throws java.lang.Exception
-2022-05-29 00:17:30.746 DEBUG 62308 --- [http-nio-9006-exec-8] m.m.a.RequestResponseBodyMethodProcessor : Read "application/json;charset=UTF-8" to [FileQueryDto(path=null, fileName=hello/)]
-2022-05-29 00:17:54.888  INFO 62308 --- [AsyncResolver-bootstrap-executor-0] c.n.d.s.r.aws.ConfigClusterResolver      : Resolving eureka endpoints via configuration
-2022-05-29 00:17:54.893 DEBUG 62308 --- [http-nio-9006-exec-7] o.s.web.servlet.DispatcherServlet        : POST "/stock/file/getHeadList", parameters={}
-2022-05-29 00:17:54.893 DEBUG 62308 --- [http-nio-9006-exec-7] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to public com.coatardbul.stock.common.api.CommonResult<java.util.List<com.coatardbul.stock.model.bo.FileBo>> com.coatardbul.stock.controller.FileController.getHeadList(com.coatardbul.stock.model.dto.FileQueryDto) throws java.lang.Exception
-2022-05-29 00:17:54.894 DEBUG 62308 --- [http-nio-9006-exec-7] m.m.a.RequestResponseBodyMethodProcessor : Read "application/json;charset=UTF-8" to [FileQueryDto(path=null, fileName=)]
-2022-05-29 00:17:55.579 DEBUG 62308 --- [http-nio-9006-exec-7] m.m.a.RequestResponseBodyMethodProcessor : Using 'application/json', given [application/json, text/plain, */*] and supported [application/json, application/*+json, application/json, application/*+json]
-2022-05-29 00:17:55.579 DEBUG 62308 --- [http-nio-9006-exec-7] m.m.a.RequestResponseBodyMethodProcessor : Writing [com.coatardbul.stock.common.api.CommonResult@6f47df53]
-2022-05-29 00:17:55.580 DEBUG 62308 --- [http-nio-9006-exec-7] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
-2022-05-29 00:17:55.632 DEBUG 62308 --- [http-nio-9006-exec-8] m.m.a.RequestResponseBodyMethodProcessor : Using 'application/json', given [application/json, text/plain, */*] and supported [application/json, application/*+json, application/json, application/*+json]
-2022-05-29 00:17:55.632 DEBUG 62308 --- [http-nio-9006-exec-8] m.m.a.RequestResponseBodyMethodProcessor : Writing [com.coatardbul.stock.common.api.CommonResult@15700c07]
-2022-05-29 00:17:55.633 DEBUG 62308 --- [http-nio-9006-exec-8] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
-2022-05-29 00:22:54.901  INFO 62308 --- [AsyncResolver-bootstrap-executor-0] c.n.d.s.r.aws.ConfigClusterResolver      : Resolving eureka endpoints via configuration
-2022-05-29 00:26:19.489 DEBUG 62308 --- [http-nio-9006-exec-1] o.s.web.servlet.DispatcherServlet        : POST "/stock/file/deleteFolder", parameters={}
-2022-05-29 00:26:19.558 DEBUG 62308 --- [http-nio-9006-exec-1] o.s.w.s.handler.SimpleUrlHandlerMapping  : Patterns [/webjars/**, /**] in 'resourceHandlerMapping'
-2022-05-29 00:26:19.569 DEBUG 62308 --- [http-nio-9006-exec-1] o.s.w.s.handler.SimpleUrlHandlerMapping  : Mapped to ResourceHttpRequestHandler ["classpath:/META-INF/resources/", "classpath:/resources/", "classpath:/static/", "classpath:/public/", "/"]
-2022-05-29 00:26:19.588 DEBUG 62308 --- [http-nio-9006-exec-1] o.s.w.s.r.ResourceHttpRequestHandler     : Resource not found
-2022-05-29 00:26:19.589 DEBUG 62308 --- [http-nio-9006-exec-1] o.s.web.servlet.DispatcherServlet        : Completed 404 NOT_FOUND
-2022-05-29 00:26:19.610 DEBUG 62308 --- [http-nio-9006-exec-1] o.s.web.servlet.DispatcherServlet        : "ERROR" dispatch for POST "/stock/error", parameters={}
-2022-05-29 00:26:19.611 DEBUG 62308 --- [http-nio-9006-exec-1] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to public org.springframework.http.ResponseEntity<java.util.Map<java.lang.String, java.lang.Object>> org.springframework.boot.autoconfigure.web.servlet.error.BasicErrorController.error(javax.servlet.http.HttpServletRequest)
-2022-05-29 00:26:19.621 DEBUG 62308 --- [http-nio-9006-exec-1] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Using 'application/json', given [*/*] and supported [application/json, application/*+json, application/json, application/*+json]
-2022-05-29 00:26:19.622 DEBUG 62308 --- [http-nio-9006-exec-1] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Writing [{timestamp=Sun May 29 00:26:19 CST 2022, status=404, error=Not Found, message=No message available,  (truncated)...]
-2022-05-29 00:26:19.646 DEBUG 62308 --- [http-nio-9006-exec-1] o.s.web.servlet.DispatcherServlet        : Exiting from "ERROR" dispatch, status 404
-2022-05-29 00:26:32.134  WARN 62308 --- [http-nio-9006-exec-2] o.m.s.mapper.ClassPathMapperScanner      : No MyBatis mapper was found in '[com.coatardbul.stock.mapper]' package. Please check your configuration.
-2022-05-29 00:26:32.145  INFO 62308 --- [http-nio-9006-exec-2] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data repositories in DEFAULT mode.
-2022-05-29 00:26:32.161  INFO 62308 --- [http-nio-9006-exec-2] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 15ms. Found 0 repository interfaces.
-2022-05-29 00:26:32.212  INFO 62308 --- [http-nio-9006-exec-2] f.a.AutowiredAnnotationBeanPostProcessor : Autowired annotation should only be used on methods with parameters: public void com.coatardbul.stock.service.base.CosService.setClientConfig()
-2022-05-29 00:26:32.318 DEBUG 62308 --- [http-nio-9006-exec-2] o.s.web.servlet.DispatcherServlet        : Detected StandardServletMultipartResolver
-2022-05-29 00:26:32.335 DEBUG 62308 --- [http-nio-9006-exec-2] o.s.web.servlet.DispatcherServlet        : POST "/stock/file/deleteFolder", parameters={}
-2022-05-29 00:26:32.338 DEBUG 62308 --- [http-nio-9006-exec-2] o.s.w.s.handler.SimpleUrlHandlerMapping  : Patterns [/**/favicon.ico] in 'faviconHandlerMapping'
-2022-05-29 00:26:32.344  INFO 62308 --- [http-nio-9006-exec-2] pertySourcedRequestMappingHandlerMapping : Mapped URL path [/v2/api-docs] onto method [public org.springframework.http.ResponseEntity<springfox.documentation.spring.web.json.Json> springfox.documentation.swagger2.web.Swagger2Controller.getDocumentation(java.lang.String,javax.servlet.http.HttpServletRequest)]
-2022-05-29 00:26:32.397 DEBUG 62308 --- [http-nio-9006-exec-2] s.w.s.m.m.a.RequestMappingHandlerMapping : 97 mappings in 'requestMappingHandlerMapping'
-2022-05-29 00:26:32.397 DEBUG 62308 --- [http-nio-9006-exec-2] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to public com.coatardbul.stock.common.api.CommonResult com.coatardbul.stock.controller.FileController.deleteFolder(com.coatardbul.stock.model.dto.FileQueryDto) throws java.lang.Exception
-2022-05-29 00:26:32.399 DEBUG 62308 --- [http-nio-9006-exec-2] m.m.a.RequestResponseBodyMethodProcessor : Read "application/json;charset=UTF-8" to [FileQueryDto(path=, fileName=images/)]
-2022-05-29 00:26:33.045 DEBUG 62308 --- [http-nio-9006-exec-2] m.m.a.RequestResponseBodyMethodProcessor : Using 'application/json', given [*/*] and supported [application/json, application/*+json, application/json, application/*+json]
-2022-05-29 00:26:33.045 DEBUG 62308 --- [http-nio-9006-exec-2] m.m.a.RequestResponseBodyMethodProcessor : Writing [com.coatardbul.stock.common.api.CommonResult@45eea6b2]
-2022-05-29 00:26:33.046 DEBUG 62308 --- [http-nio-9006-exec-2] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
-2022-05-29 00:26:44.575 DEBUG 62308 --- [http-nio-9006-exec-3] o.s.web.servlet.DispatcherServlet        : POST "/stock/file/getHeadList", parameters={}
-2022-05-29 00:26:44.578 DEBUG 62308 --- [http-nio-9006-exec-3] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to public com.coatardbul.stock.common.api.CommonResult<java.util.List<com.coatardbul.stock.model.bo.FileBo>> com.coatardbul.stock.controller.FileController.getHeadList(com.coatardbul.stock.model.dto.FileQueryDto) throws java.lang.Exception
-2022-05-29 00:26:44.580 DEBUG 62308 --- [http-nio-9006-exec-3] m.m.a.RequestResponseBodyMethodProcessor : Read "application/json;charset=UTF-8" to [FileQueryDto(path=, fileName=)]
-2022-05-29 00:26:45.074 DEBUG 62308 --- [http-nio-9006-exec-3] m.m.a.RequestResponseBodyMethodProcessor : Using 'application/json', given [application/json, text/plain, */*] and supported [application/json, application/*+json, application/json, application/*+json]
-2022-05-29 00:26:45.074 DEBUG 62308 --- [http-nio-9006-exec-3] m.m.a.RequestResponseBodyMethodProcessor : Writing [com.coatardbul.stock.common.api.CommonResult@2d4d1c88]
-2022-05-29 00:26:45.076 DEBUG 62308 --- [http-nio-9006-exec-3] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
-2022-05-29 00:27:48.297 DEBUG 62308 --- [http-nio-9006-exec-5] o.s.web.servlet.DispatcherServlet        : POST "/stock/file/getHeadList", parameters={}
-2022-05-29 00:27:48.302 DEBUG 62308 --- [http-nio-9006-exec-5] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to public com.coatardbul.stock.common.api.CommonResult<java.util.List<com.coatardbul.stock.model.bo.FileBo>> com.coatardbul.stock.controller.FileController.getHeadList(com.coatardbul.stock.model.dto.FileQueryDto) throws java.lang.Exception
-2022-05-29 00:27:48.305 DEBUG 62308 --- [http-nio-9006-exec-5] m.m.a.RequestResponseBodyMethodProcessor : Read "application/json;charset=UTF-8" to [FileQueryDto(path=, fileName=)]
-2022-05-29 00:27:48.865 DEBUG 62308 --- [http-nio-9006-exec-5] m.m.a.RequestResponseBodyMethodProcessor : Using 'application/json', given [application/json, text/plain, */*] and supported [application/json, application/*+json, application/json, application/*+json]
-2022-05-29 00:27:48.866 DEBUG 62308 --- [http-nio-9006-exec-5] m.m.a.RequestResponseBodyMethodProcessor : Writing [com.coatardbul.stock.common.api.CommonResult@5236e42c]
-2022-05-29 00:27:48.867 DEBUG 62308 --- [http-nio-9006-exec-5] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
-2022-05-29 00:27:54.888  INFO 62308 --- [AsyncResolver-bootstrap-executor-0] c.n.d.s.r.aws.ConfigClusterResolver      : Resolving eureka endpoints via configuration
-2022-05-29 00:28:08.131 DEBUG 62308 --- [http-nio-9006-exec-6] o.s.web.servlet.DispatcherServlet        : POST "/stock/file/getHeadList", parameters={}
-2022-05-29 00:28:08.132 DEBUG 62308 --- [http-nio-9006-exec-6] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to public com.coatardbul.stock.common.api.CommonResult<java.util.List<com.coatardbul.stock.model.bo.FileBo>> com.coatardbul.stock.controller.FileController.getHeadList(com.coatardbul.stock.model.dto.FileQueryDto) throws java.lang.Exception
-2022-05-29 00:28:08.133 DEBUG 62308 --- [http-nio-9006-exec-6] m.m.a.RequestResponseBodyMethodProcessor : Read "application/json;charset=UTF-8" to [FileQueryDto(path=, fileName=)]
-2022-05-29 00:28:08.491 DEBUG 62308 --- [http-nio-9006-exec-6] m.m.a.RequestResponseBodyMethodProcessor : Using 'application/json', given [application/json, text/plain, */*] and supported [application/json, application/*+json, application/json, application/*+json]
-2022-05-29 00:28:08.491 DEBUG 62308 --- [http-nio-9006-exec-6] m.m.a.RequestResponseBodyMethodProcessor : Writing [com.coatardbul.stock.common.api.CommonResult@70e367dc]
-2022-05-29 00:28:08.492 DEBUG 62308 --- [http-nio-9006-exec-6] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
-2022-05-29 00:28:10.523 DEBUG 62308 --- [http-nio-9006-exec-9] o.s.web.servlet.DispatcherServlet        : POST "/stock/file/getHeadList", parameters={}
-2022-05-29 00:28:10.523 DEBUG 62308 --- [http-nio-9006-exec-9] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to public com.coatardbul.stock.common.api.CommonResult<java.util.List<com.coatardbul.stock.model.bo.FileBo>> com.coatardbul.stock.controller.FileController.getHeadList(com.coatardbul.stock.model.dto.FileQueryDto) throws java.lang.Exception
-2022-05-29 00:28:10.525 DEBUG 62308 --- [http-nio-9006-exec-9] m.m.a.RequestResponseBodyMethodProcessor : Read "application/json;charset=UTF-8" to [FileQueryDto(path=, fileName=)]
-2022-05-29 00:28:10.653 DEBUG 62308 --- [http-nio-9006-exec-9] m.m.a.RequestResponseBodyMethodProcessor : Using 'application/json', given [application/json, text/plain, */*] and supported [application/json, application/*+json, application/json, application/*+json]
-2022-05-29 00:28:10.653 DEBUG 62308 --- [http-nio-9006-exec-9] m.m.a.RequestResponseBodyMethodProcessor : Writing [com.coatardbul.stock.common.api.CommonResult@603f45e8]
-2022-05-29 00:28:10.654 DEBUG 62308 --- [http-nio-9006-exec-9] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
-2022-05-29 00:28:12.688 DEBUG 62308 --- [http-nio-9006-exec-7] o.s.web.servlet.DispatcherServlet        : POST "/stock/file/delete", parameters={}
-2022-05-29 00:28:12.689 DEBUG 62308 --- [http-nio-9006-exec-7] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to public com.coatardbul.stock.common.api.CommonResult com.coatardbul.stock.controller.FileController.delete(com.coatardbul.stock.model.dto.FileQueryDto) throws java.lang.Exception
-2022-05-29 00:28:12.691 DEBUG 62308 --- [http-nio-9006-exec-7] m.m.a.RequestResponseBodyMethodProcessor : Read "application/json;charset=UTF-8" to [FileQueryDto(path=null, fileName=hello/)]
-2022-05-29 00:28:16.199 DEBUG 62308 --- [http-nio-9006-exec-8] o.s.web.servlet.DispatcherServlet        : POST "/stock/file/getHeadList", parameters={}
-2022-05-29 00:28:16.200 DEBUG 62308 --- [http-nio-9006-exec-8] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to public com.coatardbul.stock.common.api.CommonResult<java.util.List<com.coatardbul.stock.model.bo.FileBo>> com.coatardbul.stock.controller.FileController.getHeadList(com.coatardbul.stock.model.dto.FileQueryDto) throws java.lang.Exception
-2022-05-29 00:28:16.200 DEBUG 62308 --- [http-nio-9006-exec-8] m.m.a.RequestResponseBodyMethodProcessor : Read "application/json;charset=UTF-8" to [FileQueryDto(path=null, fileName=)]
-2022-05-29 00:28:16.523 DEBUG 62308 --- [http-nio-9006-exec-8] m.m.a.RequestResponseBodyMethodProcessor : Using 'application/json', given [application/json, text/plain, */*] and supported [application/json, application/*+json, application/json, application/*+json]
-2022-05-29 00:28:16.524 DEBUG 62308 --- [http-nio-9006-exec-8] m.m.a.RequestResponseBodyMethodProcessor : Writing [com.coatardbul.stock.common.api.CommonResult@22be3502]
-2022-05-29 00:28:16.524 DEBUG 62308 --- [http-nio-9006-exec-8] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
-2022-05-29 00:28:16.674 DEBUG 62308 --- [http-nio-9006-exec-7] m.m.a.RequestResponseBodyMethodProcessor : Using 'application/json', given [application/json, text/plain, */*] and supported [application/json, application/*+json, application/json, application/*+json]
-2022-05-29 00:28:16.674 DEBUG 62308 --- [http-nio-9006-exec-7] m.m.a.RequestResponseBodyMethodProcessor : Writing [com.coatardbul.stock.common.api.CommonResult@71a814d8]
-2022-05-29 00:28:16.675 DEBUG 62308 --- [http-nio-9006-exec-7] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
-2022-05-29 00:28:20.136 DEBUG 62308 --- [http-nio-9006-exec-10] o.s.web.servlet.DispatcherServlet        : POST "/stock/file/delete", parameters={}
-2022-05-29 00:28:20.136 DEBUG 62308 --- [http-nio-9006-exec-10] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to public com.coatardbul.stock.common.api.CommonResult com.coatardbul.stock.controller.FileController.delete(com.coatardbul.stock.model.dto.FileQueryDto) throws java.lang.Exception
-2022-05-29 00:28:20.137 DEBUG 62308 --- [http-nio-9006-exec-10] m.m.a.RequestResponseBodyMethodProcessor : Read "application/json;charset=UTF-8" to [FileQueryDto(path=null, fileName=hello/)]
-2022-05-29 00:28:20.265 DEBUG 62308 --- [http-nio-9006-exec-10] m.m.a.RequestResponseBodyMethodProcessor : Using 'application/json', given [application/json, text/plain, */*] and supported [application/json, application/*+json, application/json, application/*+json]
-2022-05-29 00:28:20.265 DEBUG 62308 --- [http-nio-9006-exec-10] m.m.a.RequestResponseBodyMethodProcessor : Writing [com.coatardbul.stock.common.api.CommonResult@c95f28b]
-2022-05-29 00:28:20.265 DEBUG 62308 --- [http-nio-9006-exec-10] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
-2022-05-29 00:28:29.191 DEBUG 62308 --- [http-nio-9006-exec-1] o.s.web.servlet.DispatcherServlet        : POST "/stock/file/getHeadList", parameters={}
-2022-05-29 00:28:29.191 DEBUG 62308 --- [http-nio-9006-exec-1] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to public com.coatardbul.stock.common.api.CommonResult<java.util.List<com.coatardbul.stock.model.bo.FileBo>> com.coatardbul.stock.controller.FileController.getHeadList(com.coatardbul.stock.model.dto.FileQueryDto) throws java.lang.Exception
-2022-05-29 00:28:29.192 DEBUG 62308 --- [http-nio-9006-exec-1] m.m.a.RequestResponseBodyMethodProcessor : Read "application/json;charset=UTF-8" to [FileQueryDto(path=, fileName=)]
-2022-05-29 00:28:29.854 DEBUG 62308 --- [http-nio-9006-exec-1] m.m.a.RequestResponseBodyMethodProcessor : Using 'application/json', given [application/json, text/plain, */*] and supported [application/json, application/*+json, application/json, application/*+json]
-2022-05-29 00:28:29.854 DEBUG 62308 --- [http-nio-9006-exec-1] m.m.a.RequestResponseBodyMethodProcessor : Writing [com.coatardbul.stock.common.api.CommonResult@4be6aaa1]
-2022-05-29 00:28:29.855 DEBUG 62308 --- [http-nio-9006-exec-1] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
-2022-05-29 00:28:33.874 DEBUG 62308 --- [http-nio-9006-exec-2] o.s.web.servlet.DispatcherServlet        : POST "/stock/file/delete", parameters={}
-2022-05-29 00:28:33.874 DEBUG 62308 --- [http-nio-9006-exec-2] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to public com.coatardbul.stock.common.api.CommonResult com.coatardbul.stock.controller.FileController.delete(com.coatardbul.stock.model.dto.FileQueryDto) throws java.lang.Exception
-2022-05-29 00:28:33.875 DEBUG 62308 --- [http-nio-9006-exec-2] m.m.a.RequestResponseBodyMethodProcessor : Read "application/json;charset=UTF-8" to [FileQueryDto(path=null, fileName=hello/)]
-2022-05-29 00:28:34.034 DEBUG 62308 --- [http-nio-9006-exec-2] m.m.a.RequestResponseBodyMethodProcessor : Using 'application/json', given [application/json, text/plain, */*] and supported [application/json, application/*+json, application/json, application/*+json]
-2022-05-29 00:28:34.034 DEBUG 62308 --- [http-nio-9006-exec-2] m.m.a.RequestResponseBodyMethodProcessor : Writing [com.coatardbul.stock.common.api.CommonResult@38800dd8]
-2022-05-29 00:28:34.034 DEBUG 62308 --- [http-nio-9006-exec-2] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
-2022-05-29 00:29:04.469 DEBUG 62308 --- [http-nio-9006-exec-4] o.s.web.servlet.DispatcherServlet        : POST "/stock/file/deleteFolder", parameters={}
-2022-05-29 00:29:04.469 DEBUG 62308 --- [http-nio-9006-exec-4] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to public com.coatardbul.stock.common.api.CommonResult com.coatardbul.stock.controller.FileController.deleteFolder(com.coatardbul.stock.model.dto.FileQueryDto) throws java.lang.Exception
-2022-05-29 00:29:04.470 DEBUG 62308 --- [http-nio-9006-exec-4] m.m.a.RequestResponseBodyMethodProcessor : Read "application/json;charset=UTF-8" to [FileQueryDto(path=, fileName=hello/)]
-2022-05-29 00:29:04.928 DEBUG 62308 --- [http-nio-9006-exec-4] m.m.a.RequestResponseBodyMethodProcessor : Using 'application/json', given [*/*] and supported [application/json, application/*+json, application/json, application/*+json]
-2022-05-29 00:29:04.928 DEBUG 62308 --- [http-nio-9006-exec-4] m.m.a.RequestResponseBodyMethodProcessor : Writing [com.coatardbul.stock.common.api.CommonResult@3f739ac7]
-2022-05-29 00:29:04.929 DEBUG 62308 --- [http-nio-9006-exec-4] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
-2022-05-29 00:29:09.822 DEBUG 62308 --- [http-nio-9006-exec-5] o.s.web.servlet.DispatcherServlet        : POST "/stock/file/getHeadList", parameters={}
-2022-05-29 00:29:09.822 DEBUG 62308 --- [http-nio-9006-exec-5] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to public com.coatardbul.stock.common.api.CommonResult<java.util.List<com.coatardbul.stock.model.bo.FileBo>> com.coatardbul.stock.controller.FileController.getHeadList(com.coatardbul.stock.model.dto.FileQueryDto) throws java.lang.Exception
-2022-05-29 00:29:09.823 DEBUG 62308 --- [http-nio-9006-exec-5] m.m.a.RequestResponseBodyMethodProcessor : Read "application/json;charset=UTF-8" to [FileQueryDto(path=, fileName=)]
-2022-05-29 00:29:09.931 DEBUG 62308 --- [http-nio-9006-exec-5] m.m.a.RequestResponseBodyMethodProcessor : Using 'application/json', given [application/json, text/plain, */*] and supported [application/json, application/*+json, application/json, application/*+json]
-2022-05-29 00:29:09.931 DEBUG 62308 --- [http-nio-9006-exec-5] m.m.a.RequestResponseBodyMethodProcessor : Writing [com.coatardbul.stock.common.api.CommonResult@444974f1]
-2022-05-29 00:29:09.932 DEBUG 62308 --- [http-nio-9006-exec-5] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
-2022-05-29 00:29:15.341 DEBUG 62308 --- [http-nio-9006-exec-6] o.s.web.servlet.DispatcherServlet        : POST "/stock/file/delete", parameters={}
-2022-05-29 00:29:15.341 DEBUG 62308 --- [http-nio-9006-exec-6] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to public com.coatardbul.stock.common.api.CommonResult com.coatardbul.stock.controller.FileController.delete(com.coatardbul.stock.model.dto.FileQueryDto) throws java.lang.Exception
-2022-05-29 00:29:15.342 DEBUG 62308 --- [http-nio-9006-exec-6] m.m.a.RequestResponseBodyMethodProcessor : Read "application/json;charset=UTF-8" to [FileQueryDto(path=null, fileName=sdfsdf/)]
-2022-05-29 00:29:15.501 DEBUG 62308 --- [http-nio-9006-exec-6] m.m.a.RequestResponseBodyMethodProcessor : Using 'application/json', given [application/json, text/plain, */*] and supported [application/json, application/*+json, application/json, application/*+json]
-2022-05-29 00:29:15.501 DEBUG 62308 --- [http-nio-9006-exec-6] m.m.a.RequestResponseBodyMethodProcessor : Writing [com.coatardbul.stock.common.api.CommonResult@5ee8d742]
-2022-05-29 00:29:15.502 DEBUG 62308 --- [http-nio-9006-exec-6] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
-2022-05-29 00:29:24.974 DEBUG 62308 --- [http-nio-9006-exec-9] o.s.web.servlet.DispatcherServlet        : POST "/stock/file/getHeadList", parameters={}
-2022-05-29 00:29:24.974 DEBUG 62308 --- [http-nio-9006-exec-9] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to public com.coatardbul.stock.common.api.CommonResult<java.util.List<com.coatardbul.stock.model.bo.FileBo>> com.coatardbul.stock.controller.FileController.getHeadList(com.coatardbul.stock.model.dto.FileQueryDto) throws java.lang.Exception
-2022-05-29 00:29:24.975 DEBUG 62308 --- [http-nio-9006-exec-9] m.m.a.RequestResponseBodyMethodProcessor : Read "application/json;charset=UTF-8" to [FileQueryDto(path=, fileName=)]
-2022-05-29 00:29:25.328 DEBUG 62308 --- [http-nio-9006-exec-9] m.m.a.RequestResponseBodyMethodProcessor : Using 'application/json', given [application/json, text/plain, */*] and supported [application/json, application/*+json, application/json, application/*+json]
-2022-05-29 00:29:25.328 DEBUG 62308 --- [http-nio-9006-exec-9] m.m.a.RequestResponseBodyMethodProcessor : Writing [com.coatardbul.stock.common.api.CommonResult@2781a744]
-2022-05-29 00:29:25.329 DEBUG 62308 --- [http-nio-9006-exec-9] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
-2022-05-29 00:29:29.874 DEBUG 62308 --- [http-nio-9006-exec-8] o.s.web.servlet.DispatcherServlet        : POST "/stock/file/delete", parameters={}
-2022-05-29 00:29:29.874 DEBUG 62308 --- [http-nio-9006-exec-8] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to public com.coatardbul.stock.common.api.CommonResult com.coatardbul.stock.controller.FileController.delete(com.coatardbul.stock.model.dto.FileQueryDto) throws java.lang.Exception
-2022-05-29 00:29:29.875 DEBUG 62308 --- [http-nio-9006-exec-8] m.m.a.RequestResponseBodyMethodProcessor : Read "application/json;charset=UTF-8" to [FileQueryDto(path=null, fileName=稳中有升（大阳-阴-大阳）/)]
-2022-05-29 00:29:30.001 DEBUG 62308 --- [http-nio-9006-exec-8] m.m.a.RequestResponseBodyMethodProcessor : Using 'application/json', given [application/json, text/plain, */*] and supported [application/json, application/*+json, application/json, application/*+json]
-2022-05-29 00:29:30.001 DEBUG 62308 --- [http-nio-9006-exec-8] m.m.a.RequestResponseBodyMethodProcessor : Writing [com.coatardbul.stock.common.api.CommonResult@338138dc]
-2022-05-29 00:29:30.001 DEBUG 62308 --- [http-nio-9006-exec-8] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
-2022-05-29 00:30:17.291 DEBUG 62308 --- [http-nio-9006-exec-10] o.s.web.servlet.DispatcherServlet        : POST "/stock/file/getHeadList", parameters={}
-2022-05-29 00:30:17.291 DEBUG 62308 --- [http-nio-9006-exec-10] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to public com.coatardbul.stock.common.api.CommonResult<java.util.List<com.coatardbul.stock.model.bo.FileBo>> com.coatardbul.stock.controller.FileController.getHeadList(com.coatardbul.stock.model.dto.FileQueryDto) throws java.lang.Exception
-2022-05-29 00:30:17.292 DEBUG 62308 --- [http-nio-9006-exec-10] m.m.a.RequestResponseBodyMethodProcessor : Read "application/json;charset=UTF-8" to [FileQueryDto(path=, fileName=)]
-2022-05-29 00:30:17.666 DEBUG 62308 --- [http-nio-9006-exec-10] m.m.a.RequestResponseBodyMethodProcessor : Using 'application/json', given [application/json, text/plain, */*] and supported [application/json, application/*+json, application/json, application/*+json]
-2022-05-29 00:30:17.666 DEBUG 62308 --- [http-nio-9006-exec-10] m.m.a.RequestResponseBodyMethodProcessor : Writing [com.coatardbul.stock.common.api.CommonResult@2d637e68]
-2022-05-29 00:30:17.666 DEBUG 62308 --- [http-nio-9006-exec-10] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
-2022-05-29 00:30:19.208 DEBUG 62308 --- [http-nio-9006-exec-1] o.s.web.servlet.DispatcherServlet        : POST "/stock/file/delete", parameters={}
-2022-05-29 00:30:19.208 DEBUG 62308 --- [http-nio-9006-exec-1] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to public com.coatardbul.stock.common.api.CommonResult com.coatardbul.stock.controller.FileController.delete(com.coatardbul.stock.model.dto.FileQueryDto) throws java.lang.Exception
-2022-05-29 00:30:19.209 DEBUG 62308 --- [http-nio-9006-exec-1] m.m.a.RequestResponseBodyMethodProcessor : Read "application/json;charset=UTF-8" to [FileQueryDto(path=null, fileName=稳中有升（大阳-阴-大阳）/)]
-2022-05-29 00:30:19.329 DEBUG 62308 --- [http-nio-9006-exec-1] m.m.a.RequestResponseBodyMethodProcessor : Using 'application/json', given [application/json, text/plain, */*] and supported [application/json, application/*+json, application/json, application/*+json]
-2022-05-29 00:30:19.330 DEBUG 62308 --- [http-nio-9006-exec-1] m.m.a.RequestResponseBodyMethodProcessor : Writing [com.coatardbul.stock.common.api.CommonResult@37d3b139]
-2022-05-29 00:30:19.330 DEBUG 62308 --- [http-nio-9006-exec-1] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
-2022-05-29 00:30:21.217 DEBUG 62308 --- [http-nio-9006-exec-2] o.s.web.servlet.DispatcherServlet        : POST "/stock/file/getHeadList", parameters={}
-2022-05-29 00:30:21.217 DEBUG 62308 --- [http-nio-9006-exec-2] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to public com.coatardbul.stock.common.api.CommonResult<java.util.List<com.coatardbul.stock.model.bo.FileBo>> com.coatardbul.stock.controller.FileController.getHeadList(com.coatardbul.stock.model.dto.FileQueryDto) throws java.lang.Exception
-2022-05-29 00:30:21.218 DEBUG 62308 --- [http-nio-9006-exec-2] m.m.a.RequestResponseBodyMethodProcessor : Read "application/json;charset=UTF-8" to [FileQueryDto(path=null, fileName=)]
-2022-05-29 00:30:21.330 DEBUG 62308 --- [http-nio-9006-exec-2] m.m.a.RequestResponseBodyMethodProcessor : Using 'application/json', given [application/json, text/plain, */*] and supported [application/json, application/*+json, application/json, application/*+json]
-2022-05-29 00:30:21.330 DEBUG 62308 --- [http-nio-9006-exec-2] m.m.a.RequestResponseBodyMethodProcessor : Writing [com.coatardbul.stock.common.api.CommonResult@18afa8b7]
-2022-05-29 00:30:21.330 DEBUG 62308 --- [http-nio-9006-exec-2] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
-2022-05-29 00:30:27.088 DEBUG 62308 --- [http-nio-9006-exec-3] o.s.web.servlet.DispatcherServlet        : POST "/stock/file/getHeadList", parameters={}
-2022-05-29 00:30:27.088 DEBUG 62308 --- [http-nio-9006-exec-3] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to public com.coatardbul.stock.common.api.CommonResult<java.util.List<com.coatardbul.stock.model.bo.FileBo>> com.coatardbul.stock.controller.FileController.getHeadList(com.coatardbul.stock.model.dto.FileQueryDto) throws java.lang.Exception
-2022-05-29 00:30:27.089 DEBUG 62308 --- [http-nio-9006-exec-3] m.m.a.RequestResponseBodyMethodProcessor : Read "application/json;charset=UTF-8" to [FileQueryDto(path=, fileName=)]
-2022-05-29 00:30:27.420 DEBUG 62308 --- [http-nio-9006-exec-3] m.m.a.RequestResponseBodyMethodProcessor : Using 'application/json', given [application/json, text/plain, */*] and supported [application/json, application/*+json, application/json, application/*+json]
-2022-05-29 00:30:27.420 DEBUG 62308 --- [http-nio-9006-exec-3] m.m.a.RequestResponseBodyMethodProcessor : Writing [com.coatardbul.stock.common.api.CommonResult@16ba8997]
-2022-05-29 00:30:27.421 DEBUG 62308 --- [http-nio-9006-exec-3] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
-2022-05-29 00:30:32.534 DEBUG 62308 --- [http-nio-9006-exec-4] o.s.web.servlet.DispatcherServlet        : POST "/stock/file/delete", parameters={}
-2022-05-29 00:30:32.534 DEBUG 62308 --- [http-nio-9006-exec-4] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to public com.coatardbul.stock.common.api.CommonResult com.coatardbul.stock.controller.FileController.delete(com.coatardbul.stock.model.dto.FileQueryDto) throws java.lang.Exception
-2022-05-29 00:30:32.535 DEBUG 62308 --- [http-nio-9006-exec-4] m.m.a.RequestResponseBodyMethodProcessor : Read "application/json;charset=UTF-8" to [FileQueryDto(path=null, fileName=稳中有升（大阳-阴-大阳）/)]
-2022-05-29 00:30:32.685 DEBUG 62308 --- [http-nio-9006-exec-4] m.m.a.RequestResponseBodyMethodProcessor : Using 'application/json', given [application/json, text/plain, */*] and supported [application/json, application/*+json, application/json, application/*+json]
-2022-05-29 00:30:32.686 DEBUG 62308 --- [http-nio-9006-exec-4] m.m.a.RequestResponseBodyMethodProcessor : Writing [com.coatardbul.stock.common.api.CommonResult@2ee8e2f2]
-2022-05-29 00:30:32.686 DEBUG 62308 --- [http-nio-9006-exec-4] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
-2022-05-29 00:30:34.535 DEBUG 62308 --- [http-nio-9006-exec-5] o.s.web.servlet.DispatcherServlet        : POST "/stock/file/getHeadList", parameters={}
-2022-05-29 00:30:34.536 DEBUG 62308 --- [http-nio-9006-exec-5] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to public com.coatardbul.stock.common.api.CommonResult<java.util.List<com.coatardbul.stock.model.bo.FileBo>> com.coatardbul.stock.controller.FileController.getHeadList(com.coatardbul.stock.model.dto.FileQueryDto) throws java.lang.Exception
-2022-05-29 00:30:34.536 DEBUG 62308 --- [http-nio-9006-exec-5] m.m.a.RequestResponseBodyMethodProcessor : Read "application/json;charset=UTF-8" to [FileQueryDto(path=null, fileName=)]
-2022-05-29 00:30:34.682 DEBUG 62308 --- [http-nio-9006-exec-5] m.m.a.RequestResponseBodyMethodProcessor : Using 'application/json', given [application/json, text/plain, */*] and supported [application/json, application/*+json, application/json, application/*+json]
-2022-05-29 00:30:34.683 DEBUG 62308 --- [http-nio-9006-exec-5] m.m.a.RequestResponseBodyMethodProcessor : Writing [com.coatardbul.stock.common.api.CommonResult@50feb02d]
-2022-05-29 00:30:34.683 DEBUG 62308 --- [http-nio-9006-exec-5] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
-2022-05-29 00:30:54.934 DEBUG 62308 --- [http-nio-9006-exec-9] o.s.web.servlet.DispatcherServlet        : POST "/stock/file/deleteFolder", parameters={}
-2022-05-29 00:30:54.934 DEBUG 62308 --- [http-nio-9006-exec-9] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to public com.coatardbul.stock.common.api.CommonResult com.coatardbul.stock.controller.FileController.deleteFolder(com.coatardbul.stock.model.dto.FileQueryDto) throws java.lang.Exception
-2022-05-29 00:30:54.935 DEBUG 62308 --- [http-nio-9006-exec-9] m.m.a.RequestResponseBodyMethodProcessor : Read "application/json;charset=UTF-8" to [FileQueryDto(path=, fileName=稳中有升（大阳-阴-大阳）/)]
-2022-05-29 00:30:55.711 DEBUG 62308 --- [http-nio-9006-exec-9] m.m.a.RequestResponseBodyMethodProcessor : Using 'application/json', given [*/*] and supported [application/json, application/*+json, application/json, application/*+json]
-2022-05-29 00:30:55.712 DEBUG 62308 --- [http-nio-9006-exec-9] m.m.a.RequestResponseBodyMethodProcessor : Writing [com.coatardbul.stock.common.api.CommonResult@2ea790f2]
-2022-05-29 00:30:55.712 DEBUG 62308 --- [http-nio-9006-exec-9] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
-2022-05-29 00:31:05.171 DEBUG 62308 --- [http-nio-9006-exec-8] o.s.web.servlet.DispatcherServlet        : POST "/stock/file/getHeadList", parameters={}
-2022-05-29 00:31:05.172 DEBUG 62308 --- [http-nio-9006-exec-8] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to public com.coatardbul.stock.common.api.CommonResult<java.util.List<com.coatardbul.stock.model.bo.FileBo>> com.coatardbul.stock.controller.FileController.getHeadList(com.coatardbul.stock.model.dto.FileQueryDto) throws java.lang.Exception
-2022-05-29 00:31:05.173 DEBUG 62308 --- [http-nio-9006-exec-8] m.m.a.RequestResponseBodyMethodProcessor : Read "application/json;charset=UTF-8" to [FileQueryDto(path=, fileName=)]
-2022-05-29 00:31:05.882 DEBUG 62308 --- [http-nio-9006-exec-8] m.m.a.RequestResponseBodyMethodProcessor : Using 'application/json', given [application/json, text/plain, */*] and supported [application/json, application/*+json, application/json, application/*+json]
-2022-05-29 00:31:05.882 DEBUG 62308 --- [http-nio-9006-exec-8] m.m.a.RequestResponseBodyMethodProcessor : Writing [com.coatardbul.stock.common.api.CommonResult@35fd3360]
-2022-05-29 00:31:05.883 DEBUG 62308 --- [http-nio-9006-exec-8] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
-2022-05-29 00:31:53.104 DEBUG 62308 --- [http-nio-9006-exec-7] o.s.web.servlet.DispatcherServlet        : POST "/stock/file/getHeadList", parameters={}
-2022-05-29 00:31:53.105 DEBUG 62308 --- [http-nio-9006-exec-7] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to public com.coatardbul.stock.common.api.CommonResult<java.util.List<com.coatardbul.stock.model.bo.FileBo>> com.coatardbul.stock.controller.FileController.getHeadList(com.coatardbul.stock.model.dto.FileQueryDto) throws java.lang.Exception
-2022-05-29 00:31:53.105 DEBUG 62308 --- [http-nio-9006-exec-7] m.m.a.RequestResponseBodyMethodProcessor : Read "application/json;charset=UTF-8" to [FileQueryDto(path=, fileName=)]
-2022-05-29 00:31:53.493 DEBUG 62308 --- [http-nio-9006-exec-7] m.m.a.RequestResponseBodyMethodProcessor : Using 'application/json', given [application/json, text/plain, */*] and supported [application/json, application/*+json, application/json, application/*+json]
-2022-05-29 00:31:53.493 DEBUG 62308 --- [http-nio-9006-exec-7] m.m.a.RequestResponseBodyMethodProcessor : Writing [com.coatardbul.stock.common.api.CommonResult@5987b86c]
-2022-05-29 00:31:53.494 DEBUG 62308 --- [http-nio-9006-exec-7] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
-2022-05-29 00:32:01.780 DEBUG 62308 --- [http-nio-9006-exec-1] o.s.web.servlet.DispatcherServlet        : POST "/stock/file/mkdir", parameters={}
-2022-05-29 00:32:01.781 DEBUG 62308 --- [http-nio-9006-exec-1] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to public com.coatardbul.stock.common.api.CommonResult com.coatardbul.stock.controller.FileController.mkdir(com.coatardbul.stock.model.dto.FileQueryDto) throws java.lang.Exception
-2022-05-29 00:32:01.782 DEBUG 62308 --- [http-nio-9006-exec-1] m.m.a.RequestResponseBodyMethodProcessor : Read "application/json;charset=UTF-8" to [FileQueryDto(path=sdjsdklfjdsl, fileName=null)]
-2022-05-29 00:32:02.116 DEBUG 62308 --- [http-nio-9006-exec-1] m.m.a.RequestResponseBodyMethodProcessor : Using 'application/json', given [application/json, text/plain, */*] and supported [application/json, application/*+json, application/json, application/*+json]
-2022-05-29 00:32:02.116 DEBUG 62308 --- [http-nio-9006-exec-1] m.m.a.RequestResponseBodyMethodProcessor : Writing [com.coatardbul.stock.common.api.CommonResult@5bdfe825]
-2022-05-29 00:32:02.116 DEBUG 62308 --- [http-nio-9006-exec-1] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
-2022-05-29 00:32:03.783 DEBUG 62308 --- [http-nio-9006-exec-2] o.s.web.servlet.DispatcherServlet        : POST "/stock/file/getHeadList", parameters={}
-2022-05-29 00:32:03.784 DEBUG 62308 --- [http-nio-9006-exec-2] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to public com.coatardbul.stock.common.api.CommonResult<java.util.List<com.coatardbul.stock.model.bo.FileBo>> com.coatardbul.stock.controller.FileController.getHeadList(com.coatardbul.stock.model.dto.FileQueryDto) throws java.lang.Exception
-2022-05-29 00:32:03.784 DEBUG 62308 --- [http-nio-9006-exec-2] m.m.a.RequestResponseBodyMethodProcessor : Read "application/json;charset=UTF-8" to [FileQueryDto(path=, fileName=)]
-2022-05-29 00:32:03.897 DEBUG 62308 --- [http-nio-9006-exec-2] m.m.a.RequestResponseBodyMethodProcessor : Using 'application/json', given [application/json, text/plain, */*] and supported [application/json, application/*+json, application/json, application/*+json]
-2022-05-29 00:32:03.897 DEBUG 62308 --- [http-nio-9006-exec-2] m.m.a.RequestResponseBodyMethodProcessor : Writing [com.coatardbul.stock.common.api.CommonResult@229212d7]
-2022-05-29 00:32:03.898 DEBUG 62308 --- [http-nio-9006-exec-2] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
-2022-05-29 00:32:07.075 DEBUG 62308 --- [http-nio-9006-exec-3] o.s.web.servlet.DispatcherServlet        : POST "/stock/file/delete", parameters={}
-2022-05-29 00:32:07.076 DEBUG 62308 --- [http-nio-9006-exec-3] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to public com.coatardbul.stock.common.api.CommonResult com.coatardbul.stock.controller.FileController.delete(com.coatardbul.stock.model.dto.FileQueryDto) throws java.lang.Exception
-2022-05-29 00:32:07.076 DEBUG 62308 --- [http-nio-9006-exec-3] m.m.a.RequestResponseBodyMethodProcessor : Read "application/json;charset=UTF-8" to [FileQueryDto(path=null, fileName=sdjsdklfjdsl/)]
-2022-05-29 00:32:07.212 DEBUG 62308 --- [http-nio-9006-exec-3] m.m.a.RequestResponseBodyMethodProcessor : Using 'application/json', given [application/json, text/plain, */*] and supported [application/json, application/*+json, application/json, application/*+json]
-2022-05-29 00:32:07.212 DEBUG 62308 --- [http-nio-9006-exec-3] m.m.a.RequestResponseBodyMethodProcessor : Writing [com.coatardbul.stock.common.api.CommonResult@43a49c7c]
-2022-05-29 00:32:07.212 DEBUG 62308 --- [http-nio-9006-exec-3] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
-2022-05-29 00:32:09.096 DEBUG 62308 --- [http-nio-9006-exec-4] o.s.web.servlet.DispatcherServlet        : POST "/stock/file/getHeadList", parameters={}
-2022-05-29 00:32:09.096 DEBUG 62308 --- [http-nio-9006-exec-4] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to public com.coatardbul.stock.common.api.CommonResult<java.util.List<com.coatardbul.stock.model.bo.FileBo>> com.coatardbul.stock.controller.FileController.getHeadList(com.coatardbul.stock.model.dto.FileQueryDto) throws java.lang.Exception
-2022-05-29 00:32:09.097 DEBUG 62308 --- [http-nio-9006-exec-4] m.m.a.RequestResponseBodyMethodProcessor : Read "application/json;charset=UTF-8" to [FileQueryDto(path=null, fileName=)]
-2022-05-29 00:32:09.264 DEBUG 62308 --- [http-nio-9006-exec-4] m.m.a.RequestResponseBodyMethodProcessor : Using 'application/json', given [application/json, text/plain, */*] and supported [application/json, application/*+json, application/json, application/*+json]
-2022-05-29 00:32:09.265 DEBUG 62308 --- [http-nio-9006-exec-4] m.m.a.RequestResponseBodyMethodProcessor : Writing [com.coatardbul.stock.common.api.CommonResult@6da5f6a0]
-2022-05-29 00:32:09.265 DEBUG 62308 --- [http-nio-9006-exec-4] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
-2022-05-29 00:32:14.047 DEBUG 62308 --- [http-nio-9006-exec-5] o.s.web.servlet.DispatcherServlet        : POST "/stock/file/mkdir", parameters={}
-2022-05-29 00:32:14.048 DEBUG 62308 --- [http-nio-9006-exec-5] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to public com.coatardbul.stock.common.api.CommonResult com.coatardbul.stock.controller.FileController.mkdir(com.coatardbul.stock.model.dto.FileQueryDto) throws java.lang.Exception
-2022-05-29 00:32:14.048 DEBUG 62308 --- [http-nio-9006-exec-5] m.m.a.RequestResponseBodyMethodProcessor : Read "application/json;charset=UTF-8" to [FileQueryDto(path=sdjsdklfjdsldsfsd, fileName=null)]
-2022-05-29 00:32:14.171 DEBUG 62308 --- [http-nio-9006-exec-5] m.m.a.RequestResponseBodyMethodProcessor : Using 'application/json', given [application/json, text/plain, */*] and supported [application/json, application/*+json, application/json, application/*+json]
-2022-05-29 00:32:14.171 DEBUG 62308 --- [http-nio-9006-exec-5] m.m.a.RequestResponseBodyMethodProcessor : Writing [com.coatardbul.stock.common.api.CommonResult@6707b546]
-2022-05-29 00:32:14.171 DEBUG 62308 --- [http-nio-9006-exec-5] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
-2022-05-29 00:32:16.050 DEBUG 62308 --- [http-nio-9006-exec-6] o.s.web.servlet.DispatcherServlet        : POST "/stock/file/getHeadList", parameters={}
-2022-05-29 00:32:16.050 DEBUG 62308 --- [http-nio-9006-exec-6] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to public com.coatardbul.stock.common.api.CommonResult<java.util.List<com.coatardbul.stock.model.bo.FileBo>> com.coatardbul.stock.controller.FileController.getHeadList(com.coatardbul.stock.model.dto.FileQueryDto) throws java.lang.Exception
-2022-05-29 00:32:16.050 DEBUG 62308 --- [http-nio-9006-exec-6] m.m.a.RequestResponseBodyMethodProcessor : Read "application/json;charset=UTF-8" to [FileQueryDto(path=, fileName=)]
-2022-05-29 00:32:16.175 DEBUG 62308 --- [http-nio-9006-exec-6] m.m.a.RequestResponseBodyMethodProcessor : Using 'application/json', given [application/json, text/plain, */*] and supported [application/json, application/*+json, application/json, application/*+json]
-2022-05-29 00:32:16.175 DEBUG 62308 --- [http-nio-9006-exec-6] m.m.a.RequestResponseBodyMethodProcessor : Writing [com.coatardbul.stock.common.api.CommonResult@31c5f2f]
-2022-05-29 00:32:16.175 DEBUG 62308 --- [http-nio-9006-exec-6] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
-2022-05-29 00:32:24.484 DEBUG 62308 --- [http-nio-9006-exec-9] o.s.web.servlet.DispatcherServlet        : POST "/stock/file/mkdir", parameters={}
-2022-05-29 00:32:24.484 DEBUG 62308 --- [http-nio-9006-exec-9] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to public com.coatardbul.stock.common.api.CommonResult com.coatardbul.stock.controller.FileController.mkdir(com.coatardbul.stock.model.dto.FileQueryDto) throws java.lang.Exception
-2022-05-29 00:32:24.485 DEBUG 62308 --- [http-nio-9006-exec-9] m.m.a.RequestResponseBodyMethodProcessor : Read "application/json;charset=UTF-8" to [FileQueryDto(path=我爱你中华, fileName=null)]
-2022-05-29 00:32:24.840 DEBUG 62308 --- [http-nio-9006-exec-9] m.m.a.RequestResponseBodyMethodProcessor : Using 'application/json', given [application/json, text/plain, */*] and supported [application/json, application/*+json, application/json, application/*+json]
-2022-05-29 00:32:24.840 DEBUG 62308 --- [http-nio-9006-exec-9] m.m.a.RequestResponseBodyMethodProcessor : Writing [com.coatardbul.stock.common.api.CommonResult@70232e76]
-2022-05-29 00:32:24.841 DEBUG 62308 --- [http-nio-9006-exec-9] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
-2022-05-29 00:32:26.469 DEBUG 62308 --- [http-nio-9006-exec-8] o.s.web.servlet.DispatcherServlet        : POST "/stock/file/getHeadList", parameters={}
-2022-05-29 00:32:26.469 DEBUG 62308 --- [http-nio-9006-exec-8] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to public com.coatardbul.stock.common.api.CommonResult<java.util.List<com.coatardbul.stock.model.bo.FileBo>> com.coatardbul.stock.controller.FileController.getHeadList(com.coatardbul.stock.model.dto.FileQueryDto) throws java.lang.Exception
-2022-05-29 00:32:26.470 DEBUG 62308 --- [http-nio-9006-exec-8] m.m.a.RequestResponseBodyMethodProcessor : Read "application/json;charset=UTF-8" to [FileQueryDto(path=, fileName=)]
-2022-05-29 00:32:26.585 DEBUG 62308 --- [http-nio-9006-exec-8] m.m.a.RequestResponseBodyMethodProcessor : Using 'application/json', given [application/json, text/plain, */*] and supported [application/json, application/*+json, application/json, application/*+json]
-2022-05-29 00:32:26.585 DEBUG 62308 --- [http-nio-9006-exec-8] m.m.a.RequestResponseBodyMethodProcessor : Writing [com.coatardbul.stock.common.api.CommonResult@66067888]
-2022-05-29 00:32:26.585 DEBUG 62308 --- [http-nio-9006-exec-8] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
-2022-05-29 00:32:35.615 DEBUG 62308 --- [http-nio-9006-exec-7] o.s.web.servlet.DispatcherServlet        : POST "/stock/file/mkdir", parameters={}
-2022-05-29 00:32:35.616 DEBUG 62308 --- [http-nio-9006-exec-7] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to public com.coatardbul.stock.common.api.CommonResult com.coatardbul.stock.controller.FileController.mkdir(com.coatardbul.stock.model.dto.FileQueryDto) throws java.lang.Exception
-2022-05-29 00:32:35.617 DEBUG 62308 --- [http-nio-9006-exec-7] m.m.a.RequestResponseBodyMethodProcessor : Read "application/json;charset=UTF-8" to [FileQueryDto(path=我爱你中华（221321）, fileName=null)]
-2022-05-29 00:32:35.938 DEBUG 62308 --- [http-nio-9006-exec-7] m.m.a.RequestResponseBodyMethodProcessor : Using 'application/json', given [application/json, text/plain, */*] and supported [application/json, application/*+json, application/json, application/*+json]
-2022-05-29 00:32:35.938 DEBUG 62308 --- [http-nio-9006-exec-7] m.m.a.RequestResponseBodyMethodProcessor : Writing [com.coatardbul.stock.common.api.CommonResult@44de813e]
-2022-05-29 00:32:35.938 DEBUG 62308 --- [http-nio-9006-exec-7] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
-2022-05-29 00:32:37.620 DEBUG 62308 --- [http-nio-9006-exec-10] o.s.web.servlet.DispatcherServlet        : POST "/stock/file/getHeadList", parameters={}
-2022-05-29 00:32:37.620 DEBUG 62308 --- [http-nio-9006-exec-10] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to public com.coatardbul.stock.common.api.CommonResult<java.util.List<com.coatardbul.stock.model.bo.FileBo>> com.coatardbul.stock.controller.FileController.getHeadList(com.coatardbul.stock.model.dto.FileQueryDto) throws java.lang.Exception
-2022-05-29 00:32:37.621 DEBUG 62308 --- [http-nio-9006-exec-10] m.m.a.RequestResponseBodyMethodProcessor : Read "application/json;charset=UTF-8" to [FileQueryDto(path=, fileName=)]
-2022-05-29 00:32:37.743 DEBUG 62308 --- [http-nio-9006-exec-10] m.m.a.RequestResponseBodyMethodProcessor : Using 'application/json', given [application/json, text/plain, */*] and supported [application/json, application/*+json, application/json, application/*+json]
-2022-05-29 00:32:37.743 DEBUG 62308 --- [http-nio-9006-exec-10] m.m.a.RequestResponseBodyMethodProcessor : Writing [com.coatardbul.stock.common.api.CommonResult@68b05467]
-2022-05-29 00:32:37.744 DEBUG 62308 --- [http-nio-9006-exec-10] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
-2022-05-29 00:32:39.960 DEBUG 62308 --- [http-nio-9006-exec-1] o.s.web.servlet.DispatcherServlet        : POST "/stock/file/delete", parameters={}
-2022-05-29 00:32:39.961 DEBUG 62308 --- [http-nio-9006-exec-1] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to public com.coatardbul.stock.common.api.CommonResult com.coatardbul.stock.controller.FileController.delete(com.coatardbul.stock.model.dto.FileQueryDto) throws java.lang.Exception
-2022-05-29 00:32:39.961 DEBUG 62308 --- [http-nio-9006-exec-1] m.m.a.RequestResponseBodyMethodProcessor : Read "application/json;charset=UTF-8" to [FileQueryDto(path=null, fileName=我爱你中华（221321）/)]
-2022-05-29 00:32:40.091 DEBUG 62308 --- [http-nio-9006-exec-1] m.m.a.RequestResponseBodyMethodProcessor : Using 'application/json', given [application/json, text/plain, */*] and supported [application/json, application/*+json, application/json, application/*+json]
-2022-05-29 00:32:40.101 DEBUG 62308 --- [http-nio-9006-exec-1] m.m.a.RequestResponseBodyMethodProcessor : Writing [com.coatardbul.stock.common.api.CommonResult@71bfa5e4]
-2022-05-29 00:32:40.101 DEBUG 62308 --- [http-nio-9006-exec-1] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
-2022-05-29 00:32:41.967 DEBUG 62308 --- [http-nio-9006-exec-2] o.s.web.servlet.DispatcherServlet        : POST "/stock/file/getHeadList", parameters={}
-2022-05-29 00:32:41.967 DEBUG 62308 --- [http-nio-9006-exec-2] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to public com.coatardbul.stock.common.api.CommonResult<java.util.List<com.coatardbul.stock.model.bo.FileBo>> com.coatardbul.stock.controller.FileController.getHeadList(com.coatardbul.stock.model.dto.FileQueryDto) throws java.lang.Exception
-2022-05-29 00:32:41.968 DEBUG 62308 --- [http-nio-9006-exec-2] m.m.a.RequestResponseBodyMethodProcessor : Read "application/json;charset=UTF-8" to [FileQueryDto(path=null, fileName=)]
-2022-05-29 00:32:42.111 DEBUG 62308 --- [http-nio-9006-exec-2] m.m.a.RequestResponseBodyMethodProcessor : Using 'application/json', given [application/json, text/plain, */*] and supported [application/json, application/*+json, application/json, application/*+json]
-2022-05-29 00:32:42.111 DEBUG 62308 --- [http-nio-9006-exec-2] m.m.a.RequestResponseBodyMethodProcessor : Writing [com.coatardbul.stock.common.api.CommonResult@56ae91cd]
-2022-05-29 00:32:42.111 DEBUG 62308 --- [http-nio-9006-exec-2] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
-2022-05-29 00:32:50.676 DEBUG 62308 --- [http-nio-9006-exec-3] o.s.web.servlet.DispatcherServlet        : POST "/stock/file/delete", parameters={}
-2022-05-29 00:32:50.676 DEBUG 62308 --- [http-nio-9006-exec-3] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to public com.coatardbul.stock.common.api.CommonResult com.coatardbul.stock.controller.FileController.delete(com.coatardbul.stock.model.dto.FileQueryDto) throws java.lang.Exception
-2022-05-29 00:32:50.676 DEBUG 62308 --- [http-nio-9006-exec-3] m.m.a.RequestResponseBodyMethodProcessor : Read "application/json;charset=UTF-8" to [FileQueryDto(path=null, fileName=我爱你中华/)]
-2022-05-29 00:32:50.998 DEBUG 62308 --- [http-nio-9006-exec-3] m.m.a.RequestResponseBodyMethodProcessor : Using 'application/json', given [application/json, text/plain, */*] and supported [application/json, application/*+json, application/json, application/*+json]
-2022-05-29 00:32:50.998 DEBUG 62308 --- [http-nio-9006-exec-3] m.m.a.RequestResponseBodyMethodProcessor : Writing [com.coatardbul.stock.common.api.CommonResult@1e1eb6ea]
-2022-05-29 00:32:50.999 DEBUG 62308 --- [http-nio-9006-exec-3] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
-2022-05-29 00:32:52.685 DEBUG 62308 --- [http-nio-9006-exec-4] o.s.web.servlet.DispatcherServlet        : POST "/stock/file/getHeadList", parameters={}
-2022-05-29 00:32:52.686 DEBUG 62308 --- [http-nio-9006-exec-4] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to public com.coatardbul.stock.common.api.CommonResult<java.util.List<com.coatardbul.stock.model.bo.FileBo>> com.coatardbul.stock.controller.FileController.getHeadList(com.coatardbul.stock.model.dto.FileQueryDto) throws java.lang.Exception
-2022-05-29 00:32:52.686 DEBUG 62308 --- [http-nio-9006-exec-4] m.m.a.RequestResponseBodyMethodProcessor : Read "application/json;charset=UTF-8" to [FileQueryDto(path=null, fileName=)]
-2022-05-29 00:32:52.815 DEBUG 62308 --- [http-nio-9006-exec-4] m.m.a.RequestResponseBodyMethodProcessor : Using 'application/json', given [application/json, text/plain, */*] and supported [application/json, application/*+json, application/json, application/*+json]
-2022-05-29 00:32:52.816 DEBUG 62308 --- [http-nio-9006-exec-4] m.m.a.RequestResponseBodyMethodProcessor : Writing [com.coatardbul.stock.common.api.CommonResult@188523a9]
-2022-05-29 00:32:52.817 DEBUG 62308 --- [http-nio-9006-exec-4] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
-2022-05-29 00:32:54.900  INFO 62308 --- [AsyncResolver-bootstrap-executor-0] c.n.d.s.r.aws.ConfigClusterResolver      : Resolving eureka endpoints via configuration
-2022-05-29 00:33:01.235 DEBUG 62308 --- [http-nio-9006-exec-5] o.s.web.servlet.DispatcherServlet        : POST "/stock/file/delete", parameters={}
-2022-05-29 00:33:01.235 DEBUG 62308 --- [http-nio-9006-exec-5] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to public com.coatardbul.stock.common.api.CommonResult com.coatardbul.stock.controller.FileController.delete(com.coatardbul.stock.model.dto.FileQueryDto) throws java.lang.Exception
-2022-05-29 00:33:01.236 DEBUG 62308 --- [http-nio-9006-exec-5] m.m.a.RequestResponseBodyMethodProcessor : Read "application/json;charset=UTF-8" to [FileQueryDto(path=null, fileName=sdjsdklfjdsldsfsd/)]
-2022-05-29 00:33:01.633 DEBUG 62308 --- [http-nio-9006-exec-5] m.m.a.RequestResponseBodyMethodProcessor : Using 'application/json', given [application/json, text/plain, */*] and supported [application/json, application/*+json, application/json, application/*+json]
-2022-05-29 00:33:01.634 DEBUG 62308 --- [http-nio-9006-exec-5] m.m.a.RequestResponseBodyMethodProcessor : Writing [com.coatardbul.stock.common.api.CommonResult@195ee804]
-2022-05-29 00:33:01.634 DEBUG 62308 --- [http-nio-9006-exec-5] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
-2022-05-29 00:33:03.235 DEBUG 62308 --- [http-nio-9006-exec-6] o.s.web.servlet.DispatcherServlet        : POST "/stock/file/getHeadList", parameters={}
-2022-05-29 00:33:03.235 DEBUG 62308 --- [http-nio-9006-exec-6] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to public com.coatardbul.stock.common.api.CommonResult<java.util.List<com.coatardbul.stock.model.bo.FileBo>> com.coatardbul.stock.controller.FileController.getHeadList(com.coatardbul.stock.model.dto.FileQueryDto) throws java.lang.Exception
-2022-05-29 00:33:03.236 DEBUG 62308 --- [http-nio-9006-exec-6] m.m.a.RequestResponseBodyMethodProcessor : Read "application/json;charset=UTF-8" to [FileQueryDto(path=null, fileName=)]
-2022-05-29 00:33:03.372 DEBUG 62308 --- [http-nio-9006-exec-6] m.m.a.RequestResponseBodyMethodProcessor : Using 'application/json', given [application/json, text/plain, */*] and supported [application/json, application/*+json, application/json, application/*+json]
-2022-05-29 00:33:03.373 DEBUG 62308 --- [http-nio-9006-exec-6] m.m.a.RequestResponseBodyMethodProcessor : Writing [com.coatardbul.stock.common.api.CommonResult@31a674d3]
-2022-05-29 00:33:03.373 DEBUG 62308 --- [http-nio-9006-exec-6] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
-2022-05-29 00:33:06.691 DEBUG 62308 --- [http-nio-9006-exec-9] o.s.web.servlet.DispatcherServlet        : POST "/stock/file/delete", parameters={}
-2022-05-29 00:33:06.692 DEBUG 62308 --- [http-nio-9006-exec-9] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to public com.coatardbul.stock.common.api.CommonResult com.coatardbul.stock.controller.FileController.delete(com.coatardbul.stock.model.dto.FileQueryDto) throws java.lang.Exception
-2022-05-29 00:33:06.692 DEBUG 62308 --- [http-nio-9006-exec-9] m.m.a.RequestResponseBodyMethodProcessor : Read "application/json;charset=UTF-8" to [FileQueryDto(path=null, fileName=555.jpg)]
-2022-05-29 00:33:06.811 DEBUG 62308 --- [http-nio-9006-exec-9] m.m.a.RequestResponseBodyMethodProcessor : Using 'application/json', given [application/json, text/plain, */*] and supported [application/json, application/*+json, application/json, application/*+json]
-2022-05-29 00:33:06.811 DEBUG 62308 --- [http-nio-9006-exec-9] m.m.a.RequestResponseBodyMethodProcessor : Writing [com.coatardbul.stock.common.api.CommonResult@9d25d28]
-2022-05-29 00:33:06.812 DEBUG 62308 --- [http-nio-9006-exec-9] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
-2022-05-29 00:33:08.701 DEBUG 62308 --- [http-nio-9006-exec-8] o.s.web.servlet.DispatcherServlet        : POST "/stock/file/getHeadList", parameters={}
-2022-05-29 00:33:08.702 DEBUG 62308 --- [http-nio-9006-exec-8] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to public com.coatardbul.stock.common.api.CommonResult<java.util.List<com.coatardbul.stock.model.bo.FileBo>> com.coatardbul.stock.controller.FileController.getHeadList(com.coatardbul.stock.model.dto.FileQueryDto) throws java.lang.Exception
-2022-05-29 00:33:08.702 DEBUG 62308 --- [http-nio-9006-exec-8] m.m.a.RequestResponseBodyMethodProcessor : Read "application/json;charset=UTF-8" to [FileQueryDto(path=null, fileName=)]
-2022-05-29 00:33:08.826 DEBUG 62308 --- [http-nio-9006-exec-8] m.m.a.RequestResponseBodyMethodProcessor : Using 'application/json', given [application/json, text/plain, */*] and supported [application/json, application/*+json, application/json, application/*+json]
-2022-05-29 00:33:08.826 DEBUG 62308 --- [http-nio-9006-exec-8] m.m.a.RequestResponseBodyMethodProcessor : Writing [com.coatardbul.stock.common.api.CommonResult@53dee875]
-2022-05-29 00:33:08.826 DEBUG 62308 --- [http-nio-9006-exec-8] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
-2022-05-29 00:33:35.707  INFO 62308 --- [Thread-57] o.s.c.n.e.s.EurekaServiceRegistry        : Unregistering application STOCK with eureka with status DOWN
-2022-05-29 00:33:35.708  WARN 62308 --- [Thread-57] com.netflix.discovery.DiscoveryClient    : Saw local status change event StatusChangeEvent [timestamp=1653755615708, current=DOWN, previous=UP]
-2022-05-29 00:33:35.710  INFO 62308 --- [DiscoveryClient-InstanceInfoReplicator-0] com.netflix.discovery.DiscoveryClient    : DiscoveryClient_STOCK/coatardbuldembp:stock:9006: registering service...
-2022-05-29 00:33:35.747  INFO 62308 --- [Thread-57] org.quartz.core.QuartzScheduler          : Scheduler quartzScheduler_$_NON_CLUSTERED paused.
-2022-05-29 00:33:35.782  INFO 62308 --- [Thread-57] o.s.s.quartz.SchedulerFactoryBean        : Shutting down Quartz Scheduler
-2022-05-29 00:33:35.782  INFO 62308 --- [Thread-57] org.quartz.core.QuartzScheduler          : Scheduler quartzScheduler_$_NON_CLUSTERED shutting down.
-2022-05-29 00:33:35.782  INFO 62308 --- [Thread-57] org.quartz.core.QuartzScheduler          : Scheduler quartzScheduler_$_NON_CLUSTERED paused.
-2022-05-29 00:33:35.783  INFO 62308 --- [Thread-57] org.quartz.core.QuartzScheduler          : Scheduler quartzScheduler_$_NON_CLUSTERED shutdown complete.
-2022-05-29 00:33:35.790  INFO 62308 --- [Thread-57] o.s.s.concurrent.ThreadPoolTaskExecutor  : Shutting down ExecutorService 'applicationTaskExecutor'
-2022-05-29 00:33:35.808  INFO 62308 --- [Thread-50] com.xxl.job.core.server.EmbedServer      : >>>>>>>>>>> xxl-job remoting server stop.
-2022-05-29 00:33:35.853  INFO 62308 --- [DiscoveryClient-InstanceInfoReplicator-0] com.netflix.discovery.DiscoveryClient    : DiscoveryClient_STOCK/coatardbuldembp:stock:9006 - registration status: 204
+2022-06-01 07:19:21.321  INFO 66668 --- [main] com.coatardbul.stock.StockApplication    : The following profiles are active: tx
+2022-06-01 07:19:22.842  INFO 66668 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Multiple Spring Data modules found, entering strict repository configuration mode!
+2022-06-01 07:19:22.847  INFO 66668 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data repositories in DEFAULT mode.
+2022-06-01 07:19:23.087  INFO 66668 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 34ms. Found 0 repository interfaces.
+2022-06-01 07:19:23.623  INFO 66668 --- [main] o.s.cloud.context.scope.GenericScope     : BeanFactory id=b44735b6-a756-3107-a750-65d01e36f509
+2022-06-01 07:19:23.812  INFO 66668 --- [main] trationDelegate$BeanPostProcessorChecker : Bean 'org.springframework.transaction.annotation.ProxyTransactionManagementConfiguration' of type [org.springframework.transaction.annotation.ProxyTransactionManagementConfiguration$$EnhancerBySpringCGLIB$$1] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2022-06-01 07:19:24.019  INFO 66668 --- [main] trationDelegate$BeanPostProcessorChecker : Bean 'redisConfig' of type [com.coatardbul.stock.common.config.RedisConfig$$EnhancerBySpringCGLIB$$1] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2022-06-01 07:19:24.108  INFO 66668 --- [main] trationDelegate$BeanPostProcessorChecker : Bean 'org.springframework.cloud.autoconfigure.ConfigurationPropertiesRebinderAutoConfiguration' of type [org.springframework.cloud.autoconfigure.ConfigurationPropertiesRebinderAutoConfiguration$$EnhancerBySpringCGLIB$$1] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2022-06-01 07:19:24.888  INFO 66668 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 9006 (http)
+2022-06-01 07:19:24.928  INFO 66668 --- [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2022-06-01 07:19:24.929  INFO 66668 --- [main] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.21]
+2022-06-01 07:19:25.190  INFO 66668 --- [main] o.a.c.c.C.[Tomcat].[localhost].[/stock]  : Initializing Spring embedded WebApplicationContext
+2022-06-01 07:19:25.190 DEBUG 66668 --- [main] o.s.web.context.ContextLoader            : Published root WebApplicationContext as ServletContext attribute with name [org.springframework.web.context.WebApplicationContext.ROOT]
+2022-06-01 07:19:25.190  INFO 66668 --- [main] o.s.web.context.ContextLoader            : Root WebApplicationContext: initialization completed in 3839 ms
+2022-06-01 07:19:25.537  INFO 66668 --- [main] f.a.AutowiredAnnotationBeanPostProcessor : Autowired annotation should only be used on methods with parameters: public void com.coatardbul.stock.service.base.CosService.setClientConfig()
+2022-06-01 07:19:25.946  INFO 66668 --- [main] f.a.AutowiredAnnotationBeanPostProcessor : Autowired annotation should only be used on methods with parameters: public void com.coatardbul.stock.service.statistic.ProxyIpService.setProxyIps()
+2022-06-01 07:19:26.621  INFO 66668 --- [main] o.s.b.d.a.OptionalLiveReloadServer       : LiveReload server is running on port 35729
+2022-06-01 07:19:27.119  INFO 66668 --- [main] c.a.d.s.b.a.DruidDataSourceAutoConfigure : Init DruidDataSource
+2022-06-01 07:19:27.445  INFO 66668 --- [main] com.alibaba.druid.pool.DruidDataSource   : {dataSource-1} inited
+2022-06-01 07:19:29.252  INFO 66668 --- [main] f.a.AutowiredAnnotationBeanPostProcessor : Autowired annotation should only be used on methods with parameters: public void com.coatardbul.stock.service.base.StockStrategyService.refreshCookie()
+2022-06-01 07:19:30.273  INFO 66668 --- [main] f.a.AutowiredAnnotationBeanPostProcessor : Autowired annotation should only be used on methods with parameters: public void com.coatardbul.stock.controller.unuse.StockController.PostLoanController()
+2022-06-01 07:19:30.786 DEBUG 66668 --- [main] s.w.s.m.m.a.RequestMappingHandlerMapping : 99 mappings in 'requestMappingHandlerMapping'
+2022-06-01 07:19:30.947  INFO 66668 --- [main] pertySourcedRequestMappingHandlerMapping : Mapped URL path [/v2/api-docs] onto method [public org.springframework.http.ResponseEntity<springfox.documentation.spring.web.json.Json> springfox.documentation.swagger2.web.Swagger2Controller.getDocumentation(java.lang.String,javax.servlet.http.HttpServletRequest)]
+2022-06-01 07:19:30.978  INFO 66668 --- [main] c.c.stock.common.config.XxlJobConfig     : >>>>>>>>>>> xxl-job config init.
+2022-06-01 07:19:31.003  WARN 66668 --- [main] c.n.c.sources.URLConfigurationSource     : No URLs will be polled as dynamic configuration sources.
+2022-06-01 07:19:31.003  INFO 66668 --- [main] c.n.c.sources.URLConfigurationSource     : To enable URLs as dynamic configuration sources, define System property archaius.configurationSource.additionalUrls or make config.properties available on classpath.
+2022-06-01 07:19:31.009  WARN 66668 --- [main] c.n.c.sources.URLConfigurationSource     : No URLs will be polled as dynamic configuration sources.
+2022-06-01 07:19:31.009  INFO 66668 --- [main] c.n.c.sources.URLConfigurationSource     : To enable URLs as dynamic configuration sources, define System property archaius.configurationSource.additionalUrls or make config.properties available on classpath.
+2022-06-01 07:19:31.109 DEBUG 66668 --- [main] o.s.w.s.handler.SimpleUrlHandlerMapping  : Patterns [/**/favicon.ico] in 'faviconHandlerMapping'
+2022-06-01 07:19:31.334  INFO 66668 --- [main] o.s.s.concurrent.ThreadPoolTaskExecutor  : Initializing ExecutorService 'applicationTaskExecutor'
+2022-06-01 07:19:31.383 DEBUG 66668 --- [main] s.w.s.m.m.a.RequestMappingHandlerAdapter : ControllerAdvice beans: 0 @ModelAttribute, 0 @InitBinder, 1 RequestBodyAdvice, 1 ResponseBodyAdvice
+2022-06-01 07:19:31.441 DEBUG 66668 --- [main] o.s.w.s.handler.SimpleUrlHandlerMapping  : Patterns [/webjars/**, /**] in 'resourceHandlerMapping'
+2022-06-01 07:19:31.464 DEBUG 66668 --- [main] .m.m.a.ExceptionHandlerExceptionResolver : ControllerAdvice beans: 1 @ExceptionHandler, 1 ResponseBodyAdvice
+2022-06-01 07:19:32.307  INFO 66668 --- [main] org.quartz.impl.StdSchedulerFactory      : Using default implementation for ThreadExecutor
+2022-06-01 07:19:32.323  INFO 66668 --- [main] org.quartz.core.SchedulerSignalerImpl    : Initialized Scheduler Signaller of type: class org.quartz.core.SchedulerSignalerImpl
+2022-06-01 07:19:32.324  INFO 66668 --- [main] org.quartz.core.QuartzScheduler          : Quartz Scheduler v.2.3.1 created.
+2022-06-01 07:19:32.325  INFO 66668 --- [main] org.quartz.simpl.RAMJobStore             : RAMJobStore initialized.
+2022-06-01 07:19:32.326  INFO 66668 --- [main] org.quartz.core.QuartzScheduler          : Scheduler meta-data: Quartz Scheduler (v2.3.1) 'quartzScheduler' with instanceId 'NON_CLUSTERED'
+  Scheduler class: 'org.quartz.core.QuartzScheduler' - running locally.
+  NOT STARTED.
+  Currently in standby mode.
+  Number of jobs executed: 0
+  Using thread pool 'org.quartz.simpl.SimpleThreadPool' - with 10 threads.
+  Using job-store 'org.quartz.simpl.RAMJobStore' - which does not support persistence. and is not clustered.
+
+2022-06-01 07:19:32.326  INFO 66668 --- [main] org.quartz.impl.StdSchedulerFactory      : Quartz scheduler 'quartzScheduler' initialized from an externally provided properties instance.
+2022-06-01 07:19:32.326  INFO 66668 --- [main] org.quartz.impl.StdSchedulerFactory      : Quartz scheduler version: 2.3.1
+2022-06-01 07:19:32.326  INFO 66668 --- [main] org.quartz.core.QuartzScheduler          : JobFactory set to: org.springframework.scheduling.quartz.SpringBeanJobFactory@e700641
+2022-06-01 07:19:32.762  INFO 66668 --- [main] c.xxl.job.core.executor.XxlJobExecutor   : >>>>>>>>>>> xxl-job register jobhandler success, name:dayUpDownJobHandler, jobHandler:com.xxl.job.core.handler.impl.MethodJobHandler@2de11117[class com.coatardbul.stock.task.DayStatisticJob#dayUpDownJobHandler]
+2022-06-01 07:19:32.763  INFO 66668 --- [main] c.xxl.job.core.executor.XxlJobExecutor   : >>>>>>>>>>> xxl-job register jobhandler success, name:dayTwoUpLimitJobHandler, jobHandler:com.xxl.job.core.handler.impl.MethodJobHandler@4c93cf28[class com.coatardbul.stock.task.DayStatisticJob#dayTwoUpLimitJobHandler]
+2022-06-01 07:19:32.763  INFO 66668 --- [main] c.xxl.job.core.executor.XxlJobExecutor   : >>>>>>>>>>> xxl-job register jobhandler success, name:openStockOneJobHandler, jobHandler:com.xxl.job.core.handler.impl.MethodJobHandler@4e5dcc50[class com.coatardbul.stock.task.DayStatisticJob#openStockOneJobHandler]
+2022-06-01 07:19:32.763  INFO 66668 --- [main] c.xxl.job.core.executor.XxlJobExecutor   : >>>>>>>>>>> xxl-job register jobhandler success, name:openStockTwoJobHandler, jobHandler:com.xxl.job.core.handler.impl.MethodJobHandler@47be3679[class com.coatardbul.stock.task.DayStatisticJob#openStockTwoJobHandler]
+2022-06-01 07:19:32.763  INFO 66668 --- [main] c.xxl.job.core.executor.XxlJobExecutor   : >>>>>>>>>>> xxl-job register jobhandler success, name:dayMarketValueUpLimitJobHandler, jobHandler:com.xxl.job.core.handler.impl.MethodJobHandler@6272fe30[class com.coatardbul.stock.task.DayStatisticJob#dayMarketValueUpLimitJobHandler]
+2022-06-01 07:19:32.763  INFO 66668 --- [main] c.xxl.job.core.executor.XxlJobExecutor   : >>>>>>>>>>> xxl-job register jobhandler success, name:dayTwoAboveUpLimitVolPriceJobHandler, jobHandler:com.xxl.job.core.handler.impl.MethodJobHandler@30ca87d9[class com.coatardbul.stock.task.DayStatisticJob#dayTwoAboveUpLimitVolPriceJobHandler]
+2022-06-01 07:19:32.763  INFO 66668 --- [main] c.xxl.job.core.executor.XxlJobExecutor   : >>>>>>>>>>> xxl-job register jobhandler success, name:minuterEmotionJobHandler, jobHandler:com.xxl.job.core.handler.impl.MethodJobHandler@10d5e2dc[class com.coatardbul.stock.task.MinuterEmotionXxlJob#minuterEmotionJobHandler]
+2022-06-01 07:19:32.764  INFO 66668 --- [main] c.xxl.job.core.executor.XxlJobExecutor   : >>>>>>>>>>> xxl-job register jobhandler success, name:buildLastUpLimitInfoJobHandler, jobHandler:com.xxl.job.core.handler.impl.MethodJobHandler@266e0341[class com.coatardbul.stock.task.MinuterEmotionXxlJob#buildLastUpLimitInfoJobHandler]
+2022-06-01 07:19:32.764  INFO 66668 --- [main] c.xxl.job.core.executor.XxlJobExecutor   : >>>>>>>>>>> xxl-job register jobhandler success, name:proxyIpJobHandler, jobHandler:com.xxl.job.core.handler.impl.MethodJobHandler@5398fac2[class com.coatardbul.stock.task.ProxyIpXxlJob#proxyIpJobHandler]
+2022-06-01 07:19:32.764  INFO 66668 --- [main] c.xxl.job.core.executor.XxlJobExecutor   : >>>>>>>>>>> xxl-job register jobhandler success, name:demoJobHandler, jobHandler:com.xxl.job.core.handler.impl.MethodJobHandler@37884b27[class com.coatardbul.stock.task.SampleXxlJob#demoJobHandler]
+2022-06-01 07:19:32.764  INFO 66668 --- [main] c.xxl.job.core.executor.XxlJobExecutor   : >>>>>>>>>>> xxl-job register jobhandler success, name:shardingJobHandler, jobHandler:com.xxl.job.core.handler.impl.MethodJobHandler@8749c08[class com.coatardbul.stock.task.SampleXxlJob#shardingJobHandler]
+2022-06-01 07:19:32.765  INFO 66668 --- [main] c.xxl.job.core.executor.XxlJobExecutor   : >>>>>>>>>>> xxl-job register jobhandler success, name:commandJobHandler, jobHandler:com.xxl.job.core.handler.impl.MethodJobHandler@5e56f24c[class com.coatardbul.stock.task.SampleXxlJob#commandJobHandler]
+2022-06-01 07:19:32.765  INFO 66668 --- [main] c.xxl.job.core.executor.XxlJobExecutor   : >>>>>>>>>>> xxl-job register jobhandler success, name:httpJobHandler, jobHandler:com.xxl.job.core.handler.impl.MethodJobHandler@4a8c4dae[class com.coatardbul.stock.task.SampleXxlJob#httpJobHandler]
+2022-06-01 07:19:32.765  INFO 66668 --- [main] c.xxl.job.core.executor.XxlJobExecutor   : >>>>>>>>>>> xxl-job register jobhandler success, name:demoJobHandler2, jobHandler:com.xxl.job.core.handler.impl.MethodJobHandler@3fa8e6ab[class com.coatardbul.stock.task.SampleXxlJob#demoJobHandler2]
+2022-06-01 07:19:32.765  INFO 66668 --- [main] c.xxl.job.core.executor.XxlJobExecutor   : >>>>>>>>>>> xxl-job register jobhandler success, name:strategyNowWatchJobHandler, jobHandler:com.xxl.job.core.handler.impl.MethodJobHandler@1310b98a[class com.coatardbul.stock.task.StrategyWatchJob#strategyWatchJobHandler]
+2022-06-01 07:19:32.765  INFO 66668 --- [main] c.xxl.job.core.executor.XxlJobExecutor   : >>>>>>>>>>> xxl-job register jobhandler success, name:historyStrategyWatchJobHandler, jobHandler:com.xxl.job.core.handler.impl.MethodJobHandler@7abdfd36[class com.coatardbul.stock.task.StrategyWatchJob#historyStrategyWatchJobHandler]
+2022-06-01 07:19:32.765  INFO 66668 --- [main] c.xxl.job.core.executor.XxlJobExecutor   : >>>>>>>>>>> xxl-job register jobhandler success, name:emailStrategyWatchJobHandler, jobHandler:com.xxl.job.core.handler.impl.MethodJobHandler@52743ef2[class com.coatardbul.stock.task.StrategyWatchJob#emailStrategyWatchJobHandler]
+2022-06-01 07:19:32.870  WARN 66668 --- [main] c.xxl.job.core.executor.XxlJobExecutor   : >>>>>>>>>>> xxl-job accessToken is empty. To ensure system security, please set the accessToken.
+2022-06-01 07:19:33.282  INFO 66668 --- [Thread-52] com.xxl.job.core.server.EmbedServer      : >>>>>>>>>>> xxl-job remoting server start success, nettype = class com.xxl.job.core.server.EmbedServer, port = 8888
+2022-06-01 07:19:33.317  INFO 66668 --- [main] o.s.c.n.eureka.InstanceInfoFactory       : Setting initial instance status as: STARTING
+2022-06-01 07:19:33.364  INFO 66668 --- [main] com.netflix.discovery.DiscoveryClient    : Initializing Eureka in region us-east-1
+2022-06-01 07:19:33.447  INFO 66668 --- [main] c.n.d.provider.DiscoveryJerseyProvider   : Using JSON encoding codec LegacyJacksonJson
+2022-06-01 07:19:33.447  INFO 66668 --- [main] c.n.d.provider.DiscoveryJerseyProvider   : Using JSON decoding codec LegacyJacksonJson
+2022-06-01 07:19:33.618  INFO 66668 --- [main] c.n.d.provider.DiscoveryJerseyProvider   : Using XML encoding codec XStreamXml
+2022-06-01 07:19:33.618  INFO 66668 --- [main] c.n.d.provider.DiscoveryJerseyProvider   : Using XML decoding codec XStreamXml
+2022-06-01 07:19:33.980  INFO 66668 --- [main] c.n.d.s.r.aws.ConfigClusterResolver      : Resolving eureka endpoints via configuration
+2022-06-01 07:19:34.011  INFO 66668 --- [main] com.netflix.discovery.DiscoveryClient    : Disable delta property : false
+2022-06-01 07:19:34.011  INFO 66668 --- [main] com.netflix.discovery.DiscoveryClient    : Single vip registry refresh property : null
+2022-06-01 07:19:34.011  INFO 66668 --- [main] com.netflix.discovery.DiscoveryClient    : Force full registry fetch : false
+2022-06-01 07:19:34.011  INFO 66668 --- [main] com.netflix.discovery.DiscoveryClient    : Application is null : false
+2022-06-01 07:19:34.011  INFO 66668 --- [main] com.netflix.discovery.DiscoveryClient    : Registered Applications size is zero : true
+2022-06-01 07:19:34.011  INFO 66668 --- [main] com.netflix.discovery.DiscoveryClient    : Application version is -1: true
+2022-06-01 07:19:34.011  INFO 66668 --- [main] com.netflix.discovery.DiscoveryClient    : Getting all instance registry info from the eureka server
+2022-06-01 07:19:34.483  INFO 66668 --- [main] com.netflix.discovery.DiscoveryClient    : The response status is 200
+2022-06-01 07:19:34.488  INFO 66668 --- [main] com.netflix.discovery.DiscoveryClient    : Starting heartbeat executor: renew interval is: 30
+2022-06-01 07:19:34.493  INFO 66668 --- [main] c.n.discovery.InstanceInfoReplicator     : InstanceInfoReplicator onDemand update allowed rate per min is 4
+2022-06-01 07:19:34.500  INFO 66668 --- [main] com.netflix.discovery.DiscoveryClient    : Discovery Client initialized at timestamp 1654039174498 with initial instances count: 3
+2022-06-01 07:19:34.510  INFO 66668 --- [main] o.s.c.n.e.s.EurekaServiceRegistry        : Registering application STOCK with eureka with status UP
+2022-06-01 07:19:34.511  INFO 66668 --- [main] com.netflix.discovery.DiscoveryClient    : Saw local status change event StatusChangeEvent [timestamp=1654039174511, current=UP, previous=STARTING]
+2022-06-01 07:19:34.514  INFO 66668 --- [DiscoveryClient-InstanceInfoReplicator-0] com.netflix.discovery.DiscoveryClient    : DiscoveryClient_STOCK/192.168.8.100:stock:9006: registering service...
+2022-06-01 07:19:34.514  INFO 66668 --- [main] d.s.w.p.DocumentationPluginsBootstrapper : Context refreshed
+2022-06-01 07:19:34.552  INFO 66668 --- [main] d.s.w.p.DocumentationPluginsBootstrapper : Found 1 custom documentation plugin(s)
+2022-06-01 07:19:34.626  INFO 66668 --- [main] s.d.s.w.s.ApiListingReferenceScanner     : Scanning for api listing references
+2022-06-01 07:19:34.641  INFO 66668 --- [DiscoveryClient-InstanceInfoReplicator-0] com.netflix.discovery.DiscoveryClient    : DiscoveryClient_STOCK/192.168.8.100:stock:9006 - registration status: 204
+2022-06-01 07:19:34.870  INFO 66668 --- [main] .d.s.w.r.o.CachingOperationNameGenerator : Generating unique operation named: addUsingPOST_1
+2022-06-01 07:19:34.901  INFO 66668 --- [main] .d.s.w.r.o.CachingOperationNameGenerator : Generating unique operation named: deleteUsingPOST_1
+2022-06-01 07:19:34.907  INFO 66668 --- [main] .d.s.w.r.o.CachingOperationNameGenerator : Generating unique operation named: modifyUsingPOST_1
+2022-06-01 07:19:34.918  INFO 66668 --- [main] .d.s.w.r.o.CachingOperationNameGenerator : Generating unique operation named: refreshDayUsingPOST_1
+2022-06-01 07:19:34.920  INFO 66668 --- [main] .d.s.w.r.o.CachingOperationNameGenerator : Generating unique operation named: refreshDayRangeUsingPOST_1
+2022-06-01 07:19:34.926  INFO 66668 --- [main] .d.s.w.r.o.CachingOperationNameGenerator : Generating unique operation named: addUsingPOST_2
+2022-06-01 07:19:34.927  INFO 66668 --- [main] .d.s.w.r.o.CachingOperationNameGenerator : Generating unique operation named: deleteUsingPOST_2
+2022-06-01 07:19:34.933  INFO 66668 --- [main] .d.s.w.r.o.CachingOperationNameGenerator : Generating unique operation named: findAllUsingPOST_1
+2022-06-01 07:19:34.935  INFO 66668 --- [main] .d.s.w.r.o.CachingOperationNameGenerator : Generating unique operation named: modifyUsingPOST_2
+2022-06-01 07:19:34.938  INFO 66668 --- [main] .d.s.w.r.o.CachingOperationNameGenerator : Generating unique operation named: addUsingPOST_3
+2022-06-01 07:19:34.943  INFO 66668 --- [main] .d.s.w.r.o.CachingOperationNameGenerator : Generating unique operation named: deleteUsingPOST_3
+2022-06-01 07:19:34.950  INFO 66668 --- [main] .d.s.w.r.o.CachingOperationNameGenerator : Generating unique operation named: findAllUsingPOST_2
+2022-06-01 07:19:34.951  INFO 66668 --- [main] .d.s.w.r.o.CachingOperationNameGenerator : Generating unique operation named: modifyUsingPOST_3
+2022-06-01 07:19:34.953  INFO 66668 --- [main] .d.s.w.r.o.CachingOperationNameGenerator : Generating unique operation named: deleteDayUsingPOST_1
+2022-06-01 07:19:34.954  INFO 66668 --- [main] .d.s.w.r.o.CachingOperationNameGenerator : Generating unique operation named: forceRefreshDayRangeUsingPOST_1
+2022-06-01 07:19:34.955  INFO 66668 --- [main] .d.s.w.r.o.CachingOperationNameGenerator : Generating unique operation named: getRangeStaticUsingPOST_1
+2022-06-01 07:19:34.957  INFO 66668 --- [main] .d.s.w.r.o.CachingOperationNameGenerator : Generating unique operation named: refreshDayUsingPOST_2
+2022-06-01 07:19:34.958  INFO 66668 --- [main] .d.s.w.r.o.CachingOperationNameGenerator : Generating unique operation named: refreshDayRangeUsingPOST_2
+2022-06-01 07:19:34.967  INFO 66668 --- [main] .d.s.w.r.o.CachingOperationNameGenerator : Generating unique operation named: addUsingPOST_4
+2022-06-01 07:19:34.969  INFO 66668 --- [main] .d.s.w.r.o.CachingOperationNameGenerator : Generating unique operation named: deleteUsingPOST_4
+2022-06-01 07:19:34.974  INFO 66668 --- [main] .d.s.w.r.o.CachingOperationNameGenerator : Generating unique operation named: findAllUsingPOST_3
+2022-06-01 07:19:34.975  INFO 66668 --- [main] .d.s.w.r.o.CachingOperationNameGenerator : Generating unique operation named: modifyUsingPOST_4
+2022-06-01 07:19:34.979  INFO 66668 --- [main] .d.s.w.r.o.CachingOperationNameGenerator : Generating unique operation named: addUsingPOST_5
+2022-06-01 07:19:34.980  INFO 66668 --- [main] .d.s.w.r.o.CachingOperationNameGenerator : Generating unique operation named: deleteUsingPOST_5
+2022-06-01 07:19:34.985  INFO 66668 --- [main] .d.s.w.r.o.CachingOperationNameGenerator : Generating unique operation named: findAllUsingPOST_4
+2022-06-01 07:19:34.987  INFO 66668 --- [main] .d.s.w.r.o.CachingOperationNameGenerator : Generating unique operation named: modifyUsingPOST_5
+2022-06-01 07:19:34.995  INFO 66668 --- [main] .d.s.w.r.o.CachingOperationNameGenerator : Generating unique operation named: deleteDayUsingPOST_2
+2022-06-01 07:19:34.998  INFO 66668 --- [main] .d.s.w.r.o.CachingOperationNameGenerator : Generating unique operation named: forceRefreshDayRangeUsingPOST_2
+2022-06-01 07:19:35.000  INFO 66668 --- [main] .d.s.w.r.o.CachingOperationNameGenerator : Generating unique operation named: getRangeStaticUsingPOST_2
+2022-06-01 07:19:35.002  INFO 66668 --- [main] .d.s.w.r.o.CachingOperationNameGenerator : Generating unique operation named: refreshDayUsingPOST_3
+2022-06-01 07:19:35.003  INFO 66668 --- [main] .d.s.w.r.o.CachingOperationNameGenerator : Generating unique operation named: refreshDayRangeUsingPOST_3
+2022-06-01 07:19:35.006  INFO 66668 --- [main] .d.s.w.r.o.CachingOperationNameGenerator : Generating unique operation named: deleteUsingPOST_6
+2022-06-01 07:19:35.007  INFO 66668 --- [main] .d.s.w.r.o.CachingOperationNameGenerator : Generating unique operation named: executeUsingPOST_1
+2022-06-01 07:19:35.008  INFO 66668 --- [main] .d.s.w.r.o.CachingOperationNameGenerator : Generating unique operation named: getAllUsingPOST_1
+2022-06-01 07:19:35.014  INFO 66668 --- [main] .d.s.w.r.o.CachingOperationNameGenerator : Generating unique operation named: deleteUsingPOST_7
+2022-06-01 07:19:35.018  INFO 66668 --- [main] .d.s.w.r.o.CachingOperationNameGenerator : Generating unique operation named: findAllUsingPOST_5
+2022-06-01 07:19:35.022  INFO 66668 --- [main] .d.s.w.r.o.CachingOperationNameGenerator : Generating unique operation named: cosUploadUsingPOST_1
+2022-06-01 07:19:35.041  INFO 66668 --- [main] o.s.s.quartz.SchedulerFactoryBean        : Starting Quartz Scheduler now
+2022-06-01 07:19:35.042  INFO 66668 --- [main] org.quartz.core.QuartzScheduler          : Scheduler quartzScheduler_$_NON_CLUSTERED started.
+2022-06-01 07:19:35.077  INFO 66668 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 9006 (http) with context path '/stock'
+2022-06-01 07:19:35.078  INFO 66668 --- [main] .s.c.n.e.s.EurekaAutoServiceRegistration : Updating port to 9006
+2022-06-01 07:19:35.081  INFO 66668 --- [main] com.coatardbul.stock.StockApplication    : Started StockApplication in 15.504 seconds (JVM running for 21.477)
+2022-06-01 07:21:39.117  INFO 66668 --- [Thread-59] o.s.c.n.e.s.EurekaServiceRegistry        : Unregistering application STOCK with eureka with status DOWN
+2022-06-01 07:21:39.117  WARN 66668 --- [Thread-59] com.netflix.discovery.DiscoveryClient    : Saw local status change event StatusChangeEvent [timestamp=1654039299117, current=DOWN, previous=UP]
+2022-06-01 07:21:39.118  INFO 66668 --- [DiscoveryClient-InstanceInfoReplicator-0] com.netflix.discovery.DiscoveryClient    : DiscoveryClient_STOCK/192.168.8.100:stock:9006: registering service...
+2022-06-01 07:21:39.124  INFO 66668 --- [Thread-59] org.quartz.core.QuartzScheduler          : Scheduler quartzScheduler_$_NON_CLUSTERED paused.
+2022-06-01 07:21:39.135  INFO 66668 --- [Thread-59] o.s.s.quartz.SchedulerFactoryBean        : Shutting down Quartz Scheduler
+2022-06-01 07:21:39.135  INFO 66668 --- [Thread-59] org.quartz.core.QuartzScheduler          : Scheduler quartzScheduler_$_NON_CLUSTERED shutting down.
+2022-06-01 07:21:39.135  INFO 66668 --- [Thread-59] org.quartz.core.QuartzScheduler          : Scheduler quartzScheduler_$_NON_CLUSTERED paused.
+2022-06-01 07:21:39.136  INFO 66668 --- [Thread-59] org.quartz.core.QuartzScheduler          : Scheduler quartzScheduler_$_NON_CLUSTERED shutdown complete.
+2022-06-01 07:21:39.138  INFO 66668 --- [Thread-59] o.s.s.concurrent.ThreadPoolTaskExecutor  : Shutting down ExecutorService 'applicationTaskExecutor'
+2022-06-01 07:21:39.144  INFO 66668 --- [Thread-52] com.xxl.job.core.server.EmbedServer      : >>>>>>>>>>> xxl-job remoting server stop.
+2022-06-01 07:21:39.194  INFO 66668 --- [DiscoveryClient-InstanceInfoReplicator-0] com.netflix.discovery.DiscoveryClient    : DiscoveryClient_STOCK/192.168.8.100:stock:9006 - registration status: 204
+2022-06-01 07:21:39.212  INFO 66668 --- [xxl-job, executor ExecutorRegistryThread] c.x.j.c.thread.ExecutorRegistryThread    : >>>>>>>>>>> xxl-job registry-remove success, registryParam:RegistryParam{registryGroup='EXECUTOR', registryKey='xxl-job-stock', registryValue='124.222.217.230'}, registryResult:ReturnT [code=200, msg=null, content=null]
+2022-06-01 07:21:39.213  INFO 66668 --- [xxl-job, executor ExecutorRegistryThread] c.x.j.c.thread.ExecutorRegistryThread    : >>>>>>>>>>> xxl-job, executor registry thread destory.
+2022-06-01 07:21:39.213  INFO 66668 --- [Thread-59] com.xxl.job.core.server.EmbedServer      : >>>>>>>>>>> xxl-job remoting server destroy success.
+2022-06-01 07:21:39.213  INFO 66668 --- [xxl-job, executor JobLogFileCleanThread] c.x.j.core.thread.JobLogFileCleanThread  : >>>>>>>>>>> xxl-job, executor JobLogFileCleanThread thread destory.
+2022-06-01 07:21:39.214  INFO 66668 --- [xxl-job, executor TriggerCallbackThread] c.x.j.core.thread.TriggerCallbackThread  : >>>>>>>>>>> xxl-job, executor callback thread destory.
+2022-06-01 07:21:39.214  INFO 66668 --- [Thread-51] c.x.j.core.thread.TriggerCallbackThread  : >>>>>>>>>>> xxl-job, executor retry callback thread destory.
+2022-06-01 07:21:39.255  INFO 66668 --- [Thread-59] com.alibaba.druid.pool.DruidDataSource   : {dataSource-1} closed
+2022-06-01 07:21:39.261  INFO 66668 --- [Thread-59] com.netflix.discovery.DiscoveryClient    : Shutting down DiscoveryClient ...
+2022-06-01 07:22:25.844  INFO 67503 --- [main] com.coatardbul.stock.StockApplication    : The following profiles are active: tx
+2022-06-01 07:22:27.314  INFO 67503 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Multiple Spring Data modules found, entering strict repository configuration mode!
+2022-06-01 07:22:27.318  INFO 67503 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data repositories in DEFAULT mode.
+2022-06-01 07:22:27.582  INFO 67503 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 36ms. Found 0 repository interfaces.
+2022-06-01 07:22:28.080  INFO 67503 --- [main] o.s.cloud.context.scope.GenericScope     : BeanFactory id=b44735b6-a756-3107-a750-65d01e36f509
+2022-06-01 07:22:28.269  INFO 67503 --- [main] trationDelegate$BeanPostProcessorChecker : Bean 'org.springframework.transaction.annotation.ProxyTransactionManagementConfiguration' of type [org.springframework.transaction.annotation.ProxyTransactionManagementConfiguration$$EnhancerBySpringCGLIB$$1] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2022-06-01 07:22:28.479  INFO 67503 --- [main] trationDelegate$BeanPostProcessorChecker : Bean 'redisConfig' of type [com.coatardbul.stock.common.config.RedisConfig$$EnhancerBySpringCGLIB$$1] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2022-06-01 07:22:28.564  INFO 67503 --- [main] trationDelegate$BeanPostProcessorChecker : Bean 'org.springframework.cloud.autoconfigure.ConfigurationPropertiesRebinderAutoConfiguration' of type [org.springframework.cloud.autoconfigure.ConfigurationPropertiesRebinderAutoConfiguration$$EnhancerBySpringCGLIB$$1] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2022-06-01 07:22:29.318  INFO 67503 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 9006 (http)
+2022-06-01 07:22:29.360  INFO 67503 --- [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2022-06-01 07:22:29.360  INFO 67503 --- [main] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.21]
+2022-06-01 07:22:29.588  INFO 67503 --- [main] o.a.c.c.C.[Tomcat].[localhost].[/stock]  : Initializing Spring embedded WebApplicationContext
+2022-06-01 07:22:29.589 DEBUG 67503 --- [main] o.s.web.context.ContextLoader            : Published root WebApplicationContext as ServletContext attribute with name [org.springframework.web.context.WebApplicationContext.ROOT]
+2022-06-01 07:22:29.589  INFO 67503 --- [main] o.s.web.context.ContextLoader            : Root WebApplicationContext: initialization completed in 3721 ms
+2022-06-01 07:22:29.914  INFO 67503 --- [main] f.a.AutowiredAnnotationBeanPostProcessor : Autowired annotation should only be used on methods with parameters: public void com.coatardbul.stock.service.base.CosService.setClientConfig()
+2022-06-01 07:22:30.094  INFO 67503 --- [main] f.a.AutowiredAnnotationBeanPostProcessor : Autowired annotation should only be used on methods with parameters: public void com.coatardbul.stock.service.statistic.ProxyIpService.setProxyIps()
+2022-06-01 07:22:30.477  INFO 67503 --- [main] o.s.b.d.a.OptionalLiveReloadServer       : LiveReload server is running on port 35729
+2022-06-01 07:22:30.861  INFO 67503 --- [main] c.a.d.s.b.a.DruidDataSourceAutoConfigure : Init DruidDataSource
+2022-06-01 07:22:31.138  INFO 67503 --- [main] com.alibaba.druid.pool.DruidDataSource   : {dataSource-1} inited
+2022-06-01 07:22:32.733  INFO 67503 --- [main] f.a.AutowiredAnnotationBeanPostProcessor : Autowired annotation should only be used on methods with parameters: public void com.coatardbul.stock.service.base.StockStrategyService.refreshCookie()
+2022-06-01 07:22:33.590  INFO 67503 --- [main] f.a.AutowiredAnnotationBeanPostProcessor : Autowired annotation should only be used on methods with parameters: public void com.coatardbul.stock.controller.unuse.StockController.PostLoanController()
+2022-06-01 07:22:34.078 DEBUG 67503 --- [main] s.w.s.m.m.a.RequestMappingHandlerMapping : 99 mappings in 'requestMappingHandlerMapping'
+2022-06-01 07:22:34.226  INFO 67503 --- [main] pertySourcedRequestMappingHandlerMapping : Mapped URL path [/v2/api-docs] onto method [public org.springframework.http.ResponseEntity<springfox.documentation.spring.web.json.Json> springfox.documentation.swagger2.web.Swagger2Controller.getDocumentation(java.lang.String,javax.servlet.http.HttpServletRequest)]
+2022-06-01 07:22:34.253  INFO 67503 --- [main] c.c.stock.common.config.XxlJobConfig     : >>>>>>>>>>> xxl-job config init.
+2022-06-01 07:22:34.277  WARN 67503 --- [main] c.n.c.sources.URLConfigurationSource     : No URLs will be polled as dynamic configuration sources.
+2022-06-01 07:22:34.277  INFO 67503 --- [main] c.n.c.sources.URLConfigurationSource     : To enable URLs as dynamic configuration sources, define System property archaius.configurationSource.additionalUrls or make config.properties available on classpath.
+2022-06-01 07:22:34.284  WARN 67503 --- [main] c.n.c.sources.URLConfigurationSource     : No URLs will be polled as dynamic configuration sources.
+2022-06-01 07:22:34.284  INFO 67503 --- [main] c.n.c.sources.URLConfigurationSource     : To enable URLs as dynamic configuration sources, define System property archaius.configurationSource.additionalUrls or make config.properties available on classpath.
+2022-06-01 07:22:34.392 DEBUG 67503 --- [main] o.s.w.s.handler.SimpleUrlHandlerMapping  : Patterns [/**/favicon.ico] in 'faviconHandlerMapping'
+2022-06-01 07:22:34.634  INFO 67503 --- [main] o.s.s.concurrent.ThreadPoolTaskExecutor  : Initializing ExecutorService 'applicationTaskExecutor'
+2022-06-01 07:22:34.685 DEBUG 67503 --- [main] s.w.s.m.m.a.RequestMappingHandlerAdapter : ControllerAdvice beans: 0 @ModelAttribute, 0 @InitBinder, 1 RequestBodyAdvice, 1 ResponseBodyAdvice
+2022-06-01 07:22:34.741 DEBUG 67503 --- [main] o.s.w.s.handler.SimpleUrlHandlerMapping  : Patterns [/webjars/**, /**] in 'resourceHandlerMapping'
+2022-06-01 07:22:34.761 DEBUG 67503 --- [main] .m.m.a.ExceptionHandlerExceptionResolver : ControllerAdvice beans: 1 @ExceptionHandler, 1 ResponseBodyAdvice
+2022-06-01 07:22:35.551  INFO 67503 --- [main] org.quartz.impl.StdSchedulerFactory      : Using default implementation for ThreadExecutor
+2022-06-01 07:22:35.568  INFO 67503 --- [main] org.quartz.core.SchedulerSignalerImpl    : Initialized Scheduler Signaller of type: class org.quartz.core.SchedulerSignalerImpl
+2022-06-01 07:22:35.568  INFO 67503 --- [main] org.quartz.core.QuartzScheduler          : Quartz Scheduler v.2.3.1 created.
+2022-06-01 07:22:35.569  INFO 67503 --- [main] org.quartz.simpl.RAMJobStore             : RAMJobStore initialized.
+2022-06-01 07:22:35.570  INFO 67503 --- [main] org.quartz.core.QuartzScheduler          : Scheduler meta-data: Quartz Scheduler (v2.3.1) 'quartzScheduler' with instanceId 'NON_CLUSTERED'
+  Scheduler class: 'org.quartz.core.QuartzScheduler' - running locally.
+  NOT STARTED.
+  Currently in standby mode.
+  Number of jobs executed: 0
+  Using thread pool 'org.quartz.simpl.SimpleThreadPool' - with 10 threads.
+  Using job-store 'org.quartz.simpl.RAMJobStore' - which does not support persistence. and is not clustered.
+
+2022-06-01 07:22:35.570  INFO 67503 --- [main] org.quartz.impl.StdSchedulerFactory      : Quartz scheduler 'quartzScheduler' initialized from an externally provided properties instance.
+2022-06-01 07:22:35.570  INFO 67503 --- [main] org.quartz.impl.StdSchedulerFactory      : Quartz scheduler version: 2.3.1
+2022-06-01 07:22:35.570  INFO 67503 --- [main] org.quartz.core.QuartzScheduler          : JobFactory set to: org.springframework.scheduling.quartz.SpringBeanJobFactory@1cf44346
+2022-06-01 07:22:35.966  INFO 67503 --- [main] c.xxl.job.core.executor.XxlJobExecutor   : >>>>>>>>>>> xxl-job register jobhandler success, name:dayUpDownJobHandler, jobHandler:com.xxl.job.core.handler.impl.MethodJobHandler@3d741969[class com.coatardbul.stock.task.DayStatisticJob#dayUpDownJobHandler]
+2022-06-01 07:22:35.967  INFO 67503 --- [main] c.xxl.job.core.executor.XxlJobExecutor   : >>>>>>>>>>> xxl-job register jobhandler success, name:dayTwoUpLimitJobHandler, jobHandler:com.xxl.job.core.handler.impl.MethodJobHandler@17504749[class com.coatardbul.stock.task.DayStatisticJob#dayTwoUpLimitJobHandler]
+2022-06-01 07:22:35.967  INFO 67503 --- [main] c.xxl.job.core.executor.XxlJobExecutor   : >>>>>>>>>>> xxl-job register jobhandler success, name:openStockOneJobHandler, jobHandler:com.xxl.job.core.handler.impl.MethodJobHandler@4a17b9f3[class com.coatardbul.stock.task.DayStatisticJob#openStockOneJobHandler]
+2022-06-01 07:22:35.968  INFO 67503 --- [main] c.xxl.job.core.executor.XxlJobExecutor   : >>>>>>>>>>> xxl-job register jobhandler success, name:openStockTwoJobHandler, jobHandler:com.xxl.job.core.handler.impl.MethodJobHandler@767c69d4[class com.coatardbul.stock.task.DayStatisticJob#openStockTwoJobHandler]
+2022-06-01 07:22:35.968  INFO 67503 --- [main] c.xxl.job.core.executor.XxlJobExecutor   : >>>>>>>>>>> xxl-job register jobhandler success, name:dayMarketValueUpLimitJobHandler, jobHandler:com.xxl.job.core.handler.impl.MethodJobHandler@6b5e9923[class com.coatardbul.stock.task.DayStatisticJob#dayMarketValueUpLimitJobHandler]
+2022-06-01 07:22:35.968  INFO 67503 --- [main] c.xxl.job.core.executor.XxlJobExecutor   : >>>>>>>>>>> xxl-job register jobhandler success, name:dayTwoAboveUpLimitVolPriceJobHandler, jobHandler:com.xxl.job.core.handler.impl.MethodJobHandler@7e21f10e[class com.coatardbul.stock.task.DayStatisticJob#dayTwoAboveUpLimitVolPriceJobHandler]
+2022-06-01 07:22:35.968  INFO 67503 --- [main] c.xxl.job.core.executor.XxlJobExecutor   : >>>>>>>>>>> xxl-job register jobhandler success, name:minuterEmotionJobHandler, jobHandler:com.xxl.job.core.handler.impl.MethodJobHandler@98e0718[class com.coatardbul.stock.task.MinuterEmotionXxlJob#minuterEmotionJobHandler]
+2022-06-01 07:22:35.968  INFO 67503 --- [main] c.xxl.job.core.executor.XxlJobExecutor   : >>>>>>>>>>> xxl-job register jobhandler success, name:buildLastUpLimitInfoJobHandler, jobHandler:com.xxl.job.core.handler.impl.MethodJobHandler@1ca9fd34[class com.coatardbul.stock.task.MinuterEmotionXxlJob#buildLastUpLimitInfoJobHandler]
+2022-06-01 07:22:35.969  INFO 67503 --- [main] c.xxl.job.core.executor.XxlJobExecutor   : >>>>>>>>>>> xxl-job register jobhandler success, name:proxyIpJobHandler, jobHandler:com.xxl.job.core.handler.impl.MethodJobHandler@3a1e803[class com.coatardbul.stock.task.ProxyIpXxlJob#proxyIpJobHandler]
+2022-06-01 07:22:35.969  INFO 67503 --- [main] c.xxl.job.core.executor.XxlJobExecutor   : >>>>>>>>>>> xxl-job register jobhandler success, name:demoJobHandler, jobHandler:com.xxl.job.core.handler.impl.MethodJobHandler@7279d0f8[class com.coatardbul.stock.task.SampleXxlJob#demoJobHandler]
+2022-06-01 07:22:35.969  INFO 67503 --- [main] c.xxl.job.core.executor.XxlJobExecutor   : >>>>>>>>>>> xxl-job register jobhandler success, name:shardingJobHandler, jobHandler:com.xxl.job.core.handler.impl.MethodJobHandler@bb6bf68[class com.coatardbul.stock.task.SampleXxlJob#shardingJobHandler]
+2022-06-01 07:22:35.970  INFO 67503 --- [main] c.xxl.job.core.executor.XxlJobExecutor   : >>>>>>>>>>> xxl-job register jobhandler success, name:commandJobHandler, jobHandler:com.xxl.job.core.handler.impl.MethodJobHandler@58a5b377[class com.coatardbul.stock.task.SampleXxlJob#commandJobHandler]
+2022-06-01 07:22:35.970  INFO 67503 --- [main] c.xxl.job.core.executor.XxlJobExecutor   : >>>>>>>>>>> xxl-job register jobhandler success, name:httpJobHandler, jobHandler:com.xxl.job.core.handler.impl.MethodJobHandler@54c8b990[class com.coatardbul.stock.task.SampleXxlJob#httpJobHandler]
+2022-06-01 07:22:35.970  INFO 67503 --- [main] c.xxl.job.core.executor.XxlJobExecutor   : >>>>>>>>>>> xxl-job register jobhandler success, name:demoJobHandler2, jobHandler:com.xxl.job.core.handler.impl.MethodJobHandler@680a5de1[class com.coatardbul.stock.task.SampleXxlJob#demoJobHandler2]
+2022-06-01 07:22:35.971  INFO 67503 --- [main] c.xxl.job.core.executor.XxlJobExecutor   : >>>>>>>>>>> xxl-job register jobhandler success, name:strategyNowWatchJobHandler, jobHandler:com.xxl.job.core.handler.impl.MethodJobHandler@5679e277[class com.coatardbul.stock.task.StrategyWatchJob#strategyWatchJobHandler]
+2022-06-01 07:22:35.971  INFO 67503 --- [main] c.xxl.job.core.executor.XxlJobExecutor   : >>>>>>>>>>> xxl-job register jobhandler success, name:historyStrategyWatchJobHandler, jobHandler:com.xxl.job.core.handler.impl.MethodJobHandler@23b2ddc4[class com.coatardbul.stock.task.StrategyWatchJob#historyStrategyWatchJobHandler]
+2022-06-01 07:22:35.971  INFO 67503 --- [main] c.xxl.job.core.executor.XxlJobExecutor   : >>>>>>>>>>> xxl-job register jobhandler success, name:emailStrategyWatchJobHandler, jobHandler:com.xxl.job.core.handler.impl.MethodJobHandler@32a7f41b[class com.coatardbul.stock.task.StrategyWatchJob#emailStrategyWatchJobHandler]
+2022-06-01 07:22:36.076  WARN 67503 --- [main] c.xxl.job.core.executor.XxlJobExecutor   : >>>>>>>>>>> xxl-job accessToken is empty. To ensure system security, please set the accessToken.
+2022-06-01 07:22:36.409  INFO 67503 --- [Thread-49] com.xxl.job.core.server.EmbedServer      : >>>>>>>>>>> xxl-job remoting server start success, nettype = class com.xxl.job.core.server.EmbedServer, port = 8888
+2022-06-01 07:22:36.433  INFO 67503 --- [main] o.s.c.n.eureka.InstanceInfoFactory       : Setting initial instance status as: STARTING
+2022-06-01 07:22:36.483  INFO 67503 --- [main] com.netflix.discovery.DiscoveryClient    : Initializing Eureka in region us-east-1
+2022-06-01 07:22:36.569  INFO 67503 --- [main] c.n.d.provider.DiscoveryJerseyProvider   : Using JSON encoding codec LegacyJacksonJson
+2022-06-01 07:22:36.569  INFO 67503 --- [main] c.n.d.provider.DiscoveryJerseyProvider   : Using JSON decoding codec LegacyJacksonJson
+2022-06-01 07:22:36.742  INFO 67503 --- [main] c.n.d.provider.DiscoveryJerseyProvider   : Using XML encoding codec XStreamXml
+2022-06-01 07:22:36.742  INFO 67503 --- [main] c.n.d.provider.DiscoveryJerseyProvider   : Using XML decoding codec XStreamXml
+2022-06-01 07:22:37.111  INFO 67503 --- [main] c.n.d.s.r.aws.ConfigClusterResolver      : Resolving eureka endpoints via configuration
+2022-06-01 07:22:37.138  INFO 67503 --- [main] com.netflix.discovery.DiscoveryClient    : Disable delta property : false
+2022-06-01 07:22:37.138  INFO 67503 --- [main] com.netflix.discovery.DiscoveryClient    : Single vip registry refresh property : null
+2022-06-01 07:22:37.138  INFO 67503 --- [main] com.netflix.discovery.DiscoveryClient    : Force full registry fetch : false
+2022-06-01 07:22:37.138  INFO 67503 --- [main] com.netflix.discovery.DiscoveryClient    : Application is null : false
+2022-06-01 07:22:37.138  INFO 67503 --- [main] com.netflix.discovery.DiscoveryClient    : Registered Applications size is zero : true
+2022-06-01 07:22:37.138  INFO 67503 --- [main] com.netflix.discovery.DiscoveryClient    : Application version is -1: true
+2022-06-01 07:22:37.138  INFO 67503 --- [main] com.netflix.discovery.DiscoveryClient    : Getting all instance registry info from the eureka server
+2022-06-01 07:22:37.643  INFO 67503 --- [main] com.netflix.discovery.DiscoveryClient    : The response status is 200
+2022-06-01 07:22:37.647  INFO 67503 --- [main] com.netflix.discovery.DiscoveryClient    : Starting heartbeat executor: renew interval is: 30
+2022-06-01 07:22:37.650  INFO 67503 --- [main] c.n.discovery.InstanceInfoReplicator     : InstanceInfoReplicator onDemand update allowed rate per min is 4
+2022-06-01 07:22:37.655  INFO 67503 --- [main] com.netflix.discovery.DiscoveryClient    : Discovery Client initialized at timestamp 1654039357654 with initial instances count: 4
+2022-06-01 07:22:37.662  INFO 67503 --- [main] o.s.c.n.e.s.EurekaServiceRegistry        : Registering application STOCK with eureka with status UP
+2022-06-01 07:22:37.663  INFO 67503 --- [main] com.netflix.discovery.DiscoveryClient    : Saw local status change event StatusChangeEvent [timestamp=1654039357663, current=UP, previous=STARTING]
+2022-06-01 07:22:37.665  INFO 67503 --- [DiscoveryClient-InstanceInfoReplicator-0] com.netflix.discovery.DiscoveryClient    : DiscoveryClient_STOCK/192.168.8.100:stock:9006: registering service...
+2022-06-01 07:22:37.666  INFO 67503 --- [main] d.s.w.p.DocumentationPluginsBootstrapper : Context refreshed
+2022-06-01 07:22:37.698  INFO 67503 --- [main] d.s.w.p.DocumentationPluginsBootstrapper : Found 1 custom documentation plugin(s)
+2022-06-01 07:22:37.758  INFO 67503 --- [main] s.d.s.w.s.ApiListingReferenceScanner     : Scanning for api listing references
+2022-06-01 07:22:37.810  INFO 67503 --- [DiscoveryClient-InstanceInfoReplicator-0] com.netflix.discovery.DiscoveryClient    : DiscoveryClient_STOCK/192.168.8.100:stock:9006 - registration status: 204
+2022-06-01 07:22:37.992  INFO 67503 --- [main] .d.s.w.r.o.CachingOperationNameGenerator : Generating unique operation named: addUsingPOST_1
+2022-06-01 07:22:38.053  INFO 67503 --- [main] .d.s.w.r.o.CachingOperationNameGenerator : Generating unique operation named: deleteUsingPOST_1
+2022-06-01 07:22:38.070  INFO 67503 --- [main] .d.s.w.r.o.CachingOperationNameGenerator : Generating unique operation named: modifyUsingPOST_1
+2022-06-01 07:22:38.099  INFO 67503 --- [main] .d.s.w.r.o.CachingOperationNameGenerator : Generating unique operation named: refreshDayUsingPOST_1
+2022-06-01 07:22:38.101  INFO 67503 --- [main] .d.s.w.r.o.CachingOperationNameGenerator : Generating unique operation named: refreshDayRangeUsingPOST_1
+2022-06-01 07:22:38.110  INFO 67503 --- [main] .d.s.w.r.o.CachingOperationNameGenerator : Generating unique operation named: addUsingPOST_2
+2022-06-01 07:22:38.112  INFO 67503 --- [main] .d.s.w.r.o.CachingOperationNameGenerator : Generating unique operation named: deleteUsingPOST_2
+2022-06-01 07:22:38.120  INFO 67503 --- [main] .d.s.w.r.o.CachingOperationNameGenerator : Generating unique operation named: findAllUsingPOST_1
+2022-06-01 07:22:38.122  INFO 67503 --- [main] .d.s.w.r.o.CachingOperationNameGenerator : Generating unique operation named: modifyUsingPOST_2
+2022-06-01 07:22:38.127  INFO 67503 --- [main] .d.s.w.r.o.CachingOperationNameGenerator : Generating unique operation named: addUsingPOST_3
+2022-06-01 07:22:38.135  INFO 67503 --- [main] .d.s.w.r.o.CachingOperationNameGenerator : Generating unique operation named: deleteUsingPOST_3
+2022-06-01 07:22:38.142  INFO 67503 --- [main] .d.s.w.r.o.CachingOperationNameGenerator : Generating unique operation named: findAllUsingPOST_2
+2022-06-01 07:22:38.144  INFO 67503 --- [main] .d.s.w.r.o.CachingOperationNameGenerator : Generating unique operation named: modifyUsingPOST_3
+2022-06-01 07:22:38.146  INFO 67503 --- [main] .d.s.w.r.o.CachingOperationNameGenerator : Generating unique operation named: deleteDayUsingPOST_1
+2022-06-01 07:22:38.148  INFO 67503 --- [main] .d.s.w.r.o.CachingOperationNameGenerator : Generating unique operation named: forceRefreshDayRangeUsingPOST_1
+2022-06-01 07:22:38.150  INFO 67503 --- [main] .d.s.w.r.o.CachingOperationNameGenerator : Generating unique operation named: getRangeStaticUsingPOST_1
+2022-06-01 07:22:38.152  INFO 67503 --- [main] .d.s.w.r.o.CachingOperationNameGenerator : Generating unique operation named: refreshDayUsingPOST_2
+2022-06-01 07:22:38.153  INFO 67503 --- [main] .d.s.w.r.o.CachingOperationNameGenerator : Generating unique operation named: refreshDayRangeUsingPOST_2
+2022-06-01 07:22:38.166  INFO 67503 --- [main] .d.s.w.r.o.CachingOperationNameGenerator : Generating unique operation named: addUsingPOST_4
+2022-06-01 07:22:38.168  INFO 67503 --- [main] .d.s.w.r.o.CachingOperationNameGenerator : Generating unique operation named: deleteUsingPOST_4
+2022-06-01 07:22:38.174  INFO 67503 --- [main] .d.s.w.r.o.CachingOperationNameGenerator : Generating unique operation named: findAllUsingPOST_3
+2022-06-01 07:22:38.176  INFO 67503 --- [main] .d.s.w.r.o.CachingOperationNameGenerator : Generating unique operation named: modifyUsingPOST_4
+2022-06-01 07:22:38.181  INFO 67503 --- [main] .d.s.w.r.o.CachingOperationNameGenerator : Generating unique operation named: addUsingPOST_5
+2022-06-01 07:22:38.182  INFO 67503 --- [main] .d.s.w.r.o.CachingOperationNameGenerator : Generating unique operation named: deleteUsingPOST_5
+2022-06-01 07:22:38.188  INFO 67503 --- [main] .d.s.w.r.o.CachingOperationNameGenerator : Generating unique operation named: findAllUsingPOST_4
+2022-06-01 07:22:38.191  INFO 67503 --- [main] .d.s.w.r.o.CachingOperationNameGenerator : Generating unique operation named: modifyUsingPOST_5
+2022-06-01 07:22:38.201  INFO 67503 --- [main] .d.s.w.r.o.CachingOperationNameGenerator : Generating unique operation named: deleteDayUsingPOST_2
+2022-06-01 07:22:38.205  INFO 67503 --- [main] .d.s.w.r.o.CachingOperationNameGenerator : Generating unique operation named: forceRefreshDayRangeUsingPOST_2
+2022-06-01 07:22:38.208  INFO 67503 --- [main] .d.s.w.r.o.CachingOperationNameGenerator : Generating unique operation named: getRangeStaticUsingPOST_2
+2022-06-01 07:22:38.211  INFO 67503 --- [main] .d.s.w.r.o.CachingOperationNameGenerator : Generating unique operation named: refreshDayUsingPOST_3
+2022-06-01 07:22:38.213  INFO 67503 --- [main] .d.s.w.r.o.CachingOperationNameGenerator : Generating unique operation named: refreshDayRangeUsingPOST_3
+2022-06-01 07:22:38.216  INFO 67503 --- [main] .d.s.w.r.o.CachingOperationNameGenerator : Generating unique operation named: deleteUsingPOST_6
+2022-06-01 07:22:38.218  INFO 67503 --- [main] .d.s.w.r.o.CachingOperationNameGenerator : Generating unique operation named: executeUsingPOST_1
+2022-06-01 07:22:38.219  INFO 67503 --- [main] .d.s.w.r.o.CachingOperationNameGenerator : Generating unique operation named: getAllUsingPOST_1
+2022-06-01 07:22:38.229  INFO 67503 --- [main] .d.s.w.r.o.CachingOperationNameGenerator : Generating unique operation named: deleteUsingPOST_7
+2022-06-01 07:22:38.234  INFO 67503 --- [main] .d.s.w.r.o.CachingOperationNameGenerator : Generating unique operation named: findAllUsingPOST_5
+2022-06-01 07:22:38.239  INFO 67503 --- [main] .d.s.w.r.o.CachingOperationNameGenerator : Generating unique operation named: cosUploadUsingPOST_1
+2022-06-01 07:22:38.263  INFO 67503 --- [main] o.s.s.quartz.SchedulerFactoryBean        : Starting Quartz Scheduler now
+2022-06-01 07:22:38.263  INFO 67503 --- [main] org.quartz.core.QuartzScheduler          : Scheduler quartzScheduler_$_NON_CLUSTERED started.
+2022-06-01 07:22:38.305  INFO 67503 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 9006 (http) with context path '/stock'
+2022-06-01 07:22:38.306  INFO 67503 --- [main] .s.c.n.e.s.EurekaAutoServiceRegistration : Updating port to 9006
+2022-06-01 07:22:38.311  INFO 67503 --- [main] com.coatardbul.stock.StockApplication    : Started StockApplication in 14.223 seconds (JVM running for 20.314)
+2022-06-01 07:23:26.985  INFO 67503 --- [http-nio-9006-exec-1] o.apache.tomcat.util.http.parser.Cookie  : A cookie header was received [1653660432,1653732945,1653897717; Hm_lpvt_e8002ef3d9e0d8274b5b74cc4a027d08=1654039338; SECKEY_ABVK=iggilEotaDGeVIvR1c37fKSAOlVbBlLDoyFO6lnGkiw%3D; BMAP_SECKEY=iggilEotaDGeVIvR1c37fJFBfs5CaAo7dzJmoyvFfLiQEeMSWzJUlUx-H6QBF4ILOOAQmF5RImp2ckWOS1ywR8tNDSs0O8UwAouhpWVxoR-KZJ2nvsizyorXoxzdhTlToau0DwzMnncP693BVuaRCqXf2a1sRf8n6U1XMs6Uhh3WE3mwtUifcdxWEKZ1ZA34] that contained an invalid cookie. That cookie will be ignored.
+ Note: further occurrences of this error will be logged at DEBUG level.
+2022-06-01 07:23:27.003  INFO 67503 --- [http-nio-9006-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/stock]  : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2022-06-01 07:23:27.003  INFO 67503 --- [http-nio-9006-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2022-06-01 07:23:27.004 DEBUG 67503 --- [http-nio-9006-exec-1] o.s.web.servlet.DispatcherServlet        : Detected StandardServletMultipartResolver
+2022-06-01 07:23:27.023 DEBUG 67503 --- [http-nio-9006-exec-1] o.s.web.servlet.DispatcherServlet        : enableLoggingRequestDetails='false': request parameters and headers will be masked to prevent unsafe logging of potentially sensitive data
+2022-06-01 07:23:27.024  INFO 67503 --- [http-nio-9006-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 21 ms
+2022-06-01 07:23:27.045 DEBUG 67503 --- [http-nio-9006-exec-1] o.s.web.servlet.DispatcherServlet        : POST "/stock/stockPredict/getAll", parameters={}
+2022-06-01 07:23:27.052 DEBUG 67503 --- [http-nio-9006-exec-1] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to public com.coatardbul.stock.common.api.CommonResult com.coatardbul.stock.controller.StockTemplatedPredictController.getAll(com.coatardbul.stock.model.dto.StockPredictDto)
+2022-06-01 07:23:27.092 DEBUG 67503 --- [http-nio-9006-exec-1] m.m.a.RequestResponseBodyMethodProcessor : Read "application/json;charset=UTF-8" to [StockPredictDto(id=1531498597017845760, buyTime=null, beginDate=2022-05-02, endDate=2022-06-01, hole (truncated)...]
+2022-06-01 07:23:27.635 DEBUG 67503 --- [http-nio-9006-exec-1] o.s.w.c.HttpMessageConverterExtractor    : Reading to [com.coatardbul.stock.common.api.CommonResult<com.coatardbul.stock.model.feign.StockTemplateDto>]
+2022-06-01 07:23:27.648 DEBUG 67503 --- [http-nio-9006-exec-1] m.m.a.RequestResponseBodyMethodProcessor : Using 'application/json', given [application/json, text/plain, */*] and supported [application/json, application/*+json, application/json, application/*+json]
+2022-06-01 07:23:27.649 DEBUG 67503 --- [http-nio-9006-exec-1] m.m.a.RequestResponseBodyMethodProcessor : Writing [com.coatardbul.stock.common.api.CommonResult@61740b5f]
+2022-06-01 07:23:27.672 DEBUG 67503 --- [http-nio-9006-exec-1] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
+2022-06-01 07:23:36.071 DEBUG 67503 --- [http-nio-9006-exec-2] o.s.web.servlet.DispatcherServlet        : POST "/stock/stockPredict/deleteById", parameters={}
+2022-06-01 07:23:36.072 DEBUG 67503 --- [http-nio-9006-exec-2] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to public com.coatardbul.stock.common.api.CommonResult com.coatardbul.stock.controller.StockTemplatedPredictController.deleteById(com.coatardbul.stock.model.dto.StockPredictDto)
+2022-06-01 07:23:36.073 DEBUG 67503 --- [http-nio-9006-exec-2] m.m.a.RequestResponseBodyMethodProcessor : Read "application/json;charset=UTF-8" to [StockPredictDto(id=1531498597017845760, buyTime=null, beginDate=2022-05-02, endDate=2022-06-01, hole (truncated)...]
+2022-06-01 07:23:36.197 DEBUG 67503 --- [http-nio-9006-exec-2] m.m.a.RequestResponseBodyMethodProcessor : Using 'application/json', given [application/json, text/plain, */*] and supported [application/json, application/*+json, application/json, application/*+json]
+2022-06-01 07:23:36.197 DEBUG 67503 --- [http-nio-9006-exec-2] m.m.a.RequestResponseBodyMethodProcessor : Writing [com.coatardbul.stock.common.api.CommonResult@4a5c78a]
+2022-06-01 07:23:36.198 DEBUG 67503 --- [http-nio-9006-exec-2] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
+2022-06-01 07:23:36.213 DEBUG 67503 --- [http-nio-9006-exec-3] o.s.web.servlet.DispatcherServlet        : POST "/stock/stockPredict/getAll", parameters={}
+2022-06-01 07:23:36.214 DEBUG 67503 --- [http-nio-9006-exec-3] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to public com.coatardbul.stock.common.api.CommonResult com.coatardbul.stock.controller.StockTemplatedPredictController.getAll(com.coatardbul.stock.model.dto.StockPredictDto)
+2022-06-01 07:23:36.215 DEBUG 67503 --- [http-nio-9006-exec-3] m.m.a.RequestResponseBodyMethodProcessor : Read "application/json;charset=UTF-8" to [StockPredictDto(id=1531498597017845760, buyTime=null, beginDate=2022-05-02, endDate=2022-06-01, hole (truncated)...]
+2022-06-01 07:23:36.596 DEBUG 67503 --- [http-nio-9006-exec-3] o.s.w.c.HttpMessageConverterExtractor    : Reading to [com.coatardbul.stock.common.api.CommonResult<com.coatardbul.stock.model.feign.StockTemplateDto>]
+2022-06-01 07:23:36.598 DEBUG 67503 --- [http-nio-9006-exec-3] m.m.a.RequestResponseBodyMethodProcessor : Using 'application/json', given [application/json, text/plain, */*] and supported [application/json, application/*+json, application/json, application/*+json]
+2022-06-01 07:23:36.598 DEBUG 67503 --- [http-nio-9006-exec-3] m.m.a.RequestResponseBodyMethodProcessor : Writing [com.coatardbul.stock.common.api.CommonResult@195bb9da]
+2022-06-01 07:23:36.603 DEBUG 67503 --- [http-nio-9006-exec-3] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
+2022-06-01 07:23:38.047 DEBUG 67503 --- [http-nio-9006-exec-4] o.s.web.servlet.DispatcherServlet        : POST "/stock/stockPredict/getAll", parameters={}
+2022-06-01 07:23:38.047 DEBUG 67503 --- [http-nio-9006-exec-4] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to public com.coatardbul.stock.common.api.CommonResult com.coatardbul.stock.controller.StockTemplatedPredictController.getAll(com.coatardbul.stock.model.dto.StockPredictDto)
+2022-06-01 07:23:38.049 DEBUG 67503 --- [http-nio-9006-exec-4] m.m.a.RequestResponseBodyMethodProcessor : Read "application/json;charset=UTF-8" to [StockPredictDto(id=1531498597017845760, buyTime=null, beginDate=2022-05-02, endDate=2022-06-01, hole (truncated)...]
+2022-06-01 07:23:38.428 DEBUG 67503 --- [http-nio-9006-exec-4] o.s.w.c.HttpMessageConverterExtractor    : Reading to [com.coatardbul.stock.common.api.CommonResult<com.coatardbul.stock.model.feign.StockTemplateDto>]
+2022-06-01 07:23:38.428 DEBUG 67503 --- [http-nio-9006-exec-4] m.m.a.RequestResponseBodyMethodProcessor : Using 'application/json', given [application/json, text/plain, */*] and supported [application/json, application/*+json, application/json, application/*+json]
+2022-06-01 07:23:38.429 DEBUG 67503 --- [http-nio-9006-exec-4] m.m.a.RequestResponseBodyMethodProcessor : Writing [com.coatardbul.stock.common.api.CommonResult@3d2f1fd6]
+2022-06-01 07:23:38.431 DEBUG 67503 --- [http-nio-9006-exec-4] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
+2022-06-01 07:23:46.405 DEBUG 67503 --- [http-nio-9006-exec-5] o.s.web.servlet.DispatcherServlet        : POST "/stock/stockPredict/deleteById", parameters={}
+2022-06-01 07:23:46.406 DEBUG 67503 --- [http-nio-9006-exec-5] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to public com.coatardbul.stock.common.api.CommonResult com.coatardbul.stock.controller.StockTemplatedPredictController.deleteById(com.coatardbul.stock.model.dto.StockPredictDto)
+2022-06-01 07:23:46.408 DEBUG 67503 --- [http-nio-9006-exec-5] m.m.a.RequestResponseBodyMethodProcessor : Read "application/json;charset=UTF-8" to [StockPredictDto(id=1531498597017845760, buyTime=null, beginDate=2022-05-02, endDate=2022-06-01, hole (truncated)...]
+2022-06-01 07:23:46.537 DEBUG 67503 --- [http-nio-9006-exec-5] m.m.a.RequestResponseBodyMethodProcessor : Using 'application/json', given [application/json, text/plain, */*] and supported [application/json, application/*+json, application/json, application/*+json]
+2022-06-01 07:23:46.538 DEBUG 67503 --- [http-nio-9006-exec-5] m.m.a.RequestResponseBodyMethodProcessor : Writing [com.coatardbul.stock.common.api.CommonResult@78d0c9bd]
+2022-06-01 07:23:46.539 DEBUG 67503 --- [http-nio-9006-exec-5] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
+2022-06-01 07:23:46.573 DEBUG 67503 --- [http-nio-9006-exec-6] o.s.web.servlet.DispatcherServlet        : POST "/stock/stockPredict/getAll", parameters={}
+2022-06-01 07:23:46.574 DEBUG 67503 --- [http-nio-9006-exec-6] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to public com.coatardbul.stock.common.api.CommonResult com.coatardbul.stock.controller.StockTemplatedPredictController.getAll(com.coatardbul.stock.model.dto.StockPredictDto)
+2022-06-01 07:23:46.575 DEBUG 67503 --- [http-nio-9006-exec-6] m.m.a.RequestResponseBodyMethodProcessor : Read "application/json;charset=UTF-8" to [StockPredictDto(id=1531498597017845760, buyTime=null, beginDate=2022-05-02, endDate=2022-06-01, hole (truncated)...]
+2022-06-01 07:23:46.977 DEBUG 67503 --- [http-nio-9006-exec-6] o.s.w.c.HttpMessageConverterExtractor    : Reading to [com.coatardbul.stock.common.api.CommonResult<com.coatardbul.stock.model.feign.StockTemplateDto>]
+2022-06-01 07:23:46.978 DEBUG 67503 --- [http-nio-9006-exec-6] m.m.a.RequestResponseBodyMethodProcessor : Using 'application/json', given [application/json, text/plain, */*] and supported [application/json, application/*+json, application/json, application/*+json]
+2022-06-01 07:23:46.978 DEBUG 67503 --- [http-nio-9006-exec-6] m.m.a.RequestResponseBodyMethodProcessor : Writing [com.coatardbul.stock.common.api.CommonResult@1e0e4c44]
+2022-06-01 07:23:46.980 DEBUG 67503 --- [http-nio-9006-exec-6] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
+2022-06-01 07:24:42.180 DEBUG 67503 --- [http-nio-9006-exec-7] o.s.web.servlet.DispatcherServlet        : POST "/stock/stockPredict/getAll", parameters={}
+2022-06-01 07:24:42.181 DEBUG 67503 --- [http-nio-9006-exec-7] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to public com.coatardbul.stock.common.api.CommonResult com.coatardbul.stock.controller.StockTemplatedPredictController.getAll(com.coatardbul.stock.model.dto.StockPredictDto)
+2022-06-01 07:24:42.182 DEBUG 67503 --- [http-nio-9006-exec-7] m.m.a.RequestResponseBodyMethodProcessor : Read "application/json;charset=UTF-8" to [StockPredictDto(id=, buyTime=null, beginDate=2022-05-02, endDate=2022-06-01, holeDay=null, saleTime= (truncated)...]
+2022-06-01 07:24:42.955 DEBUG 67503 --- [http-nio-9006-exec-7] o.s.w.c.HttpMessageConverterExtractor    : Reading to [com.coatardbul.stock.common.api.CommonResult<com.coatardbul.stock.model.feign.StockTemplateDto>]
+2022-06-01 07:24:43.055 DEBUG 67503 --- [http-nio-9006-exec-7] o.s.w.c.HttpMessageConverterExtractor    : Reading to [com.coatardbul.stock.common.api.CommonResult<com.coatardbul.stock.model.feign.StockTemplateDto>]
+2022-06-01 07:24:43.147 DEBUG 67503 --- [http-nio-9006-exec-7] o.s.w.c.HttpMessageConverterExtractor    : Reading to [com.coatardbul.stock.common.api.CommonResult<com.coatardbul.stock.model.feign.StockTemplateDto>]
+2022-06-01 07:24:43.250 DEBUG 67503 --- [http-nio-9006-exec-7] o.s.w.c.HttpMessageConverterExtractor    : Reading to [com.coatardbul.stock.common.api.CommonResult<com.coatardbul.stock.model.feign.StockTemplateDto>]
+2022-06-01 07:24:43.252 DEBUG 67503 --- [http-nio-9006-exec-7] m.m.a.RequestResponseBodyMethodProcessor : Using 'application/json', given [application/json, text/plain, */*] and supported [application/json, application/*+json, application/json, application/*+json]
+2022-06-01 07:24:43.252 DEBUG 67503 --- [http-nio-9006-exec-7] m.m.a.RequestResponseBodyMethodProcessor : Writing [com.coatardbul.stock.common.api.CommonResult@1997821d]
+2022-06-01 07:24:43.265 DEBUG 67503 --- [http-nio-9006-exec-7] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
+2022-06-01 07:24:59.350 DEBUG 67503 --- [http-nio-9006-exec-8] o.s.web.servlet.DispatcherServlet        : POST "/stock/stockPredict/getAll", parameters={}
+2022-06-01 07:24:59.351 DEBUG 67503 --- [http-nio-9006-exec-8] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to public com.coatardbul.stock.common.api.CommonResult com.coatardbul.stock.controller.StockTemplatedPredictController.getAll(com.coatardbul.stock.model.dto.StockPredictDto)
+2022-06-01 07:24:59.353 DEBUG 67503 --- [http-nio-9006-exec-8] m.m.a.RequestResponseBodyMethodProcessor : Read "application/json;charset=UTF-8" to [StockPredictDto(id=1531498597017845760, buyTime=null, beginDate=2022-05-02, endDate=2022-06-01, hole (truncated)...]
+2022-06-01 07:24:59.728 DEBUG 67503 --- [http-nio-9006-exec-8] o.s.w.c.HttpMessageConverterExtractor    : Reading to [com.coatardbul.stock.common.api.CommonResult<com.coatardbul.stock.model.feign.StockTemplateDto>]
+2022-06-01 07:24:59.730 DEBUG 67503 --- [http-nio-9006-exec-8] m.m.a.RequestResponseBodyMethodProcessor : Using 'application/json', given [application/json, text/plain, */*] and supported [application/json, application/*+json, application/json, application/*+json]
+2022-06-01 07:24:59.730 DEBUG 67503 --- [http-nio-9006-exec-8] m.m.a.RequestResponseBodyMethodProcessor : Writing [com.coatardbul.stock.common.api.CommonResult@7c8c2a0e]
+2022-06-01 07:24:59.733 DEBUG 67503 --- [http-nio-9006-exec-8] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
+2022-06-01 07:25:07.260 DEBUG 67503 --- [http-nio-9006-exec-9] o.s.web.servlet.DispatcherServlet        : POST "/stock/stockPredict/deleteByQuery", parameters={}
+2022-06-01 07:25:07.261 DEBUG 67503 --- [http-nio-9006-exec-9] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to public com.coatardbul.stock.common.api.CommonResult com.coatardbul.stock.controller.StockTemplatedPredictController.deleteByQuery(com.coatardbul.stock.model.dto.StockPredictDto)
+2022-06-01 07:25:07.262 DEBUG 67503 --- [http-nio-9006-exec-9] m.m.a.RequestResponseBodyMethodProcessor : Read "application/json;charset=UTF-8" to [StockPredictDto(id=1531498597017845760, buyTime=null, beginDate=2022-05-02, endDate=2022-06-01, hole (truncated)...]
+2022-06-01 07:25:07.396 DEBUG 67503 --- [http-nio-9006-exec-9] m.m.a.RequestResponseBodyMethodProcessor : Using 'application/json', given [application/json, text/plain, */*] and supported [application/json, application/*+json, application/json, application/*+json]
+2022-06-01 07:25:07.396 DEBUG 67503 --- [http-nio-9006-exec-9] m.m.a.RequestResponseBodyMethodProcessor : Writing [com.coatardbul.stock.common.api.CommonResult@2f6709dd]
+2022-06-01 07:25:07.397 DEBUG 67503 --- [http-nio-9006-exec-9] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
+2022-06-01 07:25:07.411 DEBUG 67503 --- [http-nio-9006-exec-10] o.s.web.servlet.DispatcherServlet        : POST "/stock/stockPredict/getAll", parameters={}
+2022-06-01 07:25:07.411 DEBUG 67503 --- [http-nio-9006-exec-10] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to public com.coatardbul.stock.common.api.CommonResult com.coatardbul.stock.controller.StockTemplatedPredictController.getAll(com.coatardbul.stock.model.dto.StockPredictDto)
+2022-06-01 07:25:07.412 DEBUG 67503 --- [http-nio-9006-exec-10] m.m.a.RequestResponseBodyMethodProcessor : Read "application/json;charset=UTF-8" to [StockPredictDto(id=1531498597017845760, buyTime=null, beginDate=2022-05-02, endDate=2022-06-01, hole (truncated)...]
+2022-06-01 07:25:07.746 DEBUG 67503 --- [http-nio-9006-exec-10] o.s.w.c.HttpMessageConverterExtractor    : Reading to [com.coatardbul.stock.common.api.CommonResult<com.coatardbul.stock.model.feign.StockTemplateDto>]
+2022-06-01 07:25:07.747 DEBUG 67503 --- [http-nio-9006-exec-10] m.m.a.RequestResponseBodyMethodProcessor : Using 'application/json', given [application/json, text/plain, */*] and supported [application/json, application/*+json, application/json, application/*+json]
+2022-06-01 07:25:07.747 DEBUG 67503 --- [http-nio-9006-exec-10] m.m.a.RequestResponseBodyMethodProcessor : Writing [com.coatardbul.stock.common.api.CommonResult@421dbe01]
+2022-06-01 07:25:07.748 DEBUG 67503 --- [http-nio-9006-exec-10] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
+2022-06-01 07:25:16.848 DEBUG 67503 --- [http-nio-9006-exec-1] o.s.web.servlet.DispatcherServlet        : POST "/stock/stockPredict/getAll", parameters={}
+2022-06-01 07:25:16.848 DEBUG 67503 --- [http-nio-9006-exec-1] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to public com.coatardbul.stock.common.api.CommonResult com.coatardbul.stock.controller.StockTemplatedPredictController.getAll(com.coatardbul.stock.model.dto.StockPredictDto)
+2022-06-01 07:25:16.849 DEBUG 67503 --- [http-nio-9006-exec-1] m.m.a.RequestResponseBodyMethodProcessor : Read "application/json;charset=UTF-8" to [StockPredictDto(id=1531498597017845760, buyTime=null, beginDate=2022-05-02, endDate=2022-06-01, hole (truncated)...]
+2022-06-01 07:25:17.249 DEBUG 67503 --- [http-nio-9006-exec-1] o.s.w.c.HttpMessageConverterExtractor    : Reading to [com.coatardbul.stock.common.api.CommonResult<com.coatardbul.stock.model.feign.StockTemplateDto>]
+2022-06-01 07:25:17.252 DEBUG 67503 --- [http-nio-9006-exec-1] m.m.a.RequestResponseBodyMethodProcessor : Using 'application/json', given [application/json, text/plain, */*] and supported [application/json, application/*+json, application/json, application/*+json]
+2022-06-01 07:25:17.252 DEBUG 67503 --- [http-nio-9006-exec-1] m.m.a.RequestResponseBodyMethodProcessor : Writing [com.coatardbul.stock.common.api.CommonResult@3d9a7e73]
+2022-06-01 07:25:17.254 DEBUG 67503 --- [http-nio-9006-exec-1] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
+2022-06-01 07:25:44.312 DEBUG 67503 --- [http-nio-9006-exec-2] o.s.web.servlet.DispatcherServlet        : POST "/stock/stockPredict/deleteByQuery", parameters={}
+2022-06-01 07:25:44.313 DEBUG 67503 --- [http-nio-9006-exec-2] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to public com.coatardbul.stock.common.api.CommonResult com.coatardbul.stock.controller.StockTemplatedPredictController.deleteByQuery(com.coatardbul.stock.model.dto.StockPredictDto)
+2022-06-01 07:25:44.314 DEBUG 67503 --- [http-nio-9006-exec-2] m.m.a.RequestResponseBodyMethodProcessor : Read "application/json;charset=UTF-8" to [StockPredictDto(id=1531498597017845760, buyTime=null, beginDate=2022-05-02, endDate=2022-06-01, hole (truncated)...]
+2022-06-01 07:25:44.439 DEBUG 67503 --- [http-nio-9006-exec-2] m.m.a.RequestResponseBodyMethodProcessor : Using 'application/json', given [application/json, text/plain, */*] and supported [application/json, application/*+json, application/json, application/*+json]
+2022-06-01 07:25:44.439 DEBUG 67503 --- [http-nio-9006-exec-2] m.m.a.RequestResponseBodyMethodProcessor : Writing [com.coatardbul.stock.common.api.CommonResult@703e10f3]
+2022-06-01 07:25:44.440 DEBUG 67503 --- [http-nio-9006-exec-2] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
+2022-06-01 07:25:44.454 DEBUG 67503 --- [http-nio-9006-exec-3] o.s.web.servlet.DispatcherServlet        : POST "/stock/stockPredict/getAll", parameters={}
+2022-06-01 07:25:44.454 DEBUG 67503 --- [http-nio-9006-exec-3] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to public com.coatardbul.stock.common.api.CommonResult com.coatardbul.stock.controller.StockTemplatedPredictController.getAll(com.coatardbul.stock.model.dto.StockPredictDto)
+2022-06-01 07:25:44.455 DEBUG 67503 --- [http-nio-9006-exec-3] m.m.a.RequestResponseBodyMethodProcessor : Read "application/json;charset=UTF-8" to [StockPredictDto(id=1531498597017845760, buyTime=null, beginDate=2022-05-02, endDate=2022-06-01, hole (truncated)...]
+2022-06-01 07:25:44.839 DEBUG 67503 --- [http-nio-9006-exec-3] o.s.w.c.HttpMessageConverterExtractor    : Reading to [com.coatardbul.stock.common.api.CommonResult<com.coatardbul.stock.model.feign.StockTemplateDto>]
+2022-06-01 07:25:44.840 DEBUG 67503 --- [http-nio-9006-exec-3] m.m.a.RequestResponseBodyMethodProcessor : Using 'application/json', given [application/json, text/plain, */*] and supported [application/json, application/*+json, application/json, application/*+json]
+2022-06-01 07:25:44.840 DEBUG 67503 --- [http-nio-9006-exec-3] m.m.a.RequestResponseBodyMethodProcessor : Writing [com.coatardbul.stock.common.api.CommonResult@1b172ae3]
+2022-06-01 07:25:44.842 DEBUG 67503 --- [http-nio-9006-exec-3] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
+2022-06-01 07:26:47.158 DEBUG 67503 --- [http-nio-9006-exec-4] o.s.web.servlet.DispatcherServlet        : POST "/stock/stockPredict/deleteByQuery", parameters={}
+2022-06-01 07:26:47.159 DEBUG 67503 --- [http-nio-9006-exec-4] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to public com.coatardbul.stock.common.api.CommonResult com.coatardbul.stock.controller.StockTemplatedPredictController.deleteByQuery(com.coatardbul.stock.model.dto.StockPredictDto)
+2022-06-01 07:26:47.160 DEBUG 67503 --- [http-nio-9006-exec-4] m.m.a.RequestResponseBodyMethodProcessor : Read "application/json;charset=UTF-8" to [StockPredictDto(id=1531498597017845760, buyTime=null, beginDate=2022-05-02, endDate=2022-06-01, hole (truncated)...]
+2022-06-01 07:26:47.331 DEBUG 67503 --- [http-nio-9006-exec-4] m.m.a.RequestResponseBodyMethodProcessor : Using 'application/json', given [application/json, text/plain, */*] and supported [application/json, application/*+json, application/json, application/*+json]
+2022-06-01 07:26:47.331 DEBUG 67503 --- [http-nio-9006-exec-4] m.m.a.RequestResponseBodyMethodProcessor : Writing [com.coatardbul.stock.common.api.CommonResult@74d91666]
+2022-06-01 07:26:47.331 DEBUG 67503 --- [http-nio-9006-exec-4] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
+2022-06-01 07:26:47.346 DEBUG 67503 --- [http-nio-9006-exec-5] o.s.web.servlet.DispatcherServlet        : POST "/stock/stockPredict/getAll", parameters={}
+2022-06-01 07:26:47.346 DEBUG 67503 --- [http-nio-9006-exec-5] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to public com.coatardbul.stock.common.api.CommonResult com.coatardbul.stock.controller.StockTemplatedPredictController.getAll(com.coatardbul.stock.model.dto.StockPredictDto)
+2022-06-01 07:26:47.347 DEBUG 67503 --- [http-nio-9006-exec-5] m.m.a.RequestResponseBodyMethodProcessor : Read "application/json;charset=UTF-8" to [StockPredictDto(id=1531498597017845760, buyTime=null, beginDate=2022-05-02, endDate=2022-06-01, hole (truncated)...]
+2022-06-01 07:26:47.689 DEBUG 67503 --- [http-nio-9006-exec-5] o.s.w.c.HttpMessageConverterExtractor    : Reading to [com.coatardbul.stock.common.api.CommonResult<com.coatardbul.stock.model.feign.StockTemplateDto>]
+2022-06-01 07:26:47.691 DEBUG 67503 --- [http-nio-9006-exec-5] m.m.a.RequestResponseBodyMethodProcessor : Using 'application/json', given [application/json, text/plain, */*] and supported [application/json, application/*+json, application/json, application/*+json]
+2022-06-01 07:26:47.691 DEBUG 67503 --- [http-nio-9006-exec-5] m.m.a.RequestResponseBodyMethodProcessor : Writing [com.coatardbul.stock.common.api.CommonResult@55124546]
+2022-06-01 07:26:47.693 DEBUG 67503 --- [http-nio-9006-exec-5] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
+2022-06-01 07:26:49.498 DEBUG 67503 --- [http-nio-9006-exec-6] o.s.web.servlet.DispatcherServlet        : POST "/stock/stockPredict/getAll", parameters={}
+2022-06-01 07:26:49.499 DEBUG 67503 --- [http-nio-9006-exec-6] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to public com.coatardbul.stock.common.api.CommonResult com.coatardbul.stock.controller.StockTemplatedPredictController.getAll(com.coatardbul.stock.model.dto.StockPredictDto)
+2022-06-01 07:26:49.501 DEBUG 67503 --- [http-nio-9006-exec-6] m.m.a.RequestResponseBodyMethodProcessor : Read "application/json;charset=UTF-8" to [StockPredictDto(id=1531498597017845760, buyTime=null, beginDate=2022-05-02, endDate=2022-06-01, hole (truncated)...]
+2022-06-01 07:26:49.820 DEBUG 67503 --- [http-nio-9006-exec-6] o.s.w.c.HttpMessageConverterExtractor    : Reading to [com.coatardbul.stock.common.api.CommonResult<com.coatardbul.stock.model.feign.StockTemplateDto>]
+2022-06-01 07:26:49.821 DEBUG 67503 --- [http-nio-9006-exec-6] m.m.a.RequestResponseBodyMethodProcessor : Using 'application/json', given [application/json, text/plain, */*] and supported [application/json, application/*+json, application/json, application/*+json]
+2022-06-01 07:26:49.822 DEBUG 67503 --- [http-nio-9006-exec-6] m.m.a.RequestResponseBodyMethodProcessor : Writing [com.coatardbul.stock.common.api.CommonResult@8f66d66]
+2022-06-01 07:26:49.824 DEBUG 67503 --- [http-nio-9006-exec-6] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
+2022-06-01 07:27:37.152  INFO 67503 --- [AsyncResolver-bootstrap-executor-0] c.n.d.s.r.aws.ConfigClusterResolver      : Resolving eureka endpoints via configuration
+2022-06-01 07:27:45.369 DEBUG 67503 --- [http-nio-9006-exec-7] o.s.web.servlet.DispatcherServlet        : POST "/stock/stockPredict/getAll", parameters={}
+2022-06-01 07:27:45.369 DEBUG 67503 --- [http-nio-9006-exec-7] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to public com.coatardbul.stock.common.api.CommonResult com.coatardbul.stock.controller.StockTemplatedPredictController.getAll(com.coatardbul.stock.model.dto.StockPredictDto)
+2022-06-01 07:27:45.370 DEBUG 67503 --- [http-nio-9006-exec-7] m.m.a.RequestResponseBodyMethodProcessor : Read "application/json;charset=UTF-8" to [StockPredictDto(id=1531498597017845760, buyTime=null, beginDate=2022-01-01, endDate=2022-05-31, hole (truncated)...]
+2022-06-01 07:27:45.993 DEBUG 67503 --- [http-nio-9006-exec-7] o.s.w.c.HttpMessageConverterExtractor    : Reading to [com.coatardbul.stock.common.api.CommonResult<com.coatardbul.stock.model.feign.StockTemplateDto>]
+2022-06-01 07:27:45.994 DEBUG 67503 --- [http-nio-9006-exec-7] m.m.a.RequestResponseBodyMethodProcessor : Using 'application/json', given [application/json, text/plain, */*] and supported [application/json, application/*+json, application/json, application/*+json]
+2022-06-01 07:27:45.994 DEBUG 67503 --- [http-nio-9006-exec-7] m.m.a.RequestResponseBodyMethodProcessor : Writing [com.coatardbul.stock.common.api.CommonResult@33a9d045]
+2022-06-01 07:27:45.999 DEBUG 67503 --- [http-nio-9006-exec-7] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
+2022-06-01 07:27:52.213 DEBUG 67503 --- [http-nio-9006-exec-8] o.s.web.servlet.DispatcherServlet        : POST "/stock/stockPredict/deleteByQuery", parameters={}
+2022-06-01 07:27:52.213 DEBUG 67503 --- [http-nio-9006-exec-8] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to public com.coatardbul.stock.common.api.CommonResult com.coatardbul.stock.controller.StockTemplatedPredictController.deleteByQuery(com.coatardbul.stock.model.dto.StockPredictDto)
+2022-06-01 07:27:52.214 DEBUG 67503 --- [http-nio-9006-exec-8] m.m.a.RequestResponseBodyMethodProcessor : Read "application/json;charset=UTF-8" to [StockPredictDto(id=1531498597017845760, buyTime=null, beginDate=2022-01-01, endDate=2022-05-31, hole (truncated)...]
+2022-06-01 07:27:52.335 DEBUG 67503 --- [http-nio-9006-exec-8] m.m.a.RequestResponseBodyMethodProcessor : Using 'application/json', given [application/json, text/plain, */*] and supported [application/json, application/*+json, application/json, application/*+json]
+2022-06-01 07:27:52.336 DEBUG 67503 --- [http-nio-9006-exec-8] m.m.a.RequestResponseBodyMethodProcessor : Writing [com.coatardbul.stock.common.api.CommonResult@121f2841]
+2022-06-01 07:27:52.337 DEBUG 67503 --- [http-nio-9006-exec-8] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
+2022-06-01 07:27:52.376 DEBUG 67503 --- [http-nio-9006-exec-9] o.s.web.servlet.DispatcherServlet        : POST "/stock/stockPredict/getAll", parameters={}
+2022-06-01 07:27:52.377 DEBUG 67503 --- [http-nio-9006-exec-9] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to public com.coatardbul.stock.common.api.CommonResult com.coatardbul.stock.controller.StockTemplatedPredictController.getAll(com.coatardbul.stock.model.dto.StockPredictDto)
+2022-06-01 07:27:52.378 DEBUG 67503 --- [http-nio-9006-exec-9] m.m.a.RequestResponseBodyMethodProcessor : Read "application/json;charset=UTF-8" to [StockPredictDto(id=1531498597017845760, buyTime=null, beginDate=2022-01-01, endDate=2022-05-31, hole (truncated)...]
+2022-06-01 07:27:52.959 DEBUG 67503 --- [http-nio-9006-exec-9] o.s.w.c.HttpMessageConverterExtractor    : Reading to [com.coatardbul.stock.common.api.CommonResult<com.coatardbul.stock.model.feign.StockTemplateDto>]
+2022-06-01 07:27:52.962 DEBUG 67503 --- [http-nio-9006-exec-9] m.m.a.RequestResponseBodyMethodProcessor : Using 'application/json', given [application/json, text/plain, */*] and supported [application/json, application/*+json, application/json, application/*+json]
+2022-06-01 07:27:52.962 DEBUG 67503 --- [http-nio-9006-exec-9] m.m.a.RequestResponseBodyMethodProcessor : Writing [com.coatardbul.stock.common.api.CommonResult@480025b]
+2022-06-01 07:27:52.967 DEBUG 67503 --- [http-nio-9006-exec-9] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
+2022-06-01 07:30:10.639  INFO 67503 --- [http-nio-9006-exec-10] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data repositories in DEFAULT mode.
+2022-06-01 07:30:10.690  INFO 67503 --- [http-nio-9006-exec-10] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 50ms. Found 0 repository interfaces.
+2022-06-01 07:30:11.314 DEBUG 67503 --- [http-nio-9006-exec-10] o.s.web.servlet.DispatcherServlet        : Detected StandardServletMultipartResolver
+2022-06-01 07:30:11.342 DEBUG 67503 --- [http-nio-9006-exec-10] o.s.web.servlet.DispatcherServlet        : POST "/stock/stockPredict/deleteByQuery", parameters={}
+2022-06-01 07:30:11.346 DEBUG 67503 --- [http-nio-9006-exec-10] o.s.w.s.handler.SimpleUrlHandlerMapping  : Patterns [/**/favicon.ico] in 'faviconHandlerMapping'
+2022-06-01 07:30:11.347 DEBUG 67503 --- [http-nio-9006-exec-10] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to public com.coatardbul.stock.common.api.CommonResult com.coatardbul.stock.controller.StockTemplatedPredictController.deleteByQuery(com.coatardbul.stock.model.dto.StockPredictDto)
+2022-06-01 07:30:11.351 DEBUG 67503 --- [http-nio-9006-exec-10] m.m.a.RequestResponseBodyMethodProcessor : Read "application/json;charset=UTF-8" to [StockPredictDto(id=1531498597017845760, buyTime=null, beginDate=2022-01-01, endDate=2022-05-31, hole (truncated)...]
+2022-06-01 07:30:11.556 DEBUG 67503 --- [http-nio-9006-exec-10] m.m.a.RequestResponseBodyMethodProcessor : Using 'application/json', given [application/json, text/plain, */*] and supported [application/json, application/*+json, application/json, application/*+json]
+2022-06-01 07:30:11.558 DEBUG 67503 --- [http-nio-9006-exec-10] m.m.a.RequestResponseBodyMethodProcessor : Writing [com.coatardbul.stock.common.api.CommonResult@6065c16c]
+2022-06-01 07:30:11.560 DEBUG 67503 --- [http-nio-9006-exec-10] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
+2022-06-01 07:30:11.611 DEBUG 67503 --- [http-nio-9006-exec-1] o.s.web.servlet.DispatcherServlet        : POST "/stock/stockPredict/getAll", parameters={}
+2022-06-01 07:30:11.612 DEBUG 67503 --- [http-nio-9006-exec-1] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to public com.coatardbul.stock.common.api.CommonResult com.coatardbul.stock.controller.StockTemplatedPredictController.getAll(com.coatardbul.stock.model.dto.StockPredictDto)
+2022-06-01 07:30:11.613 DEBUG 67503 --- [http-nio-9006-exec-1] m.m.a.RequestResponseBodyMethodProcessor : Read "application/json;charset=UTF-8" to [StockPredictDto(id=1531498597017845760, buyTime=null, beginDate=2022-01-01, endDate=2022-05-31, hole (truncated)...]
+2022-06-01 07:30:11.689 DEBUG 67503 --- [http-nio-9006-exec-1] m.m.a.RequestResponseBodyMethodProcessor : Using 'application/json', given [application/json, text/plain, */*] and supported [application/json, application/*+json, application/json, application/*+json]
+2022-06-01 07:30:11.690 DEBUG 67503 --- [http-nio-9006-exec-1] m.m.a.RequestResponseBodyMethodProcessor : Writing [com.coatardbul.stock.common.api.CommonResult@2e30d7b1]
+2022-06-01 07:30:11.691 DEBUG 67503 --- [http-nio-9006-exec-1] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
+2022-06-01 07:32:37.164  INFO 67503 --- [AsyncResolver-bootstrap-executor-0] c.n.d.s.r.aws.ConfigClusterResolver      : Resolving eureka endpoints via configuration
+2022-06-01 07:33:03.011 DEBUG 67503 --- [http-nio-9006-exec-2] o.s.web.servlet.DispatcherServlet        : POST "/stock/stockPredict/getAll", parameters={}
+2022-06-01 07:33:03.013 DEBUG 67503 --- [http-nio-9006-exec-2] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to public com.coatardbul.stock.common.api.CommonResult com.coatardbul.stock.controller.StockTemplatedPredictController.getAll(com.coatardbul.stock.model.dto.StockPredictDto)
+2022-06-01 07:33:03.015 DEBUG 67503 --- [http-nio-9006-exec-2] m.m.a.RequestResponseBodyMethodProcessor : Read "application/json;charset=UTF-8" to [StockPredictDto(id=, buyTime=null, beginDate=2022-05-02, endDate=2022-06-01, holeDay=null, saleTime= (truncated)...]
+2022-06-01 07:33:03.892 DEBUG 67503 --- [http-nio-9006-exec-2] o.s.w.c.HttpMessageConverterExtractor    : Reading to [com.coatardbul.stock.common.api.CommonResult<com.coatardbul.stock.model.feign.StockTemplateDto>]
+2022-06-01 07:33:04.015 DEBUG 67503 --- [http-nio-9006-exec-2] o.s.w.c.HttpMessageConverterExtractor    : Reading to [com.coatardbul.stock.common.api.CommonResult<com.coatardbul.stock.model.feign.StockTemplateDto>]
+2022-06-01 07:33:04.201 DEBUG 67503 --- [http-nio-9006-exec-2] o.s.w.c.HttpMessageConverterExtractor    : Reading to [com.coatardbul.stock.common.api.CommonResult<com.coatardbul.stock.model.feign.StockTemplateDto>]
+2022-06-01 07:33:04.208 DEBUG 67503 --- [http-nio-9006-exec-2] m.m.a.RequestResponseBodyMethodProcessor : Using 'application/json', given [application/json, text/plain, */*] and supported [application/json, application/*+json, application/json, application/*+json]
+2022-06-01 07:33:04.209 DEBUG 67503 --- [http-nio-9006-exec-2] m.m.a.RequestResponseBodyMethodProcessor : Writing [com.coatardbul.stock.common.api.CommonResult@38c5a944]
+2022-06-01 07:33:04.244 DEBUG 67503 --- [http-nio-9006-exec-2] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
+2022-06-01 07:33:11.009 DEBUG 67503 --- [http-nio-9006-exec-3] o.s.web.servlet.DispatcherServlet        : POST "/stock/stockPredict/getAll", parameters={}
+2022-06-01 07:33:11.010 DEBUG 67503 --- [http-nio-9006-exec-3] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to public com.coatardbul.stock.common.api.CommonResult com.coatardbul.stock.controller.StockTemplatedPredictController.getAll(com.coatardbul.stock.model.dto.StockPredictDto)
+2022-06-01 07:33:11.011 DEBUG 67503 --- [http-nio-9006-exec-3] m.m.a.RequestResponseBodyMethodProcessor : Read "application/json;charset=UTF-8" to [StockPredictDto(id=1526961477527928832, buyTime=null, beginDate=2022-05-02, endDate=2022-06-01, hole (truncated)...]
+2022-06-01 07:33:11.146 DEBUG 67503 --- [http-nio-9006-exec-3] m.m.a.RequestResponseBodyMethodProcessor : Using 'application/json', given [application/json, text/plain, */*] and supported [application/json, application/*+json, application/json, application/*+json]
+2022-06-01 07:33:11.146 DEBUG 67503 --- [http-nio-9006-exec-3] m.m.a.RequestResponseBodyMethodProcessor : Writing [com.coatardbul.stock.common.api.CommonResult@413c29f6]
+2022-06-01 07:33:11.147 DEBUG 67503 --- [http-nio-9006-exec-3] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
+2022-06-01 07:33:23.760 DEBUG 67503 --- [http-nio-9006-exec-4] o.s.web.servlet.DispatcherServlet        : POST "/stock/stockPredict/getAll", parameters={}
+2022-06-01 07:33:23.761 DEBUG 67503 --- [http-nio-9006-exec-4] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to public com.coatardbul.stock.common.api.CommonResult com.coatardbul.stock.controller.StockTemplatedPredictController.getAll(com.coatardbul.stock.model.dto.StockPredictDto)
+2022-06-01 07:33:23.762 DEBUG 67503 --- [http-nio-9006-exec-4] m.m.a.RequestResponseBodyMethodProcessor : Read "application/json;charset=UTF-8" to [StockPredictDto(id=1528711135640027136, buyTime=null, beginDate=2022-05-02, endDate=2022-06-01, hole (truncated)...]
+2022-06-01 07:33:24.141 DEBUG 67503 --- [http-nio-9006-exec-4] o.s.w.c.HttpMessageConverterExtractor    : Reading to [com.coatardbul.stock.common.api.CommonResult<com.coatardbul.stock.model.feign.StockTemplateDto>]
+2022-06-01 07:33:24.142 DEBUG 67503 --- [http-nio-9006-exec-4] m.m.a.RequestResponseBodyMethodProcessor : Using 'application/json', given [application/json, text/plain, */*] and supported [application/json, application/*+json, application/json, application/*+json]
+2022-06-01 07:33:24.143 DEBUG 67503 --- [http-nio-9006-exec-4] m.m.a.RequestResponseBodyMethodProcessor : Writing [com.coatardbul.stock.common.api.CommonResult@c0e5b94]
+2022-06-01 07:33:24.145 DEBUG 67503 --- [http-nio-9006-exec-4] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
+2022-06-01 07:33:26.901 DEBUG 67503 --- [http-nio-9006-exec-5] o.s.web.servlet.DispatcherServlet        : POST "/stock/stockPredict/deleteByQuery", parameters={}
+2022-06-01 07:33:26.902 DEBUG 67503 --- [http-nio-9006-exec-5] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to public com.coatardbul.stock.common.api.CommonResult com.coatardbul.stock.controller.StockTemplatedPredictController.deleteByQuery(com.coatardbul.stock.model.dto.StockPredictDto)
+2022-06-01 07:33:26.903 DEBUG 67503 --- [http-nio-9006-exec-5] m.m.a.RequestResponseBodyMethodProcessor : Read "application/json;charset=UTF-8" to [StockPredictDto(id=1528711135640027136, buyTime=null, beginDate=2022-05-02, endDate=2022-06-01, hole (truncated)...]
+2022-06-01 07:33:27.136 DEBUG 67503 --- [http-nio-9006-exec-5] m.m.a.RequestResponseBodyMethodProcessor : Using 'application/json', given [application/json, text/plain, */*] and supported [application/json, application/*+json, application/json, application/*+json]
+2022-06-01 07:33:27.136 DEBUG 67503 --- [http-nio-9006-exec-5] m.m.a.RequestResponseBodyMethodProcessor : Writing [com.coatardbul.stock.common.api.CommonResult@70506761]
+2022-06-01 07:33:27.137 DEBUG 67503 --- [http-nio-9006-exec-5] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
+2022-06-01 07:33:27.152 DEBUG 67503 --- [http-nio-9006-exec-6] o.s.web.servlet.DispatcherServlet        : POST "/stock/stockPredict/getAll", parameters={}
+2022-06-01 07:33:27.152 DEBUG 67503 --- [http-nio-9006-exec-6] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to public com.coatardbul.stock.common.api.CommonResult com.coatardbul.stock.controller.StockTemplatedPredictController.getAll(com.coatardbul.stock.model.dto.StockPredictDto)
+2022-06-01 07:33:27.153 DEBUG 67503 --- [http-nio-9006-exec-6] m.m.a.RequestResponseBodyMethodProcessor : Read "application/json;charset=UTF-8" to [StockPredictDto(id=1528711135640027136, buyTime=null, beginDate=2022-05-02, endDate=2022-06-01, hole (truncated)...]
+2022-06-01 07:33:27.273 DEBUG 67503 --- [http-nio-9006-exec-6] m.m.a.RequestResponseBodyMethodProcessor : Using 'application/json', given [application/json, text/plain, */*] and supported [application/json, application/*+json, application/json, application/*+json]
+2022-06-01 07:33:27.273 DEBUG 67503 --- [http-nio-9006-exec-6] m.m.a.RequestResponseBodyMethodProcessor : Writing [com.coatardbul.stock.common.api.CommonResult@5c79b27f]
+2022-06-01 07:33:27.274 DEBUG 67503 --- [http-nio-9006-exec-6] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
+2022-06-01 07:34:21.805  INFO 67503 --- [Thread-56] o.s.c.n.e.s.EurekaServiceRegistry        : Unregistering application STOCK with eureka with status DOWN
+2022-06-01 07:34:21.805  WARN 67503 --- [Thread-56] com.netflix.discovery.DiscoveryClient    : Saw local status change event StatusChangeEvent [timestamp=1654040061805, current=DOWN, previous=UP]
+2022-06-01 07:34:21.811  INFO 67503 --- [DiscoveryClient-InstanceInfoReplicator-0] com.netflix.discovery.DiscoveryClient    : DiscoveryClient_STOCK/192.168.8.100:stock:9006: registering service...
+2022-06-01 07:34:21.826  INFO 67503 --- [Thread-56] org.quartz.core.QuartzScheduler          : Scheduler quartzScheduler_$_NON_CLUSTERED paused.
+2022-06-01 07:34:21.859  INFO 67503 --- [Thread-56] o.s.s.quartz.SchedulerFactoryBean        : Shutting down Quartz Scheduler
+2022-06-01 07:34:21.859  INFO 67503 --- [Thread-56] org.quartz.core.QuartzScheduler          : Scheduler quartzScheduler_$_NON_CLUSTERED shutting down.
+2022-06-01 07:34:21.859  INFO 67503 --- [Thread-56] org.quartz.core.QuartzScheduler          : Scheduler quartzScheduler_$_NON_CLUSTERED paused.
+2022-06-01 07:34:21.860  INFO 67503 --- [Thread-56] org.quartz.core.QuartzScheduler          : Scheduler quartzScheduler_$_NON_CLUSTERED shutdown complete.
+2022-06-01 07:34:21.866  INFO 67503 --- [Thread-56] o.s.s.concurrent.ThreadPoolTaskExecutor  : Shutting down ExecutorService 'applicationTaskExecutor'
+2022-06-01 07:34:21.881  INFO 67503 --- [Thread-49] com.xxl.job.core.server.EmbedServer      : >>>>>>>>>>> xxl-job remoting server stop.

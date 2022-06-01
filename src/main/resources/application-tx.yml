@@ -41,8 +41,8 @@ xxl:
 ##verifyCodeLength 验证码长度
 email:
   service:
-    sendFrom: 953903969@qq.com
-    sendFromAuthCode: lsgajdcdlzhqbcih
+    sendFrom: 386785145@qq.com
+    sendFromAuthCode: otmmvqxvrpbkbhdg
     emailProp: smtp.qq.com
 
 

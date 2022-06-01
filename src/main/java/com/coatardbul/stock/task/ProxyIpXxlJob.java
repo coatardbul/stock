@@ -27,8 +27,9 @@ import java.util.Calendar;
 public class ProxyIpXxlJob {
     @Autowired
     ProxyIpService proxyIpService;
-@Autowired
+    @Autowired
     ProxyIpMapper proxyIpMapper;
+
     @XxlJob("proxyIpJobHandler")
     public void proxyIpJobHandler() throws Exception {
         String param = XxlJobHelper.getJobParam();

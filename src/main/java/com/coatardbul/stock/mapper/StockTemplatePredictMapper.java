@@ -18,4 +18,9 @@ public interface StockTemplatePredictMapper {
     List<StockTemplatePredict> selectAllByDateBetweenEqualAndTemplatedIdAndHoldDay(@Param("minDate") String minDate, @Param("maxDate") String maxDate, @Param("templatedId") String templatedId, @Param("holdDay") Integer holdDay);
 
     int deleteByDateAndTempatedId(@Param("date") String date, @Param("tempatedId") String tempatedId);
+    
+    
+    int deleteByTemplatedIdAndHoldDayAndDateBetweenEqual(@Param("templatedId")String templatedId, @Param("holdDay")Integer holdDay, @Param("minBuyTime")String minBuyTime, @Param("maxBuyTime")String maxBuyTime);
+
+	
 }

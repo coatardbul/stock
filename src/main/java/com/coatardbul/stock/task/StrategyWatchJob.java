@@ -52,4 +52,18 @@ public class StrategyWatchJob {
         }
         log.info("历史策略监控定时任务结束");
     }
+
+
+    @XxlJob("emailStrategyWatchJobHandler")
+    public void emailStrategyWatchJobHandler() throws Exception {
+        String param = XxlJobHelper.getJobParam();
+        log.info("邮件策略监控定时任务开始,传递参数为：" + param);
+        if (StringUtils.isNotBlank(param)) {
+            StockEmotionDayDTO stockEmotionDayDTO = new StockEmotionDayDTO();
+            stockEmotionDayDTO.setDateStr(DateTimeUtil.getDateFormat(new Date(), DateTimeUtil.YYYY_MM_DD));
+            stockEmotionDayDTO.setTimeStr(DateTimeUtil.getDateFormat(new Date(), DateTimeUtil.HH_MM));
+            stockStrategyWatchService.emailStrategyWatch(stockEmotionDayDTO);
+        }
+        log.info("邮件策略监控定时任务结束");
+    }
 }

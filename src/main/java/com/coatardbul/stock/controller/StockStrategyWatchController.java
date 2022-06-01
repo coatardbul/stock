@@ -86,5 +86,14 @@ public class StockStrategyWatchController {
         stockStrategyWatchService.hisSimulate(dto);
     }
 
+    /**
+     * 邮件测试
+     */
+    @WebLog(value = "")
+    @RequestMapping(path = "/emailHisStrategy", method = RequestMethod.POST)
+    public void emailHisStrategy(@Validated @RequestBody StockEmotionDayDTO dto) throws Exception {
+        stockStrategyWatchService.emailStrategyWatch(dto);
+    }
+
 
 }

@@ -17,20 +17,15 @@ import com.coatardbul.stock.model.entity.StockTemplatePredict;
 import com.coatardbul.stock.model.feign.StockTemplateQueryDTO;
 import com.coatardbul.stock.service.base.StockStrategyService;
 import com.coatardbul.stock.service.romote.RiverRemoteService;
-import com.google.gson.JsonObject;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 
-import javax.script.ScriptException;
-import java.io.FileNotFoundException;
-import java.math.BigDecimal;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import java.util.function.Function;
 import java.util.stream.Collectors;
 
 /**
@@ -205,5 +200,9 @@ public class StockPredictService {
 
     public void deleteById(StockPredictDto dto) {
         stockTemplatePredictMapper.deleteByPrimaryKey(dto.getId());
+    }
+
+    public void deleteByQuery(StockPredictDto dto) {
+        stockTemplatePredictMapper.deleteByTemplatedIdAndHoldDayAndDateBetweenEqual(dto.getId(),dto.getHoleDay(),dto.getBeginDate(),dto.getEndDate());
     }
 }
