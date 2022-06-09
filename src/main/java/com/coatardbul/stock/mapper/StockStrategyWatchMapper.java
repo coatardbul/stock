@@ -1,8 +1,6 @@
 package com.coatardbul.stock.mapper;
-import org.apache.ibatis.annotations.Param;
-import java.util.List;
 
-import com.coatardbul.stock.model.entity.StockStrategyWatch;
+import com.coatardbul.stock.model.entity.StockStrategyWatch;import org.apache.ibatis.annotations.Param;import java.util.List;
 
 public interface StockStrategyWatchMapper {
     int deleteByPrimaryKey(String id);
@@ -17,11 +15,7 @@ public interface StockStrategyWatchMapper {
 
     int updateByPrimaryKey(StockStrategyWatch record);
 
-List<StockStrategyWatch> selectByAll(StockStrategyWatch stockStrategyWatch);
+    List<StockStrategyWatch> selectByAll(StockStrategyWatch stockStrategyWatch);
 
-
-
-    List<StockStrategyWatch> selectAllByType(@Param("type")Integer type);
-
-
+    List<StockStrategyWatch> selectAllByType(@Param("type") Integer type);
 }

@@ -10,7 +10,9 @@ import org.apache.http.HttpEntity;
 import org.apache.http.HttpHost;
 import org.apache.http.HttpResponse;
 import org.apache.http.HttpStatus;
+import org.apache.http.NameValuePair;
 import org.apache.http.client.config.RequestConfig;
+import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
@@ -33,6 +35,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.Arrays;
@@ -113,6 +116,8 @@ public class HttpService {
     public String doPost(String url, String jsonString, List<Header> headerList) throws ConnectTimeoutException {
         return doPost(url, jsonString, headerList, true);
     }
+
+
 
 
     public   String   doPost(String url, String jsonString, List<Header> headerList, boolean isProxy) throws ConnectTimeoutException {

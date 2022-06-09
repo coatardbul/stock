@@ -2,14 +2,21 @@ package com.coatardbul.stock.service.statistic;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
+import com.coatardbul.stock.common.constants.StockTemplateEnum;
+import com.coatardbul.stock.common.constants.StockTradeBuyTypeEnum;
+import com.coatardbul.stock.common.constants.StockWatchTypeEnum;
+import com.coatardbul.stock.common.util.DateTimeUtil;
 import com.coatardbul.stock.common.util.JsonUtil;
 import com.coatardbul.stock.feign.river.BaseServerFeign;
 import com.coatardbul.stock.mapper.StockStrategyWatchMapper;
+import com.coatardbul.stock.mapper.StockTradeBuyConfigMapper;
 import com.coatardbul.stock.model.bo.AxiosBaseBo;
+import com.coatardbul.stock.model.bo.StockTradeBO;
 import com.coatardbul.stock.model.bo.StrategyBO;
 import com.coatardbul.stock.model.dto.StockEmotionDayDTO;
 import com.coatardbul.stock.model.dto.StockStrategyQueryDTO;
 import com.coatardbul.stock.model.entity.StockStrategyWatch;
+import com.coatardbul.stock.model.entity.StockTradeBuyConfig;
 import com.coatardbul.stock.model.feign.StockTemplateDto;
 import com.coatardbul.stock.service.base.EmailService;
 import com.coatardbul.stock.service.base.StockStrategyService;
@@ -21,7 +28,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 
+import javax.script.ScriptException;
+import java.io.FileNotFoundException;
+import java.math.BigDecimal;
 import java.text.ParseException;
+import java.util.Date;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
@@ -54,6 +65,12 @@ public class StockStrategyWatchService {
     RedisTemplate redisTemplate;
     @Autowired
     EmailService emailService;
+    @Autowired
+    StockTradeBuyConfigMapper stockTradeBuyConfigMapper;
+    @Autowired
+    StockParseAndConvertService stockParseAndConvertService;
+    @Autowired
+    StockTradeService stockTradeService;
 
     //模拟历史扫描数据
     public void simulateHistoryStrategyWatch(StockEmotionDayDTO dto) throws ParseException {
@@ -77,7 +94,7 @@ public class StockStrategyWatchService {
             return;
         }
         //需要发送邮件
-        List<StockStrategyWatch> stockStrategyWatches = stockStrategyWatchMapper.selectAllByType(3);
+        List<StockStrategyWatch> stockStrategyWatches = stockStrategyWatchMapper.selectAllByType(StockWatchTypeEnum.EMAIL.getType());
         //过滤符合要求的信息
         if (stockStrategyWatches == null || stockStrategyWatches.size() == 0) {
             return;
@@ -104,18 +121,117 @@ public class StockStrategyWatchService {
                         String name = jsonObject.getString("股票简称");
                         String key = executeStrategy.getTemplatedId() + "_" + code;
                         if (redisTemplate.opsForValue().get(key) == null) {
-                            redisTemplate.opsForValue().set(key, JsonUtil.toJson(jsonObject), 20, TimeUnit.HOURS);
-                            //发送邮件
-                            emailService.sendProcess("sxl14459048@163.com",
-                                    riverRemoteService.getTemplateNameById(executeStrategy.getTemplatedId())+"-"+name,
-                                    emailInfo(jsonObject)
-                            );
+                            //执行任务
+                            process(executeStrategy.getTemplatedId(), key, jsonObject, name, code);
                         }
                     }
 
                 }
             } catch (Exception e) {
                 log.error(e.getMessage(), e);
+            }
+        }
+    }
+
+    /**
+     * 判断走邮件还是直接购买
+     *
+     * @param templateId
+     * @param key
+     * @param jsonObject
+     * @param name
+     * @param code
+     */
+    private void process(String templateId, String key, JSONObject jsonObject, String name, String code) {
+        redisTemplate.opsForValue().set(key, JsonUtil.toJson(jsonObject), 20, TimeUnit.HOURS);
+
+        //判断是发邮件还是直接买
+        StockTradeBuyConfig stockTradeBuyConfig = stockTradeBuyConfigMapper.selectAllByTemplateId(templateId);
+        //直接买入
+        if (StockTradeBuyTypeEnum.DIRECT.getType().equals(stockTradeBuyConfig.getType())) {
+
+            directBuy(stockTradeBuyConfig, code, name);
+        }
+        //邮件类型
+        if (StockTradeBuyTypeEnum.EMAIL.getType().equals(stockTradeBuyConfig.getType())) {
+        }
+
+        //发送邮件
+        try {
+            emailService.sendProcess("sxl14459048@163.com",
+                    riverRemoteService.getTemplateNameById(templateId) + "-" + name,
+                    emailInfo(jsonObject)
+            );
+        } catch (Exception e) {
+
+            log.error(e.getMessage(), e);
+        }
+
+    }
+
+
+    /**
+     * 直接买入
+     *
+     * @param stockTradeBuyConfig
+     * @param code
+     */
+    private void directBuy(StockTradeBuyConfig stockTradeBuyConfig, String code, String name) {
+        //判断次数
+        if (stockTradeBuyConfig.getSubNum() <= 0) {
+            return;
+        }
+        //金额判断,股票详情
+        StockStrategyQueryDTO dto = new StockStrategyQueryDTO();
+        dto.setRiverStockTemplateSign(StockTemplateEnum.STOCK_DETAIL.getSign());
+        dto.setDateStr(DateTimeUtil.getDateFormat(new Date(), DateTimeUtil.YYYY_MM_DD));
+        dto.setStockCode(code);
+        StrategyBO strategy = null;
+        try {
+            strategy = stockStrategyService.strategy(dto);
+        } catch (Exception e) {
+            log.error(e.getMessage(), e);
+        }
+        if (strategy == null || strategy.getTotalNum() == 0) {
+            return;
+        }
+        JSONObject jsonObject = strategy.getData().getJSONObject(0);
+
+        BigDecimal closePrice = null;
+        //当日
+        String dateFormat = DateTimeUtil.getDateFormat(new Date(), DateTimeUtil.YYYYMMDD);
+        for (String key : jsonObject.keySet()) {
+            if (key.contains("收盘价") && !key.contains(dateFormat)) {
+                closePrice = stockParseAndConvertService.convert(jsonObject.get(key));
+            }
+        }
+        if (closePrice != null) {
+            //涨停价
+            BigDecimal upLimit = stockParseAndConvertService.getUpLimit(closePrice);
+            //每次可使用的金额
+            BigDecimal userMoney = stockTradeBuyConfig.getSubMoney().divide(new BigDecimal(stockTradeBuyConfig.getSubNum()), 2, BigDecimal.ROUND_HALF_UP);
+            //可买的多少,1 ,2,
+            BigDecimal buyNum = userMoney.divide(upLimit.multiply(new BigDecimal(100)), 0, BigDecimal.ROUND_DOWN);
+            if (buyNum.compareTo(BigDecimal.ONE) < 0) {
+                //金额不够，无法购买
+                return;
+            } else {
+                //调用购买接口，
+                StockTradeBO stockTradeBO=new StockTradeBO();
+                stockTradeBO.setStockCode(code);
+                stockTradeBO.setPrice(upLimit.toString());
+                stockTradeBO.setAmount(buyNum.multiply(new BigDecimal(100)).toString());
+                stockTradeBO.setZqmc(name);
+                String response = stockTradeService.buy(stockTradeBO);
+                //成功
+                if(StringUtils.isNotBlank(response)){
+                    //剩余次数
+                    stockTradeBuyConfig.setSubNum(stockTradeBuyConfig.getSubNum() - 1);
+                    //剩余金额
+                    BigDecimal subtractMoney = stockTradeBuyConfig.getSubMoney().subtract(upLimit.multiply(buyNum.multiply(new BigDecimal(100))));
+                    stockTradeBuyConfig.setSubMoney(subtractMoney);
+                    stockTradeBuyConfigMapper.updateByPrimaryKeySelective(stockTradeBuyConfig);
+                }
             }
         }
     }

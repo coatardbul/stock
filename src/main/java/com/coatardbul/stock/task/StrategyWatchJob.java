@@ -4,6 +4,7 @@ import com.coatardbul.stock.common.util.DateTimeUtil;
 import com.coatardbul.stock.common.util.JsonUtil;
 import com.coatardbul.stock.model.dto.StockEmotionDayDTO;
 import com.coatardbul.stock.service.statistic.StockStrategyWatchService;
+import com.coatardbul.stock.service.statistic.StockTradeService;
 import com.xxl.job.core.context.XxlJobHelper;
 import com.xxl.job.core.handler.annotation.XxlJob;
 import lombok.extern.slf4j.Slf4j;
@@ -28,6 +29,8 @@ public class StrategyWatchJob {
     @Autowired
     StockStrategyWatchService stockStrategyWatchService;
 
+    @Autowired
+    StockTradeService stockTradeService;
 
     @XxlJob("strategyNowWatchJobHandler")
     public void strategyWatchJobHandler() throws Exception {
@@ -65,5 +68,15 @@ public class StrategyWatchJob {
             stockStrategyWatchService.emailStrategyWatch(stockEmotionDayDTO);
         }
         log.info("邮件策略监控定时任务结束");
+    }
+
+
+    @XxlJob("sellStrategyJobHandler")
+    public void sellStrategyJobHandler() throws Exception {
+        log.info("卖出策略定时任务开始,传递参数为：" );
+
+        stockTradeService.sellStrategyJobHandler();
+
+        log.info("卖出策略定时任务结束");
     }
 }

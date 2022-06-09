@@ -80,4 +80,16 @@ public class StockParseAndConvertService {
         }
         return (BigDecimal) value;
     }
+
+    public BigDecimal getUpLimit(BigDecimal price){
+        BigDecimal multiply = price.multiply(new BigDecimal(1.1)).setScale(2,BigDecimal.ROUND_HALF_UP);
+        return  multiply;
+    }
+    public BigDecimal getDownLimit(BigDecimal price){
+        BigDecimal multiply = price.multiply(new BigDecimal(0.9)).setScale(2,BigDecimal.ROUND_HALF_UP);
+        return  multiply;
+    }
+
+
+
 }

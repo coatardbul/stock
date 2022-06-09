@@ -7,6 +7,7 @@ import com.coatardbul.stock.service.base.CosService;
 import com.coatardbul.stock.service.base.EmailService;
 import com.coatardbul.stock.service.statistic.RedisService;
 import com.coatardbul.stock.service.statistic.StockSpecialStrategyService;
+import com.coatardbul.stock.service.statistic.StockTradeService;
 import com.qcloud.cos.COSClient;
 import com.qcloud.cos.ClientConfig;
 import com.qcloud.cos.auth.BasicCOSCredentials;
@@ -67,6 +68,8 @@ public class TestController {
     @Autowired
     RestTemplate restTemplate;
 
+    @Autowired
+    StockTradeService stockTradeService;
     @WebLog(value = "")
     @RequestMapping(path = "/test", method = RequestMethod.POST)
     public void dayStatic() throws Exception {
@@ -174,15 +177,8 @@ public class TestController {
     @RequestMapping(path = "/test2", method = RequestMethod.POST)
     public void dayStatic22() throws Exception {
 
+        stockTradeService.sellStrategyJobHandler();
 
-        CalendarDateDTO query = new CalendarDateDTO();
-        query.setBeginDate("2022-01-01");
-        query.setEndDate("2022-05-01");
-        query.setDateProp(1);
-        ResponseEntity<CommonResult> commonResultResponseEntity = restTemplate.postForEntity("http://124.222.217.230:9002/river/api/calendar/getDate", query, CommonResult.class);
-
-        CommonResult body = commonResultResponseEntity.getBody();
-        log.info(body.toString());
 
     }
 }

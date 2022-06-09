@@ -8,9 +8,7 @@ public class StockStrategyWatch {
 
     private String templatedId;
 
-
     private String templatedName;
-
 
     /**
      * 结束时间
@@ -26,7 +24,13 @@ public class StockStrategyWatch {
 
     /**
      * 1.已购股票
-     * 2. 扫描类型
+     * 2.定时任务策略扫描
+     * 3.需要发送邮件
      */
     private Integer type;
+
+    /**
+     * 是否开启交易
+     */
+    private Integer isOpenTrade;
 }

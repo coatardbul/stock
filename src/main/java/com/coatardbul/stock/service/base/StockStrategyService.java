@@ -325,7 +325,8 @@ public class StockStrategyService {
         String heXinStr = TongHuaShunUtil.getHeXinStr();
         Header cookie = httpService.getHead("Cookie", cookieValue + heXinStr);
         Header hexin = httpService.getHead("hexin-v", heXinStr);
-        Header orign = httpService.getHead("Origin", "http://www.iwencai.com");
+        Header orign =httpService.getHead ("Origin", "http://www.iwencai.com");
+
         headerList.add(cookie);
         headerList.add(hexin);
         headerList.add(orign);
