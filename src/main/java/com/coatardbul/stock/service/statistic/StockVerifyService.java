@@ -111,6 +111,14 @@ public class StockVerifyService {
             throw new BusinessException("当前"+dateStr+timeStr+"不合法，不能超过当前时间");
         }
     }
+
+    /**
+     * 是否非法日期，
+     * @param dateStr
+     * @param timeStr
+     * @return
+     * @throws ParseException
+     */
     public Boolean isIllegalDateTimeStr(String  dateStr,String timeStr) throws ParseException {
         Date date=DateTimeUtil.parseDateStr(dateStr+timeStr,DateTimeUtil.YYYY_MM_DD+DateTimeUtil.HH_MM);
         if (new Date().compareTo(date) < 0) {

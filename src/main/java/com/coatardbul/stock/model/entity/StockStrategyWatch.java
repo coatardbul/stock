@@ -8,12 +8,32 @@ public class StockStrategyWatch {
 
     private String templatedId;
 
+
     private String templatedName;
+
+    /**
+     * 开始时间
+     */
+    private String beginTime;
 
     /**
      * 结束时间
      */
     private String endTime;
+
+    /**
+     * 1.已购股票
+     * 2.定时任务策略扫描
+     * 3.需要发送邮件
+     * 4.买入，卖出
+     * 5.策略模拟
+     */
+    private Integer type;
+
+    /**
+     * 是否开启交易
+     */
+    private Integer isOpenTrade;
 
     /**
      * 1. 必须全程开启
@@ -23,14 +43,12 @@ public class StockStrategyWatch {
     private Integer watchLevel;
 
     /**
-     * 1.已购股票
-     * 2.定时任务策略扫描
-     * 3.需要发送邮件
+     * 策略标识，固定策略信息
      */
-    private Integer type;
+    private String strategySign;
 
     /**
-     * 是否开启交易
+     * 买入条件
      */
-    private Integer isOpenTrade;
+    private String buyCondition;
 }

@@ -5,7 +5,8 @@ public enum StockWatchTypeEnum {
     POSITION(1,"持仓股票"),
     CRON_WATCH(2,"定时任务策略扫描"),
     EMAIL(3,"需要发送邮件"),
-    BUY_SELL(4,"买入，卖出");
+    BUY_SELL(4,"买入，卖出"),
+    STRATEGY_SIMULATE(5,"策略模拟");
     private Integer type;
 
     private String desc;

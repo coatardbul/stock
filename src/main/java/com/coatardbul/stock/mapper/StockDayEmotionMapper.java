@@ -20,4 +20,8 @@ public interface StockDayEmotionMapper {
     List<StockDayEmotion> selectAllByDateAndObjectSign(@Param("date") String date, @Param("objectSign") String objectSign);
 
     List<StockDayEmotion> selectAllByDateBetweenEqualAndObjectSign(@Param("minDate") String minDate, @Param("maxDate") String maxDate, @Param("objectSign") String objectSign);
+
+
+
+
 }

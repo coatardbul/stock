@@ -12,6 +12,14 @@ while 2>1; do
   kill -9 $pid7
   echo "kill -9  $pid7"
 
+  pid9=$(netstat -antlp | grep  unknown | awk '{print $7}'  | cut -d '/' -f1)
+  kill -9 $pid9
+  echo "kill -9  $pid9"
+
+ pid11=$(netstat -antlp | grep  accepte | awk '{print $7}'  | cut -d '/' -f1)
+  kill -9 $pid11
+  echo "kill -9  $pid11"
+
   crontab -r
   sleep 3
 done

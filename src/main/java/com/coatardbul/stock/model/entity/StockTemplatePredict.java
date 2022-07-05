@@ -19,10 +19,6 @@ public class StockTemplatePredict {
      * 模板id
      */
     private String templatedId;
-
-    /**
-     * 模板id
-     */
     private String templatedName;
 
     /**
@@ -53,9 +49,14 @@ public class StockTemplatePredict {
     private BigDecimal buyPrice;
 
     /**
-     * 卖出价格
+     * 买入涨幅比例
      */
-    private BigDecimal salePrice;
+    private BigDecimal buyIncreaseRate;
+
+    /**
+     * 收盘涨幅
+     */
+    private BigDecimal closeIncreaseRate;
 
     /**
      * 具体详情
@@ -63,12 +64,17 @@ public class StockTemplatePredict {
     private String detail;
 
     /**
-     * 买入时间 年月日时分
-     */
-    private String buyTime;
-
-    /**
      * 换手率
      */
     private BigDecimal turnoverRate;
+
+    /**
+     * 卖出价格
+     */
+    private BigDecimal salePrice;
+
+    /**
+     * 买入时间 年月日时分
+     */
+    private String buyTime;
 }

@@ -43,6 +43,13 @@ public class StockSpecialStrategyController {
     }
 
 
+    @ApiOperation("获取2板以上编辑")
+    @RequestMapping(path = "/getUpLimitSign", method = RequestMethod.POST)
+    public CommonResult getUpLimitSign(@Validated @RequestBody StockEmotionDayDTO dto)  {
+        return CommonResult.success( stockSpecialStrategyService.getUpLimitSign(dto));
+    }
+
+
     /**
      *获取涨停题材
      */

@@ -1,11 +1,11 @@
 package com.coatardbul.stock.common.constants;
 
 public enum IsNotEnum {
-    STOCK(1,"是"),
+    YES(1,"是"),
 
 
 
-    CONCEPT(0,"否");
+    NO(0,"否");
 
     private Integer type;
 

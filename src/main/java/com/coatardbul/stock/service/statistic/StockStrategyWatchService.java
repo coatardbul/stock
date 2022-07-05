@@ -87,10 +87,7 @@ public class StockStrategyWatchService {
         if (stockVerifyService.isIllegalDate(dto.getDateStr())) {
             return;
         }
-        if (dto.getTimeStr().compareTo("09:30") < 0) {
-            return;
-        }
-        if (dto.getTimeStr().compareTo("11:30") > 0 && dto.getTimeStr().compareTo("13:00") < 0) {
+        if (stockVerifyService.isIllegalDateTimeStr(dto.getDateStr(),dto.getTimeStr())) {
             return;
         }
         //需要发送邮件
@@ -278,14 +275,11 @@ public class StockStrategyWatchService {
         if (stockVerifyService.isIllegalDate(dto.getDateStr())) {
             return;
         }
-        if (dto.getTimeStr().compareTo("09:30") < 0) {
-            return;
-        }
-        if (dto.getTimeStr().compareTo("11:30") > 0 && dto.getTimeStr().compareTo("13:00") < 0) {
+        if (stockVerifyService.isIllegalDateTimeStr(dto.getDateStr(),dto.getTimeStr())) {
             return;
         }
         //todo 根据类型，查询出需要扫描的策略
-        List<StockStrategyWatch> stockStrategyWatches = stockStrategyWatchMapper.selectAllByType(2);
+        List<StockStrategyWatch> stockStrategyWatches = stockStrategyWatchMapper.selectAllByType(StockWatchTypeEnum.CRON_WATCH.getType());
         //过滤符合要求的信息
         if (stockStrategyWatches == null || stockStrategyWatches.size() == 0) {
             return;
@@ -328,7 +322,9 @@ public class StockStrategyWatchService {
     private boolean filter(StockStrategyWatch stockStrategyWatch, String cronTime) {
         if (StringUtils.isNotBlank(stockStrategyWatch.getEndTime())) {
             return stockStrategyWatch.getEndTime().compareTo(cronTime) >= 0;
-        } else {
+        } else if(StringUtils.isNotBlank(stockStrategyWatch.getBeginTime())){
+            return stockStrategyWatch.getBeginTime().compareTo(cronTime) <= 0;
+        }else {
             return true;
         }
     }
@@ -366,7 +362,7 @@ public class StockStrategyWatchService {
             return;
         }
         //todo 根据类型，查询出需要扫描的策略
-        List<StockStrategyWatch> stockStrategyWatches = stockStrategyWatchMapper.selectAllByType(2);
+        List<StockStrategyWatch> stockStrategyWatches = stockStrategyWatchMapper.selectAllByType(StockWatchTypeEnum.CRON_WATCH.getType());
         //过滤符合要求的信息
         if (stockStrategyWatches == null || stockStrategyWatches.size() == 0) {
             return;

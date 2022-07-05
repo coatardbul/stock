@@ -21,4 +21,10 @@ public class StockUpLimitNameBO {
      */
     private List<String> nameList;
 
+    /**
+     * codeList
+     */
+    private List<String> codeList;
+
+
 }

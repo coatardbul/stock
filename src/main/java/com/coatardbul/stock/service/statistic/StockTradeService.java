@@ -140,9 +140,7 @@ public class StockTradeService {
     }
 
     public void syncBuyInfo() {
-        StockStrategyWatch stockStrategyWatch = new StockStrategyWatch();
-        stockStrategyWatch.setType(StockWatchTypeEnum.EMAIL.getType());
-        List<StockStrategyWatch> stockStrategyWatches = stockStrategyWatchMapper.selectByAll(stockStrategyWatch);
+        List<StockStrategyWatch> stockStrategyWatches = stockStrategyWatchMapper.selectAllByType(StockWatchTypeEnum.EMAIL.getType());
         if (stockStrategyWatches.size() > 0) {
             for (StockStrategyWatch ssw : stockStrategyWatches) {
                 StockTradeBuyConfig stbc = stockTradeBuyConfigMapper.selectAllByTemplateId(ssw.getTemplatedId());
@@ -201,13 +199,9 @@ public class StockTradeService {
         if (stockVerifyService.isIllegalDate(dateStr)) {
             return;
         }
-        if (timeStr.compareTo("09:30") < 0) {
+        if (stockVerifyService.isIllegalDateTimeStr(dateStr,timeStr)) {
             return;
         }
-        if (timeStr.compareTo("11:30") > 0 && timeStr.compareTo("13:00") < 0) {
-            return;
-        }
-
         //查询未卖出，且状态为定时的
         List<StockTradeSellJob> stockTradeSellJobs = stockTradeSellJobMapper.selectAllByTypeAndStatus(StockTradeSellTypeEnum.TIME_SELL.getType(), StockTradeSellStatusEnum.NO_SELL.getType());
         if(stockTradeSellJobs==null ||stockTradeSellJobs.size()==0){

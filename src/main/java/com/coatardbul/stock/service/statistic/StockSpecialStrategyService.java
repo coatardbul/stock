@@ -121,6 +121,50 @@ public class StockSpecialStrategyService {
         return result.stream().sorted(Comparator.comparing(StockUpLimitNameBO::getUpLimitNum).reversed()).collect(Collectors.toList());
     }
 
+    public Object getUpLimitSign(StockEmotionDayDTO dto) {
+        dto.setDateStr(riverRemoteService.getSpecialDay(dto.getDateStr(),-1));
+        List<StockUpLimitNameBO> result = new ArrayList<>();
+        CountDownLatch countDownLatch = new CountDownLatch(7);
+        for (int i = 2; i < 9; i++) {
+            final int num = i;
+            Constant.abThreadPool.execute(() -> {
+                //涨停脚本语句
+                String upLimitNumScript = getUpLimitNumScript(num);
+                StockStrategyQueryDTO stockStrategyQueryDTO = new StockStrategyQueryDTO();
+                stockStrategyQueryDTO.setDateStr(dto.getDateStr());
+                stockStrategyQueryDTO.setStockTemplateScript(upLimitNumScript);
+                StrategyBO strategy = null;
+                try {
+                    //策略查询
+                    strategy = stockStrategyService.strategy(stockStrategyQueryDTO);
+                    JSONArray data = strategy.getData();
+                    List<String> codeList = new ArrayList<>();
+                    for (int j = 0; j < data.size(); j++) {
+                        codeList.add(stockParseAndConvertService.getStockCode(data.getJSONObject(j)));
+                    }
+                    StockUpLimitNameBO stockUpLimitNameBO = new StockUpLimitNameBO();
+                    stockUpLimitNameBO.setUpLimitNum((num+1) + "板");
+                    stockUpLimitNameBO.setCodeList(codeList);
+                    if (stockUpLimitNameBO.getCodeList().size() > 0) {
+                        result.add(stockUpLimitNameBO);
+                    }
+                } catch (Exception e) {
+                    log.error(e.getMessage(), e);
+                } finally {
+                    countDownLatch.countDown();
+                }
+
+            });
+        }
+
+        try {
+            countDownLatch.await();
+        } catch (InterruptedException e) {
+            log.error(e.getMessage(), e);
+        }
+        return result.stream().sorted(Comparator.comparing(StockUpLimitNameBO::getUpLimitNum).reversed()).collect(Collectors.toList());
+    }
+
 
     /**
      * 非创业板，非st板块，{{lastDay3}}未涨停，{{lastDay2}}涨停，{{lastDay1}}涨停，{{today}}涨停，
@@ -588,4 +632,6 @@ public class StockSpecialStrategyService {
         }
        return stockAnomalousBehaviorStaticMapper.selectAll();
     }
+
+
 }
