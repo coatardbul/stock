@@ -1,0 +1,208 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.coatardbul.stock.mapper.StockTradeSellJobMapper">
+  <resultMap id="BaseResultMap" type="com.coatardbul.stock.model.entity.StockTradeSellJob">
+    <!--@mbg.generated-->
+    <!--@Table stock_trade_sell_job-->
+    <id column="id" jdbcType="VARCHAR" property="id" />
+    <result column="code" jdbcType="VARCHAR" property="code" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="amount" jdbcType="VARCHAR" property="amount" />
+    <result column="price" jdbcType="VARCHAR" property="price" />
+    <result column="type" jdbcType="INTEGER" property="type" />
+    <result column="sell_date" jdbcType="VARCHAR" property="sellDate" />
+    <result column="sell_time" jdbcType="VARCHAR" property="sellTime" />
+    <result column="sell_script" jdbcType="VARCHAR" property="sellScript" />
+    <result column="status" jdbcType="INTEGER" property="status" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    <!--@mbg.generated-->
+    id, code, `name`, amount, price, `type`, sell_date, sell_time, sell_script, `status`
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    <!--@mbg.generated-->
+    select 
+    <include refid="Base_Column_List" />
+    from stock_trade_sell_job
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    <!--@mbg.generated-->
+    delete from stock_trade_sell_job
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.coatardbul.stock.model.entity.StockTradeSellJob">
+    <!--@mbg.generated-->
+    insert into stock_trade_sell_job (id, code, `name`, 
+      amount, price, `type`, 
+      sell_date, sell_time, sell_script, 
+      `status`)
+    values (#{id,jdbcType=VARCHAR}, #{code,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, 
+      #{amount,jdbcType=VARCHAR}, #{price,jdbcType=VARCHAR}, #{type,jdbcType=INTEGER}, 
+      #{sellDate,jdbcType=VARCHAR}, #{sellTime,jdbcType=VARCHAR}, #{sellScript,jdbcType=VARCHAR}, 
+      #{status,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.coatardbul.stock.model.entity.StockTradeSellJob">
+    <!--@mbg.generated-->
+    insert into stock_trade_sell_job
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="code != null">
+        code,
+      </if>
+      <if test="name != null">
+        `name`,
+      </if>
+      <if test="amount != null">
+        amount,
+      </if>
+      <if test="price != null">
+        price,
+      </if>
+      <if test="type != null">
+        `type`,
+      </if>
+      <if test="sellDate != null">
+        sell_date,
+      </if>
+      <if test="sellTime != null">
+        sell_time,
+      </if>
+      <if test="sellScript != null">
+        sell_script,
+      </if>
+      <if test="status != null">
+        `status`,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="code != null">
+        #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null">
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="amount != null">
+        #{amount,jdbcType=VARCHAR},
+      </if>
+      <if test="price != null">
+        #{price,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null">
+        #{type,jdbcType=INTEGER},
+      </if>
+      <if test="sellDate != null">
+        #{sellDate,jdbcType=VARCHAR},
+      </if>
+      <if test="sellTime != null">
+        #{sellTime,jdbcType=VARCHAR},
+      </if>
+      <if test="sellScript != null">
+        #{sellScript,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.coatardbul.stock.model.entity.StockTradeSellJob">
+    <!--@mbg.generated-->
+    update stock_trade_sell_job
+    <set>
+      <if test="code != null">
+        code = #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null">
+        `name` = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="amount != null">
+        amount = #{amount,jdbcType=VARCHAR},
+      </if>
+      <if test="price != null">
+        price = #{price,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null">
+        `type` = #{type,jdbcType=INTEGER},
+      </if>
+      <if test="sellDate != null">
+        sell_date = #{sellDate,jdbcType=VARCHAR},
+      </if>
+      <if test="sellTime != null">
+        sell_time = #{sellTime,jdbcType=VARCHAR},
+      </if>
+      <if test="sellScript != null">
+        sell_script = #{sellScript,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        `status` = #{status,jdbcType=INTEGER},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.coatardbul.stock.model.entity.StockTradeSellJob">
+    <!--@mbg.generated-->
+    update stock_trade_sell_job
+    set code = #{code,jdbcType=VARCHAR},
+      `name` = #{name,jdbcType=VARCHAR},
+      amount = #{amount,jdbcType=VARCHAR},
+      price = #{price,jdbcType=VARCHAR},
+      `type` = #{type,jdbcType=INTEGER},
+      sell_date = #{sellDate,jdbcType=VARCHAR},
+      sell_time = #{sellTime,jdbcType=VARCHAR},
+      sell_script = #{sellScript,jdbcType=VARCHAR},
+      `status` = #{status,jdbcType=INTEGER}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+
+<!--auto generated by MybatisCodeHelper on 2022-06-05-->
+  <select id="selectByAll" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from stock_trade_sell_job
+        <where>
+            <if test="id != null">
+                and id=#{id,jdbcType=VARCHAR}
+            </if>
+            <if test="code != null and code != ''">
+                and code=#{code,jdbcType=VARCHAR}
+            </if>
+            <if test="name != null and name != ''">
+                and `name`=#{name,jdbcType=VARCHAR}
+            </if>
+            <if test="amount != null">
+                and amount=#{amount,jdbcType=VARCHAR}
+            </if>
+            <if test="price != null">
+                and price=#{price,jdbcType=VARCHAR}
+            </if>
+            <if test="type != null">
+                and `type`=#{type,jdbcType=VARCHAR}
+            </if>
+            <if test="sellDate != null">
+                and sell_date=#{sellDate,jdbcType=VARCHAR}
+            </if>
+            <if test="sellTime != null">
+                and sell_time=#{sellTime,jdbcType=VARCHAR}
+            </if>
+            <if test="sellScript != null">
+                and sell_script=#{sellScript,jdbcType=VARCHAR}
+            </if>
+            <if test="status != null">
+                and `status`=#{status,jdbcType=INTEGER}
+            </if>
+        </where>
+    </select>
+
+<!--auto generated by MybatisCodeHelper on 2022-06-05-->
+  <select id="selectAllByTypeAndStatus" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List"/>
+    from stock_trade_sell_job
+    where `type`=#{type,jdbcType=INTEGER} and `status`=#{status,jdbcType=INTEGER}
+  </select>
+</mapper>
