@@ -4,7 +4,6 @@ spring:
     driverClassName: com.mysql.cj.jdbc.Driver
     username: root
     password: Dream1226.27!
-
   redis:
     host: 47.105.148.90
     port: 6399
@@ -15,6 +14,21 @@ spring:
     max-wait: -1
     min-idle: 0
     timeout: 5000
+  quartz:
+    # 参见 org.springframework.boot.autoconfigure.quartz.QuartzProperties
+    job-store-type: jdbc
+    wait-for-jobs-to-complete-on-shutdown: true
+    scheduler-name: SpringBootDemoScheduler
+    properties:
+      org.quartz.threadPool.threadCount: 5
+      org.quartz.threadPool.threadPriority: 5
+      org.quartz.threadPool.threadsInheritContextClassLoaderOfInitializingThread: true
+      org.quartz.jobStore.misfireThreshold: 5000
+      org.quartz.jobStore.class: org.quartz.impl.jdbcjobstore.JobStoreTX
+      org.quartz.jobStore.driverDelegateClass: org.quartz.impl.jdbcjobstore.StdJDBCDelegate
+      # 在调度流程的第一步，也就是拉取待即将触发的triggers时，是上锁的状态，即不会同时存在多个线程拉取到相同的trigger的情况，也就避免的重复调度的危险。参考：https://segmentfault.com/a/1190000015492260
+      org.quartz.jobStore.acquireTriggersWithinLock: true
+
 
 eureka:
   client:
@@ -35,3 +49,35 @@ xxl:
       logretentiondays: 30
       #      logpath: /Users/coatardbul/Desktop/xxljob
       logpath: /usr/local/xxl_job/client
+
+
+##邮箱发送服务，sendFrom 发送邮箱，sendFromAuthCode 邮箱授权码，不是密码！！
+##emailProp 邮箱服务器 verifyCodeOutServiceTime 邮箱失效时间（分钟）
+##verifyCodeLength 验证码长度
+email:
+  service:
+    sendFrom: 386785145@qq.com
+    sendFromAuthCode: otmmvqxvrpbkbhdg
+    emailProp: smtp.qq.com
+
+
+
+##腾讯云对象存储
+cos:
+  baseUrl: https://stable-up-1254163062.cos.ap-nanjing.myqcloud.com
+  secretId: AKIDc4JL8gy1oNhmbAUYNwGK9i26vWyB9uPf
+  secretKey: 3qOhkX5OREl36uUrzrUryqSovnPlriKK
+  regionName: ap-nanjing
+  bucketName: stable-up-1254163062
+  folderPrefix: /files
+system:
+  proxy:
+    enabled: false
+    host: 7070
+    port: 6060
+  rest:
+    readTimeout: 30000
+    connectTimeout: 30000
+
+
+

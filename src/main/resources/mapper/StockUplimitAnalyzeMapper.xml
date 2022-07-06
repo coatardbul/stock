@@ -9,10 +9,22 @@
     <result column="object_sign" jdbcType="VARCHAR" property="objectSign" />
     <result column="json_detail" jdbcType="VARCHAR" property="jsonDetail" />
     <result column="code" jdbcType="VARCHAR" property="code" />
+    <result column="last_turn_over" jdbcType="VARCHAR" property="lastTurnOver" />
+    <result column="last_vol" jdbcType="VARCHAR" property="lastVol" />
+    <result column="compression_division" jdbcType="VARCHAR" property="compressionDivision" />
+    <result column="auction_turn_over" jdbcType="VARCHAR" property="auctionTurnOver" />
+    <result column="auction_increase" jdbcType="VARCHAR" property="auctionIncrease" />
+    <result column="new_increase" jdbcType="VARCHAR" property="newIncrease" />
+    <result column="circulation_market_value" jdbcType="VARCHAR" property="circulationMarketValue" />
+    <result column="current_price" jdbcType="VARCHAR" property="currentPrice" />
+    <result column="auction_vol" jdbcType="VARCHAR" property="auctionVol" />
+    <result column="market_value" jdbcType="VARCHAR" property="marketValue" />
   </resultMap>
   <sql id="Base_Column_List">
     <!--@mbg.generated-->
-    id, `date`, object_sign, json_detail, code
+    id, `date`, object_sign, json_detail, code, last_turn_over, last_vol, compression_division, 
+    auction_turn_over, auction_increase, new_increase, circulation_market_value, current_price, 
+    auction_vol, market_value
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
     <!--@mbg.generated-->
@@ -29,9 +41,17 @@
   <insert id="insert" parameterType="com.coatardbul.stock.model.entity.StockUplimitAnalyze">
     <!--@mbg.generated-->
     insert into stock_uplimit_analyze (id, `date`, object_sign, 
-      json_detail, code)
+      json_detail, code, last_turn_over, 
+      last_vol, compression_division, auction_turn_over, 
+      auction_increase, new_increase, circulation_market_value, 
+      current_price, auction_vol, market_value
+      )
     values (#{id,jdbcType=VARCHAR}, #{date,jdbcType=VARCHAR}, #{objectSign,jdbcType=VARCHAR}, 
-      #{jsonDetail,jdbcType=VARCHAR}, #{code,jdbcType=VARCHAR})
+      #{jsonDetail,jdbcType=VARCHAR}, #{code,jdbcType=VARCHAR}, #{lastTurnOver,jdbcType=VARCHAR}, 
+      #{lastVol,jdbcType=VARCHAR}, #{compressionDivision,jdbcType=VARCHAR}, #{auctionTurnOver,jdbcType=VARCHAR}, 
+      #{auctionIncrease,jdbcType=VARCHAR}, #{newIncrease,jdbcType=VARCHAR}, #{circulationMarketValue,jdbcType=VARCHAR}, 
+      #{currentPrice,jdbcType=VARCHAR}, #{auctionVol,jdbcType=VARCHAR}, #{marketValue,jdbcType=VARCHAR}
+      )
   </insert>
   <insert id="insertSelective" parameterType="com.coatardbul.stock.model.entity.StockUplimitAnalyze">
     <!--@mbg.generated-->
@@ -52,6 +72,36 @@
       <if test="code != null">
         code,
       </if>
+      <if test="lastTurnOver != null">
+        last_turn_over,
+      </if>
+      <if test="lastVol != null">
+        last_vol,
+      </if>
+      <if test="compressionDivision != null">
+        compression_division,
+      </if>
+      <if test="auctionTurnOver != null">
+        auction_turn_over,
+      </if>
+      <if test="auctionIncrease != null">
+        auction_increase,
+      </if>
+      <if test="newIncrease != null">
+        new_increase,
+      </if>
+      <if test="circulationMarketValue != null">
+        circulation_market_value,
+      </if>
+      <if test="currentPrice != null">
+        current_price,
+      </if>
+      <if test="auctionVol != null">
+        auction_vol,
+      </if>
+      <if test="marketValue != null">
+        market_value,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="id != null">
@@ -68,6 +118,36 @@
       </if>
       <if test="code != null">
         #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="lastTurnOver != null">
+        #{lastTurnOver,jdbcType=VARCHAR},
+      </if>
+      <if test="lastVol != null">
+        #{lastVol,jdbcType=VARCHAR},
+      </if>
+      <if test="compressionDivision != null">
+        #{compressionDivision,jdbcType=VARCHAR},
+      </if>
+      <if test="auctionTurnOver != null">
+        #{auctionTurnOver,jdbcType=VARCHAR},
+      </if>
+      <if test="auctionIncrease != null">
+        #{auctionIncrease,jdbcType=VARCHAR},
+      </if>
+      <if test="newIncrease != null">
+        #{newIncrease,jdbcType=VARCHAR},
+      </if>
+      <if test="circulationMarketValue != null">
+        #{circulationMarketValue,jdbcType=VARCHAR},
+      </if>
+      <if test="currentPrice != null">
+        #{currentPrice,jdbcType=VARCHAR},
+      </if>
+      <if test="auctionVol != null">
+        #{auctionVol,jdbcType=VARCHAR},
+      </if>
+      <if test="marketValue != null">
+        #{marketValue,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
@@ -87,6 +167,36 @@
       <if test="code != null">
         code = #{code,jdbcType=VARCHAR},
       </if>
+      <if test="lastTurnOver != null">
+        last_turn_over = #{lastTurnOver,jdbcType=VARCHAR},
+      </if>
+      <if test="lastVol != null">
+        last_vol = #{lastVol,jdbcType=VARCHAR},
+      </if>
+      <if test="compressionDivision != null">
+        compression_division = #{compressionDivision,jdbcType=VARCHAR},
+      </if>
+      <if test="auctionTurnOver != null">
+        auction_turn_over = #{auctionTurnOver,jdbcType=VARCHAR},
+      </if>
+      <if test="auctionIncrease != null">
+        auction_increase = #{auctionIncrease,jdbcType=VARCHAR},
+      </if>
+      <if test="newIncrease != null">
+        new_increase = #{newIncrease,jdbcType=VARCHAR},
+      </if>
+      <if test="circulationMarketValue != null">
+        circulation_market_value = #{circulationMarketValue,jdbcType=VARCHAR},
+      </if>
+      <if test="currentPrice != null">
+        current_price = #{currentPrice,jdbcType=VARCHAR},
+      </if>
+      <if test="auctionVol != null">
+        auction_vol = #{auctionVol,jdbcType=VARCHAR},
+      </if>
+      <if test="marketValue != null">
+        market_value = #{marketValue,jdbcType=VARCHAR},
+      </if>
     </set>
     where id = #{id,jdbcType=VARCHAR}
   </update>
@@ -96,23 +206,117 @@
     set `date` = #{date,jdbcType=VARCHAR},
       object_sign = #{objectSign,jdbcType=VARCHAR},
       json_detail = #{jsonDetail,jdbcType=VARCHAR},
-      code = #{code,jdbcType=VARCHAR}
+      code = #{code,jdbcType=VARCHAR},
+      last_turn_over = #{lastTurnOver,jdbcType=VARCHAR},
+      last_vol = #{lastVol,jdbcType=VARCHAR},
+      compression_division = #{compressionDivision,jdbcType=VARCHAR},
+      auction_turn_over = #{auctionTurnOver,jdbcType=VARCHAR},
+      auction_increase = #{auctionIncrease,jdbcType=VARCHAR},
+      new_increase = #{newIncrease,jdbcType=VARCHAR},
+      circulation_market_value = #{circulationMarketValue,jdbcType=VARCHAR},
+      current_price = #{currentPrice,jdbcType=VARCHAR},
+      auction_vol = #{auctionVol,jdbcType=VARCHAR},
+      market_value = #{marketValue,jdbcType=VARCHAR}
     where id = #{id,jdbcType=VARCHAR}
   </update>
 
-<!--auto generated by MybatisCodeHelper on 2022-07-03-->
-  <select id="selectByAll" resultMap="BaseResultMap">
+
+
+
+
+    <!--auto generated by MybatisCodeHelper on 2022-07-06-->
+    <delete id="deleteByDateAndCode">
+        delete
+        from stock_uplimit_analyze
+        where `date` = #{date,jdbcType=VARCHAR}
+          and code = #{code,jdbcType=VARCHAR}
+    </delete>
+
+    <!--auto generated by MybatisCodeHelper on 2022-07-06-->
+    <select id="selectByCondition" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List" />
         from stock_uplimit_analyze
+        where object_sign = #{objectSign,jdbcType=VARCHAR}
 
+        <if test="beginDateStr != null and beginDateStr != '' ">
+            and `date`<![CDATA[ >=]]> #{beginDateStr,jdbcType=VARCHAR}
+        </if>
+        <if test="endDateStr != null and endDateStr != '' ">
+            and `date`<![CDATA[ <=]]> #{endDateStr,jdbcType=VARCHAR}
+        </if>
+        <if test="beginLastTurnOver != null and beginLastTurnOver != '' ">
+            and convert (last_turn_over, decimal(20,2)) <![CDATA[ >=]]> #{beginLastTurnOver,jdbcType=VARCHAR}
+        </if>
+        <if test="endLastTurnOver != null and endLastTurnOver != '' ">
+            and convert (last_turn_over, decimal(20,2)) <![CDATA[ <=]]> #{endLastTurnOver,jdbcType=VARCHAR}
+        </if>
+        <if test="beginLastVol != null and beginLastVol != '' ">
+            and convert (last_vol, decimal(20,2))  <![CDATA[ >=]]> #{beginLastVol,jdbcType=VARCHAR}
+        </if>
+        <if test="endLastVol != null and endLastVol != '' ">
+            and convert (last_vol, decimal(20,2))  <![CDATA[ <=]]> #{endLastVol,jdbcType=VARCHAR}
+        </if>
+
+
+        <if test="beginCompressionDivision != null and beginCompressionDivision != '' ">
+            and convert (compression_division, decimal(20,2))   <![CDATA[ >=]]> #{beginCompressionDivision,jdbcType=VARCHAR}
+        </if>
+        <if test="endCompressionDivision != null and endCompressionDivision != '' ">
+            and convert (compression_division, decimal(20,2)) <![CDATA[ <=]]> #{endCompressionDivision,jdbcType=VARCHAR}
+        </if>
+
+        <if test="beginAuctionIncrease != null and beginAuctionIncrease != '' ">
+            and convert (auction_increase, decimal(20,2)) <![CDATA[ >=]]> #{beginAuctionIncrease,jdbcType=VARCHAR}
+        </if>
+        <if test="endAuctionIncrease != null and endAuctionIncrease != '' ">
+            and convert (auction_increase, decimal(20,2)) <![CDATA[ <=]]> #{endAuctionIncrease,jdbcType=VARCHAR}
+        </if>
+
+        <if test="beginNewIncrease != null and beginNewIncrease != '' ">
+            and convert (new_increase, decimal(20,2)) <![CDATA[ >=]]> #{beginNewIncrease,jdbcType=VARCHAR}
+        </if>
+        <if test="endNewIncrease != null and endNewIncrease != '' ">
+            and convert (new_increase, decimal(20,2)) <![CDATA[ <=]]> #{endNewIncrease,jdbcType=VARCHAR}
+        </if>
+
+        <if test="beginAuctionTurnOver != null and beginAuctionTurnOver != '' ">
+            and convert (auction_turn_over, decimal(20,2)) <![CDATA[ >=]]> #{beginAuctionTurnOver,jdbcType=VARCHAR}
+        </if>
+        <if test="endAuctionTurnOver != null and endAuctionTurnOver != '' ">
+            and convert (auction_turn_over, decimal(20,2)) <![CDATA[ <=]]> #{endAuctionTurnOver,jdbcType=VARCHAR}
+        </if>
+
+        <if test="beginAuctionVol != null and beginAuctionVol != '' ">
+            and convert (auction_vol, decimal(20,2)) <![CDATA[ >=]]> #{beginAuctionVol,jdbcType=VARCHAR}
+        </if>
+        <if test="endAuctionVol != null and endAuctionVol != '' ">
+            and convert (auction_vol, decimal(20,2)) <![CDATA[ <=]]> #{endAuctionVol,jdbcType=VARCHAR}
+        </if>
+
+
+        <if test="beginMarketValue != null and beginMarketValue != '' ">
+            and convert (market_value, decimal(20,2)) <![CDATA[ >=]]> #{beginMarketValue,jdbcType=VARCHAR}
+        </if>
+        <if test="endMarketValue != null and endMarketValue != '' ">
+            and convert (market_value, decimal(20,2)) <![CDATA[ <=]]> #{endMarketValue,jdbcType=VARCHAR}
+        </if>
+
+        <if test="beginCirculationMarketValue != null and beginCirculationMarketValue != '' ">
+            and convert (circulation_market_value, decimal(20,2)) <![CDATA[ >=]]> #{beginCirculationMarketValue,jdbcType=VARCHAR}
+        </if>
+        <if test="endCirculationMarketValue != null and endCirculationMarketValue != '' ">
+            and convert (circulation_market_value, decimal(20,2)) <![CDATA[ <=]]> #{endCirculationMarketValue,jdbcType=VARCHAR}
+        </if>
+ order by date asc
     </select>
 
-<!--auto generated by MybatisCodeHelper on 2022-07-03-->
-  <select id="selectAllByDateAndCode" resultMap="BaseResultMap">
-    select
-    <include refid="Base_Column_List"/>
-    from stock_uplimit_analyze
-    where `date`=#{date,jdbcType=VARCHAR} and code=#{code,jdbcType=VARCHAR}
-  </select>
+    <!--auto generated by MybatisCodeHelper on 2022-07-06-->
+    <select id="selectAllByDateBetweenEqual" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from stock_uplimit_analyze
+        where `date` <![CDATA[>=]]> #{minDate,jdbcType=VARCHAR}
+          and `date` <![CDATA[<=]]> #{maxDate,jdbcType=VARCHAR}
+    </select>
 </mapper>

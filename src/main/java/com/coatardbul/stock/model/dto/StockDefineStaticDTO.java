@@ -12,7 +12,6 @@ public class StockDefineStaticDTO {
 
     private String endDateStr;
 
-
     /**
     * 对象标识
     */

@@ -1,7 +1,6 @@
 package com.coatardbul.stock.mapper;
-import org.apache.ibatis.annotations.Param;
 
-import com.coatardbul.stock.model.entity.StockUplimitAnalyze;import java.util.List;
+import com.coatardbul.stock.model.dto.StockUplimitAnalyzeDTO;import com.coatardbul.stock.model.entity.StockUplimitAnalyze;import org.apache.ibatis.annotations.Param;import java.util.List;
 
 public interface StockUplimitAnalyzeMapper {
     int deleteByPrimaryKey(String id);
@@ -16,9 +15,9 @@ public interface StockUplimitAnalyzeMapper {
 
     int updateByPrimaryKey(StockUplimitAnalyze record);
 
-    List<StockUplimitAnalyze> selectByAll();
+    List<StockUplimitAnalyze> selectByCondition(StockUplimitAnalyzeDTO stockUplimitAnalyze);
 
-    List<StockUplimitAnalyze> selectAllByDateAndCode(@Param("date")String date,@Param("code")String code);
+    List<StockUplimitAnalyze> selectAllByDateBetweenEqual(@Param("minDate") String minDate, @Param("maxDate") String maxDate);
 
-
+    int deleteByDateAndCode(@Param("date") String date, @Param("code") String code);
 }

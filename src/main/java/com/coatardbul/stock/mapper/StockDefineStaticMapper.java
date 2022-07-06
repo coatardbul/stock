@@ -1,8 +1,6 @@
 package com.coatardbul.stock.mapper;
-import org.apache.ibatis.annotations.Param;
-import java.util.List;
 
-import com.coatardbul.stock.model.entity.StockDefineStatic;
+import com.coatardbul.stock.model.entity.StockDefineStatic;import org.apache.ibatis.annotations.Param;import java.util.List;
 
 public interface StockDefineStaticMapper {
     int deleteByPrimaryKey(String id);
@@ -17,15 +15,9 @@ public interface StockDefineStaticMapper {
 
     int updateByPrimaryKey(StockDefineStatic record);
 
-    StockDefineStatic selectAllByDateAndObjectSign(@Param("date")String date,@Param("objectSign")String objectSign);
+    StockDefineStatic selectAllByDateAndObjectSign(@Param("date") String date, @Param("objectSign") String objectSign);
 
+    int deleteByDateAndObjectSign(@Param("date") String date, @Param("objectSign") String objectSign);
 
-    int deleteByDateAndObjectSign(@Param("date")String date,@Param("objectSign")String objectSign);
-
-
-
-    List<StockDefineStatic> selectAllByDateBetweenEqualAndObjectSign(@Param("minDate")String minDate,@Param("maxDate")String maxDate,@Param("objectSign")String objectSign);
-
-
-
+    List<StockDefineStatic> selectAllByDateBetweenEqualAndObjectSign(@Param("minDate") String minDate, @Param("maxDate") String maxDate, @Param("objectSign") String objectSign);
 }

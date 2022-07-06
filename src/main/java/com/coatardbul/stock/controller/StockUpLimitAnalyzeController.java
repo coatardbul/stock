@@ -1,6 +1,9 @@
 package com.coatardbul.stock.controller;
 
 import com.coatardbul.stock.common.api.CommonResult;
+import com.coatardbul.stock.model.dto.StockUplimitAnalyzeDTO;
+import com.coatardbul.stock.model.dto.StockUserCookieDTO;
+import com.coatardbul.stock.model.entity.StockUplimitAnalyze;
 import com.coatardbul.stock.service.statistic.StockUpLimitAnalyzeService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -32,14 +35,14 @@ public class StockUpLimitAnalyzeController {
 
     @ApiOperation("添加")
     @RequestMapping(path = "/add", method = RequestMethod.POST)
-    public CommonResult getUpLimitInfo(@Validated @RequestBody Map dto)  {
+    public CommonResult getUpLimitInfo(@Validated @RequestBody Map dto) throws IllegalAccessException {
         stockUpLimitAnalyzeService.add(dto);
         return CommonResult.success( null);
     }
     @ApiOperation("添加")
     @RequestMapping(path = "/getAll", method = RequestMethod.POST)
-    public CommonResult getAll()  {
-        return CommonResult.success( stockUpLimitAnalyzeService.getAll());
+    public CommonResult getAll(@Validated @RequestBody StockUplimitAnalyzeDTO dto)  {
+        return CommonResult.success( stockUpLimitAnalyzeService.getAll(dto));
     }
 
 }
