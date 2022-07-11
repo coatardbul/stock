@@ -51,8 +51,10 @@ public class StockDefineStaticController {
     @WebLog(value = "获取所有")
     @RequestMapping(path = "/getAll", method = RequestMethod.POST)
     public CommonResult getAll(@Validated @RequestBody StockDefineStaticDTO dto)  {
-
         return CommonResult.success(stockDefineStaticService.getAll(dto));
     }
+
+
+
 
 }

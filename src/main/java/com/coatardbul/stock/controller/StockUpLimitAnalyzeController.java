@@ -1,6 +1,8 @@
 package com.coatardbul.stock.controller;
 
+import com.coatardbul.stock.common.annotation.WebLog;
 import com.coatardbul.stock.common.api.CommonResult;
+import com.coatardbul.stock.model.dto.StockDefineStaticDTO;
 import com.coatardbul.stock.model.dto.StockUplimitAnalyzeDTO;
 import com.coatardbul.stock.model.dto.StockUserCookieDTO;
 import com.coatardbul.stock.model.entity.StockUplimitAnalyze;
@@ -44,5 +46,17 @@ public class StockUpLimitAnalyzeController {
     public CommonResult getAll(@Validated @RequestBody StockUplimitAnalyzeDTO dto)  {
         return CommonResult.success( stockUpLimitAnalyzeService.getAll(dto));
     }
+
+    /**
+     * 收据数据
+     */
+    @WebLog(value = "收据数据")
+    @RequestMapping(path = "/simulateAdd", method = RequestMethod.POST)
+    public CommonResult simulateAdd(@Validated @RequestBody StockDefineStaticDTO dto)  {
+        stockUpLimitAnalyzeService.simulateAdd(dto);
+        return CommonResult.success(null);
+    }
+
+
 
 }

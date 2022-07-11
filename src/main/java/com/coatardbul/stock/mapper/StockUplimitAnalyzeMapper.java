@@ -20,4 +20,7 @@ public interface StockUplimitAnalyzeMapper {
     List<StockUplimitAnalyze> selectAllByDateBetweenEqual(@Param("minDate") String minDate, @Param("maxDate") String maxDate);
 
     int deleteByDateAndCode(@Param("date") String date, @Param("code") String code);
+    int deleteByDate(@Param("date")String date);
+
+
 }
