@@ -86,14 +86,5 @@ public class StockAnomalousBehaviorController {
         return CommonResult.success(  stockSpecialStrategyService.getAbStatic(dto));
     }
 
-//    /**
-//     *修改获取移动统计数据
-//     */
-//    @WebLog(value = "")
-//    @RequestMapping(path = "/getAbStatic", method = RequestMethod.POST)
-//    public CommonResult getsb(@Validated @RequestBody StockLastUpLimitDetailDTO dto) {
-//        stockSpecialStrategyService.getAbStatic(dto);
-//        return CommonResult.success( null);
-//    }
 
 }

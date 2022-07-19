@@ -155,18 +155,7 @@ public class StockTradeService {
         }
     }
 
-    public void modifyBuyInfo(StockTradeBuyConfig dto) {
-        stockTradeBuyConfigMapper.updateByPrimaryKeySelective(dto);
-    }
 
-    public void deleteBuyInfo(StockTradeBuyConfig dto) {
-        stockTradeBuyConfigMapper.deleteByPrimaryKey(dto.getId());
-    }
-
-    public List<StockTradeBuyConfig> queryBuyInfo(StockTradeBuyConfig dto) {
-        List<StockTradeBuyConfig> stockTradeBuyConfigs = stockTradeBuyConfigMapper.selectByAll(dto);
-        return stockTradeBuyConfigs;
-    }
 
     public void initBuyInfo() {
         List<StockTradeBuyConfig> stockTradeBuyConfigs = stockTradeBuyConfigMapper.selectByAll(null);

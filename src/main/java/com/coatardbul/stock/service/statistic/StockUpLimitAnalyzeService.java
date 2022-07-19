@@ -184,6 +184,10 @@ public class StockUpLimitAnalyzeService {
             ) {
                 jsonMap.put("auctionIncreaseRate", jsonObject.get(key));
             }
+            if (key.indexOf("1日avl") > -1 && key.indexOf("收盘价:不复权") > -1
+            ) {
+                jsonMap.put("avgPriceRate", jsonObject.get(key));
+            }
             //昨日竞价涨幅
             if (key.indexOf("竞价涨幅") > -1 && key.indexOf(dateStr) == -1
             ) {
@@ -256,23 +260,17 @@ public class StockUpLimitAnalyzeService {
         BigDecimal divide = new BigDecimal(String.valueOf(jsonMap.get("lastTurnOverRate")))
                 .divide(new BigDecimal(String.valueOf(jsonMap.get("lastVolRate"))), 2, BigDecimal.ROUND_HALF_UP);
         jsonMap.put("compressionDivision", divide);
-
         //竞价动能比例，今日竞价金额/昨日成交额
         BigDecimal divide1 = new BigDecimal(String.valueOf(jsonMap.get("auctionTradeAmount"))).multiply(new BigDecimal(100))
                 .divide(new BigDecimal(String.valueOf(jsonMap.get("lasttradeAmount"))), 2, BigDecimal.ROUND_HALF_UP);
         jsonMap.put("auctionPowerRate", divide1);
-
         jsonMap.put("objectSign",StockTemplateEnum.FIRST_UP_LIMIT_WATCH_TWO.getSign());
-
-
         BigDecimal bigDecimal = new BigDecimal(String.valueOf(jsonMap.get("lastAuctionIncreaseRate")));
         if(bigDecimal.compareTo(new BigDecimal(-5))>0&&bigDecimal.compareTo(new BigDecimal(3))<0){
             return jsonMap;
         }else {
             return new HashMap();
         }
-
-
     }
 
 

@@ -67,10 +67,6 @@ public class FileTestController {
     @RequestMapping(path = "/downLoadTest")
     public void downLoadTest(HttpServletResponse response) throws Exception {
 
-
-
-
-
     }
 
 

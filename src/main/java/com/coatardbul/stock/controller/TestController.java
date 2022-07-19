@@ -5,7 +5,9 @@ import com.coatardbul.stock.common.api.CommonResult;
 import com.coatardbul.stock.model.feign.CalendarDateDTO;
 import com.coatardbul.stock.service.base.CosService;
 import com.coatardbul.stock.service.base.EmailService;
+import com.coatardbul.stock.service.base.HttpService;
 import com.coatardbul.stock.service.statistic.RedisService;
+import com.coatardbul.stock.service.statistic.StockQuartzService;
 import com.coatardbul.stock.service.statistic.StockSpecialStrategyService;
 import com.coatardbul.stock.service.statistic.StockTradeService;
 import com.qcloud.cos.COSClient;
@@ -70,10 +72,16 @@ public class TestController {
 
     @Autowired
     StockTradeService stockTradeService;
+
+    @Autowired
+    HttpService   httpService;
+    @Autowired
+    StockQuartzService stockQuartzService;
     @WebLog(value = "")
     @RequestMapping(path = "/test", method = RequestMethod.POST)
     public void dayStatic() throws Exception {
-        emailService.sendProcess("sxl14459048@163.com","测试","测试内容");
+//        stockQuartzService.xxx();
+        httpService.doGet("https://www.eastmoney.com/");
     }
 
     @RequestMapping(path = "/test1", method = RequestMethod.POST)

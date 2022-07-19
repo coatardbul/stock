@@ -95,12 +95,7 @@ create table if not exists stock_minuter_emotion
 )
     comment '股票情绪';
 
-create table if not exists stock_module_mapper
-(
-    stock_code varchar(6) not null comment '股票代码',
-    module_code varchar(6) not null comment '板块代码',
-    primary key (stock_code, module_code)
-);
+
 
 create table if not exists stock_optional_plate
 (

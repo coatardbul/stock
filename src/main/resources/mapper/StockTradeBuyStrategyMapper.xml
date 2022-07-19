@@ -1,0 +1,231 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.coatardbul.stock.mapper.StockTradeBuyStrategyMapper">
+  <resultMap id="BaseResultMap" type="com.coatardbul.stock.model.entity.StockTradeBuyStrategy">
+    <!--@mbg.generated-->
+    <!--@Table stock_trade_buy_strategy-->
+    <id column="id" jdbcType="VARCHAR" property="id" />
+    <result column="template_id" jdbcType="VARCHAR" property="templateId" />
+    <result column="template_name" jdbcType="VARCHAR" property="templateName" />
+    <result column="start_time" jdbcType="VARCHAR" property="startTime" />
+    <result column="end_time" jdbcType="VARCHAR" property="endTime" />
+    <result column="all_money" jdbcType="VARCHAR" property="allMoney" />
+    <result column="sub_money" jdbcType="VARCHAR" property="subMoney" />
+    <result column="all_num" jdbcType="INTEGER" property="allNum" />
+    <result column="sub_num" jdbcType="INTEGER" property="subNum" />
+    <result column="proportion" jdbcType="VARCHAR" property="proportion" />
+    <result column="cron" jdbcType="VARCHAR" property="cron" />
+    <result column="job_class" jdbcType="VARCHAR" property="jobClass" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    <!--@mbg.generated-->
+    id, template_id, template_name, start_time, end_time, all_money, sub_money, all_num, 
+    sub_num, proportion, cron, job_class
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    <!--@mbg.generated-->
+    select 
+    <include refid="Base_Column_List" />
+    from stock_trade_buy_strategy
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    <!--@mbg.generated-->
+    delete from stock_trade_buy_strategy
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.coatardbul.stock.model.entity.StockTradeBuyStrategy">
+    <!--@mbg.generated-->
+    insert into stock_trade_buy_strategy (id, template_id, template_name, 
+      start_time, end_time, all_money, 
+      sub_money, all_num, sub_num, 
+      proportion, cron, job_class
+      )
+    values (#{id,jdbcType=VARCHAR}, #{templateId,jdbcType=VARCHAR}, #{templateName,jdbcType=VARCHAR}, 
+      #{startTime,jdbcType=VARCHAR}, #{endTime,jdbcType=VARCHAR}, #{allMoney,jdbcType=VARCHAR}, 
+      #{subMoney,jdbcType=VARCHAR}, #{allNum,jdbcType=INTEGER}, #{subNum,jdbcType=INTEGER}, 
+      #{proportion,jdbcType=VARCHAR}, #{cron,jdbcType=VARCHAR}, #{jobClass,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.coatardbul.stock.model.entity.StockTradeBuyStrategy">
+    <!--@mbg.generated-->
+    insert into stock_trade_buy_strategy
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="templateId != null">
+        template_id,
+      </if>
+      <if test="templateName != null">
+        template_name,
+      </if>
+      <if test="startTime != null">
+        start_time,
+      </if>
+      <if test="endTime != null">
+        end_time,
+      </if>
+      <if test="allMoney != null">
+        all_money,
+      </if>
+      <if test="subMoney != null">
+        sub_money,
+      </if>
+      <if test="allNum != null">
+        all_num,
+      </if>
+      <if test="subNum != null">
+        sub_num,
+      </if>
+      <if test="proportion != null">
+        proportion,
+      </if>
+      <if test="cron != null">
+        cron,
+      </if>
+      <if test="jobClass != null">
+        job_class,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="templateId != null">
+        #{templateId,jdbcType=VARCHAR},
+      </if>
+      <if test="templateName != null">
+        #{templateName,jdbcType=VARCHAR},
+      </if>
+      <if test="startTime != null">
+        #{startTime,jdbcType=VARCHAR},
+      </if>
+      <if test="endTime != null">
+        #{endTime,jdbcType=VARCHAR},
+      </if>
+      <if test="allMoney != null">
+        #{allMoney,jdbcType=VARCHAR},
+      </if>
+      <if test="subMoney != null">
+        #{subMoney,jdbcType=VARCHAR},
+      </if>
+      <if test="allNum != null">
+        #{allNum,jdbcType=INTEGER},
+      </if>
+      <if test="subNum != null">
+        #{subNum,jdbcType=INTEGER},
+      </if>
+      <if test="proportion != null">
+        #{proportion,jdbcType=VARCHAR},
+      </if>
+      <if test="cron != null">
+        #{cron,jdbcType=VARCHAR},
+      </if>
+      <if test="jobClass != null">
+        #{jobClass,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.coatardbul.stock.model.entity.StockTradeBuyStrategy">
+    <!--@mbg.generated-->
+    update stock_trade_buy_strategy
+    <set>
+      <if test="templateId != null">
+        template_id = #{templateId,jdbcType=VARCHAR},
+      </if>
+      <if test="templateName != null">
+        template_name = #{templateName,jdbcType=VARCHAR},
+      </if>
+      <if test="startTime != null">
+        start_time = #{startTime,jdbcType=VARCHAR},
+      </if>
+      <if test="endTime != null">
+        end_time = #{endTime,jdbcType=VARCHAR},
+      </if>
+      <if test="allMoney != null">
+        all_money = #{allMoney,jdbcType=VARCHAR},
+      </if>
+      <if test="subMoney != null">
+        sub_money = #{subMoney,jdbcType=VARCHAR},
+      </if>
+      <if test="allNum != null">
+        all_num = #{allNum,jdbcType=INTEGER},
+      </if>
+      <if test="subNum != null">
+        sub_num = #{subNum,jdbcType=INTEGER},
+      </if>
+      <if test="proportion != null">
+        proportion = #{proportion,jdbcType=VARCHAR},
+      </if>
+      <if test="cron != null">
+        cron = #{cron,jdbcType=VARCHAR},
+      </if>
+      <if test="jobClass != null">
+        job_class = #{jobClass,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.coatardbul.stock.model.entity.StockTradeBuyStrategy">
+    <!--@mbg.generated-->
+    update stock_trade_buy_strategy
+    set template_id = #{templateId,jdbcType=VARCHAR},
+      template_name = #{templateName,jdbcType=VARCHAR},
+      start_time = #{startTime,jdbcType=VARCHAR},
+      end_time = #{endTime,jdbcType=VARCHAR},
+      all_money = #{allMoney,jdbcType=VARCHAR},
+      sub_money = #{subMoney,jdbcType=VARCHAR},
+      all_num = #{allNum,jdbcType=INTEGER},
+      sub_num = #{subNum,jdbcType=INTEGER},
+      proportion = #{proportion,jdbcType=VARCHAR},
+      cron = #{cron,jdbcType=VARCHAR},
+      job_class = #{jobClass,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+
+<!--auto generated by MybatisCodeHelper on 2022-07-19-->
+  <select id="selectByAll" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from stock_trade_buy_strategy
+        <where>
+            <if test="id != null">
+                and id=#{id,jdbcType=VARCHAR}
+            </if>
+            <if test="templateId != null">
+                and template_id=#{templateId,jdbcType=VARCHAR}
+            </if>
+            <if test="templateName != null">
+                and template_name=#{templateName,jdbcType=VARCHAR}
+            </if>
+            <if test="startTime != null">
+                and start_time=#{startTime,jdbcType=VARCHAR}
+            </if>
+            <if test="endTime != null">
+                and end_time=#{endTime,jdbcType=VARCHAR}
+            </if>
+            <if test="allMoney != null">
+                and all_money=#{allMoney,jdbcType=DECIMAL}
+            </if>
+            <if test="subMoney != null">
+                and sub_money=#{subMoney,jdbcType=DECIMAL}
+            </if>
+            <if test="allNum != null">
+                and all_num=#{allNum,jdbcType=INTEGER}
+            </if>
+            <if test="subNum != null">
+                and sub_num=#{subNum,jdbcType=INTEGER}
+            </if>
+            <if test="proportion != null">
+                and proportion=#{proportion,jdbcType=DECIMAL}
+            </if>
+            <if test="cron != null">
+                and cron=#{cron,jdbcType=VARCHAR}
+            </if>
+            <if test="jobClass != null">
+                and job_class=#{jobClass,jdbcType=VARCHAR}
+            </if>
+        </where>
+    </select>
+</mapper>

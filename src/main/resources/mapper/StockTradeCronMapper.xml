@@ -1,0 +1,268 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.coatardbul.stock.mapper.StockTradeCronMapper">
+  <resultMap id="BaseResultMap" type="com.coatardbul.stock.model.entity.StockTradeCron">
+    <!--@mbg.generated-->
+    <!--@Table stock_trade_cron-->
+    <id column="id" jdbcType="VARCHAR" property="id" />
+    <result column="strategy_id" jdbcType="VARCHAR" property="strategyId" />
+    <result column="strategy_sign" jdbcType="VARCHAR" property="strategySign" />
+    <result column="strategy_name" jdbcType="VARCHAR" property="strategyName" />
+    <result column="strategy_param" jdbcType="VARCHAR" property="strategyParam" />
+    <result column="job_name" jdbcType="VARCHAR" property="jobName" />
+    <result column="cron" jdbcType="VARCHAR" property="cron" />
+    <result column="trade_amount" jdbcType="VARCHAR" property="tradeAmount" />
+    <result column="trade_rate_type" jdbcType="INTEGER" property="tradeRateType" />
+    <result column="trade_rate" jdbcType="VARCHAR" property="tradeRate" />
+    <result column="stock_code" jdbcType="VARCHAR" property="stockCode" />
+    <result column="stock_name" jdbcType="VARCHAR" property="stockName" />
+    <result column="strategy_type" jdbcType="INTEGER" property="strategyType" />
+    <result column="trade_type" jdbcType="VARCHAR" property="tradeType" />
+    <result column="all_num" jdbcType="VARCHAR" property="allNum" />
+    <result column="sub_num" jdbcType="VARCHAR" property="subNum" />
+    <result column="all_money" jdbcType="VARCHAR" property="allMoney" />
+    <result column="sub_money" jdbcType="VARCHAR" property="subMoney" />
+    <result column="proportion" jdbcType="VARCHAR" property="proportion" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    <!--@mbg.generated-->
+    id, strategy_id, strategy_sign, strategy_name, strategy_param, job_name, cron, trade_amount, 
+    trade_rate_type, trade_rate, stock_code, stock_name, strategy_type, trade_type, all_num, 
+    sub_num, all_money, sub_money, proportion
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    <!--@mbg.generated-->
+    select 
+    <include refid="Base_Column_List" />
+    from stock_trade_cron
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    <!--@mbg.generated-->
+    delete from stock_trade_cron
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.coatardbul.stock.model.entity.StockTradeCron">
+    <!--@mbg.generated-->
+    insert into stock_trade_cron (id, strategy_id, strategy_sign, 
+      strategy_name, strategy_param, job_name, 
+      cron, trade_amount, trade_rate_type, 
+      trade_rate, stock_code, stock_name, 
+      strategy_type, trade_type, all_num, 
+      sub_num, all_money, sub_money, 
+      proportion)
+    values (#{id,jdbcType=VARCHAR}, #{strategyId,jdbcType=VARCHAR}, #{strategySign,jdbcType=VARCHAR}, 
+      #{strategyName,jdbcType=VARCHAR}, #{strategyParam,jdbcType=VARCHAR}, #{jobName,jdbcType=VARCHAR}, 
+      #{cron,jdbcType=VARCHAR}, #{tradeAmount,jdbcType=VARCHAR}, #{tradeRateType,jdbcType=INTEGER}, 
+      #{tradeRate,jdbcType=VARCHAR}, #{stockCode,jdbcType=VARCHAR}, #{stockName,jdbcType=VARCHAR}, 
+      #{strategyType,jdbcType=INTEGER}, #{tradeType,jdbcType=VARCHAR}, #{allNum,jdbcType=VARCHAR}, 
+      #{subNum,jdbcType=VARCHAR}, #{allMoney,jdbcType=VARCHAR}, #{subMoney,jdbcType=VARCHAR}, 
+      #{proportion,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.coatardbul.stock.model.entity.StockTradeCron">
+    <!--@mbg.generated-->
+    insert into stock_trade_cron
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="strategyId != null">
+        strategy_id,
+      </if>
+      <if test="strategySign != null">
+        strategy_sign,
+      </if>
+      <if test="strategyName != null">
+        strategy_name,
+      </if>
+      <if test="strategyParam != null">
+        strategy_param,
+      </if>
+      <if test="jobName != null">
+        job_name,
+      </if>
+      <if test="cron != null">
+        cron,
+      </if>
+      <if test="tradeAmount != null">
+        trade_amount,
+      </if>
+      <if test="tradeRateType != null">
+        trade_rate_type,
+      </if>
+      <if test="tradeRate != null">
+        trade_rate,
+      </if>
+      <if test="stockCode != null">
+        stock_code,
+      </if>
+      <if test="stockName != null">
+        stock_name,
+      </if>
+      <if test="strategyType != null">
+        strategy_type,
+      </if>
+      <if test="tradeType != null">
+        trade_type,
+      </if>
+      <if test="allNum != null">
+        all_num,
+      </if>
+      <if test="subNum != null">
+        sub_num,
+      </if>
+      <if test="allMoney != null">
+        all_money,
+      </if>
+      <if test="subMoney != null">
+        sub_money,
+      </if>
+      <if test="proportion != null">
+        proportion,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="strategyId != null">
+        #{strategyId,jdbcType=VARCHAR},
+      </if>
+      <if test="strategySign != null">
+        #{strategySign,jdbcType=VARCHAR},
+      </if>
+      <if test="strategyName != null">
+        #{strategyName,jdbcType=VARCHAR},
+      </if>
+      <if test="strategyParam != null">
+        #{strategyParam,jdbcType=VARCHAR},
+      </if>
+      <if test="jobName != null">
+        #{jobName,jdbcType=VARCHAR},
+      </if>
+      <if test="cron != null">
+        #{cron,jdbcType=VARCHAR},
+      </if>
+      <if test="tradeAmount != null">
+        #{tradeAmount,jdbcType=VARCHAR},
+      </if>
+      <if test="tradeRateType != null">
+        #{tradeRateType,jdbcType=INTEGER},
+      </if>
+      <if test="tradeRate != null">
+        #{tradeRate,jdbcType=VARCHAR},
+      </if>
+      <if test="stockCode != null">
+        #{stockCode,jdbcType=VARCHAR},
+      </if>
+      <if test="stockName != null">
+        #{stockName,jdbcType=VARCHAR},
+      </if>
+      <if test="strategyType != null">
+        #{strategyType,jdbcType=INTEGER},
+      </if>
+      <if test="tradeType != null">
+        #{tradeType,jdbcType=VARCHAR},
+      </if>
+      <if test="allNum != null">
+        #{allNum,jdbcType=VARCHAR},
+      </if>
+      <if test="subNum != null">
+        #{subNum,jdbcType=VARCHAR},
+      </if>
+      <if test="allMoney != null">
+        #{allMoney,jdbcType=VARCHAR},
+      </if>
+      <if test="subMoney != null">
+        #{subMoney,jdbcType=VARCHAR},
+      </if>
+      <if test="proportion != null">
+        #{proportion,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.coatardbul.stock.model.entity.StockTradeCron">
+    <!--@mbg.generated-->
+    update stock_trade_cron
+    <set>
+      <if test="strategyId != null">
+        strategy_id = #{strategyId,jdbcType=VARCHAR},
+      </if>
+      <if test="strategySign != null">
+        strategy_sign = #{strategySign,jdbcType=VARCHAR},
+      </if>
+      <if test="strategyName != null">
+        strategy_name = #{strategyName,jdbcType=VARCHAR},
+      </if>
+      <if test="strategyParam != null">
+        strategy_param = #{strategyParam,jdbcType=VARCHAR},
+      </if>
+      <if test="jobName != null">
+        job_name = #{jobName,jdbcType=VARCHAR},
+      </if>
+      <if test="cron != null">
+        cron = #{cron,jdbcType=VARCHAR},
+      </if>
+      <if test="tradeAmount != null">
+        trade_amount = #{tradeAmount,jdbcType=VARCHAR},
+      </if>
+      <if test="tradeRateType != null">
+        trade_rate_type = #{tradeRateType,jdbcType=INTEGER},
+      </if>
+      <if test="tradeRate != null">
+        trade_rate = #{tradeRate,jdbcType=VARCHAR},
+      </if>
+      <if test="stockCode != null">
+        stock_code = #{stockCode,jdbcType=VARCHAR},
+      </if>
+      <if test="stockName != null">
+        stock_name = #{stockName,jdbcType=VARCHAR},
+      </if>
+      <if test="strategyType != null">
+        strategy_type = #{strategyType,jdbcType=INTEGER},
+      </if>
+      <if test="tradeType != null">
+        trade_type = #{tradeType,jdbcType=VARCHAR},
+      </if>
+      <if test="allNum != null">
+        all_num = #{allNum,jdbcType=VARCHAR},
+      </if>
+      <if test="subNum != null">
+        sub_num = #{subNum,jdbcType=VARCHAR},
+      </if>
+      <if test="allMoney != null">
+        all_money = #{allMoney,jdbcType=VARCHAR},
+      </if>
+      <if test="subMoney != null">
+        sub_money = #{subMoney,jdbcType=VARCHAR},
+      </if>
+      <if test="proportion != null">
+        proportion = #{proportion,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.coatardbul.stock.model.entity.StockTradeCron">
+    <!--@mbg.generated-->
+    update stock_trade_cron
+    set strategy_id = #{strategyId,jdbcType=VARCHAR},
+      strategy_sign = #{strategySign,jdbcType=VARCHAR},
+      strategy_name = #{strategyName,jdbcType=VARCHAR},
+      strategy_param = #{strategyParam,jdbcType=VARCHAR},
+      job_name = #{jobName,jdbcType=VARCHAR},
+      cron = #{cron,jdbcType=VARCHAR},
+      trade_amount = #{tradeAmount,jdbcType=VARCHAR},
+      trade_rate_type = #{tradeRateType,jdbcType=INTEGER},
+      trade_rate = #{tradeRate,jdbcType=VARCHAR},
+      stock_code = #{stockCode,jdbcType=VARCHAR},
+      stock_name = #{stockName,jdbcType=VARCHAR},
+      strategy_type = #{strategyType,jdbcType=INTEGER},
+      trade_type = #{tradeType,jdbcType=VARCHAR},
+      all_num = #{allNum,jdbcType=VARCHAR},
+      sub_num = #{subNum,jdbcType=VARCHAR},
+      all_money = #{allMoney,jdbcType=VARCHAR},
+      sub_money = #{subMoney,jdbcType=VARCHAR},
+      proportion = #{proportion,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+</mapper>

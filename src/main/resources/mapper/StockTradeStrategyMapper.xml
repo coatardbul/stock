@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.coatardbul.stock.mapper.StockTradeStrategyMapper">
+  <resultMap id="BaseResultMap" type="com.coatardbul.stock.model.entity.StockTradeStrategy">
+    <!--@mbg.generated-->
+    <!--@Table stock_trade_strategy-->
+    <id column="id" jdbcType="VARCHAR" property="id" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="sign" jdbcType="VARCHAR" property="sign" />
+    <result column="express_example" jdbcType="VARCHAR" property="expressExample" />
+    <result column="default_param" jdbcType="VARCHAR" property="defaultParam" />
+    <result column="express_script" jdbcType="VARCHAR" property="expressScript" />
+    <result column="type" jdbcType="VARCHAR" property="type" />
+    <result column="job_class" jdbcType="VARCHAR" property="jobClass" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    <!--@mbg.generated-->
+    id, `name`, sign, express_example, default_param, express_script, `type`, job_class
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    <!--@mbg.generated-->
+    select 
+    <include refid="Base_Column_List" />
+    from stock_trade_strategy
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    <!--@mbg.generated-->
+    delete from stock_trade_strategy
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.coatardbul.stock.model.entity.StockTradeStrategy">
+    <!--@mbg.generated-->
+    insert into stock_trade_strategy (id, `name`, sign, 
+      express_example, default_param, express_script, 
+      `type`, job_class)
+    values (#{id,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, #{sign,jdbcType=VARCHAR}, 
+      #{expressExample,jdbcType=VARCHAR}, #{defaultParam,jdbcType=VARCHAR}, #{expressScript,jdbcType=VARCHAR}, 
+      #{type,jdbcType=VARCHAR}, #{jobClass,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.coatardbul.stock.model.entity.StockTradeStrategy">
+    <!--@mbg.generated-->
+    insert into stock_trade_strategy
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="name != null">
+        `name`,
+      </if>
+      <if test="sign != null">
+        sign,
+      </if>
+      <if test="expressExample != null">
+        express_example,
+      </if>
+      <if test="defaultParam != null">
+        default_param,
+      </if>
+      <if test="expressScript != null">
+        express_script,
+      </if>
+      <if test="type != null">
+        `type`,
+      </if>
+      <if test="jobClass != null">
+        job_class,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null">
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="sign != null">
+        #{sign,jdbcType=VARCHAR},
+      </if>
+      <if test="expressExample != null">
+        #{expressExample,jdbcType=VARCHAR},
+      </if>
+      <if test="defaultParam != null">
+        #{defaultParam,jdbcType=VARCHAR},
+      </if>
+      <if test="expressScript != null">
+        #{expressScript,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null">
+        #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="jobClass != null">
+        #{jobClass,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.coatardbul.stock.model.entity.StockTradeStrategy">
+    <!--@mbg.generated-->
+    update stock_trade_strategy
+    <set>
+      <if test="name != null">
+        `name` = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="sign != null">
+        sign = #{sign,jdbcType=VARCHAR},
+      </if>
+      <if test="expressExample != null">
+        express_example = #{expressExample,jdbcType=VARCHAR},
+      </if>
+      <if test="defaultParam != null">
+        default_param = #{defaultParam,jdbcType=VARCHAR},
+      </if>
+      <if test="expressScript != null">
+        express_script = #{expressScript,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null">
+        `type` = #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="jobClass != null">
+        job_class = #{jobClass,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.coatardbul.stock.model.entity.StockTradeStrategy">
+    <!--@mbg.generated-->
+    update stock_trade_strategy
+    set `name` = #{name,jdbcType=VARCHAR},
+      sign = #{sign,jdbcType=VARCHAR},
+      express_example = #{expressExample,jdbcType=VARCHAR},
+      default_param = #{defaultParam,jdbcType=VARCHAR},
+      express_script = #{expressScript,jdbcType=VARCHAR},
+      `type` = #{type,jdbcType=VARCHAR},
+      job_class = #{jobClass,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+
+<!--auto generated by MybatisCodeHelper on 2022-07-17-->
+  <select id="selectAllByTypeAndNameLikeAndExpressExampleLike" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from stock_trade_strategy
+        <where>
+            <if test="type != null and type != ''">
+                and `type`=#{type,jdbcType=VARCHAR}
+            </if>
+            <if test="likeName != null and likeName != ''">
+                and `name` like concat('%',#{likeName,jdbcType=VARCHAR},'%')
+            </if>
+            <if test="likeExpressExample != null and likeExpressExample != ''">
+                and express_example like concat('%',#{likeExpressExample,jdbcType=VARCHAR},'%')
+            </if>
+        </where>
+    </select>
+</mapper>

@@ -48,6 +48,8 @@ public class HttpService {
     ProxyIpService proxyIpService;
 
 
+
+
     public String doGet(String url) {
 
         //创建HttpClient对象

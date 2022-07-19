@@ -96,20 +96,6 @@ public class StockTradeController {
         return CommonResult.success(null);
     }
 
-    @RequestMapping(path = "/modifyBuyInfo", method = RequestMethod.POST)
-    public CommonResult modifyBuyInfo(@Validated @RequestBody StockTradeBuyConfig dto) {
-        stockTradeService.modifyBuyInfo(dto);
-        return CommonResult.success(null);
-    }
-    @RequestMapping(path = "/deleteBuyInfo", method = RequestMethod.POST)
-    public CommonResult deleteBuyInfo(@Validated @RequestBody StockTradeBuyConfig dto) {
-        stockTradeService.deleteBuyInfo(dto);
-        return CommonResult.success(null);
-    }
-    @RequestMapping(path = "/queryBuyInfo", method = RequestMethod.POST)
-    public CommonResult queryBuyInfo(@Validated @RequestBody StockTradeBuyConfig dto) {
-        List<StockTradeBuyConfig> stockTradeBuyConfigs = stockTradeService.queryBuyInfo(dto);
-        return CommonResult.success(stockTradeBuyConfigs);
-    }
+
 
 }
