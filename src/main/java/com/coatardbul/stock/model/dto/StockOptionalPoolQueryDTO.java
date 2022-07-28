@@ -1,6 +1,5 @@
 package com.coatardbul.stock.model.dto;
 
-import com.coatardbul.stock.model.entity.StockOptionalPool;
 import lombok.Data;
 
 import java.util.List;

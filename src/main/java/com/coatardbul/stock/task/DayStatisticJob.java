@@ -109,35 +109,7 @@ public class DayStatisticJob {
     }
 
 
-    @XxlJob("openStockOneJobHandler")
-    public void openStockOneJobHandler() {
-        log.info("刷新开盘首板数据异常类型1开始");
-        String param = XxlJobHelper.getJobParam();
-        if (StringUtils.isNotBlank(param)) {
-            StockStrategyQueryDTO dto = JsonUtil.readToValue(param, StockStrategyQueryDTO.class);
-            if (!StringUtils.isNotBlank(dto.getDateStr())) {
-                dto.setDateStr(DateTimeUtil.getDateFormat(new Date(), DateTimeUtil.YYYY_MM_DD));
-            }
-            stockSpecialStrategyService.amAbOne(dto);
-        }
-        log.info("刷新开盘首板数据异常类型1结束");
 
-    }
-
-    @XxlJob("openStockTwoJobHandler")
-    public void openStockTwoJobHandler() {
-        log.info("刷新开盘首板数据异常类型2开始");
-        String param = XxlJobHelper.getJobParam();
-        if (StringUtils.isNotBlank(param)) {
-            StockStrategyQueryDTO dto = JsonUtil.readToValue(param, StockStrategyQueryDTO.class);
-            if (!StringUtils.isNotBlank(dto.getDateStr())) {
-                dto.setDateStr(DateTimeUtil.getDateFormat(new Date(), DateTimeUtil.YYYY_MM_DD));
-            }
-            stockSpecialStrategyService.amAbTwo(dto);
-        }
-        log.info("刷新开盘首板数据异常类型2结束");
-
-    }
 
 
 }

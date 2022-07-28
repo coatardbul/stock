@@ -59,24 +59,6 @@ public class StockSpecialStrategyController {
         return CommonResult.success( stockSpecialStrategyService.getUpLimitTheme(dto));
     }
 
-    /**
-     *早上开盘最上面的股票异动信息构建
-     * 只需要传入日期确定哪一天
-     */
-    @WebLog(value = "")
-    @RequestMapping(path = "/amAbOne", method = RequestMethod.POST)
-    public CommonResult amAbOne(@Validated @RequestBody StockStrategyQueryDTO dto)  {
-        stockSpecialStrategyService.amAbOne(dto);
-        return CommonResult.success( null);
-    }
-    /**
-     *早上开盘最上面的股票异动信息构建
-     * 只需要传入日期确定哪一天
-     */
-    @WebLog(value = "")
-    @RequestMapping(path = "/amAbTwo", method = RequestMethod.POST)
-    public CommonResult amAbTwo(@Validated @RequestBody StockStrategyQueryDTO dto) {
-        stockSpecialStrategyService.amAbTwo(dto);
-        return CommonResult.success( null);
-    }
+
+
 }

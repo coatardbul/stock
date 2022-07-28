@@ -50,27 +50,4 @@ public class MinuterEmotionXxlJob {
 
     }
 
-
-    @XxlJob("buildLastUpLimitInfoJobHandler")
-    public void buildLastUpLimitInfoJobHandler() throws Exception {
-        if (stockVerifyService.isIllegalDate(DateTimeUtil.getDateFormat(new Date(), DateTimeUtil.YYYY_MM_DD))) {
-            return;
-        }
-        if (stockVerifyService.isIllegalDateTimeStr(DateTimeUtil.getDateFormat(new Date(), DateTimeUtil.YYYY_MM_DD),
-                DateTimeUtil.getDateFormat(new Date(), DateTimeUtil.HH_MM))) {
-            return;
-        }
-
-        String param = XxlJobHelper.getJobParam();
-        log.info("构造昨曾模式数据定时任务开始,传递参数为：" + param);
-        if (StringUtils.isNotBlank(param)) {
-            StockLastUpLimitDetailDTO dto = JsonUtil.readToValue(param, StockLastUpLimitDetailDTO.class);
-            dto.setDateStr(DateTimeUtil.getDateFormat(new Date(), DateTimeUtil.YYYY_MM_DD));
-            log.info("构造昨曾模式数据,传递参数为：" + dto.toString());
-
-            stockSpecialStrategyService.buildLastUpLimitInfo(dto);
-        }
-        log.info("构造昨曾模式数据定时任务结束");
-
-    }
 }
